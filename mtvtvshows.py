@@ -232,17 +232,17 @@ class ProcessTVShows:
             }
             pprint(media_info)
             
-            conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
-            cursor = conn.cursor()
-            cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                media_info["TvId"],
-                media_info["Size"],
-                media_info["Catagory"],
-                media_info["Name"],
-                media_info["Season"],
-                media_info["Episode"],
-                media_info["Path"],
-                media_info["Idx"]
-            ))
+            # conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+            # cursor = conn.cursor()
+            # cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
+            #     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            # ''', (
+            #     media_info["TvId"],
+            #     media_info["Size"],
+            #     media_info["Catagory"],
+            #     media_info["Name"],
+            #     media_info["Season"],
+            #     media_info["Episode"],
+            #     media_info["Path"],
+            #     media_info["Idx"]
+            # ))

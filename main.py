@@ -34,8 +34,8 @@ def main():
         tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
         mtvtvshows.ProcessTVShows(tvshows).process()
 
-        images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
-        mtvimages.ProcessImages(images).process()
+        # images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
+        # mtvimages.ProcessImages(images).process()
 
     elif args.update:
         pass
