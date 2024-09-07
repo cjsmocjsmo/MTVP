@@ -174,6 +174,7 @@ class ProcessTVShows:
             catagory = "SecretInvasion"
         elif re.search(self.wandavision, tv):
             catagory = "WandaVision"
+        print(f"\n\nCatagory: {catagory}")
         return catagory
 
     def get_name(self, tv):
