@@ -3,6 +3,7 @@
 import hashlib
 import os
 import re
+from pprint import pprint
 
 class ProcessTVShows:
     def __init__(self, tvshows):
@@ -179,18 +180,11 @@ class ProcessTVShows:
     def get_name(self, tv):
         tv = os.path.split(tv)[1]
         tvu = tv.upper()
-        print(tvu)
         match = re.search(self.episea, tvu)
         if match:
             start = match.start()
-            end = match.end()
             print(f"Start: {start}")
             new_start = start + 1
-            # new_end = end - 1
-            print(f"New Start: {new_start}")
-            # print(f"New End: {new_end}")
-            # print(f"test1 {tv[new_start:new_end]}")
-            print(f"test2 {tv[0:new_start]}")
             return tv[0:new_start]
         else:
             print("No match")
@@ -224,9 +218,6 @@ class ProcessTVShows:
         idx = 0
         for tv in self.tvlist:
             idx += 1
-            print(self.get_name(tv))
-
-            
             media_info = {
                 "TvId": self.get_tvid(tv),
                 "Size": self.get_size(tv),
@@ -237,4 +228,4 @@ class ProcessTVShows:
                 "Path": tv,
                 "Idx": idx,
             }
-            print(media_info)
+            pprint(media_info)
