@@ -182,12 +182,13 @@ class ProcessTVShows:
         tvu = tv.upper()
         searchstr = re.compile("^S\d{2}E\d{2}$")
         match = re.search(searchstr, tvu)
-        start = match.start()
-        end = match.end()
-        SE = tv[start:end]
-        season = SE[1:3]
-        episode = SE[4:6]
-        return season, episode
+        if match:
+            start = match.start()
+            end = match.end()
+            SE = tv[start:end]
+            season = SE[1:3]
+            episode = SE[4:6]
+            return season, episode
     
     def get_size(self, tv):
         file_stat = os.stat(tv)
