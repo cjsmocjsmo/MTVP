@@ -188,6 +188,7 @@ class ProcessTVShows:
             SE = tv[start:end]
             season = SE[1:3]
             episode = SE[4:6]
+            print(f"Season: {season} Episode: {episode}")
             return (season, episode)
     
     def get_size(self, tv):
