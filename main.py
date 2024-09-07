@@ -27,8 +27,8 @@ def main():
         movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
         mtvmovies.ProcessMovies(movs).process()
 
-        tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-        mtvtvshows.ProcessTVShows(tvshows).process()
+        # tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
+        # mtvtvshows.ProcessTVShows(tvshows).process()
 
     elif args.update:
         pass
