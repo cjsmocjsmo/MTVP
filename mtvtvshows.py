@@ -174,9 +174,10 @@ class ProcessTVShows:
     def get_name(self, tv):
         searchstr = re.compile("^S\d{2}E\d{2}$")
         match = re.search(searchstr, tv)
-        start = match.start()
-        new_start = start - 1
-        return tv[:new_start]
+        if match:
+            start = match.start()
+            new_start = start - 1
+            return tv[:new_start]
 
     def get_season(self, tv):
         tvu = tv.upper()
