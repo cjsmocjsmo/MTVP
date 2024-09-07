@@ -14,7 +14,7 @@ class ProcessImages:
     def thumb_dir_check(self):
         img_dir = os.getenv("MTV_POSTER_PATH")
         if not os.path.exists(img_dir):
-            os.makedirs(img_dir)
+            subprocess.run(["mkdir", img_dir])
             print(f"Created directory")
 
     def create_thumbnail(self, img):
