@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+import os
 import sqlite3
 
 class CreateTables:
     def __init__(self):
-        self.conn = sqlite3.connect("mtv.db")
+        self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
 
     def create_tables(self):
