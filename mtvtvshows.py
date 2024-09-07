@@ -233,7 +233,7 @@ class ProcessTVShows:
             pprint(media_info)
 
             try:
-                conn = sqlite3.connect(os.getenv("MTV_DB_PATH", timeout=30))
+                conn = sqlite3.connect(os.getenv("MTV_DB_PATH"), timeout=30)
                 conn.execute("PRAGMA journal_mode=WAL")
                 cursor = conn.cursor()
                 cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
