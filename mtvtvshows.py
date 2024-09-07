@@ -182,12 +182,15 @@ class ProcessTVShows:
         match = re.search(self.episea, tvu)
         if match:
             start = match.start()
+            end = match.end()
             print(f"Start: {start}")
-            new_start = start - 1
+            new_start = start + 1
+            new_end = end - 1
             print(f"New Start: {new_start}")
-            print(f"test1 {tv[:new_start]}")
-            print(f"test2 {tv[new_start:]}")
-            return tv[:new_start]
+            print(f"New End: {new_end}")
+            print(f"test1 {tv[new_start:new_end]}")
+            # print(f"test2 {tv[new_start:]}")
+            return tv[new_start:new_end]
         else:
             print("No match")
 
@@ -199,7 +202,6 @@ class ProcessTVShows:
             end = match.end()
             SE = tv[start:end]
             season = SE[2:4]
-            print(f"Season: {season}")
             return season
         
     def get_episode(self, tv):
@@ -210,7 +212,6 @@ class ProcessTVShows:
             end = match.end()
             SE = tv[start:end]
             episode = SE[5:7]
-            print(f"Episode: {episode}")
             return episode
     
     def get_size(self, tv):
