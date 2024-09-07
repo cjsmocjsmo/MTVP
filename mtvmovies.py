@@ -182,7 +182,7 @@ class ProcessMovies:
                 "Catagory": self.get_catagory(mov),
                 "HttpThumbPath": self.get_http_thumb_path(mov),
             }
-            pprint(media_info)
+            
             # Connect to the database
             conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
             cursor = conn.cursor()

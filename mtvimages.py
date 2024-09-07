@@ -75,7 +75,7 @@ class ProcessImages:
                 "Idx": idx,
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
-            print(media_info)
+            
             db_path = os.getenv("MTV_DB_PATH")
             conn = sqlite3.connect(db_path)
             c = conn.cursor()
