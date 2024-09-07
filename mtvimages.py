@@ -7,6 +7,7 @@ import re
 class ProcessImages:
     def __init__(self, imgs):
         self.imglist = imgs
+        self.search = re.compile("\s\(")
 
     def get_img_id(self, imgstr):
         encoded_string = imgstr.encode('utf-8')
@@ -16,11 +17,16 @@ class ProcessImages:
         return hash_hex
 
     def get_name(self, img):
-        searchstr = re.compile("\(")
-        match = re.search(searchstr, img)
-        start, end = match.span()
-        new_start = start - 1
-        return img[:new_start]
+        img = os.path.split(img)[1]
+        match = re.search(self.search, img)
+        if match:
+            start = match.start()
+            print(f"Start: {start}")
+            new_start = start + 1
+
+            return img[new_start:]
+        else:
+            print("No match")
 
     def get_thumb_path(self, img):
         new_dir = os.getenv("MTV_THUMBNAIL_PATH")
