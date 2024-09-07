@@ -24,7 +24,7 @@ def main():
     args = parser.parse_args()
 
     arch = utils.get_arch()
-    mtvtables.CreateTables.create_tables()
+    mtvtables.CreateTables().create_tables()
 
     if args.install:
 
