@@ -177,8 +177,7 @@ class ProcessTVShows:
         return catagory
 
     def get_name(self, tv):
-        searchstr = re.compile("^S\d{2}E\d{2}$")
-        match = re.search(searchstr, tv)
+        match = re.search(self.episea, tv)
         if match:
             start = match.start()
             print(f"Start: {start}")
@@ -190,8 +189,7 @@ class ProcessTVShows:
 
     def get_season(self, tv):
         tvu = tv.upper()
-        searchstr = re.compile("^S\d{2}E\d{2}$")
-        match = re.search(searchstr, tvu)
+        match = re.search(self.episea, tvu)
         if match:
             start = match.start()
             end = match.end()
@@ -202,8 +200,7 @@ class ProcessTVShows:
         
     def get_episode(self, tv):
         tvu = tv.upper()
-        searchstr = re.compile("^S\d{2}E\d{2}$")
-        match = re.search(searchstr, tvu)
+        match = re.search(self.episea, tvu)
         if match:
             start = match.start()
             end = match.end()
@@ -222,7 +219,7 @@ class ProcessTVShows:
         for tv in self.tvlist:
             idx += 1
             print(self.get_name(tv))
-            
+
             
             media_info = {
                 "TvId": self.get_tvid(tv),
