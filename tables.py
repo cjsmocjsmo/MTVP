@@ -7,7 +7,7 @@ class CreateTables:
 
     def create_tables(self):
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS movies (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             Name TEXT NOT NULL,
             Year TEXT NOT NULL,
             PosterAddr TEXT NOT NULL,

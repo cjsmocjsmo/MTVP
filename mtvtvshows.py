@@ -2,8 +2,10 @@
 
 import hashlib
 import os
-import re
 from pprint import pprint
+import re
+import sqlite3
+
 
 class ProcessTVShows:
     def __init__(self, tvshows):
@@ -229,3 +231,17 @@ class ProcessTVShows:
                 "Idx": idx,
             }
             pprint(media_info)
+            conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+            cursor = conn.cursor()
+            cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                media_info["TvId"],
+                media_info["Size"],
+                media_info["Catagory"],
+                media_info["Name"],
+                media_info["Season"],
+                media_info["Episode"],
+                media_info["Path"],
+                media_info["Idx"]
+            ))

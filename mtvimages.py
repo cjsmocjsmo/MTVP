@@ -3,11 +3,24 @@
 import hashlib
 import os
 import re
+import sqlite3
+import PIL
 
 class ProcessImages:
     def __init__(self, imgs):
         self.imglist = imgs
         self.search = re.compile("\s\(")
+
+    def create_thumbnail(self, img):
+        thumb_dir = os.getenv("MTV_THUMBNAIL_PATH")
+        fname = os.path.split(img)[1]
+        save_path = os.path.join(thumb_dir, fname)
+
+        thumb = PIL.Image.open(img)
+        thumb.thumbnail((300, 300))
+        thumb.save(save_path)
+        return save_path
+
 
     def get_img_id(self, imgstr):
         encoded_string = imgstr.encode('utf-8')
@@ -21,9 +34,6 @@ class ProcessImages:
         match = re.search(self.search, img)
         if match:
             start = match.start()
-            print(f"Start: {start}")
-            # new_start = start + 1
-            # print(img[:new_start])
             return img[:start]
         else:
             print("No match")
@@ -46,18 +56,38 @@ class ProcessImages:
     def process(self):
         idx = 0
         for img in self.imglist:
+            thumb = self.create_thumbnail(img)
             idx += 1
             media_info = {
-                "ImgId": self.get_img_id(img),
-                "Size": self.get_size(img),
+                "ImgId": self.get_img_id(thumb),
+                "Size": self.get_size(thumb),
                 "Name": self.get_name(img),
-                "ThumbPath": self.get_thumb_path(img),
-                "Path": img,
+                "ThumbPath": self.get_thumb_path(thumb),
+                "Path": thumb,
                 "Idx": idx,
-                "HttpThumbPath": self.get_http_thumb_path(img),
+                "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
             print(media_info)
+            db_path = os.getenv("MTV_DATABASE_PATH")
+            conn = sqlite3.connect(db_path)
+            c = conn.cursor()
+            c.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                media_info["ImgId"], 
+                media_info["Path"], 
+                media_info["Path"], 
+                media_info["Size"], 
+                media_info["Name"], 
+                media_info["ThumbPath"], 
+                media_info["Idx"], 
+                media_info["HttpThumbPath"]
+            ))
 
+            conn.commit()
+            conn.close()
+
+            
 
 
 

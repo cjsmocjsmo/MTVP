@@ -4,6 +4,7 @@ import hashlib
 import os
 import re
 from pprint import pprint
+import sqlite3
 
 class ProcessMovies:
     def __init__(self, movs):
@@ -182,4 +183,26 @@ class ProcessMovies:
                 "HttpThumbPath": self.get_http_thumb_path(mov),
             }
             pprint(media_info)
+            # Connect to the database
+            conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+            cursor = conn.cursor()
+
+            # Insert media_info into the movies table
+            cursor.execute('''
+                INSERT INTO movies (Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                media_info["Year"],
+                media_info["PosterAddr"],
+                media_info["Size"],
+                media_info["Path"],
+                media_info["Idx"],
+                media_info["MovId"],
+                media_info["Catagory"],
+                media_info["HttpThumbPath"]
+            ))
+
+            # Commit the changes and close the connection
+            conn.commit()
+            conn.close()
 
