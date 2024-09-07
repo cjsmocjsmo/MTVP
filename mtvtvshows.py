@@ -188,7 +188,7 @@ class ProcessTVShows:
             SE = tv[start:end]
             season = SE[1:3]
             episode = SE[4:6]
-            return season, episode
+            return (season, episode)
     
     def get_size(self, tv):
         file_stat = os.stat(tv)
