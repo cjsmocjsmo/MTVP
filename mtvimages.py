@@ -2,9 +2,8 @@
 
 import hashlib
 import os
+from PIL import Image
 import re
-import sqlite3
-import PIL
 
 class ProcessImages:
     def __init__(self, imgs):
@@ -16,7 +15,7 @@ class ProcessImages:
         fname = os.path.split(img)[1]
         save_path = os.path.join(thumb_dir, fname)
 
-        thumb = PIL.Image.open(img)
+        thumb = Image.open(img)
         thumb.thumbnail((300, 300))
         thumb.save(save_path)
         return save_path
