@@ -185,12 +185,12 @@ class ProcessTVShows:
             end = match.end()
             print(f"Start: {start}")
             new_start = start + 1
-            new_end = end - 1
+            # new_end = end - 1
             print(f"New Start: {new_start}")
-            print(f"New End: {new_end}")
-            print(f"test1 {tv[new_start:new_end]}")
-            # print(f"test2 {tv[new_start:]}")
-            return tv[new_start:new_end]
+            # print(f"New End: {new_end}")
+            # print(f"test1 {tv[new_start:new_end]}")
+            print(f"test2 {tv[0:new_start]}")
+            return tv[0:new_start]
         else:
             print("No match")
 
