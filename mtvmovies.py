@@ -56,6 +56,8 @@ class ProcessMovies:
         if match:
             new_start = match.start() + 1
             new_end = match.end() - 1
+            print(new_start)
+            print(new_end)
             return mov[new_start:new_end]
         else:
             print(f"\n\nWTF Year not found in {mov}")
