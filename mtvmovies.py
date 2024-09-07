@@ -51,16 +51,17 @@ class ProcessMovies:
         self.xmen = re.compile("XMen")
 
     def get_year(self, mov):
-        searchstr = re.compile("\(")
-        match = re.search(searchstr, mov)
-        if match:
-            new_start = match.start() + 1
-            new_end = match.end() - 1
-            print(new_start)
-            print(new_end)
-            return mov[new_start:new_end]
-        else:
-            print(f"\n\nWTF Year not found in {mov}")
+        searchstr1 = re.compile("\(")
+        searchstr2 = re.compile("\)")
+        start = 0
+        end = 0
+        match1 = re.search(searchstr1, mov)
+        match2 = re.search(searchstr2, mov)
+        if match1:
+            start = match1.start() + 1
+        if match2:
+            end = match2.start() - 1
+        return mov[start:end]
 
     def get_poster(self, mov):
         return os.path.splitext(mov)[0] + ".jpg"
