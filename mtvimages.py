@@ -4,11 +4,18 @@ import hashlib
 import os
 from PIL import Image
 import re
+import subprocess
 
 class ProcessImages:
     def __init__(self, imgs):
         self.imglist = imgs
         self.search = re.compile("\s\(")
+
+    def thumb_dir_check(self):
+        img_dir = os.getenv("MTV_POSTER_PATH")
+        if not os.path.exists(img_dir):
+            os.makedirs(img_dir)
+            print(f"Created directory")
 
     def create_thumbnail(self, img):
         thumb_dir = os.getenv("MTV_THUMBNAIL_PATH")
@@ -54,6 +61,7 @@ class ProcessImages:
 
     def process(self):
         idx = 0
+        self.thumb_dir_check()
         for img in self.imglist:
             thumb = self.create_thumbnail(img)
             idx += 1
