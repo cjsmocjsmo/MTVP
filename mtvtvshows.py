@@ -68,107 +68,112 @@ class ProcessTVShows:
 
     def get_catagory(self, tv):
         catagory = ""
-        if self.alteredcarbon.search(tv):
+        if re.search(self.alteredcarbon, tv):
             catagory = "AlteredCarbon"
-        elif self.forallmankind.search(tv):
+        elif re.search(self.forallmankind, tv):
             catagory = "ForAllManKind"
-        elif self.foundation.search(tv):
+        elif re.search(self.foundation, tv):
             catagory = "Foundation"
-        elif self.fuubar.search(tv):
+        elif re.search(self.fuubar, tv):
             catagory = "FuuBar"
-        elif self.hford1923.search(tv):
+        elif re.search(self.hford1923, tv):
             catagory = "HFord1923"
-        elif self.halo.search(tv):
+        elif re.search(self.halo, tv):
             catagory = "Halo"
-        elif self.houseofthedragon.search(tv):
+        elif re.search(self.houseofthedragon, tv):
             catagory = "HouseOfTheDragon"
-        elif self.lostinspace.search(tv):
+        elif re.search(self.lostinspace, tv):
             catagory = "LostInSpace"
-        elif self.mastersoftheuniverse.search(tv):
+        elif re.search(self.mastersoftheuniverse, tv):
             catagory = "MastersOfTheUniverse"
-        elif self.monarchlegacyofmonsters.search(tv):
+        elif re.search(self.monarchlegacyofmonsters, tv):
             catagory = "MonarchLegacyOfMonsters"
-        elif self.nightsky.search(tv):
+        elif re.search(self.nightsky, tv):
             catagory = "NightSky"
-        elif self.orville.search(tv):
+        elif re.search(self.orville, tv):
             catagory = "Orville"
-        elif self.prehistoricplanet.search(tv):
+        elif re.search(self.prehistoricplanet, tv):
             catagory = "PrehistoricPlanet"
-        elif self.raisedbywolves.search(tv):
+        elif re.search(self.raisedbywolves, tv):
             catagory = "RaisedByWolves"
-        elif self.shogun.search(tv):
+        elif re.search(self.shogun, tv):
             catagory = "Shogun"
-        elif self.silo.search(tv):
+        elif re.search(self.silo, tv):
             catagory = "Silo"
-        elif self.columbia.search(tv):
+        elif re.search(self.columbia, tv):
             catagory = "Columbia"
-        elif self.cowboybebop.search(tv):
+        elif re.search(self.cowboybebop, tv):
             catagory = "CowboyBebop"
-        elif self.fallout.search(tv):
+        elif re.search(self.fallout, tv):
             catagory = "Fallout"
-        elif self.thecontinental.search(tv):
+        elif re.search(self.thecontinental, tv):
             catagory = "TheContinental"
-        elif self.thelastofus.search(tv):
+        elif re.search(self.thelastofus, tv):
             catagory = "TheLastOfUs"
-        elif self.thelordoftheringstheringsofpower.search(tv):
+        elif re.search(self.thelordoftheringstheringsofpower, tv):
             catagory = "TheLordOfTheRingsTheRingsOfPower"
-        elif self.wheeloftime.search(tv):
-            catagory = "WheelOfTime" 
-        elif self.discovery.search(tv):
+        elif re.search(self.wheeloftime, tv):
+            catagory = "WheelOfTime"
+        elif re.search(self.discovery, tv):
             catagory = "Discovery"
-        elif self.enterprise.search(tv):
+        elif re.search(self.enterprise, tv):
             catagory = "Enterprise"
-        elif self.lowerdecks.search(tv):
+        elif re.search(self.lowerdecks, tv):
             catagory = "LowerDecks"
-        elif self.picard.search(tv):
+        elif re.search(self.picard, tv):
             catagory = "Picard"
-        elif self.prodigy.search(tv):
+        elif re.search(self.prodigy, tv):
             catagory = "Prodigy"
-        elif self.sttv.search(tv):
+        elif re.search(self.sttv, tv):
             catagory = "STTV"
-        elif self.strangenewworlds.search(tv):
+        elif re.search(self.strangenewworlds, tv):
             catagory = "StrangeNewWorlds"
-        elif self.tng.search(tv):
+        elif re.search(self.tng, tv):
             catagory = "TNG"
-        elif self.voyager.search(tv):
+        elif re.search(self.voyager, tv):
             catagory = "Voyager"
-        elif self.acolyte.search(tv):
+        elif re.search(self.acolyte, tv):
             catagory = "Acolyte"
-        elif self.andor.search(tv):
-            catagory = "Andor" 
-        elif self.mandalorian.search(tv):
+        elif re.search(self.andor, tv):
+            catagory = "Andor"
+        elif re.search(self.mandalorian, tv):
             catagory = "Mandalorian"
-        elif self.talesoftheempire.search(tv):
+        elif re.search(self.talesoftheempire, tv):
             catagory = "TalesOfTheEmpire"
-        elif self.thebadbatch.search(tv):
+        elif re.search(self.thebadbatch, tv):
             catagory = "TheBadBatch"
-        elif self.ahsoka.search(tv):
+        elif re.search(self.ahsoka, tv):
             catagory = "Ahsoka"
-        elif self.bookofbobafett.search(tv):
+        elif re.search(self.bookofbobafett, tv):
             catagory = "BookOfBobaFett"
-        elif self.obiwankenobi.search(tv):
+        elif re.search(self.obiwankenobi, tv):
             catagory = "ObiWanKenobi"
-        elif self.talesofthejedi.search(tv):
+        elif re.search(self.talesofthejedi, tv):
             catagory = "TalesOfTheJedi"
-        elif self.visions.search(tv):
+        elif re.search(self.visions, tv):
             catagory = "Visions"
-        elif self.falconwintersoldier.search(tv):
+        elif re.search(self.obiwankenobi, tv):
+            catagory = "ObiWanKenobi"
+        elif re.search(self.talesofthejedi, tv):
+            catagory = "TalesOfTheJedi"
+        elif re.search(self.visions, tv):
+            catagory = "Visions"
+        elif re.search(self.falconwintersoldier, tv):
             catagory = "FalconWinterSoldier"
-        elif self.iamgroot.search(tv):
-            catagory = "IAmGroot"  
-        elif self.moonknight.search(tv):
+        elif re.search(self.iamgroot, tv):
+            catagory = "IAmGroot"
+        elif re.search(self.moonknight, tv):
             catagory = "MoonKnight"
-        elif self.shehulk.search(tv):
+        elif re.search(self.shehulk, tv):
             catagory = "SheHulk"
-        elif self.hawkeye.search(tv):
+        elif re.search(self.hawkeye, tv):
             catagory = "Hawkeye"
-        elif self.loki.search(tv):
+        elif re.search(self.loki, tv):
             catagory = "Loki"
-        elif self.secretinvasion.search(tv):
+        elif re.search(self.secretinvasion, tv):
             catagory = "SecretInvasion"
-        elif self.wandavision.search(tv):
+        elif re.search(self.wandavision, tv):
             catagory = "WandaVision"
-
         return catagory
 
     def get_name(self, tv):

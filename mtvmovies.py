@@ -72,88 +72,86 @@ class ProcessMovies:
 
     def get_catagory(self, mov):
         catagory = ""
-
-        if self.action.search(mov):
+        if re.search(self.Action, mov):
             catagory = "Action"
-        elif self.arnold.search(mov):
+        elif re.search(self.arnold, mov):
             catagory = "Arnold"
-        elif self.bruce_lee.search(mov):
+        elif re.search(self.bruce_lee, mov):
             catagory = "BruceLee"
-        elif self.bruce_willis.search(mov):
+        elif re.search(self.bruce_willis, mov):
             catagory = "BruceWillis"
-        elif self.buzz.search(mov):
+        elif re.search(self.buzz, mov):
             catagory = "Buzz"
-        elif self.cartoons.search(mov):
+        elif re.search(self.cartoons, mov):
             catagory = "Cartoons"
-        elif self.charlie_brown.search(mov):
+        elif re.search(self.charlie_brown, mov):
             catagory = "CharlieBrown"
-        elif self.comedy.search(mov):
+        elif re.search(self.comedy, mov):
             catagory = "Comedy"
-        elif self.documentary.search(mov):
+        elif re.search(self.documentary, mov):
             catagory = "Documentary"
-        elif self.drama.search(mov):
+        elif re.search(self.drama, mov):
             catagory = "Drama"
-        elif self.fantasy.search(mov):
+        elif re.search(self.fantasy, mov):
             catagory = "Fantasy"
-        elif self.ghost_busters.search(mov):
+        elif re.search(self.ghost_busters, mov):
             catagory = "GhostBusters"
-        elif self.godzilla.search(mov):
+        elif re.search(self.godzilla, mov):
             catagory = "Godzilla"
-        elif self.harry_potter.search(mov):
+        elif re.search(self.harry_potter, mov):
             catagory = "HarryPotter"
-        elif self.indiana_jones.search(mov):
+        elif re.search(self.indiana_jones, mov):
             catagory = "IndianaJones"
-        elif self.james_bond.search(mov):
+        elif re.search(self.james_bond, mov):
             catagory = "JamesBond"
-        elif self.john_wayne.search(mov):
+        elif re.search(self.john_wayne, mov):
             catagory = "JohnWayne"
-        elif self.john_wick.search(mov):
+        elif re.search(self.john_wick, mov):
             catagory = "JohnWick"
-        elif self.jurassic_park.search(mov):
+        elif re.search(self.jurassic_park, mov):
             catagory = "JurassicPark"
-        elif self.kevin_costner.search(mov):
+        elif re.search(self.kevin_costner, mov):
             catagory = "KevinCostner"
-        elif self.kingsman.search(mov):
+        elif re.search(self.kingsman, mov):
             catagory = "Kingsman"
-        elif self.meninblack.search(mov):
+        elif re.search(self.meninblack, mov):
             catagory = "MenInBlack"
-        elif self.minions.search(mov):
+        elif re.search(self.minions, mov):
             catagory = "Minions"
-        elif self.misc.search(mov):
+        elif re.search(self.misc, mov):
             catagory = "Misc"
-        elif self.nicolas_cage.search(mov):
+        elif re.search(self.nicolas_cage, mov):
             catagory = "NicolasCage"
-        elif self.oldies.search(mov):
+        elif re.search(self.oldies, mov):
             catagory = "Oldies"
-        elif self.panda.search(mov):
+        elif re.search(self.panda, mov):
             catagory = "Panda"
-        elif self.pirates.search(mov):
+        elif re.search(self.pirates, mov):
             catagory = "Pirates"
-        elif self.riddick.search(mov):
+        elif re.search(self.riddick, mov):
             catagory = "Riddick"
-        elif self.sci_fi.search(mov):
+        elif re.search(self.sci_fi, mov):
             catagory = "SciFi"
-        elif self.stalone.search(mov):
+        elif re.search(self.stalone, mov):
             catagory = "Stalone"
-        elif self.startrek.search(mov):
+        elif re.search(self.startrek, mov):
             catagory = "StarTrek"
-        elif self.starwars.search(mov):
+        elif re.search(self.starwars, mov):
             catagory = "StarWars"
-        elif self.super_heros.search(mov):
+        elif re.search(self.super_heros, mov):
             catagory = "SuperHeros"
-        elif self.the_rock.search(mov):
+        elif re.search(self.the_rock, mov):
             catagory = "TheRock"
-        elif self.tinker_bell.search(mov):
+        elif re.search(self.tinker_bell, mov):
             catagory = "TinkerBell"
-        elif self.tom_cruize.search(mov):
+        elif re.search(self.tom_cruize, mov):
             catagory = "TomCruize"
-        elif self.transformers.search(mov):
+        elif re.search(self.transformers, mov):
             catagory = "Transformers"
-        elif self.tremors.search(mov):
+        elif re.search(self.tremors, mov):
             catagory = "Tremors"
-        elif self.xmen.search(mov):
-            catagory = "XMen"
-                                 
+        elif re.search(self.xmen, mov):
+            catagory = "XMen"           
         return catagory
 
     def get_http_thumb_path(self, mov):

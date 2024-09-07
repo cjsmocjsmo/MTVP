@@ -22,8 +22,6 @@ class ProcessImages:
         new_start = start - 1
         return img[:new_start]
 
-        
-
     def get_thumb_path(self, img):
         new_dir = os.getenv("MTV_THUMBNAIL_PATH")
         fname = os.path.split(img)[1]
@@ -39,10 +37,8 @@ class ProcessImages:
         file_stat = os.stat(img)
         return file_stat.st_size
 
-
     def process(self):
         idx = 0
-
         for img in self.imglist:
             idx += 1
             media_info = {
@@ -54,7 +50,7 @@ class ProcessImages:
                 "Idx": idx,
                 "HttpThumbPath": self.get_http_thumb_path(img),
             }
-            print(img)
+            print(media_info)
 
 
 
