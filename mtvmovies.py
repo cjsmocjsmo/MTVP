@@ -6,7 +6,7 @@ import re
 
 class ProcessMovies:
     def __init__(self, movs):
-        self.self.movlist = movs
+        self.movlist = movs
         self.action = re.compile("Action")
         self.chuck_norris = re.compile("ChuckNorris")
         self.arnold = re.compile("Arnold")
