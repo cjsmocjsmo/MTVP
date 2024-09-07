@@ -198,9 +198,9 @@ class ProcessTVShows:
         idx = 0
         for tv in self.tvlist:
             idx += 1
-            seaspi = self.get_season_episode
-            season = seaspi[0]
-            episode = seaspi[1]
+            seaepi = self.get_season_episode(tv)
+            season = seaepi[0]
+            episode = seaepi[1]
             media_info = {
                 "TvId": self.get_tvid(tv),
                 "Size": self.get_size(tv),
