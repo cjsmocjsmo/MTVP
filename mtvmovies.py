@@ -3,6 +3,7 @@
 import hashlib
 import os
 import re
+from pprint import pprint
 
 class ProcessMovies:
     def __init__(self, movs):
@@ -179,5 +180,5 @@ class ProcessMovies:
                 "Catagory": self.get_catagory(mov),
                 "HttpThumbPath": self.get_http_thumb_path(mov),
             }
-            print(mov)
+            pprint(media_info)
 
