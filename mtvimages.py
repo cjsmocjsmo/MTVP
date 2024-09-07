@@ -92,11 +92,12 @@ class ProcessImages:
                     media_info["Idx"], 
                     media_info["HttpThumbPath"]
                 ))
+                conn.commit()
+                conn.close()
             except sqlite3.IntegrityError:
                 print(f'this is bad{img}')
 
-            conn.commit()
-            conn.close()
+            
 
             
 

@@ -188,21 +188,24 @@ class ProcessMovies:
             cursor = conn.cursor()
 
             # Insert media_info into the movies table
-            cursor.execute('''
-                INSERT INTO movies (Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                media_info["Year"],
-                media_info["PosterAddr"],
-                media_info["Size"],
-                media_info["Path"],
-                media_info["Idx"],
-                media_info["MovId"],
-                media_info["Catagory"],
-                media_info["HttpThumbPath"]
-            ))
+            try:
+                cursor.execute('''
+                    INSERT INTO movies (Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    media_info["Year"],
+                    media_info["PosterAddr"],
+                    media_info["Size"],
+                    media_info["Path"],
+                    media_info["Idx"],
+                    media_info["MovId"],
+                    media_info["Catagory"],
+                    media_info["HttpThumbPath"]
+                ))
 
-            # Commit the changes and close the connection
-            conn.commit()
-            conn.close()
+                # Commit the changes and close the connection
+                conn.commit()
+                conn.close()
+            except sqlite3.IntegrityError:
+                print(f"Error: {mov}")
 
