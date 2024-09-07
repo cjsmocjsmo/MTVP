@@ -68,24 +68,24 @@ class ProcessImages:
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
             print(media_info)
-            db_path = os.getenv("MTV_DATABASE_PATH")
-            conn = sqlite3.connect(db_path)
-            c = conn.cursor()
-            c.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                media_info["ImgId"], 
-                media_info["Path"], 
-                media_info["Path"], 
-                media_info["Size"], 
-                media_info["Name"], 
-                media_info["ThumbPath"], 
-                media_info["Idx"], 
-                media_info["HttpThumbPath"]
-            ))
+            # db_path = os.getenv("MTV_DATABASE_PATH")
+            # conn = sqlite3.connect(db_path)
+            # c = conn.cursor()
+            # c.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
+            #             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            # ''', (
+            #     media_info["ImgId"], 
+            #     media_info["Path"], 
+            #     media_info["Path"], 
+            #     media_info["Size"], 
+            #     media_info["Name"], 
+            #     media_info["ThumbPath"], 
+            #     media_info["Idx"], 
+            #     media_info["HttpThumbPath"]
+            # ))
 
-            conn.commit()
-            conn.close()
+            # conn.commit()
+            # conn.close()
 
             
 
