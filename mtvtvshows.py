@@ -177,6 +177,7 @@ class ProcessTVShows:
         return catagory
 
     def get_name(self, tv):
+        tv = os.path.split(tv)[1]
         tvu = tv.upper()
         print(tvu)
         match = re.search(self.episea, tvu)
