@@ -52,11 +52,12 @@ class ProcessMovies:
     def get_year(self, mov):
         searchstr = re.compile("\(")
         match = re.search(searchstr, mov)
-        start = match.start()
-        end = match.end()
-        new_start = start + 1
-        new_end = end - 1
-        return mov[new_start:new_end]
+        if match:
+            new_start = match.start() + 1
+            new_end = match.end() - 1
+            return mov[new_start:new_end]
+        else:
+            print(f"\n\nWTF Year not found in {mov}")
 
     def get_poster(self, mov):
         return os.path.splitext(mov)[0] + ".jpg"
