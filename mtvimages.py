@@ -79,18 +79,21 @@ class ProcessImages:
             db_path = os.getenv("MTV_DB_PATH")
             conn = sqlite3.connect(db_path)
             c = conn.cursor()
-            c.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                media_info["ImgId"], 
-                media_info["Path"], 
-                media_info["Path"], 
-                media_info["Size"], 
-                media_info["Name"], 
-                media_info["ThumbPath"], 
-                media_info["Idx"], 
-                media_info["HttpThumbPath"]
-            ))
+            try:
+                c.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    media_info["ImgId"], 
+                    media_info["Path"], 
+                    media_info["Path"], 
+                    media_info["Size"], 
+                    media_info["Name"], 
+                    media_info["ThumbPath"], 
+                    media_info["Idx"], 
+                    media_info["HttpThumbPath"]
+                ))
+            except sqlite3.IntegrityError:
+                print(f'this is bad{img}')
 
             conn.commit()
             conn.close()
