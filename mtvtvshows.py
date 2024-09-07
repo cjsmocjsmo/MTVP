@@ -57,7 +57,7 @@ class ProcessTVShows:
         self.loki = re.compile("Loki")
         self.secretinvasion = re.compile("SecretInvasion")
         self.wandavision = re.compile("WandaVision")
-        self.episea = re.compile("^S\d{2}E\d{2}$")
+        self.episea = re.compile("^S\d{2}E\d{2}")
 
     def get_tvid(self, tv):
         encoded_string = tv.encode('utf-8')
