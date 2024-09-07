@@ -4,6 +4,7 @@ import argparse
 import mtvmovies
 import mtvtvshows
 import mtvimages
+import mtvtables
 import os
 from pprint import pprint
 import subprocess
@@ -23,6 +24,7 @@ def main():
     args = parser.parse_args()
 
     arch = utils.get_arch()
+    mtvtables.CreateTables.create_tables()
 
     if args.install:
 
