@@ -211,4 +211,4 @@ class ProcessTVShows:
                 "Path": tv,
                 "Idx": idx,
             }
-            print(tv)
+            print(media_info)
