@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import mtvmovies
 import os
 import subprocess
 import utils
@@ -21,12 +22,13 @@ def main():
     arch = utils.get_arch()
 
     if args.install:
-        movies = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-        for m in movies:
-            print(m)
+
+        movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
+        mtvmovies.ProcessMovies(movs).process()
+
         tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-        for t in tvshows:
-            print(t)
+        mtvtvshows = mtvtvshows.ProcessTVShows(tvshows).process()
+        
     elif args.update:
         pass
     elif args.delete:
