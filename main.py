@@ -32,7 +32,7 @@ def main():
         # tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
         # mtvtvshows.ProcessTVShows(tvshows).process()
 
-        images = utils.img_walk_dirs(os.getenv("MTV_IMAGES_PATH"))
+        images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
         pprint(images)
         # mtvimages.ProcessImages(images).process()
 

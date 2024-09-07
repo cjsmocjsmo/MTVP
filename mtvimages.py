@@ -37,7 +37,7 @@ class ProcessImages:
         file_stat = os.stat(img)
         return file_stat.st_size
 
-    def process(self, imglist):
+    def process(self):
         idx = 0
         for img in self.imglist:
             idx += 1

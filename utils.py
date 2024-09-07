@@ -21,9 +21,9 @@ def mtv_walk_dirs(directory):
             medialist.append(fname)
     return medialist
 
-def img_walk_dirs(directory):
+def img_walk_dirs(dir):
     medialist = []
-    for root, dirs, files in os.walk(directory):
+    for root, dirs, files in os.walk(dir):
         for file in files:
             fname = os.path.join(root, file)
             ext = os.path.splitext(fname)[1]
