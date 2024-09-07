@@ -57,6 +57,7 @@ class ProcessTVShows:
         self.loki = re.compile(" Loki")
         self.secretinvasion = re.compile(" SecretInvasion")
         self.wandavision = re.compile(" WandaVision")
+        self.episea = re.compile("^S\d{2}E\d{2}$")
 
     def get_tvid(self, tv):
         encoded_string = tv.encode('utf-8')
@@ -171,27 +172,36 @@ class ProcessTVShows:
         return catagory
 
     def get_name(self, tv):
-        pass
+        searchstr = re.compile("^S\d{2}E\d{2}$")
+        match = re.search(searchstr, tv)
+        start, end = match.span()
+        new_start = start - 1
+        return tv[:new_start]
 
-    def get_season(self, tv):
-        pass
-
-    def get_episode(self, tv):
-        pass
-
+    def get_season_episode(self, tv):
+        tvu = tv.upper()
+        searchstr = re.compile("^S\d{2}E\d{2}$")
+        match = re.search(searchstr, tvu)
+        start, end = match.span()
+        SE = tv[start:end]
+        season = SE[1:3]
+        episode = SE[4:6]
+        return season, episode
     
 
     def process(self):
         idx = 0
         for tv in self.tvlist:
             idx += 1
+            season, episode = self.get_season_episode
             media_info = {
                 "TvId": self.get_tvid(tv),
                 "Size": os.getsize(tv),
                 "Catagory": self.get_catagory(tv),
-                "Name": ,
-                "Season": ,
-                "Episode": ,
+                "Name": self.get_name(tv),
+                "Season": season,
+                "Episode": episode,
                 "Path": tv,
                 "Idx": idx,
             }
+            print(tv)

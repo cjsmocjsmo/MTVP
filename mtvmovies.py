@@ -50,7 +50,12 @@ class ProcessMovies:
         self.xmen = re.compile("XMen")
 
     def get_year(self, mov):
-        pass
+        searchstr = re.compile("\(")
+        match = re.search(searchstr, mov)
+        start, end = match.span()
+        new_start = start + 1
+        new_end = end - 1
+        return mov[new_start:new_end]
 
     def get_poster(self, mov):
         return os.path.splitext(mov)[0] + ".jpg"
@@ -159,7 +164,7 @@ class ProcessMovies:
         for mov in self.movlist:
             idx += 1
             media_info = {
-                "Year": ,
+                "Year": self.get_year(mov),
                 "PosterAddr": self.get_poster(mov),
                 "Size": os.getsize(mov),
                 "Path": mov,
