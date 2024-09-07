@@ -174,7 +174,7 @@ class ProcessTVShows:
     def get_name(self, tv):
         searchstr = re.compile("^S\d{2}E\d{2}$")
         match = re.search(searchstr, tv)
-        start, end = match.span()
+        start = match.start()
         new_start = start - 1
         return tv[:new_start]
 
@@ -182,7 +182,8 @@ class ProcessTVShows:
         tvu = tv.upper()
         searchstr = re.compile("^S\d{2}E\d{2}$")
         match = re.search(searchstr, tvu)
-        start, end = match.span()
+        start = match.start()
+        end = match.end()
         SE = tv[start:end]
         season = SE[1:3]
         episode = SE[4:6]
