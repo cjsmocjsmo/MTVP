@@ -12,13 +12,15 @@ def get_arch():
         return "64"
     
 def mtv_walk_dirs(directory):
-    re_mov = re.compile(r"Movies", re.IGNORECASE)
-    re_tv = re.compile(r"TVShows", re.IGNORECASE)
+    # re_mov = re.compile(r"Movies", re.IGNORECASE)
+    # re_tv = re.compile(r"TVShows", re.IGNORECASE)
     medialist = []
     for root, dirs, files in os.walk(directory):
         for file in files:
             fname = os.path.join(root, file)
-            medialist.append(fname)
+            ext = os.path.splitext(fname)[1]
+            if ext == ".mp4":
+                medialist.append(fname)
     return medialist
 
 def img_walk_dirs(dir):
