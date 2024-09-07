@@ -23,8 +23,8 @@ class ProcessImages:
             start = match.start()
             print(f"Start: {start}")
             new_start = start + 1
-
-            return img[new_start:]
+            print(img[:new_start])
+            return img[:new_start]
         else:
             print("No match")
 
