@@ -174,7 +174,6 @@ class ProcessTVShows:
             catagory = "SecretInvasion"
         elif re.search(self.wandavision, tv):
             catagory = "WandaVision"
-        print(f"\n\nCatagory: {catagory}")
         return catagory
 
     def get_name(self, tv):
@@ -182,7 +181,11 @@ class ProcessTVShows:
         match = re.search(searchstr, tv)
         if match:
             start = match.start()
+            print(f"Start: {start}")
             new_start = start - 1
+            print(f"New Start: {new_start}")
+            print(tv[:new_start])
+            print(tv[new_start:])
             return tv[:new_start]
 
     def get_season(self, tv):
