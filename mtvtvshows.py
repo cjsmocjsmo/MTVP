@@ -249,7 +249,8 @@ class ProcessTVShows:
                     media_info["Idx"]
                 ))
                 conn.commit()
-                conn.close()
+                
             except sqlite3.IntegrityError:
                 print(f"Error: {tv}")
                 continue
+            conn.close()

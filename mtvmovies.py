@@ -206,7 +206,7 @@ class ProcessMovies:
 
                 # Commit the changes and close the connection
                 conn.commit()
-                conn.close()
+                
             except sqlite3.IntegrityError:
                 print(f"Error: {mov}")
-
+            conn.close()
