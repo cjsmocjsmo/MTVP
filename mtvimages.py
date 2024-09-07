@@ -22,9 +22,9 @@ class ProcessImages:
         if match:
             start = match.start()
             print(f"Start: {start}")
-            new_start = start + 1
-            print(img[:new_start])
-            return img[:new_start]
+            # new_start = start + 1
+            # print(img[:new_start])
+            return img[:start]
         else:
             print("No match")
 
