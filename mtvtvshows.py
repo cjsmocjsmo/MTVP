@@ -185,8 +185,8 @@ class ProcessTVShows:
             print(f"Start: {start}")
             new_start = start - 1
             print(f"New Start: {new_start}")
-            print(tv[:new_start])
-            print(tv[new_start:])
+            print(f"test1 {tv[:new_start]}")
+            print(f"test2 {tv[new_start:]}")
             return tv[:new_start]
         else:
             print("No match")
@@ -198,7 +198,7 @@ class ProcessTVShows:
             start = match.start()
             end = match.end()
             SE = tv[start:end]
-            season = SE[1:3]
+            season = SE[2:4]
             print(f"Season: {season}")
             return season
         
@@ -209,7 +209,7 @@ class ProcessTVShows:
             start = match.start()
             end = match.end()
             SE = tv[start:end]
-            episode = SE[4:6]
+            episode = SE[5:7]
             print(f"Episode: {episode}")
             return episode
     
