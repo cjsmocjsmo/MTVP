@@ -184,7 +184,8 @@ class ProcessMovies:
             }
             
             # Connect to the database
-            conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+            conn = sqlite3.connect(os.getenv("MTV_DB_PATH", timeout=0))
+            conn.execute("PRAGMA journal_mode=WAL")
             cursor = conn.cursor()
 
             # Insert media_info into the movies table
