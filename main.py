@@ -2,6 +2,7 @@
 
 import argparse
 import mtvmovies
+import mtvtvshows
 import os
 import subprocess
 import utils
@@ -27,8 +28,8 @@ def main():
         mtvmovies.ProcessMovies(movs).process()
 
         tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-        mtvtvshows = mtvtvshows.ProcessTVShows(tvshows).process()
-        
+        mtvtvshows.ProcessTVShows(tvshows).process()
+
     elif args.update:
         pass
     elif args.delete:
