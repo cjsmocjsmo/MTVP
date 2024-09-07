@@ -72,7 +72,7 @@ class ProcessMovies:
 
     def get_catagory(self, mov):
         catagory = ""
-        if re.search(self.Action, mov):
+        if re.search(self.action, mov):
             catagory = "Action"
         elif re.search(self.arnold, mov):
             catagory = "Arnold"
