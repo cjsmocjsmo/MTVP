@@ -158,6 +158,10 @@ class ProcessMovies:
         server_addr = os.getenv("MTV_SERVER_ADDR")
         server_port = os.getenv("MTV_SERVER_PORT")
         return f"http://{server_addr}:{server_port}/thumbnails/{fname}"
+    
+    def get_size(self, mov):
+        file_stat = os.stat(mov)
+        return file_stat.st_size
 
     def process(self):
         idx = 0
@@ -166,7 +170,7 @@ class ProcessMovies:
             media_info = {
                 "Year": self.get_year(mov),
                 "PosterAddr": self.get_poster(mov),
-                "Size": os.getsize(mov),
+                "Size": self.get_size(mov),
                 "Path": mov,
                 "Idx": idx,
                 "MovId": self.get_mov_id(mov),

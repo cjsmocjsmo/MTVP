@@ -188,6 +188,10 @@ class ProcessTVShows:
         episode = SE[4:6]
         return season, episode
     
+    def get_size(self, tv):
+        file_stat = os.stat(tv)
+        return file_stat.st_size
+    
 
     def process(self):
         idx = 0
@@ -196,7 +200,7 @@ class ProcessTVShows:
             season, episode = self.get_season_episode
             media_info = {
                 "TvId": self.get_tvid(tv),
-                "Size": os.getsize(tv),
+                "Size": self.get_size(tv),
                 "Catagory": self.get_catagory(tv),
                 "Name": self.get_name(tv),
                 "Season": season,

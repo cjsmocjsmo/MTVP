@@ -34,6 +34,10 @@ class ProcessImages:
         server_addr = os.getenv("MTV_SERVER_ADDR")
         server_port = os.getenv("MTV_SERVER_PORT")
         return f"http://{server_addr}:{server_port}/thumbnails/{fname}"
+    
+    def get_size(self, img):
+        file_stat = os.stat(img)
+        return file_stat.st_size
 
 
     def process(self):
@@ -43,7 +47,7 @@ class ProcessImages:
             idx += 1
             media_info = {
                 "ImgId": self.get_img_id(img),
-                "Size": os.getsize(img),
+                "Size": self.get_size(img),
                 "Name": self.get_name(img),
                 "ThumbPath": self.get_thumb_path(img),
                 "Path": img,
