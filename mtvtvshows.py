@@ -221,6 +221,8 @@ class ProcessTVShows:
         idx = 0
         for tv in self.tvlist:
             idx += 1
+            print(self.get_name(tv))
+            
             
             media_info = {
                 "TvId": self.get_tvid(tv),
