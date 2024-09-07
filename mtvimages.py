@@ -12,7 +12,7 @@ class ProcessImages:
         self.search = re.compile("\s\(")
 
     def thumb_dir_check(self):
-        img_dir = os.getenv("MTV_POSTER_PATH")
+        img_dir = os.getenv("MTV_THUMBNAIL_PATH")
         if not os.path.exists(img_dir):
             subprocess.run(["mkdir", img_dir])
             print(f"Created directory")
