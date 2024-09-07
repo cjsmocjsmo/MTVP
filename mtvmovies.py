@@ -60,7 +60,7 @@ class ProcessMovies:
         if match1:
             start = match1.start() + 1
         if match2:
-            end = match2.start() - 1
+            end = match2.start()
         return mov[start:end]
 
     def get_poster(self, mov):
