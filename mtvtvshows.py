@@ -178,7 +178,7 @@ class ProcessTVShows:
         new_start = start - 1
         return tv[:new_start]
 
-    def get_season_episode(self, tv):
+    def get_season(self, tv):
         tvu = tv.upper()
         searchstr = re.compile("^S\d{2}E\d{2}$")
         match = re.search(searchstr, tvu)
@@ -187,9 +187,20 @@ class ProcessTVShows:
             end = match.end()
             SE = tv[start:end]
             season = SE[1:3]
+            print(f"Season: {season}")
+            return season
+        
+    def get_episode(self, tv):
+        tvu = tv.upper()
+        searchstr = re.compile("^S\d{2}E\d{2}$")
+        match = re.search(searchstr, tvu)
+        if match:
+            start = match.start()
+            end = match.end()
+            SE = tv[start:end]
             episode = SE[4:6]
-            print(f"Season: {season} Episode: {episode}")
-            return (season, episode)
+            print(f"Episode: {episode}")
+            return episode
     
     def get_size(self, tv):
         file_stat = os.stat(tv)
@@ -200,16 +211,14 @@ class ProcessTVShows:
         idx = 0
         for tv in self.tvlist:
             idx += 1
-            seaepi = self.get_season_episode(tv)
-            season = seaepi[0]
-            episode = seaepi[1]
+            
             media_info = {
                 "TvId": self.get_tvid(tv),
                 "Size": self.get_size(tv),
                 "Catagory": self.get_catagory(tv),
                 "Name": self.get_name(tv),
-                "Season": season,
-                "Episode": episode,
+                "Season": self.get_season(tv),
+                "Episode": self.get_episode(tv),
                 "Path": tv,
                 "Idx": idx,
             }
