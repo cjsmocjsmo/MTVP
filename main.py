@@ -5,6 +5,7 @@ import mtvmovies
 import mtvtvshows
 import mtvimages
 import os
+from pprint import pprint
 import subprocess
 import utils
 from dotenv import load_dotenv
@@ -32,7 +33,8 @@ def main():
         # mtvtvshows.ProcessTVShows(tvshows).process()
 
         images = utils.img_walk_dirs(os.getenv("MTV_IMAGES_PATH"))
-        mtvimages.ProcessImages(images).process()
+        pprint(images)
+        # mtvimages.ProcessImages(images).process()
 
     elif args.update:
         pass
