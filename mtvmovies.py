@@ -7,7 +7,9 @@ from pprint import pprint
 import sqlite3
 
 class ProcessMovies:
-    def __init__(self, movs):
+    def __init__(self, movs, conn, cursor):
+        self.conn = conn
+        self.cursor = cursor
         self.movlist = movs
         self.action = re.compile("Action")
         self.chuck_norris = re.compile("ChuckNorris")
@@ -51,6 +53,7 @@ class ProcessMovies:
         self.tremors = re.compile("Tremors")
         self.xmen = re.compile("XMen")
         self.crap = re.compile("\s\(")
+        
 
     def get_year(self, mov):
         searchstr1 = re.compile("\(")
@@ -196,14 +199,9 @@ class ProcessMovies:
             }
             # pprint(media_info)
             
-            # Connect to the database
-            conn = sqlite3.connect(os.getenv("MTV_DB_PATH"), timeout=30)
-            conn.execute("PRAGMA journal_mode=WAL")
-            cursor = conn.cursor()
-
             # Insert media_info into the movies table
             try:
-                cursor.execute('''
+                self.cursor.execute('''
                     INSERT INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
@@ -219,8 +217,9 @@ class ProcessMovies:
                 ))
 
                 # Commit the changes and close the connection
-                conn.commit()
+                self.conn.commit()
                 
             except sqlite3.IntegrityError as e:
                 print(f"Error: {e}")
-            conn.close()
+            except sqlite3.OperationalError as e:
+                print(f"Error: {e}")

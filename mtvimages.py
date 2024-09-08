@@ -8,7 +8,9 @@ import subprocess
 import sqlite3
 
 class ProcessImages:
-    def __init__(self, imgs):
+    def __init__(self, imgs, conn, cursor):
+        self.conn = conn
+        self.cursor = cursor
         self.imglist = imgs
         self.search = re.compile("\s\(")
 
@@ -76,12 +78,9 @@ class ProcessImages:
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
             
-            db_path = os.getenv("MTV_DB_PATH")
-            conn = sqlite3.connect(db_path, timeout=30)
-            conn.execute("PRAGMA journal_mode=WAL")
-            c = conn.cursor()
+            
             try:
-                c.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
+                self.cursor.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
                     media_info["ImgId"], 
@@ -93,12 +92,12 @@ class ProcessImages:
                     media_info["Idx"], 
                     media_info["HttpThumbPath"]
                 ))
-                conn.commit()
+                self.conn.commit()
                 
-            except sqlite3.IntegrityError:
-                print(f'this is bad{img}')
-
-            conn.close()
+            except sqlite3.IntegrityError as e:
+                print(f'Error: {e}')
+            except sqlite3.OperationalError as e:
+                print(f"Error: {e}")
 
             
 

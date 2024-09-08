@@ -8,7 +8,9 @@ import sqlite3
 
 
 class ProcessTVShows:
-    def __init__(self, tvshows):
+    def __init__(self, tvshows, conn, cursor):
+        self.conn = conn
+        self.cursor = cursor
         self.tvlist = tvshows
         self.alteredcarbon = re.compile("AlteredCarbon")
         self.forallmankind = re.compile("ForAllManKind")
@@ -233,10 +235,7 @@ class ProcessTVShows:
             pprint(media_info)
 
             try:
-                conn = sqlite3.connect(os.getenv("MTV_DB_PATH"), timeout=30)
-                conn.execute("PRAGMA journal_mode=WAL")
-                cursor = conn.cursor()
-                cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
+                self.cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
                     media_info["TvId"],
@@ -248,9 +247,11 @@ class ProcessTVShows:
                     media_info["Path"],
                     media_info["Idx"]
                 ))
-                conn.commit()
+                self.conn.commit()
                 
-            except sqlite3.IntegrityError:
-                print(f"Error: {tv}")
+            except sqlite3.IntegrityError as e:
+                print(f"Error: {e}")
                 continue
-            conn.close()
+            except sqlite3.OperationalError as e:
+                print(f"Error: {e}")
+                continue

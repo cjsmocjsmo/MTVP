@@ -7,7 +7,7 @@ import mtvimages
 import mtvtables
 import os
 from pprint import pprint
-import subprocess
+import sqlite3
 import utils
 from dotenv import load_dotenv
 
@@ -26,16 +26,23 @@ def main():
     arch = utils.get_arch()
     mtvtables.CreateTables().create_tables()
 
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+
     if args.install:
+        try:
+            movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
+            mtvmovies.ProcessMovies(movs, conn, cursor).process()
 
-        movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-        mtvmovies.ProcessMovies(movs).process()
+            tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
+            mtvtvshows.ProcessTVShows(tvshows, conn, cursor).process()
 
-        tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-        mtvtvshows.ProcessTVShows(tvshows).process()
-
-        images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
-        mtvimages.ProcessImages(images).process()
+            images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
+            mtvimages.ProcessImages(images, conn, cursor).process()
+        except sqlite3.OperationError as e:
+            print(e)
+        finally:
+            conn.close()
 
     elif args.update:
         pass
