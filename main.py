@@ -29,15 +29,13 @@ def main():
     if args.install:
 
         movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-        for m in movs:
-            print(f"this is m: {m}")
         mtvmovies.ProcessMovies(movs).process()
 
-        # tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-        # mtvtvshows.ProcessTVShows(tvshows).process()
+        tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
+        mtvtvshows.ProcessTVShows(tvshows).process()
 
-        # images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
-        # mtvimages.ProcessImages(images).process()
+        images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
+        mtvimages.ProcessImages(images).process()
 
     elif args.update:
         pass
