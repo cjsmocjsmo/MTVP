@@ -6,6 +6,7 @@ from PIL import Image
 import re
 import subprocess
 import sqlite3
+from pprint import pprint
 
 class ProcessImages:
     def __init__(self, imgs, conn, cursor):
@@ -77,7 +78,7 @@ class ProcessImages:
                 "Idx": idx,
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
-            
+            pprint(media_info)
             
             try:
                 self.cursor.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)

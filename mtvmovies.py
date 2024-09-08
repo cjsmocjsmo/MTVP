@@ -184,10 +184,8 @@ class ProcessMovies:
         idx = 0
         for mov in self.movlist:
             idx += 1
-            name = self.get_name(mov)
-            print(name)
             media_info = {
-                "Name": name,
+                "Name": self.get_name(mov),
                 "Year": self.get_year(mov),
                 "PosterAddr": self.get_poster(mov),
                 "Size": self.get_size(mov),
@@ -197,7 +195,7 @@ class ProcessMovies:
                 "Catagory": self.get_catagory(mov),
                 "HttpThumbPath": self.get_http_thumb_path(mov),
             }
-            # pprint(media_info)
+            pprint(media_info)
             
             # Insert media_info into the movies table
             try:
