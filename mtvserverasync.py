@@ -14,6 +14,8 @@ player = instance.media_player_new()
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
+MTVMEDIA = mtvserverutils.Media()
+
 # async def handle_message(websocket, path):
 async def handle_message(websocket):
     try:
@@ -40,40 +42,43 @@ async def handle_message(websocket):
                 player.stop()
                 await websocket.send(json.dumps({"status": "stopped"}))
 
+            elif command == "test":
+                await websocket.send(json.dumps({"status": "Fuck it worked"}))
+
             elif command == "action":
-                action_data = mtvserverutils.Media().action()
+                action_data = MTVMEDIA.action()
                 await websocket.send(json.dumps(action_data))
 
             elif command == "arnold":
-                arnold_data = mtvserverutils.Media().arnold()
+                arnold_data = MTVMEDIA.arnold()
                 await websocket.send(json.dumps(arnold_data))
 
             elif command == "brucelee":
-                brucelee_data = mtvserverutils.Media().brucelee()
+                brucelee_data = MTVMEDIA.brucelee()
                 await websocket.send(json.dumps(brucelee_data))
 
             elif command == "brucewillis":
-                brucewillis_data = mtvserverutils.Media().brucewillis()
+                brucewillis_data = MTVMEDIA.brucewillis()
                 await websocket.send(json.dumps(brucewillis_data))
 
             elif command == "buzz":
-                buzz_data = mtvserverutils.Media().buzz()
+                buzz_data = MTVMEDIA.buzz()
                 await websocket.send(json.dumps(buzz_data))
 
             elif command == "cartoons":
-                cartoons_data = mtvserverutils.Media().cartoons()
+                cartoons_data = MTVMEDIA.cartoons()
                 await websocket.send(json.dumps(cartoons_data))
 
             elif command == "charliebrown":
-                charliebrown_data = mtvserverutils.Media().charliebrown()
+                charliebrown_data = MTVMEDIA.charliebrown()
                 await websocket.send(json.dumps(charliebrown_data))
 
             elif command == "comedy":
-                comedy_data = mtvserverutils.Media().comedy()
+                comedy_data = MTVMEDIA.comedy()
                 await websocket.send(json.dumps(comedy_data))
 
             elif command == "chucknorris":
-                chucknorris_data = mtvserverutils.Media().chucknorris()
+                chucknorris_data = MTVMEDIA.chucknorris()
                 await websocket.send(json.dumps(chucknorris_data))         
  
 
