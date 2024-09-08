@@ -181,8 +181,10 @@ class ProcessMovies:
         idx = 0
         for mov in self.movlist:
             idx += 1
+            name = self.get_name(mov)
+            print(name)
             media_info = {
-                "Name": self.get_name(mov),
+                "Name": name,
                 "Year": self.get_year(mov),
                 "PosterAddr": self.get_poster(mov),
                 "Size": self.get_size(mov),
@@ -192,7 +194,7 @@ class ProcessMovies:
                 "Catagory": self.get_catagory(mov),
                 "HttpThumbPath": self.get_http_thumb_path(mov),
             }
-            pprint(media_info)
+            # pprint(media_info)
             
             # Connect to the database
             conn = sqlite3.connect(os.getenv("MTV_DB_PATH"), timeout=30)
