@@ -9,37 +9,37 @@ class Media:
         self.cursor = self.conn.cursor()
 
     def action(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='Action'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Action'")
         return self.cursor.fetchall()
     
     def arnold(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='Arnold'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Arnold'")
         return self.cursor.fetchall()
     
     def brucelee(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='BruceLee'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='BruceLee'")
         return self.cursor.fetchall()
     
     def brucewillis(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='BruceWillis'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='BruceWillis'")
         return self.cursor.fetchall()
     
     def buzz(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='Buzz'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Buzz'")
         return self.cursor.fetchall()
     
     def cartoons(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='Cartoons'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Cartoons'")
         return self.cursor.fetchall()
     
     def charliebrown(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='CharlieBrown'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='CharlieBrown'")
         return self.cursor.fetchall()
     
     def comedy(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='Comedy'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Comedy'")
         return self.cursor.fetchall()
     
     def chucknorris(self):
-        self.cursor.execute("SELECT * FROM media WHERE catagory='ChuckNorris'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='ChuckNorris'")
         return self.cursor.fetchall()
