@@ -6,6 +6,7 @@ import json
 import json
 import logging
 import mtvserverutils
+from dotenv import load_dotenv
 
 # Initialize VLC player
 instance = vlc.Instance()
@@ -92,4 +93,5 @@ async def main():
         await asyncio.Future()  # Run forever
 
 if __name__ == "__main__":
+    load_dotenv()
     asyncio.run(main())
