@@ -8,6 +8,7 @@ import logging
 import mtvserverutils
 from dotenv import load_dotenv
 
+load_dotenv()
 # Initialize VLC player
 instance = vlc.Instance()
 player = instance.media_player_new()
@@ -93,5 +94,4 @@ async def main():
         await asyncio.Future()  # Run forever
 
 if __name__ == "__main__":
-    load_dotenv()
     asyncio.run(main())
