@@ -18,7 +18,13 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print("WebSocket opened")
 
     def on_message(self, message):
-        if message == "pause":
+        if message == "add":
+            # Add a song to the playlist
+            print("Song added")
+        elif message == "play":
+            # Start playback
+            print("Playback started")
+        elif message == "pause":
             # Pause playback
             print("Playback paused")
         elif message == "stop":
