@@ -204,9 +204,10 @@ class ProcessMovies:
             # Insert media_info into the movies table
             try:
                 cursor.execute('''
-                    INSERT INTO movies (Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (
+                    media_info["Name"],
                     media_info["Year"],
                     media_info["PosterAddr"],
                     media_info["Size"],
