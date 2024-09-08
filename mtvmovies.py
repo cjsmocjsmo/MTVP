@@ -50,6 +50,7 @@ class ProcessMovies:
         self.transformers = re.compile("Transformers")
         self.tremors = re.compile("Tremors")
         self.xmen = re.compile("XMen")
+        self.crap = re.compile("\s\(")
 
     def get_year(self, mov):
         searchstr1 = re.compile("\(")
@@ -167,12 +168,21 @@ class ProcessMovies:
     def get_size(self, mov):
         file_stat = os.stat(mov)
         return file_stat.st_size
+    
+    def get_name(self, mov):
+        fname = os.path.split(mov)[1]
+        match = re.search(self.crap, fname)
+        if match:
+            start = match.start()
+            return fname[:start]
+
 
     def process(self):
         idx = 0
         for mov in self.movlist:
             idx += 1
             media_info = {
+                "Name": self.get_name(mov),
                 "Year": self.get_year(mov),
                 "PosterAddr": self.get_poster(mov),
                 "Size": self.get_size(mov),

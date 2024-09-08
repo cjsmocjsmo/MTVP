@@ -187,7 +187,7 @@ class ProcessTVShows:
             start = match.start()
             print(f"Start: {start}")
             new_start = start + 1
-            return tv[0:new_start]
+            return tv[:new_start]
         else:
             print("No match")
 
