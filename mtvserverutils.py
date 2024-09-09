@@ -10,7 +10,8 @@ class Media:
 
     def action(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Action'")
-        return self.cursor.fetchall()
+        return self._fetch_all_as_dict()
+
     
     def arnold(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Arnold'")
