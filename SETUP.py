@@ -23,7 +23,6 @@ def setup():
             subprocess.run([
                 'docker', 
                 'run', 
-                '-t mtvthumbsnginx', 
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
                 '-d',
@@ -34,7 +33,6 @@ def setup():
             subprocess.run([
                 'docker', 
                 'run', 
-                '-t mtvthumbsnginx', 
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
                 '-d',
