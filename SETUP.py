@@ -19,11 +19,11 @@ def setup():
 
     if args.install:
         main.Main().main()
-        if arch == 32:
+        if arch == '32':
             subprocess.run([
                 'docker', 
                 'run', 
-                '--name mtv-thumbs-nginx', 
+                '-t mtvthumbsnginx', 
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
                 '-d',
@@ -34,7 +34,7 @@ def setup():
             subprocess.run([
                 'docker', 
                 'run', 
-                '--name mtv-thumbs-nginx', 
+                '-t mtvthumbsnginx', 
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
                 '-d',
