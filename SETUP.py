@@ -79,6 +79,7 @@ def setup():
                 'build',
                 '-t',
                 'mtv64:0.0.1',
+                '.'
             ])
             subprocess.run([
                 'docker',
