@@ -1,18 +1,18 @@
 FROM arm32v7/debian:bookworm
 
-RUN sudo apt update && \
-    sudo apt dist-upgrade -y && \
-    sudo apt autoclean -y && \
-    sudo apt autoremove -y
+RUN apt update && \
+    apt dist-upgrade -y && \
+    apt autoclean -y && \
+    apt autoremove -y
     
-RUN sudo apt install -y sqlite3 \
+RUN apt install -y sqlite3 \
         python3-vlc \
         python3-PIL \
         python3-dotenv \
         python3-websockets
 
-RUN sudo mkdir /usr/share/MTV && \
-    sudo chmod -R 755 /usr/share/MTV
+RUN mkdir /usr/share/MTV && \
+    chmod -R 755 /usr/share/MTV
 
 COPY .env /usr/share/MTV/
 COPY main.py /usr/share/MTV/
