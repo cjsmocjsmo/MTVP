@@ -1,0 +1,28 @@
+FROM debian:bookworm
+
+RUN \
+    sudo apt update && \\
+    sudo apt dist-upgrade -y && \\
+    sudo apt autoclean && \\
+    sudo apt autoremove && \\
+    sudo apt install -y sqlite3 \\
+        python3-vlc \\
+        python3-PIL \\
+        python3-dotenv \\
+        python3-websockets && \\
+    mkdir /usr/share/MTV
+
+COPY .env /usr/share/MTV/
+COPY main.py /usr/share/MTV/
+COPY mtvimages.py /usr/share/MTV/
+COPY mtvmovies.py /usr/share/MTV/
+COPY mtvserver.py /usr/share/MTV/
+COPY mtvserverasync.py /usr/share/MTV/
+COPY mtvserverutils.py /usr/share/MTV/
+COPY mtvtables.py /usr/share/MTV/
+COPY mtvshows.py /usr/share/MTV/
+COPY utils.py /usr/share/MTV/
+
+EXPOSE 9999
+
+CMD ["/usr/bin/python3", "/usr/share/MTV/main.py"]
