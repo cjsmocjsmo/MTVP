@@ -26,7 +26,8 @@ def setup():
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
                 '-d',
-                "-p 9999:80",
+                "-p",
+                "9999:80",
                 'arm32v7/nginx:bookworm'
             ])
         elif arch == '64':
@@ -36,7 +37,8 @@ def setup():
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
                 '-d',
-                "-p 9999:80",
+                "-p",
+                "9999:80",
                 'nginx:bookworm'
             ])
         print(type(arch))
