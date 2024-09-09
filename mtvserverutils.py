@@ -8,6 +8,11 @@ class Media:
         self.conn = sqlite3.connect(os.getenv('MTV_DB_PATH'))
         self.cursor = self.conn.cursor()
 
+    def _fetch_all_as_dict(self):
+        columns = [column[0] for column in self.cursor.description]
+        return [dict(zip(columns, row)) for row in self.cursor.fetchall()]
+
+
     def action(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Action'")
         return self._fetch_all_as_dict()
