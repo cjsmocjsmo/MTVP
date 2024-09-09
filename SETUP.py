@@ -21,6 +21,8 @@ def setup():
     
     if args.install:
         main.Main().main()
+        crap = "/".join((CWD + "Dockerfile"))
+        subprocess.run(["rm", crap])
         if arch == '32':
             subprocess.run([
                 'docker', 
@@ -35,7 +37,8 @@ def setup():
             old = "/".join((CWD, "mtv_docker_32_file"))
             new = "/".join((CWD, "/Dockerfile"))
             subprocess.run([
-                "mv", 
+                "cp",
+                "-pvr", 
                 old, 
                 new
             ])
@@ -59,12 +62,6 @@ def setup():
         elif arch == '64':
             subprocess.run([
                 'docker', 
-                'build',
-                '-t',
-                'mtv64:0.0.1',
-            ])
-            subprocess.run([
-                'docker', 
                 'run', 
                 '-v', 
                 '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
@@ -75,7 +72,13 @@ def setup():
             ])
             old = "/".join((CWD, "mtv_docker_64_file"))
             new = "/".join((CWD, "/Dockerfile"))
-            subprocess.run(["mv", old, new])
+            subprocess.run(["cp", "-pvr", old, new])
+            subprocess.run([
+                'docker', 
+                'build',
+                '-t',
+                'mtv64:0.0.1',
+            ])
             subprocess.run([
                 'docker',
                 'run',
