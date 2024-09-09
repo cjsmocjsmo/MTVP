@@ -15,6 +15,7 @@ def setup():
     args = parser.parse_args()
 
     arch = utils.get_arch()
+    
 
     if args.install:
         main.Main().main()
@@ -29,7 +30,7 @@ def setup():
                 "-p 9999:80",
                 'arm32v7/nginx:bookworm'
             ])
-        elif arch == 64:
+        elif arch == '64':
             subprocess.run([
                 'docker', 
                 'run', 
@@ -40,11 +41,12 @@ def setup():
                 "-p 9999:80",
                 'nginx:bookworm'
             ])
+        print(type(arch))
         
 
     elif args.update:
         pass
-    elif args.delete:
+    elif args.delete:   
         pass
 
 
