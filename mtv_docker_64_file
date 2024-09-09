@@ -1,10 +1,9 @@
 FROM debian:bookworm
 
-RUN \
-    sudo apt update && \
+RUN sudo apt update && \
     sudo apt dist-upgrade -y && \
-    sudo apt autoclean && \
-    sudo apt autoremove && \
+    sudo apt autoclean -y && \
+    sudo apt autoremove -y && \
     sudo apt install -y sqlite3 \
         python3-vlc \
         python3-PIL \
