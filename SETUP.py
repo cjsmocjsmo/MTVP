@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 import argparse
 import main
+import os
 import subprocess
 from pprint import pprint
 from dotenv import load_dotenv
 import utils
+
+CWD = os.getcwd()
 
 def setup():
     parser = argparse.ArgumentParser(description="CLI for Rusic music server.")
@@ -16,7 +19,6 @@ def setup():
 
     arch = utils.get_arch()
     
-
     if args.install:
         main.Main().main()
         if arch == '32':
@@ -30,6 +32,24 @@ def setup():
                 "9999:80",
                 'arm32v7/nginx:bookworm'
             ])
+            old = "/".join((CWD, "mtv_docker_32_file"))
+            new = "/".join((CWD, "/Dockerfile"))
+            subprocess.run([
+                "mv", 
+                old, 
+                new
+            ])
+            subprocess.run([
+                'docker',
+                'run',
+                '-v',
+                '/usr/share/MTV/mtv.db:/usr/share/MTV/mtv.db:ro',
+                '-d',
+                '-p',
+                '8080:8080',
+                "."
+            ])
+
         elif arch == '64':
             subprocess.run([
                 'docker', 
@@ -41,6 +61,20 @@ def setup():
                 "9999:80",
                 'nginx:bookworm'
             ])
+            old = "/".join((CWD, "mtv_docker_64_file"))
+            new = "/".join((CWD, "/Dockerfile"))
+            subprocess.run(["mv", old, new])
+            subprocess.run([
+                'docker',
+                'run',
+                '-v',
+                '/usr/share/MTV/mtv.db:/usr/share/MTV/mtv.db:ro',
+                '-d',
+                '-p',
+                '8080:8080',
+                "."
+            ])
+
         print(type(arch))
         
 
