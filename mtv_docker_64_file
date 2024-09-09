@@ -19,7 +19,7 @@ COPY mtvserver.py /usr/share/MTV/
 COPY mtvserverasync.py /usr/share/MTV/
 COPY mtvserverutils.py /usr/share/MTV/
 COPY mtvtables.py /usr/share/MTV/
-COPY mtvshows.py /usr/share/MTV/
+COPY mtvtvshows.py /usr/share/MTV/
 COPY utils.py /usr/share/MTV/
 
 EXPOSE 9999

@@ -21,7 +21,7 @@ def setup():
     
     if args.install:
         main.Main().main()
-        crap = "/".join((CWD + "Dockerfile"))
+        crap = "/".join((CWD, "Dockerfile"))
         subprocess.run(["rm", crap])
         if arch == '32':
             subprocess.run([
