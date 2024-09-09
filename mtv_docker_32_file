@@ -9,7 +9,9 @@ RUN sudo apt update && \
         python3-PIL \
         python3-dotenv \
         python3-websockets && \
-    mkdir /usr/share/MTV
+    sudo mkdir /usr/share/MTV && \
+    sudo chown -R $USER:$USER /usr/share/MTV && \
+    sudo chmod -R 755 /usr/share/MTV
 
 COPY .env /usr/share/MTV/
 COPY main.py /usr/share/MTV/
