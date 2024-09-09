@@ -40,6 +40,12 @@ def setup():
                 new
             ])
             subprocess.run([
+                "docker", 
+                "build", 
+                "-t", 
+                "mtv32:0.0.1", "."
+            ])
+            subprocess.run([
                 'docker',
                 'run',
                 '-v',
@@ -47,10 +53,16 @@ def setup():
                 '-d',
                 '-p',
                 '8080:8080',
-                "."
+                "mtv32:0.0.1"
             ])
 
         elif arch == '64':
+            subprocess.run([
+                'docker', 
+                'build',
+                '-t',
+                'mtv64:0.0.1',
+            ])
             subprocess.run([
                 'docker', 
                 'run', 
