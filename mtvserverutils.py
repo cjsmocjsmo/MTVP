@@ -14,168 +14,168 @@ class Media:
 
 
     def action(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Action'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Action' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     
     def arnold(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Arnold'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Arnold' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def brucelee(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='BruceLee'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='BruceLee' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def brucewillis(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='BruceWillis'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='BruceWillis' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def buzz(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Buzz'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Buzz' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def cartoons(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Cartoons'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Cartoons' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def charliebrown(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='CharlieBrown'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='CharlieBrown' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def comedy(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Comedy'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Comedy' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def chucknorris(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='ChuckNorris'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='ChuckNorris' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def documentary(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Documentary'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Documentary' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def drama(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Drama'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Drama' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def fantasy(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Fantasy'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Fantasy' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def ghostbusters(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='GhostBusters'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='GhostBusters' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def godzilla(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Godzilla'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Godzilla' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def harrypotter(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='HarryPotter'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='HarryPotter' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def indianajones(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='IndianaJones'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='IndianaJones' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def jamesbond(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='JamesBond'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='JamesBond' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def johnwayne(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='JohnWayne'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='JohnWayne' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def johnwick(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='JohnWick'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='JohnWick' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def jurassicpark(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='JurassicPark'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='JurassicPark' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def kevincostner(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='KevinCostner'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='KevinCostner' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def kingsmen(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Kingsmen'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Kingsmen' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def meninblack(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='MenInBlack'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='MenInBlack' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def minions(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Minions'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Minions' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def misc(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Misc'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Misc' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def nicolascage(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='NicolasCage'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='NicolasCage' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def oldies(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Oldies'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Oldies' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def panda(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Panda'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Panda' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def pirates(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Pirates'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Pirates' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def riddick(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Riddick'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Riddick' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def scifi(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='SciFi'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='SciFi' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def stalone(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Stalone'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Stalone' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def startrek(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='StarTrek'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='StarTrek' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def starwars(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='StarWars'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='StarWars' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def superheros(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='SuperHeros'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='SuperHeros' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def therock(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='TheRock'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='TheRock' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def tinkerbell(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='TinkerBell'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='TinkerBell' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def tremors(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Tremors'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Tremors' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def tomcruize(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='TomCruize'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='TomCruize' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def transformers(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Transformers'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Transformers' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def xmen(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='XMen'")
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='XMen' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def alteredcarbon(self, mediaid):
