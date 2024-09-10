@@ -166,7 +166,7 @@ class ProcessMovies:
         fname = os.path.split(mov)[1]
         server_addr = os.getenv("MTV_SERVER_ADDR")
         server_port = "9999"
-        return f"{server_addr}:{server_port}/{fn}"
+        return f"{server_addr}:{server_port}/{fname}"
     
     def get_size(self, mov):
         file_stat = os.stat(mov)
