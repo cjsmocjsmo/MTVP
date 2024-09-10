@@ -48,8 +48,8 @@ def setup():
                 "-v",
                 "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
                 "-p",
-                "9999:80"
-                "arm32v7/debian:bookworm"
+                "9999:80",
+                "arm32v7/nginx:bookworm"
             ])
         elif utils.get_arch() == "64":
             subprocess.run([
@@ -59,8 +59,8 @@ def setup():
                 "-v",
                 "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
                 "-p",
-                "9999:80"
-                "debian:bookworm"
+                "9999:80",
+                "nginx:bookworm"
             ])
         
         import mtvserverasync
