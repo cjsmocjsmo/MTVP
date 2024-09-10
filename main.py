@@ -29,7 +29,7 @@ class Main:
 
             images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
             mtvimages.ProcessImages(images, self.conn, self.cursor).process()
-        except sqlite3.OperationError as e:
+        except sqlite3.OperationalError as e:
             print(e)
         finally:
             self.conn.close()
