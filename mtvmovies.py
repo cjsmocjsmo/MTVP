@@ -165,8 +165,8 @@ class ProcessMovies:
     def get_http_thumb_path(self, mov):
         fname = os.path.split(mov)[1]
         server_addr = os.getenv("MTV_SERVER_ADDR")
-        server_port = os.getenv("MTV_SERVER_PORT")
-        return f"http://{server_addr}:{server_port}/thumbnails/{fname}"
+        server_port = "9999"
+        return f"http://{server_addr}:{server_port}/{fname}"
     
     def get_size(self, mov):
         file_stat = os.stat(mov)

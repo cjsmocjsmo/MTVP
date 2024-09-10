@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-
-def get_arch():
-    if os.uname().machine == "armv7l":
-        return "32"
-    elif os.uname().machine == "aarch64":
-        return "64"
-    elif os.uname().machine == "x86_64":
-        return "64"
+import subprocess
     
 def mtv_walk_dirs(directory):
     medialist = []
@@ -29,3 +22,45 @@ def img_walk_dirs(dir):
             if ext == ".jpg":
                 jpglist.append(fname)
     return jpglist
+
+def sqlite3_check():
+    subprocess.run(["dpkg", "-l", "|", "grep", "sqlite3"])
+    if subprocess.run(["$?"], shell=True) == 0:
+        return True
+    else:
+        return False
+
+def vlc_check():
+    subprocess.run(["dpkg", "-l", "|", "grep", "vlc"])
+    if subprocess.run(["$?"], shell=True) == 0:
+        return True
+    else:
+        return False
+    
+def python3_vlc_check():
+    subprocess.run(["dpkg", "-l", "|", "grep", "python3-vlc"])
+    if subprocess.run(["$?"], shell=True) == 0:
+        return True
+    else:
+        return False
+    
+def python3_pil_check():
+    subprocess.run(["dpkg", "-l", "|", "grep", "python3-pil"])
+    if subprocess.run(["$?"], shell=True) == 0:
+        return True
+    else:
+        return False
+    
+def python3_dotenv_check():
+    subprocess.run(["dpkg", "-l", "|", "grep", "python3-dotenv"])
+    if subprocess.run(["$?"], shell=True) == 0:
+        return True
+    else:
+        return False
+
+def python3_websockets_check():
+    subprocess.run(["dpkg", "-l", "|", "grep", "python3-websockets"])
+    if subprocess.run(["$?"], shell=True) == 0:
+        return True
+    else:
+        return False

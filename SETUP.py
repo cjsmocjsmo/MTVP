@@ -16,83 +16,25 @@ def setup():
     parser.add_argument("-d", "--delete", action="store_true", help="Delete the program")
 
     args = parser.parse_args()
-
-    arch = utils.get_arch()
     
     if args.install:
+        if not utils.sqlite3_check():
+            subprocess.run(["sudo", "apt-get", "-y", "install", "sqlite3"])
+        if not utils.vlc_check():
+            subprocess.run(["sudo", "apt-get", "-y", "install", "vlc"])
+        if not utils.python3_vlc_check():
+            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-vlc"])
+        if not utils.python3_pil_check():
+            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-pil"])
+        if not utils.python3_dotenv_check():
+            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-dotenv"])
+        if not utils.python3_websockets_check():
+            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-websockets"])
+        
         main.Main().main()
-        crap = "/".join((CWD, "Dockerfile"))
-        if os.path.exists(crap):
-            subprocess.run(["rm", crap])
-        if arch == '32':
-            subprocess.run([
-                'docker', 
-                'run', 
-                '-v', 
-                '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
-                '-d',
-                "-p",
-                "9999:80",
-                'arm32v7/nginx:bookworm'
-            ])
-            old = "/".join((CWD, "mtv_docker_32_file"))
-            new = "/".join((CWD, "/Dockerfile"))
-            subprocess.run([
-                "cp",
-                "-pvr", 
-                old, 
-                new
-            ])
-            subprocess.run([
-                "docker", 
-                "build", 
-                "-t", 
-                "mtv32:0.0.1", "."
-            ])
-            subprocess.run([
-                'docker',
-                'run',
-                '-v',
-                '/usr/share/MTV/mtv.db:/usr/share/MTV/mtv.db:ro',
-                '-d',
-                '-p',
-                '8080:8080',
-                "mtv32:0.0.1"
-            ])
-
-        elif arch == '64':
-            subprocess.run([
-                'docker', 
-                'run', 
-                '-v', 
-                '/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro', 
-                '-d',
-                "-p",
-                "9999:80",
-                'nginx:bookworm'
-            ])
-            old = "/".join((CWD, "mtv_docker_64_file"))
-            new = "/".join((CWD, "/Dockerfile"))
-            subprocess.run(["cp", "-pvr", old, new])
-            subprocess.run([
-                'docker', 
-                'build',
-                '-t',
-                'mtv64:0.0.1',
-                '.'
-            ])
-            subprocess.run([
-                'docker',
-                'run',
-                '-v',
-                '/usr/share/MTV/mtv.db:/usr/share/MTV/mtv.db:ro',
-                '-d',
-                '-p',
-                '8080:8080',
-                "."
-            ])
-
-        print(type(arch))
+        
+        run_path = f"{CWD}/main.py"
+        subprocess.run(["python3", run_path])
         
 
     elif args.update:
