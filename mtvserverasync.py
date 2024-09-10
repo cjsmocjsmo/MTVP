@@ -514,9 +514,9 @@ async def handle_message(websocket):
         logging.error(f"Exception in handle_message: {e}")
     finally:
         logging.info("WebSocket connection closed")
-async def main():
+async def servermain():
     async with websockets.serve(handle_message, "192.168.0.113", 8765):
         await asyncio.Future()  # Run forever
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(servermain())

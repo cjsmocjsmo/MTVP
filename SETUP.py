@@ -24,7 +24,7 @@ def setup():
         print(f"utils.python3_pil_check(): {utils.python3_pil_check()}")
         print(f"utils.python3_dotenv_check(): {utils.python3_dotenv_check()}")
         print(f"utils.python3_websockets_check(): {utils.python3_websockets_check()}")
-        
+
         if not utils.sqlite3_check():
             subprocess.run(["sudo", "apt-get", "-y", "install", "sqlite3"])
         if not utils.vlc_check():
@@ -40,8 +40,8 @@ def setup():
         
         main.Main().main()
         
-        run_path = f"{CWD}/main.py"
-        subprocess.run(["python3", run_path])
+        import mtvserverasync
+        mtvserverasync.servermain()
         
 
     elif args.update:
