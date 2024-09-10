@@ -24,42 +24,42 @@ def img_walk_dirs(dir):
     return jpglist
 
 def sqlite3_check():
-    subprocess.run(["dpkg", "-l", "|", "grep", "sqlite3"])
+    subprocess.run(["apt-cache", "policy", "sqlite3"])
     if subprocess.run(["$?"], shell=True) == 0:
         return True
     else:
         return False
 
 def vlc_check():
-    subprocess.run(["dpkg", "-l", "|", "grep", "vlc"])
+    subprocess.run(["apt-cache", "policy", "vlc"])
     if subprocess.run(["$?"], shell=True) == 0:
         return True
     else:
         return False
     
 def python3_vlc_check():
-    subprocess.run(["dpkg", "-l", "|", "grep", "python3-vlc"])
+    subprocess.run(["apt-cache", "policy", "python3-vlc"])
     if subprocess.run(["$?"], shell=True) == 0:
         return True
     else:
         return False
     
 def python3_pil_check():
-    subprocess.run(["dpkg", "-l", "|", "grep", "python3-pil"])
+    subprocess.run(["apt-cache", "policy", "python3-pil"])
     if subprocess.run(["$?"], shell=True) == 0:
         return True
     else:
         return False
     
 def python3_dotenv_check():
-    subprocess.run(["dpkg", "-l", "|", "grep", "python3-dotenv"])
+    subprocess.run(["apt-cache", "policy", "python3-dotenv"])
     if subprocess.run(["$?"], shell=True) == 0:
         return True
     else:
         return False
 
 def python3_websockets_check():
-    subprocess.run(["dpkg", "-l", "|", "grep", "python3-websockets"])
+    subprocess.run(["apt-cache", "policy", "python3-websockets"])
     if subprocess.run(["$?"], shell=True) == 0:
         return True
     else:
