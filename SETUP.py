@@ -6,6 +6,7 @@ import subprocess
 from pprint import pprint
 from dotenv import load_dotenv
 import utils
+import asyncio
 
 CWD = os.getcwd()
 
@@ -41,7 +42,7 @@ def setup():
         main.Main().main()
         
         import mtvserverasync
-        mtvserverasync.servermain()
+        asyncio.run(mtvserverasync.servermain())
         
 
     elif args.update:
