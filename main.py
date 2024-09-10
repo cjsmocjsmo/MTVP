@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import mtvmovies
 import mtvtvshows
 import mtvimages
@@ -16,8 +15,6 @@ class Main:
     def __init__(self):
         self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
-        self.arch = utils.get_arch()
-    
 
     def main(self):
     
