@@ -18,6 +18,13 @@ def setup():
     args = parser.parse_args()
     
     if args.install:
+        print(f"utils.sqlite3_check(): {utils.sqlite3_check()}")
+        print(f"utils.vlc_check(): {utils.vlc_check()}")
+        print(f"utils.python3_vlc_check(): {utils.python3_vlc_check()}")
+        print(f"utils.python3_pil_check(): {utils.python3_pil_check()}")
+        print(f"utils.python3_dotenv_check(): {utils.python3_dotenv_check()}")
+        print(f"utils.python3_websockets_check(): {utils.python3_websockets_check()}")
+        
         if not utils.sqlite3_check():
             subprocess.run(["sudo", "apt-get", "-y", "install", "sqlite3"])
         if not utils.vlc_check():
