@@ -164,7 +164,6 @@ class ProcessMovies:
 
     def get_http_thumb_path(self, mov):
         fname = os.path.split(mov)[1]
-        fn = os.path.splitext(fname)[0] + ".jpg"
         server_addr = os.getenv("MTV_SERVER_ADDR")
         server_port = "9999"
         return f"{server_addr}:{server_port}/{fn}"
@@ -185,16 +184,17 @@ class ProcessMovies:
         idx = 0
         for mov in self.movlist:
             idx += 1
+            poster = self.get_poster(mov)
             media_info = {
                 "Name": self.get_name(mov),
                 "Year": self.get_year(mov),
-                "PosterAddr": self.get_poster(mov),
+                "PosterAddr": poster,
                 "Size": self.get_size(mov),
                 "Path": mov,
                 "Idx": idx,
                 "MovId": self.get_mov_id(mov),
                 "Catagory": self.get_catagory(mov),
-                "HttpThumbPath": self.get_http_thumb_path(mov),
+                "HttpThumbPath": self.get_http_thumb_path(poster),
             }
             pprint(media_info)
             
