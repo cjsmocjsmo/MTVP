@@ -40,6 +40,28 @@ def setup():
             subprocess.run(["sudo", "apt-get", "-y", "install", "python3-websockets"])
         
         main.Main().main()
+        if utils.get_arch() == "32":
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9999:80"
+                "arm32v7/debian:bookworm"
+            ])
+        elif utils.get_arch() == "64":
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9999:80"
+                "debian:bookworm"
+            ])
         
         import mtvserverasync
         asyncio.run(mtvserverasync.servermain())
