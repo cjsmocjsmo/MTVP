@@ -36,7 +36,7 @@ class CreateTables:
         
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS images (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ImgId TEXT NOT NULL UNIQUE,
+            ImgId TEXT NOT NULL,
             Path TEXT NOT NULL,
             ImgPath TEXT NOT NULL,
             Size TEXT NOT NULL,
