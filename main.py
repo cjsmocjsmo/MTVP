@@ -21,14 +21,15 @@ class Main:
         try:
             mtvtables.CreateTables().create_tables()
 
-            movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-            mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
-
             tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
             mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
 
             images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
             mtvimages.ProcessImages(images, self.conn, self.cursor).process()
+
+            movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
+            mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
+
         except sqlite3.OperationalError as e:
             print(e)
         finally:
