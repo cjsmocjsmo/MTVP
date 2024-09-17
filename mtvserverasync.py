@@ -6,16 +6,29 @@ import json
 import logging
 import mtvserverutils
 from dotenv import load_dotenv
+import sqlite3
+import os
 
-load_dotenv()
+
 # Initialize VLC player
 instance = vlc.Instance()
 player = instance.media_player_new()
 
-# Configure logging
+load_dotenv()
+
 logging.basicConfig(level=logging.INFO)
 
 MTVMEDIA = mtvserverutils.Media()
+
+async def get_media_path_from_media_id(media_id):
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM movies WHERE MovId = ?", (media_id,))
+    media_path = cursor.fetchone()[0]
+    print(f"Media path:\n{media_path}")
+    conn.close()
+    return media_path
+
 
 # async def handle_message(websocket, path):
 async def handle_message(websocket):
@@ -25,8 +38,10 @@ async def handle_message(websocket):
             command = data.get("command")
             
             if command == "set_media":
-                media_path = data.get("media_path")
-                if media_path:
+                media_id = data.get("media_id")
+                if media_id:
+                    media_path = await get_media_path_from_media_id(media_id)
+                    print(f"Starting mediaplayer with the path:\n{media_path}")
                     player.set_media(vlc.Media(media_path))
                     player.set_fullscreen(True)
                     await websocket.send(json.dumps({"status": "media_set"}))
