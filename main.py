@@ -8,6 +8,7 @@ import os
 from pprint import pprint
 import sqlite3
 import utils
+from dotenv import load_dotenv
 
 CWD = os.getcwd()
 
@@ -36,5 +37,9 @@ class Main:
             self.conn.close()
 
 if __name__ == "__main__":
+    try:
+        load_dotenv()
+    except Exception as e:
+        print(f"Error: {e}")
     m = Main()
     m.main()
