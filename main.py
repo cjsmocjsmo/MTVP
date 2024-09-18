@@ -14,9 +14,10 @@ CWD = os.getcwd()
 
 class Main:
     def __init__(self):
+        load_dotenv()
         self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
-        load_dotenv()
+        
 
     def main(self):
     
