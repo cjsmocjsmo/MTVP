@@ -149,6 +149,10 @@ async def handle_message(websocket):
                 kingsmen_data = MTVMEDIA.kingsman()
                 await websocket.send(json.dumps(kingsmen_data))
 
+            elif command == "lego":
+                lego_data = MTVMEDIA.lego()
+                await websocket.send(json.dumps(lego_data))
+
             elif command == "meninblack":
                 meninblack_data = MTVMEDIA.meninblack()
                 await websocket.send(json.dumps(meninblack_data))

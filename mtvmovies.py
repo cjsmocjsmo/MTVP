@@ -33,6 +33,7 @@ class ProcessMovies:
         self.jurassic_park = re.compile("JurassicPark")
         self.kevin_costner = re.compile("KevinCostner")
         self.kingsman = re.compile("Kingsman")
+        self.lego = re.compile("Lego")
         self.meninblack = re.compile("MenInBlack")
         self.minions = re.compile("Minions")
         self.misc = re.compile("Misc")
@@ -122,6 +123,8 @@ class ProcessMovies:
             catagory = "KevinCostner"
         elif re.search(self.kingsman, mov):
             catagory = "Kingsman"
+        elif re.search(self.lego, mov):
+            catagory = "Lego"
         elif re.search(self.meninblack, mov):
             catagory = "MenInBlack"
         elif re.search(self.minions, mov):
