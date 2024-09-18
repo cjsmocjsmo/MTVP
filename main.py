@@ -16,6 +16,7 @@ class Main:
     def __init__(self):
         self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
+        load_dotenv()
 
     def main(self):
     
@@ -37,9 +38,5 @@ class Main:
             self.conn.close()
 
 if __name__ == "__main__":
-    try:
-        load_dotenv()
-    except Exception as e:
-        print(f"Error: {e}")
     m = Main()
     m.main()
