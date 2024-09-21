@@ -36,7 +36,7 @@ async def handle_message(websocket):
         async for message in websocket:
             data = json.loads(message)
             command = data.get("command")
-            
+
             if command == "set_media":
                 media_id = data.get("media_id")
                 if media_id:
