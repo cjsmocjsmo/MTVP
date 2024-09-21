@@ -157,7 +157,6 @@ async def handle_message(websocket):
 
             elif command == "lego":
                 lego_data = MTVMEDIA.lego()
-                print(f"lego_data: {lego_data}")
                 await websocket.send(json.dumps(lego_data))
 
             elif command == "meninblack":
