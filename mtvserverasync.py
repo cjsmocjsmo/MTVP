@@ -29,6 +29,15 @@ async def get_media_path_from_media_id(media_id):
     conn.close()
     return media_path
 
+async def get_media_path_from_media_tv_id(media_tv_id):
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Path FROM tvshows WHERE TvId = ?", (media_tv_id,))
+    media_path = cursor.fetchone()[0]
+    print(f"Media path:\n{media_path}")
+    conn.close()
+    return media_path
+
 
 # async def handle_message(websocket, path):
 async def handle_message(websocket):
@@ -41,6 +50,15 @@ async def handle_message(websocket):
                 media_id = data.get("media_id")
                 if media_id:
                     media_path = await get_media_path_from_media_id(media_id)
+                    print(f"Starting mediaplayer with the path:\n{media_path}")
+                    player.set_media(vlc.Media(media_path))
+                    player.set_fullscreen(True)
+                    await websocket.send(json.dumps({"status": "media_set"}))
+
+            elif command == "set_tv_media":
+                media_tv_id = data.get("media_tv_id")
+                if media_tv_id:
+                    media_path = await get_media_path_from_media_tv_id(media_tv_id)
                     print(f"Starting mediaplayer with the path:\n{media_path}")
                     player.set_media(vlc.Media(media_path))
                     player.set_fullscreen(True)
