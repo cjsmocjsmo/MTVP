@@ -264,7 +264,7 @@ class Media:
         return self._fetch_all_as_dict()
     
     def shogun(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+        command = f"SELECT * FROM tvshows WHERE catagory='Shogun'"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
