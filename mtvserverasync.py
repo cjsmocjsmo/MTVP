@@ -47,9 +47,7 @@ async def handle_message(websocket):
             command = data.get("command")
 
             if command == "set_media":
-                media_id = data.get("media_id")
-                if media_id:
-                    media_path = await get_media_path_from_media_id(media_id)
+                    media_path = await get_media_path_from_media_id()
                     print(f"Starting mediaplayer with the path:\n{media_path}")
                     player.set_media(vlc.Media(media_path))
                     player.set_fullscreen(True)
@@ -254,302 +252,204 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(xmen_data))
 
             elif command == "alteredcarbon":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.alteredcarbon(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.alteredcarbon()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "columbia":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.columbia(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.columbia()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "cowboybebop":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.cowboybebop(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.cowboybebop()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "fallout":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.fallout(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.fallout()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "forallmankind":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.forallmankind(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.forallmankind()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "foundation":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.foundation(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.foundation()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "fubar":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.fubar(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.fubar()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "hford1923":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.hford1923(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.hford1923()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "halo":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.halo(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.halo()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "houseofthedragon":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.houseofthedragon(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.houseofthedragon()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "lostinspace":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.lostinspace(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.lostinspace()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "mastersoftheuniverse":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.mastersoftheuniverse(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.mastersoftheuniverse()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "monarchlegacyofmonsters":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.monarchlegacyofmonsters(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.monarchlegacyofmonsters()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "nightsky":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.nightsky(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.nightsky()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "orville":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.orville(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.orville()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "prehistoricplanet":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.prehistoricplanet(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.prehistoricplanet()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "raisedbywolves":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.raisedbywolves(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.raisedbywolves()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "shogun":
                 mediainfo = MTVMEDIA.shogun()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "silo":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.silo(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.silo()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "thecontinental":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.thecontinental(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.thecontinental()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "thelastofus":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.thelastofus(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.thelastofus()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "thelordoftheringstheringsofpower":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.thelordoftheringstheringsofpower(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.thelordoftheringstheringsofpower()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "wheeloftime":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.wheeloftime(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.wheeloftime()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "discovery":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.discovery(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.discovery()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "enterprise":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.enterprise(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.enterprise()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "lowerdecks":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.lowerdecks(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.lowerdecks()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "picard":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.picard(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.picard()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "prodigy":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.prodigy(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.prodigy()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "sttv":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.sttv(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.sttv()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "strangenewworlds":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.strangenewworlds(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.strangenewworlds()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "tng":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.tng(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.tng()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "voyager":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.voyager(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.voyager()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "acolyte":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.acolyte(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.acolyte()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "ahsoka":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.ahsoka(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.ahsoka()
+                await websocket.send(json.dumps(mediainfo))
             
             elif command == "andor":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.andor(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.andor()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "bookofbobafett":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.bookofbobafett(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.bookofbobafett()
+                await websocket.send(json.dumps(mediainfo))
                 
             elif command == "mandalorian":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.mandalorian(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.mandalorian()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "obiwankenobi":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.obiwankenobi(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.obiwankenobi()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "talesoftheempire":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.talesoftheempire(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.talesoftheempire()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "talesofthejedi":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.talesofthejedi(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.talesofthejedi()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "thebadbatch":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.thebadbatch(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.thebadbatch()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "visions":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.visions(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.visions()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "falconwintersoldier":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.falconwintersoldier(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.falconwintersoldier()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "hawkeye":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.hawkeye(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.hawkeye()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "iamgroot":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.iamgroot(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.iamgroot()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "loki":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.loki(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.loki()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "moonknight":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.moonknight(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.moonknight()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "secretinvasion":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.secretinvasion(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.secretinvasion()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "shehulk":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.shehulk(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.shehulk()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "wandavision":
-                media_id = data.get("media_id")
-                if media_id:
-                    mediainfo = MTVMEDIA.wandavision(media_id)
-                    await websocket.send(json.dumps(mediainfo))
+                mediainfo = MTVMEDIA.wandavision()
+                await websocket.send(json.dumps(mediainfo))
 
     except Exception as e:
         logging.error(f"Exception in handle_message: {e}")
