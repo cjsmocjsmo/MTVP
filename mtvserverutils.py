@@ -184,247 +184,247 @@ class Media:
         return self._fetch_all_as_dict()
     
     def alteredcarbon(self):
-        command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def cowboybebop(self):
-        command = "SELECT * FROM tvshows WHERE catagory='CowboyBebop' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='CowboyBebop' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def fallout(self):
-        command = "SELECT * FROM tvshows WHERE catagory='FallOut' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='FallOut' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def forallmankind(self):
-        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def foundation(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Foundation' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Foundation' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def fubar(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Fubar' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Fubar' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def hford1923(self):
-        command = "SELECT * FROM tvshows WHERE catagory='HFord1923' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='HFord1923' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def halo(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Halo' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Halo' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def houseofthedragon(self):
-        command = "SELECT * FROM tvshows WHERE catagory='HouseOfTheDragon' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='HouseOfTheDragon' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def lostinspace(self):
-        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def mastersoftheuniverse(self):
-        command = "SELECT * FROM tvshows WHERE catagory='MastersOfTheUniverse' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='MastersOfTheUniverse' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def monarchlegacyofmonsters(self):
-        command = "SELECT * FROM tvshows WHERE catagory='MonarchLegacyOfMonsters' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='MonarchLegacyOfMonsters' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def nightsky(self):
-        command = "SELECT * FROM tvshows WHERE catagory='NightSky' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='NightSky' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def orville(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Orville' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Orville' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def prehistoricplanet(self):
-        command = "SELECT * FROM tvshows WHERE catagory='PrehistoricPlanet' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='PrehistoricPlanet' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def raisedbywolves(self):
-        command = "SELECT * FROM tvshows WHERE catagory='RaisedByWolves' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='RaisedByWolves' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def shogun(self):
-        command = f"""SELECT * FROM tvshows WHERE catagory='Shogun' ORDER by ASCEND;"""
+        command = "SELECT * FROM tvshows WHERE catagory='Shogun' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def silo(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Silo' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Silo' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def thecontinental(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheContinental' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TheContinental' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def thelastofus(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def thelordoftheringstheringsofpower(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheLordOfTheRingsTheRingsOfPower' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TheLordOfTheRingsTheRingsOfPower' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def wheeloftime(self):
-        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def discovery(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Discovery' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Discovery' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def enterprise(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Enterprise' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Enterprise' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def lowerdecks(self):
-        command = "SELECT * FROM tvshows WHERE catagory='LowerDecks' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='LowerDecks' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def picard(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Picard' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Picard' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def prodigy(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Prodigy' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Prodigy' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def sttv(self):
-        command = "SELECT * FROM tvshows WHERE catagory='STTV' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='STTV' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def strangenewworlds(self):
-        command = "SELECT * FROM tvshows WHERE catagory='StrangeNewWorlds' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='StrangeNewWorlds' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def tng(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TNG' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TNG' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def voyager(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Voyager' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Voyager' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def acolyte(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Acolyte' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Acolyte' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def ahsoka(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Ahsoka' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Ahsoka' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def andor(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Andor' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Andor' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def bookofbobafett(self):
-        command = "SELECT * FROM tvshows WHERE catagory='BookOfBobaFett' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='BookOfBobaFett' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def mandalorian(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Mandalorian' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Mandalorian' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def obiwankenobi(self):
-        command = "SELECT * FROM tvshows WHERE catagory='ObiWanKenobi' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='ObiWanKenobi' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def talesoftheempire(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheEmpire' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheEmpire' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def talesofthejedi(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheJedi' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheJedi' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def thebadbatch(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def visions(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Visions' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Visions' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def falconandthewintersoldier(self):
-        command = "SELECT * FROM tvshows WHERE catagory='FalconAndTheWinterSoldier' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='FalconAndTheWinterSoldier' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def hawkeye(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Hawkeye' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Hawkeye' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def iamgroot(self):
-        command = "SELECT * FROM tvshows WHERE catagory='IAmGroot' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='IAmGroot' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def loki(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Loki' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='Loki' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def moonknight(self):
-        command = "SELECT * FROM tvshows WHERE catagory='MoonKnight' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='MoonKnight' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def secretinvasion(self):
-        command = "SELECT * FROM tvshows WHERE catagory='SecretInvasion' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='SecretInvasion' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def shehulk(self):
-        command = "SELECT * FROM tvshows WHERE catagory='SheHulk' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='SheHulk' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
     def wandavision(self): 
-        command = "SELECT * FROM tvshows WHERE catagory='WandaVision' ORDER by ASCEND;"
+        command = "SELECT * FROM tvshows WHERE catagory='WandaVision' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
