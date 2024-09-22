@@ -183,248 +183,248 @@ class Media:
         self.cursor.execute("SELECT * FROM movies WHERE catagory='XMen' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
-    def alteredcarbon(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def alteredcarbon(self):
+        command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def cowboybebop(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def cowboybebop(self):
+        command = "SELECT * FROM tvshows WHERE catagory='CowboyBebop' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def fallout(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def fallout(self):
+        command = "SELECT * FROM tvshows WHERE catagory='FallOut' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def forallmankind(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def forallmankind(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def foundation(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def foundation(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Foundation' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def fubar(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def fubar(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Fubar' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def hfor1923(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def hford1923(self):
+        command = "SELECT * FROM tvshows WHERE catagory='HFord1923' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def halo(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def halo(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Halo' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def houseofthedragon(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def houseofthedragon(self):
+        command = "SELECT * FROM tvshows WHERE catagory='HouseOfTheDragon' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def lostinspace(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def lostinspace(self):
+        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def mastersoftheuniverse(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def mastersoftheuniverse(self):
+        command = "SELECT * FROM tvshows WHERE catagory='MastersOfTheUniverse' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def monarchlegacyofmonsters(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def monarchlegacyofmonsters(self):
+        command = "SELECT * FROM tvshows WHERE catagory='MonarchLegacyOfMonsters' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def nightsky(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def nightsky(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NightSky' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def orville(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def orville(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Orville' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def prehistoricplanet(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def prehistoricplanet(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PrehistoricPlanet' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def raisedbywolves(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def raisedbywolves(self):
+        command = "SELECT * FROM tvshows WHERE catagory='RaisedByWolves' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def shogun(self):
-        command = f"""SELECT * FROM tvshows WHERE catagory='Shogun';"""
+        command = f"""SELECT * FROM tvshows WHERE catagory='Shogun' ORDER by ASCEND;"""
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def silo(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def silo(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Silo' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def thecontinental(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def thecontinental(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheContinental' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def thelastofus(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def thelastofus(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def thelordoftheringstheringsofpower(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def thelordoftheringstheringsofpower(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheLordOfTheRingsTheRingsOfPower' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def wheeloftime(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def wheeloftime(self):
+        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def discovery(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def discovery(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Discovery' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def enterprise(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def enterprise(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Enterprise' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def lowerdecks(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def lowerdecks(self):
+        command = "SELECT * FROM tvshows WHERE catagory='LowerDecks' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def picard(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def picard(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Picard' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def prodigy(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def prodigy(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Prodigy' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def sttv(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def sttv(self):
+        command = "SELECT * FROM tvshows WHERE catagory='STTV' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def strangenewworlds(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def strangenewworlds(self):
+        command = "SELECT * FROM tvshows WHERE catagory='StrangeNewWorlds' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def tng(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def tng(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TNG' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def voyager(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def voyager(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Voyager' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def acolyte(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def acolyte(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Acolyte' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def ahsoka(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def ahsoka(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Ahsoka' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def andor(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def andor(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Andor' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def bookofbobafett(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def bookofbobafett(self):
+        command = "SELECT * FROM tvshows WHERE catagory='BookOfBobaFett' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def mandalorian(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def mandalorian(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Mandalorian' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def obiwankenobi(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def obiwankenobi(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ObiWanKenobi' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def talesoftheempire(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def talesoftheempire(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheEmpire' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def talesofthejedi(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def talesofthejedi(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheJedi' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def thebadbatch(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def thebadbatch(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def visions(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def visions(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Visions' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def falconandthewintersoldier(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def falconandthewintersoldier(self):
+        command = "SELECT * FROM tvshows WHERE catagory='FalconAndTheWinterSoldier' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def hawkeye(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def hawkeye(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Hawkeye' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def iamgroot(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def iamgroot(self):
+        command = "SELECT * FROM tvshows WHERE catagory='IAmGroot' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def loki(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def loki(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Loki' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def moonknight(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def moonknight(self):
+        command = "SELECT * FROM tvshows WHERE catagory='MoonKnight' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def secretinvasion(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def secretinvasion(self):
+        command = "SELECT * FROM tvshows WHERE catagory='SecretInvasion' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def shehulk(self, mediaid):
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def shehulk(self):
+        command = "SELECT * FROM tvshows WHERE catagory='SheHulk' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def wandavision(self, mediaid): 
-        command = f"SELECT * FROM tvshows WHERE tvid={mediaid}"
+    def wandavision(self): 
+        command = "SELECT * FROM tvshows WHERE catagory='WandaVision' ORDER by ASCEND;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
