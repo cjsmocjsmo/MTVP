@@ -49,7 +49,7 @@ async def handle_message(websocket):
             if command == "set_media":
                 media_id = data.get("media_id")
                 if media_id:
-                    media_path = await get_media_path_from_media_id()
+                    media_path = await get_media_path_from_media_id(media_id)
                     print(f"Starting mediaplayer with the path:\n{media_path}")
                     player.set_media(vlc.Media(media_path))
                     player.set_fullscreen(True)
