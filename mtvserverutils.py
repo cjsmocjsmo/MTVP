@@ -208,8 +208,8 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def fubar(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Fubar' ORDER BY Episode ASC;"
+    def fuubar(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Fuubar' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 

@@ -275,8 +275,8 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.foundation()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "fubar":
-                mediainfo = MTVMEDIA.fubar()
+            elif command == "fuubar":
+                mediainfo = MTVMEDIA.fuubar()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "hford1923":
