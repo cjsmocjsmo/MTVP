@@ -309,10 +309,20 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def wheeloftime(self):
-        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' ORDER BY Episode ASC;"
+    
+    
+    
+    def wheeloftimes1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def wheeloftimes2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+
     
     def discovery(self):
         command = "SELECT * FROM tvshows WHERE catagory='Discovery' ORDER BY Episode ASC;"
