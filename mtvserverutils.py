@@ -258,8 +258,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def prehistoricplanet(self):
-        command = "SELECT * FROM tvshows WHERE catagory='PrehistoricPlanet' ORDER BY Episode ASC;"
+    def prehistoricplanets1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PrehistoricPlanet' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def prehistoricplanets2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PrehistoricPlanet' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     

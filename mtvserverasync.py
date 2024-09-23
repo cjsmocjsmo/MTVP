@@ -317,8 +317,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.orville()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "prehistoricplanet":
-                mediainfo = MTVMEDIA.prehistoricplanet()
+            elif command == "prehistoricplanets1":
+                mediainfo = MTVMEDIA.prehistoricplanets1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "prehistoricplanets2":
+                mediainfo = MTVMEDIA.prehistoricplanets2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "raisedbywolves":
