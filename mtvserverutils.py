@@ -423,8 +423,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def loki(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Loki' ORDER BY Episode ASC;"
+    def lokis1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Loki' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def lokis2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Loki' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 

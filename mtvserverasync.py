@@ -445,8 +445,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.iamgroots2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "loki":
-                mediainfo = MTVMEDIA.loki()
+            elif command == "lokis1":
+                mediainfo = MTVMEDIA.lokis1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lokis2":
+                mediainfo = MTVMEDIA.lokis2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "moonknight":
