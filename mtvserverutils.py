@@ -223,10 +223,31 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def houseofthedragon(self):
-        command = "SELECT * FROM tvshows WHERE catagory='HouseOfTheDragon' ORDER BY Episode ASC;"
+    
+    
+    
+    
+    
+    
+    def houseofthedragon_s1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='HouseOfTheDragon' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def houseofthedragon_s2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='HouseOfTheDragon' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     def lostinspace(self):
         command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' ORDER BY Episode ASC;"
