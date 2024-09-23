@@ -403,8 +403,8 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def falconandthewintersoldier(self):
-        command = "SELECT * FROM tvshows WHERE catagory='FalconAndTheWinterSoldier' ORDER BY Episode ASC;"
+    def falconwintersoldier(self):
+        command = "SELECT * FROM tvshows WHERE catagory='FalconWinterSoldier' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
