@@ -437,8 +437,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.hawkeye()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "iamgroot":
-                mediainfo = MTVMEDIA.iamgroot()
+            elif command == "iamgroots1":
+                mediainfo = MTVMEDIA.iamgroots1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "iamgroots2":
+                mediainfo = MTVMEDIA.iamgroots2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "loki":

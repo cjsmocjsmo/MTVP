@@ -413,8 +413,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def iamgroot(self):
-        command = "SELECT * FROM tvshows WHERE catagory='IAmGroot' ORDER BY Episode ASC;"
+    def iamgroots1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='IAmGroot' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def iamgroots2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='IAmGroot' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
