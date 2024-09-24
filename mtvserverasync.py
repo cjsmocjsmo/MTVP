@@ -401,40 +401,148 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.wheeloftimes2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "discovery":
-                mediainfo = MTVMEDIA.discovery()
+            elif command == "discoverys1":
+                mediainfo = MTVMEDIA.discoverys1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "enterprise":
-                mediainfo = MTVMEDIA.enterprise()
+            elif command == "discoverys2":
+                mediainfo = MTVMEDIA.discoverys2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "lowerdecks":
-                mediainfo = MTVMEDIA.lowerdecks()
+            elif command == "discoverys3":
+                mediainfo = MTVMEDIA.discoverys3()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "picard":
-                mediainfo = MTVMEDIA.picard()
+            elif command == "discoverys4":
+                mediainfo = MTVMEDIA.discoverys4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == 'discoverys5':
+                mediainfo = MTVMEDIA.discoverys5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "enterprises1":
+                mediainfo = MTVMEDIA.enterprises1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "enterprises2":
+                mediainfo = MTVMEDIA.enterprises2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "enterprises3":
+                mediainfo = MTVMEDIA.enterprises3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "enterprises4":
+                mediainfo = MTVMEDIA.enterprises4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "enterprises5":
+                mediainfo = MTVMEDIA.enterprises5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lowerdeckss1":
+                mediainfo = MTVMEDIA.lowerdeckss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lowerdeckss2":
+                mediainfo = MTVMEDIA.lowerdeckss2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lowerdeckss3":
+                mediainfo = MTVMEDIA.lowerdeckss3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lowerdeckss4":
+                mediainfo = MTVMEDIA.lowerdeckss4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "picards1":
+                mediainfo = MTVMEDIA.picards1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "picards2":
+                mediainfo = MTVMEDIA.picards2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "prodigy":
                 mediainfo = MTVMEDIA.prodigy()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "sttv":
-                mediainfo = MTVMEDIA.sttv()
+            elif command == "sttvs1":
+                mediainfo = MTVMEDIA.sttvs1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "strangenewworlds":
-                mediainfo = MTVMEDIA.strangenewworlds()
+            elif command == "sttvs2":
+                mediainfo = MTVMEDIA.sttvs2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "tng":
-                mediainfo = MTVMEDIA.tng()
+            elif command == "sttvs3":
+                mediainfo = MTVMEDIA.sttvs3()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "voyager":
-                mediainfo = MTVMEDIA.voyager()
+            elif command == "strangenewworldss1":
+                mediainfo = MTVMEDIA.strangenewworldss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "strangenewworldss2":
+                mediainfo = MTVMEDIA.strangenewworldss2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs1":
+                mediainfo = MTVMEDIA.tngs1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs2":
+                mediainfo = MTVMEDIA.tngs2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs3":
+                mediainfo = MTVMEDIA.tngs3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs4":
+                mediainfo = MTVMEDIA.tngs4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs5":
+                mediainfo = MTVMEDIA.tngs5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs6":
+                mediainfo = MTVMEDIA.tngs6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "tngs7":
+                mediainfo = MTVMEDIA.tngs7()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers1":
+                mediainfo = MTVMEDIA.voyagers1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers2":
+                mediainfo = MTVMEDIA.voyagers2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers3":
+                mediainfo = MTVMEDIA.voyagers3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers4":
+                mediainfo = MTVMEDIA.voyagers4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers5":
+                mediainfo = MTVMEDIA.voyagers5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers6":
+                mediainfo = MTVMEDIA.voyagers6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "voyagers7":
+                mediainfo = MTVMEDIA.voyagers7()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "acolyte":
