@@ -293,8 +293,18 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def orville(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Orville' ORDER BY Episode ASC;"
+    def orvilles1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Orville' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def orvilles2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Orville' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def orvilles3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Orville' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
