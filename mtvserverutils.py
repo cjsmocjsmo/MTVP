@@ -458,7 +458,7 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def strangenewworldss2(self):
+    def strangenewworldss1(self):
         command = "SELECT * FROM tvshows WHERE catagory='StrangeNewWorlds' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
