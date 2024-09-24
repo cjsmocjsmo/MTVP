@@ -263,8 +263,18 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def lostinspace(self):
-        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' ORDER BY Episode ASC;"
+    def lostinspaces1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def lostinspaces2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def lostinspaces3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='LostInSpace' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     

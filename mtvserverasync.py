@@ -321,8 +321,16 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.houseofthedragon_s2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "lostinspace":
-                mediainfo = MTVMEDIA.lostinspace()
+            elif command == "lostinspaces1":
+                mediainfo = MTVMEDIA.lostinspaces1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lostinspaces2":
+                mediainfo = MTVMEDIA.lostinspaces2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "lostinspaces3":
+                mediainfo = MTVMEDIA.lostinspaces3()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "mastersoftheuniverse":
