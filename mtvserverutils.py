@@ -203,8 +203,23 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def forallmankind(self):
-        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' ORDER BY Episode ASC;"
+    def forallmankinds1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forallmankinds2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forallmankinds3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forallmankinds4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllMankind' AND season='04' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
