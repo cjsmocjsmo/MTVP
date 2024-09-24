@@ -194,7 +194,7 @@ class Media:
         return self._fetch_all_as_dict()
     
     def fallout(self):
-        command = "SELECT * FROM tvshows WHERE catagory='FallOut' ORDER BY Episode ASC;"
+        command = "SELECT * FROM tvshows WHERE catagory='Fallout' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
