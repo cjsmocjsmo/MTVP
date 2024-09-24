@@ -273,8 +273,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.forallmankind()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "foundation":
-                mediainfo = MTVMEDIA.foundation()
+            elif command == "foundations1":
+                mediainfo = MTVMEDIA.foundations1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "foundations2":
+                mediainfo = MTVMEDIA.foundations2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "fuubar":
@@ -285,8 +289,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.hford1923()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "halo":
-                mediainfo = MTVMEDIA.halo()
+            elif command == "halos1":
+                mediainfo = MTVMEDIA.halos1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "halos2":
+                mediainfo = MTVMEDIA.halos2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "houseofthedragons1":

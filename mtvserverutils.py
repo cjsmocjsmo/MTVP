@@ -203,8 +203,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def foundation(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Foundation' ORDER BY Episode ASC;"
+    def foundations1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Foundation' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def foundations2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Foundation' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
@@ -218,8 +223,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def halo(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Halo' ORDER BY Episode ASC;"
+    def halos1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Halo' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def halos2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Halo' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
