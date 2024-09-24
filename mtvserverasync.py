@@ -253,8 +253,12 @@ async def handle_message(websocket):
                 xmen_data = MTVMEDIA.xmen()
                 await websocket.send(json.dumps(xmen_data))
 
-            elif command == "alteredcarbon":
-                mediainfo = MTVMEDIA.alteredcarbon()
+            elif command == "alteredcarbons1":
+                mediainfo = MTVMEDIA.alteredcarbons1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "alteredcarbons2":
+                mediainfo = MTVMEDIA.alteredcarbons2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "columbia":

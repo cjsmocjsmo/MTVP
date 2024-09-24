@@ -183,8 +183,13 @@ class Media:
         self.cursor.execute("SELECT * FROM movies WHERE catagory='XMen' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
-    def alteredcarbon(self):
-        command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' ORDER BY Episode ASC;"
+    def alteredcarbons1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def alteredcarbons2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
