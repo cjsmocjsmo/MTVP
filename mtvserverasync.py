@@ -577,8 +577,16 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.talesofthejedi()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "thebadbatch":
-                mediainfo = MTVMEDIA.thebadbatch()
+            elif command == "thebadbatchs1":
+                mediainfo = MTVMEDIA.thebadbatchs1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "thebadbatchs2":
+                mediainfo = MTVMEDIA.thebadbatchs2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "thebadbatchs3":
+                mediainfo = MTVMEDIA.thebadbatchs3()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "visions":

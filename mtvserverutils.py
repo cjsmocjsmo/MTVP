@@ -578,8 +578,18 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def thebadbatch(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' ORDER BY Episode ASC;"
+    def thebadbatchs1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def thebadbatchs2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def thebadbatchs3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheBadBatch' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
