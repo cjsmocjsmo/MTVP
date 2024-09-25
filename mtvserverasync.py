@@ -561,8 +561,16 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.bookofbobafett()
                 await websocket.send(json.dumps(mediainfo))
                 
-            elif command == "mandalorian":
-                mediainfo = MTVMEDIA.mandalorian()
+            elif command == "mandalorians1":
+                mediainfo = MTVMEDIA.mandalorians1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "mandalorians2":
+                mediainfo = MTVMEDIA.mandalorians2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "mandalorians3":
+                mediainfo = MTVMEDIA.mandalorians3()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "obiwankenobi":
@@ -589,8 +597,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.thebadbatchs3()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "visions":
-                mediainfo = MTVMEDIA.visions()
+            elif command == "visionss1":
+                mediainfo = MTVMEDIA.visionss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "visionss2":
+                mediainfo = MTVMEDIA.visionss2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "falconwintersoldier":
