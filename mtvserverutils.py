@@ -603,7 +603,7 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def visionss2(self):
+    def visionss1(self):
         command = "SELECT * FROM tvshows WHERE catagory='Visions' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
