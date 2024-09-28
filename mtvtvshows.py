@@ -68,8 +68,7 @@ class ProcessTVShows:
         encoded_string = tv.encode('utf-8')
         md5_hash = hashlib.md5()
         md5_hash.update(encoded_string)
-        hash_hex = md5_hash.hexdigest()
-        return hash_hex
+        return md5_hash.hexdigest()
 
     def get_catagory(self, tv):
         catagory = ""
@@ -187,7 +186,6 @@ class ProcessTVShows:
         match = re.search(self.episea, tvu)
         if match:
             start = match.start()
-            print(f"Start: {start}")
             new_start = start + 1
             return tv[:new_start]
         else:
@@ -212,25 +210,18 @@ class ProcessTVShows:
             SE = tv[start:end]
             episode = SE[5:7]
             return episode
-    
-    def get_size(self, tv):
-        file_stat = os.stat(tv)
-        return file_stat.st_size
-    
 
     def process(self):
-        idx = 0
-        for tv in self.tvlist:
-            idx += 1
+        for idx, tv in enumerate(self.tvlist):
             media_info = {
                 "TvId": self.get_tvid(tv),
-                "Size": self.get_size(tv),
+                "Size": os.stat(tv).st_size,
                 "Catagory": self.get_catagory(tv),
                 "Name": self.get_name(tv),
                 "Season": self.get_season(tv),
                 "Episode": self.get_episode(tv),
                 "Path": tv,
-                "Idx": idx,
+                "Idx": idx+1,
             }
             pprint(media_info)
 

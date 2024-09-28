@@ -72,14 +72,14 @@ class ProcessMovies:
         return mov[start:end]
 
     def get_poster(self, mov):
-        return os.path.splitext(mov)[0] + ".jpg"
+        # return os.path.splitext(mov)[0] + ".jpg"
+        return ".".join((os.path.splitext(mov)[0], "jpg"))
 
     def get_mov_id(self, mov):
         encoded_string = mov.encode('utf-8')
         md5_hash = hashlib.md5()
         md5_hash.update(encoded_string)
-        hash_hex = md5_hash.hexdigest()
-        return hash_hex
+        return md5_hash.hexdigest()
 
     def get_catagory(self, mov):
         catagory = ""
@@ -177,10 +177,6 @@ class ProcessMovies:
         server_port = "9999"
         return f"{server_addr}:{server_port}/{fname}"
     
-    def get_size(self, mov):
-        file_stat = os.stat(mov)
-        return file_stat.st_size
-    
     def get_name(self, mov):
         fname = os.path.split(mov)[1]
         match = re.search(self.crap, fname)
@@ -188,19 +184,16 @@ class ProcessMovies:
             start = match.start()
             return fname[:start]
 
-
     def process(self):
-        idx = 0
-        for mov in self.movlist:
-            idx += 1
+        for idx, mov in enumerate(self.movlist):
             poster = self.get_poster(mov)
             media_info = {
                 "Name": self.get_name(mov),
                 "Year": self.get_year(mov),
                 "PosterAddr": poster,
-                "Size": self.get_size(mov),
+                "Size": os.stat(mov).st_size,
                 "Path": mov,
-                "Idx": idx,
+                "Idx": idx+1,
                 "MovId": self.get_mov_id(mov),
                 "Catagory": self.get_catagory(mov),
                 "HttpThumbPath": self.get_http_thumb_path(poster),

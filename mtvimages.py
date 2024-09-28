@@ -36,8 +36,7 @@ class ProcessImages:
         encoded_string = imgstr.encode('utf-8')
         md5_hash = hashlib.md5()
         md5_hash.update(encoded_string)
-        hash_hex = md5_hash.hexdigest()
-        return hash_hex
+        return md5_hash.hexdigest()
 
     def get_name(self, img):
         img = os.path.split(img)[1]
@@ -59,23 +58,17 @@ class ProcessImages:
         server_port = "9999"
         return f"{server_addr}:{server_port}/{fname}"
     
-    def get_size(self, img):
-        file_stat = os.stat(img)
-        return file_stat.st_size
-
     def process(self):
-        idx = 0
         self.thumb_dir_check()
-        for img in self.imglist:
+        for idx, img in enumerate(self.imglist):
             thumb = self.create_thumbnail(img)
-            idx += 1
             media_info = {
                 "ImgId": self.get_img_id(thumb),
-                "Size": self.get_size(thumb),
+                "Size": os.stat(thumb).st_size,
                 "Name": self.get_name(img),
                 "ThumbPath": self.get_thumb_path(thumb),
                 "Path": thumb,
-                "Idx": idx,
+                "Idx": idx+1,
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
             pprint(media_info)
@@ -100,32 +93,3 @@ class ProcessImages:
             except sqlite3.OperationalError as e:
                 print(f"Error: {e}")
 
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ImgId TEXT NOT NULL UNIQUE,
-#             Path TEXT NOT NULL,
-#             ImgPath TEXT NOT NULL,
-#             Size TEXT NOT NULL,
-#             Name TEXT NOT NULL,
-#             ThumbPath TEXT NOT NULL,
-#             Idx INTEGER NOT NULL,
-#             HttpThumbPath TEXT NOT NULL
