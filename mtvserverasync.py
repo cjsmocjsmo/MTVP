@@ -141,6 +141,10 @@ async def handle_message(websocket):
                 godzilla_data = MTVMEDIA.godzilla()
                 await websocket.send(json.dumps(godzilla_data))
 
+            elif command == "harrisonford":
+                harrisonford_data = MTVMEDIA.harrisonford()
+                await websocket.send(json.dumps(harrisonford_data))
+
             elif command == "harrypotter":
                 harrypotter_data = MTVMEDIA.harrypotter()
                 await websocket.send(json.dumps(harrypotter_data))
