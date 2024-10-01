@@ -182,6 +182,10 @@ class Media:
     def transformers(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Transformers' ORDER BY year DESC")
         return self._fetch_all_as_dict()
+
+    def vandam(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='VanDam' ORDER BY year DESC")
+        return self._fetch_all_as_dict()
     
     def xmen(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='XMen' ORDER BY year DESC")

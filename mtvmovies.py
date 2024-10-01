@@ -54,6 +54,7 @@ class ProcessMovies:
         self.tom_cruize = re.compile("TomCruize")
         self.transformers = re.compile("Transformers")
         self.tremors = re.compile("Tremors")
+        self.vandam = re.compile("VanDam")
         self.xmen = re.compile("XMen")
         self.crap = re.compile("\s\(")
         
@@ -167,6 +168,8 @@ class ProcessMovies:
             catagory = "Transformers"
         elif re.search(self.tremors, mov):
             catagory = "Tremors"
+        elif re.search(self.vandam, mov):
+            catagory = "VanDam"
         elif re.search(self.xmen, mov):
             catagory = "XMen"           
         return catagory
