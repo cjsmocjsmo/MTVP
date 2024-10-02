@@ -7,6 +7,7 @@ from pprint import pprint
 from dotenv import load_dotenv
 import utils
 import asyncio
+import mtvserverasync
 
 CWD = os.getcwd()
 
@@ -27,17 +28,24 @@ def setup():
         print(f"utils.python3_websockets_check(): {utils.python3_websockets_check()}")
 
         if not utils.sqlite3_check():
-            subprocess.run(["sudo", "apt-get", "-y", "install", "sqlite3"])
+            print("Sqlite3 is not installed. Install with:\n")
+            print("\tsudo apt-get -y install sqlite3")
+            exit()
         if not utils.vlc_check():
-            subprocess.run(["sudo", "apt-get", "-y", "install", "vlc"])
+            print("VLC is not installed. Install with:\n")
+            print("\tsudo apt-get -y install vlc")
         if not utils.python3_vlc_check():
-            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-vlc"])
+            print("Python3 VLC is not installed. Install with:\n")
+            print("\tsudo apt-get -y install python3-vlc")
         if not utils.python3_pil_check():
-            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-pil"])
+            print("Python3 PIL is not installed. Install with:\n")
+            print("\tsudo apt-get -y install python3-pil")
         if not utils.python3_dotenv_check():
-            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-dotenv"])
+            print("Python3 dotenv is not installed. Install with:\n")
+            print("\tsudo apt-get -y install python3-dotenv")
         if not utils.python3_websockets_check():
-            subprocess.run(["sudo", "apt-get", "-y", "install", "python3-websockets"])
+            print("Python3 websockets is not installed. Install with:\n")
+            print("\tsudo apt-get -y install python3-websockets")
         
         main.Main().main()
         if utils.get_arch() == "32":
@@ -62,15 +70,17 @@ def setup():
                 "9999:80",
                 "nginx:bookworm"
             ])
-        
-        import mtvserverasync
         asyncio.run(mtvserverasync.servermain())
         
 
     elif args.update:
         pass
-    elif args.delete:   
-        pass
+    elif args.delete: 
+        containers = subprocess.run(("docker", "ps", "-aq"))
+        for container in containers:
+            subprocess.run(("docker", "stop", container))
+            subprocess.run(("docker", "rm", container))
+        subprocess.run(("sudo", "rm", "-rf", "/usr/share/MTV"))
 
 
     

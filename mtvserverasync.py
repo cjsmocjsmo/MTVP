@@ -78,9 +78,13 @@ async def handle_message(websocket):
 
             elif command == "next":
                 current_time = player.get_time()
-                player.set_time(current_time + 30000)
+                player.set_time(current_time + 35000)
                 await websocket.send(json.dumps({"status": "next"}))
 
+            elif command == "previous":
+                current_time = player.get_time()
+                player.set_time(current_time - 35000)
+                await websocket.send(json.dumps({"status": "previous"}))
 
             elif command == "test":
                 await websocket.send(json.dumps({"status": "Fuck it worked"}))
