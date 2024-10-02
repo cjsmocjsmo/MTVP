@@ -82,7 +82,8 @@ class ProcessMovies:
         md5_hash.update(encoded_string)
         return md5_hash.hexdigest()
 
-    def get_catagory(self, mov):
+    def get_catagory(self, mov1):
+        mov = os.path.split(mov1)[0]
         catagory = ""
         if re.search(self.action, mov):
             catagory = "Action"
