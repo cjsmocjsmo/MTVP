@@ -32,7 +32,7 @@ def img_walk_dirs(dir):
 
 def sqlite3_check():
     sqlite3 = subprocess.run(["apt-cache", "policy", "sqlite3"])
-    if sqlite3 == 0:
+    if sqlite3.returncode == 0:
         return True
     else:
         return False
@@ -40,35 +40,35 @@ def sqlite3_check():
 
 def vlc_check():
     vlc = subprocess.run(["apt-cache", "policy", "vlc"])
-    if vlc == 0:
+    if vlc.returncode == 0:
         return True
     else:
         return False
     
 def python3_vlc_check():
     pvlc = subprocess.run(["apt-cache", "policy", "python3-vlc"])
-    if pvlc == 0:
+    if pvlc.returncode == 0:
         return True
     else:
         return False
     
 def python3_pil_check():
     pil = subprocess.run(["apt-cache", "policy", "python3-pil"])
-    if pil == 0:
+    if pil.returncode == 0:
         return True
     else:
         return False
     
 def python3_dotenv_check():
     dot = subprocess.run(["apt-cache", "policy", "python3-dotenv"])
-    if dot == 0:
+    if dot.returncode == 0:
         return True
     else:
         return False
 
 def python3_websockets_check():
     ws = subprocess.run(["apt-cache", "policy", "python3-websockets"])
-    if ws == 0:
+    if ws.returncode == 0:
         return True
     else:
         return False
