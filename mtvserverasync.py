@@ -153,6 +153,10 @@ async def handle_message(websocket):
                 harrypotter_data = MTVMEDIA.harrypotter()
                 await websocket.send(json.dumps(harrypotter_data))
 
+            elif command == "hellboy":
+                hellboy_data = MTVMEDIA.hellboy()
+                await websocket.send(json.dumps(hellboy_data))
+
             elif command == "indianajones":
                 indianajones_data = MTVMEDIA.indianajones()
                 await websocket.send(json.dumps(indianajones_data))

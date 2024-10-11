@@ -28,6 +28,7 @@ class ProcessMovies:
         self.godzilla = re.compile("Godzilla")
         self.harrison_ford = re.compile("HarrisonFord")
         self.harry_potter = re.compile("HarryPotter")
+        self.hellboy = re.compile("HellBoy")
         self.indiana_jones = re.compile("IndianaJones")
         self.james_bond = re.compile("JamesBond")
         self.john_wayne = re.compile("JohnWayne")
@@ -117,6 +118,8 @@ class ProcessMovies:
             catagory = "HarrisonFord"
         elif re.search(self.harry_potter, mov):
             catagory = "HarryPotter"
+        elif re.search(self.hellboy, mov):
+            catagory = "HellBoy"
         elif re.search(self.indiana_jones, mov):
             catagory = "IndianaJones"
         elif re.search(self.james_bond, mov):
