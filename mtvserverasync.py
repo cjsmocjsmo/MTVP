@@ -63,6 +63,12 @@ async def handle_message(websocket):
                     player.set_media(vlc.Media(media_path))
                     player.set_fullscreen(True)
                     await websocket.send(json.dumps({"status": "media_set"}))
+
+            elif command == "search":
+                phrase = data.get("phrase")
+                if pharase:
+                    search_results = MTVMEDIA.search(phrase)
+                    await websocket.send(json.dumps(search_results))
             
             elif command == "play":
                 player.play()

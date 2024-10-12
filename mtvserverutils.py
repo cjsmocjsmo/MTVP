@@ -11,13 +11,16 @@ class Media:
     def _fetch_all_as_dict(self):
         columns = [column[0] for column in self.cursor.description]
         return [dict(zip(columns, row)) for row in self.cursor.fetchall()]
-
+    
+    def search(self, search):
+        command = f"SELECT * FROM movies WHERE name LIKE '%{search}%' ORDER BY year DESC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
 
     def action(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Action' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
-    
     def arnold(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Arnold' ORDER BY year DESC")
         return self._fetch_all_as_dict()
