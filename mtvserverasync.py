@@ -66,7 +66,7 @@ async def handle_message(websocket):
 
             elif command == "search":
                 phrase = data.get("phrase")
-                if pharase:
+                if phrase:
                     search_results = MTVMEDIA.search(phrase)
                     await websocket.send(json.dumps(search_results))
             
