@@ -188,8 +188,8 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(kevincostner_data))
 
             elif command == "kingsman":
-                kingsmen_data = MTVMEDIA.kingsman()
-                await websocket.send(json.dumps(kingsmen_data))
+                kingsman_data = MTVMEDIA.kingsman()
+                await websocket.send(json.dumps(kingsman_data))
 
             elif command == "lego":
                 lego_data = MTVMEDIA.lego()

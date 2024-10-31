@@ -9,6 +9,8 @@ import utils
 import asyncio
 import mtvserverasync
 
+import docker
+
 CWD = os.getcwd()
 
 def setup():
@@ -34,18 +36,23 @@ def setup():
         if not utils.vlc_check():
             print("VLC is not installed. Install with:\n")
             print("\tsudo apt-get -y install vlc")
+            exit()
         if not utils.python3_vlc_check():
             print("Python3 VLC is not installed. Install with:\n")
             print("\tsudo apt-get -y install python3-vlc")
+            exit()
         if not utils.python3_pil_check():
             print("Python3 PIL is not installed. Install with:\n")
             print("\tsudo apt-get -y install python3-pil")
+            exit()
         if not utils.python3_dotenv_check():
             print("Python3 dotenv is not installed. Install with:\n")
             print("\tsudo apt-get -y install python3-dotenv")
+            exit()
         if not utils.python3_websockets_check():
             print("Python3 websockets is not installed. Install with:\n")
             print("\tsudo apt-get -y install python3-websockets")
+            exit()
         
         main.Main().main()
         if utils.get_arch() == "32":

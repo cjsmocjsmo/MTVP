@@ -109,8 +109,8 @@ class Media:
         self.cursor.execute("SELECT * FROM movies WHERE catagory='KevinCostner' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
-    def kingsmen(self):
-        self.cursor.execute("SELECT * FROM movies WHERE catagory='Kingsmen' ORDER BY year DESC")
+    def kingsman(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Kingsman' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
     def lego(self):
