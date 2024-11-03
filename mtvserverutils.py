@@ -443,6 +443,11 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
+    def lowerdeckss5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='LowerDecks' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
     def picards1(self):
         command = "SELECT * FROM tvshows WHERE catagory='Picard' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)

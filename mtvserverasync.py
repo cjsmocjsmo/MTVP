@@ -479,6 +479,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.lowerdeckss4()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "lowerdeckss5":
+                mediainfo = MTVMEDIA.lowerdeckss5()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "picards1":
                 mediainfo = MTVMEDIA.picards1()
                 await websocket.send(json.dumps(mediainfo))
