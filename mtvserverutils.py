@@ -348,10 +348,16 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def silo(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Silo' ORDER BY Episode ASC;"
+    def silo1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Silo' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def silo2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Silo' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     
     def thecontinental(self):
         command = "SELECT * FROM tvshows WHERE catagory='TheContinental' ORDER BY Episode ASC;"

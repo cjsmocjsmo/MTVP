@@ -399,8 +399,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.shogun()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "silo":
+            elif command == "silo1":
                 mediainfo = MTVMEDIA.silo()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "silo2":
+                mediainfo = MTVMEDIA.silo2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "thecontinental":
