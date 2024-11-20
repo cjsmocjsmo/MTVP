@@ -400,7 +400,7 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "silo1":
-                mediainfo = MTVMEDIA.silo()
+                mediainfo = MTVMEDIA.silo1()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "silo2":
