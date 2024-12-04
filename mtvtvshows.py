@@ -62,6 +62,7 @@ class ProcessTVShows:
         self.loki = re.compile("Loki")
         self.secretinvasion = re.compile("SecretInvasion")
         self.wandavision = re.compile("WandaVision")
+        self.skeletoncrew = re.compile("SkeletonCrew")
         self.episea = re.compile("\sS\d{2}E\d{2}\s")
 
     def get_tvid(self, tv):
@@ -162,6 +163,8 @@ class ProcessTVShows:
             catagory = "TalesOfTheJedi"
         elif re.search(self.visions, tv):
             catagory = "Visions"
+        elif re.search(self.skeletoncrew, tv):
+            catagory = "SkeletonCrew"
         elif re.search(self.falconwintersoldier, tv):
             catagory = "FalconWinterSoldier"
         elif re.search(self.iamgroot, tv):

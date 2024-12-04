@@ -675,6 +675,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.wandavision()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "skeletoncrew":
+                mediainfo = MTVMEDIA.skeletoncrew()
+                await websocket.send(json.dumps(mediainfo))
+
     except Exception as e:
         logging.error(f"Exception in handle_message: {e}")
     finally:
