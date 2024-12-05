@@ -205,7 +205,7 @@ class ProcessMovies:
                 "Catagory": self.get_catagory(mov),
                 "HttpThumbPath": self.get_http_thumb_path(poster),
             }
-            pprint(media_info)
+            # pprint(media_info)
             
             # Insert media_info into the movies table
             try:

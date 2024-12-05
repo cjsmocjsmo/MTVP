@@ -5,7 +5,9 @@ import os
 from pprint import pprint
 import re
 import sqlite3
+import logging
 
+logging.basicConfig(filename='/usr/share/MTV/media_info.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 class ProcessTVShows:
     def __init__(self, tvshows, conn, cursor):
@@ -226,7 +228,8 @@ class ProcessTVShows:
                 "Path": tv,
                 "Idx": idx+1,
             }
-            pprint(media_info)
+            
+            logging.info(media_info)
 
             try:
                 self.cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
