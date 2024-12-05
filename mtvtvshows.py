@@ -195,6 +195,7 @@ class ProcessTVShows:
             return tv[:new_start]
         else:
             print("No match")
+            print(tv)
 
     def get_season(self, tv):
         tvu = tv.upper()

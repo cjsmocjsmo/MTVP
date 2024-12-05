@@ -115,7 +115,6 @@ class Media:
     
     def lego(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Lego' ORDER BY year DESC")
-        print(f"lego executed")
         return self._fetch_all_as_dict()
     
     def meninblack(self):
