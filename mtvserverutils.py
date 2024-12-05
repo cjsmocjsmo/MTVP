@@ -689,3 +689,8 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def skeletoncrew(self):
+        command = "SELECT * FROM tvshows WHERE catagory='SkeletonCrew' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
