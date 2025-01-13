@@ -8,6 +8,7 @@ import mtvserverutils
 from dotenv import load_dotenv
 import sqlite3
 import os
+import utils as UTILS
 
 
 # Initialize VLC player
@@ -94,6 +95,22 @@ async def handle_message(websocket):
 
             elif command == "test":
                 await websocket.send(json.dumps({"status": "Fuck it worked"}))
+
+            elif command == "movcount":
+                mov_count = UTILS.movie_count()
+                await websocket.send(json.dumps(mov_count))
+
+            elif command == "tvcount":
+                tv_count = UTILS.tvshow_count()
+                await websocket.send(json.dumps(tv_count))
+
+            elif command == "movsizeondisk":
+                movsizeondisk = UTILS.movies_size_on_disk()
+                await websocket.send(json.dumps(movsizeondisk))
+
+            elif command == "tvsizeondisk":
+                tvsizeondisk = UTILS.tvshows_size_on_disk()
+                await websocket.send(json.dumps(tvsizeondisk))
 
             elif command == "action":
                 action_data = MTVMEDIA.action()

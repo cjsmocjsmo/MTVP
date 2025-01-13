@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import sqlite3
 
 def get_arch():
     arch =  os.uname().machine
@@ -20,6 +21,53 @@ def mtv_walk_dirs(directory):
                 medialist.append(fname)
     return medialist
 
+def movie_count():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM movies")
+    count = cursor.fetchone()[0]
+    return count
+
+def tvshow_count():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM tvshows")
+    count = cursor.fetchone()[0]
+    return count
+
+def movies_size_on_disk():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT Size FROM movies")
+    sizes = cursor.fetchall()
+    
+    size_list = [int(size[0]) for size in sizes]
+    total_movie_size = sum(size_list)
+    
+    conn.close()
+    
+    total_movie_size_gb = total_movie_size / (1024 ** 3)  # Convert bytes to gigabytes
+    
+    return total_movie_size_gb
+    _size_gb
+
+def tvshows_size_on_disk():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT Size FROM tvshows")
+    sizes = cursor.fetchall()
+    
+    size_list = [int(size[0]) for size in sizes]
+    total_tvshow_size = sum(size_list)
+    
+    conn.close()
+    
+    total_tvshow_size_gb = total_tvshow_size / (1024 ** 3)  # Convert bytes to gigabytes
+    
+    return total_tvshow_size_gb
+
 def img_walk_dirs(dir):
     jpglist = []
     for root, dirs, files in os.walk(dir):
@@ -37,7 +85,6 @@ def sqlite3_check():
     else:
         return False
     
-
 def vlc_check():
     vlc = subprocess.run(["apt-cache", "policy", "vlc"])
     if vlc.returncode == 0:
