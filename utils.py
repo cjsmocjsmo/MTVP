@@ -48,9 +48,8 @@ def movies_size_on_disk():
     conn.close()
     
     total_movie_size_gb = total_movie_size / (1024 ** 3)  # Convert bytes to gigabytes
-    
+    total_movie_size_gb = round(total_movie_size_gb, 1)
     return total_movie_size_gb
-    _size_gb
 
 def tvshows_size_on_disk():
     conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
@@ -65,7 +64,7 @@ def tvshows_size_on_disk():
     conn.close()
     
     total_tvshow_size_gb = total_tvshow_size / (1024 ** 3)  # Convert bytes to gigabytes
-    
+    total_tvshow_size_gb = round(total_tvshow_size_gb, 1)
     return total_tvshow_size_gb
 
 def img_walk_dirs(dir):
