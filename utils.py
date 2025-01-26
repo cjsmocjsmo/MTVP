@@ -3,6 +3,7 @@
 import os
 import subprocess
 import sqlite3
+from datetime import datetime
 
 def get_arch():
     arch =  os.uname().machine
@@ -66,6 +67,50 @@ def tvshows_size_on_disk():
     total_tvshow_size_gb = total_tvshow_size / (1024 ** 3)  # Convert bytes to gigabytes
     total_tvshow_size_gb = round(total_tvshow_size_gb, 1)
     return total_tvshow_size_gb
+
+def propane_gallons_total():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT Gallons FROM gallons")
+    gallons = cursor.fetchall()
+    
+    gallons_list = [float(gallon[0]) for gallon in gallons]
+    total_gallons = sum(gallons_list)
+    
+    conn.close()
+    
+    return total_gallons
+
+def propane_amount_total():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT Amount FROM amount")
+    amounts = cursor.fetchall()
+    
+    amounts_list = [float(amount[0]) for amount in amounts]
+    total_amount = sum(amounts_list)
+    
+    conn.close()
+    
+    return total_amount
+
+def insert_amount(amount):
+    today_date = datetime.now().strftime("%m/%d/%Y")
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO amount (Date, Amount) VALUES (?, ?)", (today_date, amount,))
+    conn.commit()
+    conn.close()
+
+def insert_gallons(gallons):
+    today_date = datetime.now().strftime("%m/%d/%Y")
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO gallons (Date, Gallons) VALUES (?, ?)", (today_date, gallons,))
+    conn.commit()
+    conn.close()
 
 def img_walk_dirs(dir):
     jpglist = []

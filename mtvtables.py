@@ -45,6 +45,18 @@ class CreateTables:
             Idx INTEGER NOT NULL,
             HttpThumbPath TEXT NOT NULL
          )""")
+        
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS amount (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Date TEXT NOT NULL,
+            Amount TEXT NOT NULL
+         )""")
+        
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS gallons (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Date TEXT NOT NULL,
+            Gallons TEXT NOT NULL
+         )""")
 
 
 

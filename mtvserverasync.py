@@ -70,7 +70,7 @@ async def handle_message(websocket):
                 if phrase:
                     search_results = MTVMEDIA.search(phrase)
                     await websocket.send(json.dumps(search_results))
-            
+
             elif command == "play":
                 player.play()
                 await websocket.send(json.dumps({"status": "playing"}))
@@ -111,6 +111,34 @@ async def handle_message(websocket):
             elif command == "tvsizeondisk":
                 tvsizeondisk = UTILS.tvshows_size_on_disk()
                 await websocket.send(json.dumps(tvsizeondisk))
+
+
+
+
+            elif command == "gallonstotal":
+                gallons_total = UTILS.propane_gallons_total()
+                await websocket.send(json.dumps(gallons_total))
+
+            elif command == "amounttotal":
+                amount_total = UTILS.propane_amount_total()
+                await websocket.send(json.dumps(amount_total))
+
+            elif command == "insertgallons":
+                gallons = data.get("gallons")
+                if gallons:
+                    UTILS.insert_gallons(gallons)
+                    await websocket.send(json.dumps({"status": "gallons_inserted"}))
+
+            elif command == "insertamount":
+                amount = data.get("amount")
+                if amount:
+                    UTILS.insert_amount(amount)
+                    await websocket.send(json.dumps({"status": "amount_inserted"}))
+
+
+
+
+
 
             elif command == "action":
                 action_data = MTVMEDIA.action()
