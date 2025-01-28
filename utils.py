@@ -98,17 +98,23 @@ def propane_amount_total():
 
 def insert_amount(amount):
     today_date = datetime.now().strftime("%m/%d/%Y")
+    year = datetime.now().strftime("%Y")
+    month = datetime.now().strftime("%m")
+    day = datetime.now().strftime("%d")
     conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO amount (Date, Amount) VALUES (?, ?)", (today_date, amount,))
+    cursor.execute("INSERT INTO amount (Year, Month, Day, Date, Amount) VALUES (?, ?, ?, ?, ?)", (year, month, day, today_date, amount,))
     conn.commit()
     conn.close()
 
 def insert_gallons(gallons):
     today_date = datetime.now().strftime("%m/%d/%Y")
+    year = datetime.now().strftime("%Y")
+    month = datetime.now().strftime("%m")
+    day = datetime.now().strftime("%d")
     conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO gallons (Date, Gallons) VALUES (?, ?)", (today_date, gallons,))
+    cursor.execute("INSERT INTO gallons (Year, Month, Day, Date, Gallons) VALUES (?, ?, ?, ?, ?)", (year, month, day, today_date, gallons,))
     conn.commit()
     conn.close()
 

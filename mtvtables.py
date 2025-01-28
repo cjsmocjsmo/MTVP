@@ -51,12 +51,18 @@ class CreateTables:
         
         self.cursor2.execute("""CREATE TABLE IF NOT EXISTS amount (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Year TEXT NOT NULL,
+            Month TEXT NOT NULL,
+            Day TEXT NOT NULL,
             Date TEXT NOT NULL,
             Amount TEXT NOT NULL
          )""")
         
         self.cursor2.execute("""CREATE TABLE IF NOT EXISTS gallons (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Year TEXT NOT NULL,
+            Month TEXT NOT NULL,
+            Day TEXT NOT NULL,
             Date TEXT NOT NULL,
             Gallons TEXT NOT NULL
          )""")
