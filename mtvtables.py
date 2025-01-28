@@ -8,6 +8,9 @@ class CreateTables:
         self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
 
+        self.conn2 = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
+        self.cursor2 = self.conn2.cursor()
+
     def create_tables(self):
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS movies (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,13 +49,13 @@ class CreateTables:
             HttpThumbPath TEXT NOT NULL
          )""")
         
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS amount (
+        self.cursor2.execute("""CREATE TABLE IF NOT EXISTS amount (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             Date TEXT NOT NULL,
             Amount TEXT NOT NULL
          )""")
         
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS gallons (
+        self.cursor2.execute("""CREATE TABLE IF NOT EXISTS gallons (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             Date TEXT NOT NULL,
             Gallons TEXT NOT NULL

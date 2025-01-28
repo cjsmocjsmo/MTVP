@@ -69,7 +69,7 @@ def tvshows_size_on_disk():
     return total_tvshow_size_gb
 
 def propane_gallons_total():
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Gallons FROM gallons")
@@ -83,7 +83,7 @@ def propane_gallons_total():
     return total_gallons
 
 def propane_amount_total():
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))  
+    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))  
     cursor = conn.cursor()
 
     cursor.execute("SELECT Amount FROM amount")
@@ -98,7 +98,7 @@ def propane_amount_total():
 
 def insert_amount(amount):
     today_date = datetime.now().strftime("%m/%d/%Y")
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
     cursor = conn.cursor()
     cursor.execute("INSERT INTO amount (Date, Amount) VALUES (?, ?)", (today_date, amount,))
     conn.commit()
@@ -106,7 +106,7 @@ def insert_amount(amount):
 
 def insert_gallons(gallons):
     today_date = datetime.now().strftime("%m/%d/%Y")
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))
     cursor = conn.cursor()
     cursor.execute("INSERT INTO gallons (Date, Gallons) VALUES (?, ?)", (today_date, gallons,))
     conn.commit()
