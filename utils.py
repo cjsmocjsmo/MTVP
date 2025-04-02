@@ -118,6 +118,50 @@ def insert_gallons(gallons):
     conn.commit()
     conn.close()
 
+def convert_month(month_int):
+    if month_int == 1:
+        return "January"
+    elif month_int == 2:
+        return "February"
+    elif month_int == 3:
+        return "March"
+    elif month_int == 4:
+        return "April"
+    elif month_int == 5:
+        return "May"
+    elif month_int == 6:
+        return "June"
+    elif month_int == 7:
+        return "July"
+    elif month_int == 8:
+        return "August"
+    elif month_int == 9:
+        return "September"
+    elif month_int == 10:
+        return "October"
+    elif month_int == 11:
+        return "November"
+    elif month_int == 12:
+        return "December"
+    else:
+        return "Invalid month"
+
+def monthly_amount_total(month):
+    conn = sqlite3.connect(os.getenv("PROPANE_DB_PATH"))  
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT Amount FROM amount WHERE Month = ?", (month))
+    amounts = cursor.fetchall()
+    
+    amounts_list = [float(amount[0]) for amount in amounts]
+    monthly_total_amount = sum(amounts_list)
+ 
+    month_txt = convert_month(int(month))
+    
+    conn.close()
+    
+    return total_amount
+
 def img_walk_dirs(dir):
     jpglist = []
     for root, dirs, files in os.walk(dir):

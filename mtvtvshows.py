@@ -23,6 +23,7 @@ class ProcessTVShows:
         self.houseofthedragon = re.compile("HouseOfTheDragon")
         self.lostinspace = re.compile("LostInSpace")
         self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
+        self.mobland = re.compile("MobLand")
         self.monarchlegacyofmonsters = re.compile("MonarchLegacyOfMonsters")
         self.nightsky = re.compile("NightSky")
         self.orville = re.compile("Orville")
@@ -93,6 +94,8 @@ class ProcessTVShows:
             catagory = "LostInSpace"
         elif re.search(self.mastersoftheuniverse, tv):
             catagory = "MastersOfTheUniverse"
+        elif re.search(self.mobland, tv):
+            catagory = "MobLand"
         elif re.search(self.monarchlegacyofmonsters, tv):
             catagory = "MonarchLegacyOfMonsters"
         elif re.search(self.nightsky, tv):
