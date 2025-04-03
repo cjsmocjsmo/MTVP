@@ -49,6 +49,7 @@ class ProcessMovies:
         self.stalone = re.compile("Stalone")
         self.startrek = re.compile("StarTrek")
         self.starwars = re.compile("StarWars")
+        self.stooges = re.compile("Stooges")
         self.super_heros = re.compile("SuperHeros")
         self.the_rock = re.compile("TheRock")
         self.tinker_bell = re.compile("TinkerBell")
@@ -160,6 +161,8 @@ class ProcessMovies:
             catagory = "StarTrek"
         elif re.search(self.starwars, mov):
             catagory = "StarWars"
+        elif re.search(self.stooges, mov):
+            catagory = "Stooges"
         elif re.search(self.super_heros, mov):
             catagory = "SuperHeros"
         elif re.search(self.the_rock, mov):

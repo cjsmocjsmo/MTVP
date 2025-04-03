@@ -288,6 +288,10 @@ async def handle_message(websocket):
                 starwars_data = MTVMEDIA.starwars()
                 await websocket.send(json.dumps(starwars_data))
 
+            elif command == "stooges":
+                stooges_data = MTVMEDIA.stooges()
+                await websocket.send(json.dumps(stooges_data))
+
             elif command == "superheros":
                 superheros_data = MTVMEDIA.superheros()
                 await websocket.send(json.dumps(superheros_data))
