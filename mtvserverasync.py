@@ -2,6 +2,7 @@ import vlc
 # import time
 import asyncio
 import websockets
+import requests
 import json
 import logging
 import mtvserverutils
@@ -38,6 +39,35 @@ async def get_media_path_from_media_tv_id(media_tv_id):
     print(f"Media path:\n{media_path}")
     conn.close()
     return media_path
+
+async def get_weather_for_belfair_wa():
+    """
+    Retrieves and prints the current weather conditions for Belfair, WA
+    from the National Weather Service.
+    """
+    try:
+        # Option 1: Using latitude and longitude (more reliable for specific locations)
+        latitude = 47.4281
+        longitude = -122.8189
+        point_url = f"https://api.weather.gov/points/{latitude},{longitude}"
+        point_response = requests.get(point_url)
+        point_response.raise_for_status()  # Raise an exception for bad status codes
+        point_data = point_response.json()
+        forecast_url = point_data['properties']['forecastHourly']
+        weather_response = requests.get(forecast_url)
+        weather_response.raise_for_status()
+        weather_data = weather_response.json()
+        current_forecast = weather_data['properties']['periods'][0] # Get the first period (current)
+
+        print(f"Current Weather in Belfair, WA:")
+        print(f"Temperature: {current_forecast['temperature']} {current_forecast['temperatureUnit']}")
+        print(f"Conditions: {current_forecast['shortForecast']}")
+        print(f"Wind: {current_forecast['windSpeed']} {current_forecast['windDirection']}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching weather data: {e}")
+    except (KeyError, IndexError) as e:
+        print(f"Error parsing weather data: {e}")
 
 
 # async def handle_message(websocket, path):
@@ -92,6 +122,10 @@ async def handle_message(websocket):
                 current_time = player.get_time()
                 player.set_time(current_time - 35000)
                 await websocket.send(json.dumps({"status": "previous"}))
+
+            elif command == "weather":
+                weather_data = await get_weather_for_belfair_wa()
+                await websocket.send(json.dumps(weather_data))
 
             elif command == "test":
                 await websocket.send(json.dumps({"status": "Fuck it worked"}))
