@@ -178,6 +178,8 @@ class ProcessMovies:
             catagory = "Transformers"
         elif re.search(self.tremors, mov):
             catagory = "Tremors"
+        elif re.search(self.trolls, mov):
+            catagory = "Trolls"
         elif re.search(self.vandam, mov):
             catagory = "VanDam"
         elif re.search(self.xmen, mov):

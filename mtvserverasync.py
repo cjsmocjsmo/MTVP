@@ -320,6 +320,10 @@ async def handle_message(websocket):
                 tremors_data = MTVMEDIA.tremors()
                 await websocket.send(json.dumps(tremors_data))
 
+            elif command == "trolls":
+                trolls_data = MTVMEDIA.trolls()
+                await websocket.send(json.dumps(trolls_data))
+
             elif command == "vandam":
                 vandam_data = MTVMEDIA.vandam()
                 await websocket.send(json.dumps(vandam_data))
