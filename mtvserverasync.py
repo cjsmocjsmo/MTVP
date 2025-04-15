@@ -64,6 +64,17 @@ async def get_weather_for_belfair_wa():
         print(f"Conditions: {current_forecast['shortForecast']}")
         print(f"Wind: {current_forecast['windSpeed']} {current_forecast['windDirection']}")
 
+        weather_data = {
+            "location": "Belfair, WA",
+            "temperature": current_forecast['temperature'],
+            "temperature_unit": current_forecast['temperatureUnit'],
+            "conditions": current_forecast['shortForecast'],
+            "winddirection": current_forecast['windDirection'],
+            "windspeed": current_forecast['windSpeed']
+        }
+
+        return weather_data
+
     except requests.exceptions.RequestException as e:
         print(f"Error fetching weather data: {e}")
     except (KeyError, IndexError) as e:

@@ -57,6 +57,7 @@ class ProcessMovies:
         self.tom_cruize = re.compile("TomCruize")
         self.transformers = re.compile("Transformers")
         self.tremors = re.compile("Tremors")
+        self.trolls = re.compile("Trolls")
         self.vandam = re.compile("VanDam")
         self.xmen = re.compile("XMen")
         self.crap = re.compile("\s\(")
