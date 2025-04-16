@@ -367,8 +367,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def thelastofus(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' ORDER BY Episode ASC;"
+    def thelastofus1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def thelastofus2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     

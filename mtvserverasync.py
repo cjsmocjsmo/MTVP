@@ -513,8 +513,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.thecontinental()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "thelastofus":
-                mediainfo = MTVMEDIA.thelastofus()
+            elif command == "thelastofus1":
+                mediainfo = MTVMEDIA.thelastofus1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "thelastofus2":
+                mediainfo = MTVMEDIA.thelastofus2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "thelordoftheringstheringsofpower":
