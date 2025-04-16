@@ -361,14 +361,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    
     def thecontinental(self):
         command = "SELECT * FROM tvshows WHERE catagory='TheContinental' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
     def thelastofus1(self):
-        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' AND season='02' ORDER BY Episode ASC;"
+        command = "SELECT * FROM tvshows WHERE catagory='TheLastOfUs' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
@@ -582,8 +581,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def andor(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Andor' ORDER BY Episode ASC;"
+    def andor1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Andor' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def andor2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Andor' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     

@@ -689,8 +689,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.ahsoka()
                 await websocket.send(json.dumps(mediainfo))
             
-            elif command == "andor":
-                mediainfo = MTVMEDIA.andor()
+            elif command == "andor1":
+                mediainfo = MTVMEDIA.andor1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "andor2":
+                mediainfo = MTVMEDIA.andor2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "bookofbobafett":
