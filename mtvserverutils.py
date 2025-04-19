@@ -169,6 +169,11 @@ class Media:
         self.cursor.execute("SELECT * FROM movies WHERE catagory='StarWars' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
+    def stooges(self):
+        command = "SELECT * FROM movies WHERE catagory='Stooges' ORDER BY year DESC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
     def superheros(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='SuperHeros' ORDER BY year DESC")
         return self._fetch_all_as_dict()
@@ -385,13 +390,18 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def wheeloftimes1(self):
+    def wheeloftime1(self):
         command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def wheeloftimes2(self):
+    def wheeloftime2(self):
         command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def wheeloftime3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
@@ -712,10 +722,5 @@ class Media:
     
     def mobland(self):
         command = "SELECT * FROM tvshows WHERE catagory='MobLand' ORDER BY Episode ASC;"
-        self.cursor.execute(command)
-        return self._fetch_all_as_dict()
-
-    def stooges(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Stooges' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()

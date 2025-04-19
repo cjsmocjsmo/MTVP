@@ -525,12 +525,16 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.thelordoftheringstheringsofpower()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wheeloftimes1":
-                mediainfo = MTVMEDIA.wheeloftimes1()
+            elif command == "wheeloftime1":
+                mediainfo = MTVMEDIA.wheeloftime1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wheeloftimes2":
-                mediainfo = MTVMEDIA.wheeloftimes2()
+            elif command == "wheeloftime2":
+                mediainfo = MTVMEDIA.wheeloftime2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "wheeloftime3":
+                mediainfo = MTVMEDIA.wheeloftime3()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "discoverys1":
