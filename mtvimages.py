@@ -105,7 +105,7 @@ class ProcessTVShowImages:
 
     def create_thumbnail(self, img):
         thumb_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
-        img = os.path.splitext()[0]
+        img = os.path.splitext(img)[0]
         fname = os.path.split(img)[1]
         fname = ".".join((fname, "jpg"))
         save_path = os.path.join(thumb_dir, fname)
