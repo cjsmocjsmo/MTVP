@@ -94,6 +94,8 @@ class ProcessImages:
                 print(f"Error: {e}")
         
 class ProcessTVShowImages:
+    def __init__(self, imgs):
+        self.imglist = imgs
 
     def tv_thumb_dir_check(self):
         img_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
@@ -113,7 +115,7 @@ class ProcessTVShowImages:
         thumb.save(save_path)
         return save_path
     
-    def process_tv_thumbs(self, tvimg):
+    def process_tv_thumbs(self):
         self.tv_thumb_dir_check()
-        for img in tvimg:
+        for img in self.imglist:
             self.create_thumbnail(img)
