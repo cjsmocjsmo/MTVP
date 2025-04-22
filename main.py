@@ -39,7 +39,7 @@ class Main:
             mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
 
             tvimages = utils.tv_img_walk_dirs(os.getenv("MTV_TV_POSTER_PATH"))
-            mtvimages.ProcessTVShowImages(tvimages)
+            mtvimages.ProcessTVShowImages(tvimages).process_tv_thumbs()
 
         except sqlite3.OperationalError as e:
             print(e)
