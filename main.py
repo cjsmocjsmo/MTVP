@@ -35,11 +35,11 @@ class Main:
             images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
             mtvimages.ProcessImages(images, self.conn, self.cursor).process()
 
-            tvimages = utils.tv_img_walk_dirs(os.getenv("MTV_TV_POSTER_PATH"))
-            mtvimages.ProcessTVShowImages(tvimages)
-
             movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
             mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
+
+            tvimages = utils.tv_img_walk_dirs(os.getenv("MTV_TV_POSTER_PATH"))
+            mtvimages.ProcessTVShowImages(tvimages)
 
         except sqlite3.OperationalError as e:
             print(e)
