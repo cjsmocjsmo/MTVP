@@ -344,6 +344,10 @@ async def handle_message(websocket):
                 misc_data = MTVMEDIA.misc()
                 await websocket.send(json.dumps(misc_data))
 
+            elif command == "musicvids":
+                musicvids_data = MTVMEDIA.musicvids()
+                await websocket.send(json.dumps(musicvids_data))
+
             elif command == "nicolascage":
                 nicolascage_data = MTVMEDIA.nicolascage()
                 await websocket.send(json.dumps(nicolascage_data))
