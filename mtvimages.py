@@ -118,5 +118,6 @@ class ProcessTVShowImages:
     
     def process_tv_thumbs(self):
         self.tv_thumb_dir_check()
+        print(self.imglist)
         for img in self.imglist:
             self.create_thumbnail(img)
