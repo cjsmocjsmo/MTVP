@@ -172,6 +172,20 @@ def img_walk_dirs(dir):
                 jpglist.append(fname)
     return jpglist
 
+def tv_img_walk_dirs(dir):
+    imglist = []
+    for root, dirs, files in os.walk(dir):
+        for file in files:
+            fname = os.path.join(root, file)
+            ext = os.path.splitext(fname)[1]
+            if ext == ".jpg":
+                imglist.append(fname)
+            if ext == ".webp":
+                imglist.append(fname)
+            if ext == ".avif":
+                imglist.append(fname)
+    return imglist    
+
 def sqlite3_check():
     sqlite3 = subprocess.run(["apt-cache", "policy", "sqlite3"])
     if sqlite3.returncode == 0:

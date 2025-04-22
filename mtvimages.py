@@ -92,4 +92,28 @@ class ProcessImages:
                 print(f'Error: {e}')
             except sqlite3.OperationalError as e:
                 print(f"Error: {e}")
+        
+class ProcessTVShowImages:
 
+    def tv_thumb_dir_check(self):
+        img_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
+        if not os.path.exists(img_dir):
+            subprocess.run(["mkdir", img_dir])
+            print(f"Created directory")
+
+    def create_thumbnail(self, img):
+        thumb_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
+        img = os.path.splitext()[0]
+        fname = os.path.split(img)[1]
+        fname = ".".join((fname, "jpg"))
+        save_path = os.path.join(thumb_dir, fname)
+
+        thumb = Image.open(img)
+        thumb.thumbnail((300, 300))
+        thumb.save(save_path)
+        return save_path
+    
+    def process_tv_thumbs(self, tvimg):
+        dir_check = self.tv_thumb_dir_check()
+        for img in tvimg:
+            self.create_thumbnail(img)

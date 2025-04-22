@@ -18,27 +18,59 @@ player = instance.media_player_new()
 
 load_dotenv()
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    filename='/usr/share/MTV/mtv.log',
+    filemode='a',  # Append mode
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 MTVMEDIA = mtvserverutils.Media()
 
 async def get_media_path_from_media_id(media_id):
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
-    cursor = conn.cursor()
-    cursor.execute("SELECT Path FROM movies WHERE MovId = ?", (media_id,))
-    media_path = cursor.fetchone()[0]
-    print(f"Media path:\n{media_path}")
-    conn.close()
-    return media_path
+    """
+    Retrieves the media_path from the db using the media_id.
+    """
+    try:
+        # Use 'with' to manage the database connection
+        with sqlite3.connect(os.getenv("MTV_DB_PATH")) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT Path FROM movies WHERE MovId = ?", (media_id,))
+            result = cursor.fetchone()
+            if result:
+                media_path = result[0]
+                return media_path
+            else:
+                logging.error(f"No media path found for media_id: {media_id}")
+                return None
+    except sqlite3.Error as e:
+        logging.error(f"SQLite error: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error fetching media path: {e}")
+        return None
 
 async def get_media_path_from_media_tv_id(media_tv_id):
-    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
-    cursor = conn.cursor()
-    cursor.execute("SELECT Path FROM tvshows WHERE TvId = ?", (media_tv_id,))
-    media_path = cursor.fetchone()[0]
-    print(f"Media path:\n{media_path}")
-    conn.close()
-    return media_path
+    """
+    Retrieves the media_path from the db using the media_tv_id.
+    """
+    try:
+        with sqlite3.connect(os.getenv("MTV_DB_PATH")) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT Path FROM tvshows WHERE TvId = ?", (media_tv_id,))
+            result = cursor.fetchone()
+            if result:
+                media_path = result[0]
+                return media_path
+            else:
+                logging.error(f"No media path found for media_tv_id: {media_tv_id}")
+                return None
+    except sqlite3.Error as e:
+        logging.error(f"SQLite error: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error fetching media path: {e}")
+        return None      
 
 async def get_weather_for_belfair_wa():
     """
@@ -46,7 +78,6 @@ async def get_weather_for_belfair_wa():
     from the National Weather Service.
     """
     try:
-        # Option 1: Using latitude and longitude (more reliable for specific locations)
         latitude = 47.4281
         longitude = -122.8189
         point_url = f"https://api.weather.gov/points/{latitude},{longitude}"
@@ -57,12 +88,7 @@ async def get_weather_for_belfair_wa():
         weather_response = requests.get(forecast_url)
         weather_response.raise_for_status()
         weather_data = weather_response.json()
-        current_forecast = weather_data['properties']['periods'][0] # Get the first period (current)
-
-        print(f"Current Weather in Belfair, WA:")
-        print(f"Temperature: {current_forecast['temperature']} {current_forecast['temperatureUnit']}")
-        print(f"Conditions: {current_forecast['shortForecast']}")
-        print(f"Wind: {current_forecast['windSpeed']} {current_forecast['windDirection']}")
+        current_forecast = weather_data['properties']['periods'][0]
 
         weather_data = {
             "location": "Belfair, WA",
@@ -76,9 +102,16 @@ async def get_weather_for_belfair_wa():
         return weather_data
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching weather data: {e}")
+        # print(f"Error fetching weather data: {e}")
+        logging.error(f"Error fetching weather data: {e}")
+        return None
     except (KeyError, IndexError) as e:
-        print(f"Error parsing weather data: {e}")
+        # print(f"Error parsing weather data: {e}")
+        logging.error(f"Error parsing weather data: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error fetching media path: {e}")
+        return None      
 
 
 # async def handle_message(websocket, path):
@@ -89,22 +122,32 @@ async def handle_message(websocket):
             command = data.get("command")
 
             if command == "set_media":
-                media_id = data.get("media_id")
-                if media_id:
-                    media_path = await get_media_path_from_media_id(media_id)
-                    print(f"Starting mediaplayer with the path:\n{media_path}")
-                    player.set_media(vlc.Media(media_path))
-                    player.set_fullscreen(True)
-                    await websocket.send(json.dumps({"status": "media_set"}))
-
+                try:
+                    media_id = data.get("media_id")
+                    if media_id:
+                        media_path = await get_media_path_from_media_id(media_id)
+                        player.set_media(vlc.Media(media_path))
+                        player.set_fullscreen(True)
+                        print(f"Starting mediaplayer with the path:\n{media_path}")
+                        logging.info(f"Starting mediaplayer with the path:\n{media_path}")
+                        await websocket.send(json.dumps({"status": "media_set"}))
+                except Exception as e:
+                    logging.error(f"Error fetching media path: {e}")
+                    return None
+             
             elif command == "set_tv_media":
-                media_tv_id = data.get("media_tv_id")
-                if media_tv_id:
-                    media_path = await get_media_path_from_media_tv_id(media_tv_id)
-                    print(f"Starting mediaplayer with the path:\n{media_path}")
-                    player.set_media(vlc.Media(media_path))
-                    player.set_fullscreen(True)
-                    await websocket.send(json.dumps({"status": "media_set"}))
+                try:
+                    media_tv_id = data.get("media_tv_id")
+                    if media_tv_id:
+                        media_path = await get_media_path_from_media_tv_id(media_tv_id)
+                        player.set_media(vlc.Media(media_path))
+                        player.set_fullscreen(True)
+                        print(f"Starting mediaplayer with the path:\n{media_path}")
+                        logging.info(f"Starting mediaplayer with the path:\n{media_path}")
+                        await websocket.send(json.dumps({"status": "media_set"}))
+                except Exception as e:
+                    logging.error(f"Error setting player path with mediapath: {e}")
+                    return None
 
             elif command == "search":
                 phrase = data.get("phrase")
