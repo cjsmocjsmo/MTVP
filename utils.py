@@ -160,7 +160,7 @@ def monthly_amount_total(month):
     
     conn.close()
     
-    return total_amount
+    return monthly_total_amount
 
 def img_walk_dirs(dir):
     jpglist = []
@@ -179,10 +179,6 @@ def tv_img_walk_dirs(dir):
             fname = os.path.join(root, file)
             ext = os.path.splitext(fname)[1]
             if ext == ".jpg":
-                imglist.append(fname)
-            if ext == ".webp":
-                imglist.append(fname)
-            if ext == ".avif":
                 imglist.append(fname)
     return imglist    
 
