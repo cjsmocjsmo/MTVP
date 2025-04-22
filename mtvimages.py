@@ -114,6 +114,6 @@ class ProcessTVShowImages:
         return save_path
     
     def process_tv_thumbs(self, tvimg):
-        dir_check = self.tv_thumb_dir_check()
+        self.tv_thumb_dir_check()
         for img in tvimg:
             self.create_thumbnail(img)
