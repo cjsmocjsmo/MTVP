@@ -103,15 +103,15 @@ class ProcessTVShowImages:
             subprocess.run(["mkdir", img_dir])
             print(f"Created directory")
 
-    def create_thumbnail(self, img):
+    def create_thumbnail(self, img_path):
         thumb_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
-        img = os.path.splitext(img)[0]
+        img = os.path.splitext(img_path)[0]
         fname = os.path.split(img)[1]
         fname = ".".join((fname, "jpg"))
         save_path = os.path.join(thumb_dir, fname)
         print(f"Saving thumbnail to\n\t {save_path}")
 
-        thumb = Image.open(img)
+        thumb = Image.open(img_path)
         thumb.thumbnail((300, 300))
         thumb.save(save_path)
         return save_path
