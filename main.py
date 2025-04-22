@@ -18,7 +18,7 @@ class Main:
         self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
 
-        log_file_path = os.getenv("MTV_LOG_PATH")
+        log_file_path = os.getenv("MTV_SERVER_LOG")
         if not os.path.exists(log_file_path):
             os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
             with open(log_file_path, 'w') as log_file:
