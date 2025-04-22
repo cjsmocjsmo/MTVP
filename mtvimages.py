@@ -109,6 +109,7 @@ class ProcessTVShowImages:
         fname = os.path.split(img)[1]
         fname = ".".join((fname, "jpg"))
         save_path = os.path.join(thumb_dir, fname)
+        print(f"Saving thumbnail to\n\t {save_path}")
 
         thumb = Image.open(img)
         thumb.thumbnail((300, 300))
