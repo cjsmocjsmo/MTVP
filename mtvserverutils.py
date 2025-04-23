@@ -137,6 +137,10 @@ class Media:
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Misc' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
+    def nature(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Nature' ORDER BY year DESC")
+        return self._fetch_all_as_dict()
+    
     def nicolascage(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='NicolasCage' ORDER BY year DESC")
         return self._fetch_all_as_dict()
@@ -155,6 +159,10 @@ class Media:
     
     def riddick(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Riddick' ORDER BY year DESC")
+        return self._fetch_all_as_dict()
+    
+    def science(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Science' ORDER BY year DESC")
         return self._fetch_all_as_dict()
 
     def scifi(self):

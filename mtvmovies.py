@@ -42,11 +42,13 @@ class ProcessMovies:
         self.minions = re.compile("Minions")
         self.misc = re.compile("Misc")
         self.musicvids = re.compile("MusicVids")
+        self.nature = re.compile("Nature")
         self.nicolas_cage = re.compile("NicolasCage")
         self.oldies = re.compile("Oldies")
         self.panda = re.compile("Panda")
         self.pirates = re.compile("Pirates")
         self.riddick = re.compile("Riddick")
+        self.science = re.compile("Science")
         self.sci_fi = re.compile("SciFi")
         self.stalone = re.compile("Stalone")
         self.startrek = re.compile("StarTrek")
@@ -150,6 +152,8 @@ class ProcessMovies:
             catagory = "Misc"
         elif re.search(self.musicvids, mov):
             catagory = "MusicVids"
+        elif re.search(self.nature, mov):
+            catagory = "Nature"
         elif re.search(self.nicolas_cage, mov):
             catagory = "NicolasCage"
         elif re.search(self.oldies, mov):
@@ -160,6 +164,8 @@ class ProcessMovies:
             catagory = "Pirates"
         elif re.search(self.riddick, mov):
             catagory = "Riddick"
+        elif re.search(self.science, mov):
+            catagory = "Science"
         elif re.search(self.sci_fi, mov):
             catagory = "SciFi"
         elif re.search(self.stalone, mov):
