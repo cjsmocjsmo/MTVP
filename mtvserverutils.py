@@ -736,3 +736,8 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='MobLand' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def talesofthejedi(self):
+        command = "SELECT * FROM tvshows WHERE catagory='TalesOfTheJedi' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()

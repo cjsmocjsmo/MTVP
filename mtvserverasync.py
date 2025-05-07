@@ -851,6 +851,10 @@ async def handle_message(websocket):
             elif command == "mobland":
                 mediainfo = MTVMEDIA.mobland()
                 await websocket.send(json.dumps(mediainfo))
+
+            elif command == "talesofthejedi":
+                mediainfo = MTVMEDIA.talesofthejedi()
+                await websocket.send(json.dumps(mediainfo))
             
     except Exception as e:
         logging.error(f"Exception in handle_message: {e}")
