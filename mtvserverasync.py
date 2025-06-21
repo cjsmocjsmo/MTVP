@@ -484,8 +484,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.fuubar2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "hford1923":
-                mediainfo = MTVMEDIA.hford1923()
+            elif command == "hford19231":
+                mediainfo = MTVMEDIA.hford19231()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "hford19232":
+                mediainfo = MTVMEDIA.hford19232()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "halos1":

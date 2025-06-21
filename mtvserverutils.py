@@ -282,8 +282,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def hford1923(self):
-        command = "SELECT * FROM tvshows WHERE catagory='HFord1923' ORDER BY Episode ASC;"
+    def hford19231(self):
+        command = "SELECT * FROM tvshows WHERE catagory='HFord1923' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def hford19232(self):
+        command = "SELECT * FROM tvshows WHERE catagory='HFord1923' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
