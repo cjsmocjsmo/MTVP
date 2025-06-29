@@ -668,8 +668,12 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.picards2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "prodigy":
-                mediainfo = MTVMEDIA.prodigy()
+            elif command == "prodigy1":
+                mediainfo = MTVMEDIA.prodigy1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "prodigy2":
+                mediainfo = MTVMEDIA.prodigy2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "sttvs1":

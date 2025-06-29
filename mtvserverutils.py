@@ -507,8 +507,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def prodigy(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Prodigy' ORDER BY Episode ASC;"
+    def prodigy1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Prodigy' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def prodigy2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Prodigy' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
