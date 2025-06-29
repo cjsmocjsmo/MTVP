@@ -66,7 +66,8 @@ class ProcessTVShows:
         self.secretinvasion = re.compile("SecretInvasion")
         self.wandavision = re.compile("WandaVision")
         self.skeletoncrew = re.compile("SkeletonCrew")
-        self.TalesOfTheUnderworld = re.compile("TalesOfTheUnderworld")
+        self.talesoftheunderworld = re.compile("TalesOfTheUnderworld")
+        self.ironheart = re.compile("IronHeart")
         self.episea = re.compile("\sS\d{2}E\d{2}\s")
 
     def get_tvid(self, tv):
@@ -187,8 +188,10 @@ class ProcessTVShows:
             catagory = "SecretInvasion"
         elif re.search(self.wandavision, tv):
             catagory = "WandaVision"
-        elif re.search(self.TalesOfTheUnderworld, tv):
+        elif re.search(self.talesoftheunderworld, tv):
             catagory = "TalesOfTheUnderworld"
+        elif re.search(self.ironheart, tv):
+            catagory = "IronHeart"
         return catagory
 
     def get_name(self, tv):
