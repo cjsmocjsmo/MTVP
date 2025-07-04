@@ -101,7 +101,56 @@ def setup():
         
 
     elif args.update:
-        pass
+        containers = subprocess.run(("docker", "ps", "-aq"))
+        for container in containers:
+            subprocess.run(("docker", "stop", container))
+            subprocess.run(("docker", "rm", container))
+
+        main.Main().update()
+        if utils.get_arch() == "32":
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9999:80",
+                "arm32v7/nginx:bookworm"
+            ])
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV/tvthumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9998:80",
+                "arm32v7/nginx:bookworm"
+            ])
+        elif utils.get_arch() == "64":
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV/thumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9999:80",
+                "nginx:bookworm"
+            ])
+            subprocess.run([
+                "docker",
+                "run",
+                "-d",
+                "-v",
+                "/usr/share/MTV/tvthumbnails:/usr/share/nginx/html:ro",
+                "-p",
+                "9998:80",
+                "nginx:bookworm"
+            ])
+        asyncio.run(mtvserverasync.servermain())
+
     elif args.delete: 
         containers = subprocess.run(("docker", "ps", "-aq"))
         for container in containers:

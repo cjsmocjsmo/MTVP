@@ -249,3 +249,18 @@ class ProcessMovies:
                 print(f"Error: {e}")
             except sqlite3.OperationalError as e:
                 print(f"Error: {e}")
+
+class UpdateMovies:
+    def __init__(self, conn, cursor):
+        self.conn = conn
+        self.cursor = cursor
+    
+    def get_all_movie_images(self):
+        self.cursor.execute("SELECT Path FROM images")
+        rows = self.cursor.fetchall()
+        return [row[0] for row in rows]
+    
+    def get_all_movie_paths(self):
+        self.cursor.execute("SELECT Path FROM movies")
+        rows = self.cursor.fetchall()
+        return [row[0] for row in rows]
