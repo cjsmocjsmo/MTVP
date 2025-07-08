@@ -44,7 +44,7 @@ class Main:
             print(e)
         finally:
             self.conn.close()
-            self.cursor.close()
+            # self.cursor.close()
 
     def update(self):
         try:
@@ -73,7 +73,7 @@ class Main:
             print(e)
         finally:
             self.conn.close()
-            self.cursor.close()
+            # self.cursor.close()
 
 # if __name__ == "__main__":
 #     m = Main()
