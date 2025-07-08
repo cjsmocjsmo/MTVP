@@ -101,10 +101,13 @@ def setup():
         
 
     elif args.update:
-        containers = subprocess.run(("docker", "ps", "-aq"))
-        for container in containers:
-            subprocess.run(("docker", "stop", container))
-            subprocess.run(("docker", "rm", container))
+        containers = subprocess.run(("docker", "ps", "-aq"), capture_output=True, text=True)
+        container_ids = containers.stdout.strip().splitlines()
+        print(container_ids)
+        for container in container_ids:
+            if container:  # skip empty lines
+                subprocess.run(("docker", "stop", container))
+                subprocess.run(("docker", "rm", container))
 
         main.Main().update()
         if utils.get_arch() == "32":
