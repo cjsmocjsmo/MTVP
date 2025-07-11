@@ -189,6 +189,10 @@ class Media:
     def superheros(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='SuperHeros' ORDER BY year DESC")
         return self._fetch_all_as_dict()
+
+    def superman(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='SuperMan' ORDER BY year DESC")
+        return self._fetch_all_as_dict()
     
     def therock(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='TheRock' ORDER BY year DESC")

@@ -400,6 +400,10 @@ async def handle_message(websocket):
                 superheros_data = MTVMEDIA.superheros()
                 await websocket.send(json.dumps(superheros_data))
 
+            elif command == "superman":
+                superman_data = MTVMEDIA.superman()
+                await websocket.send(json.dumps(superman_data))
+
             elif command == "therock":
                 therock_data = MTVMEDIA.therock()
                 await websocket.send(json.dumps(therock_data))
