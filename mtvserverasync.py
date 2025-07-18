@@ -480,6 +480,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.foundations2()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "foundations3":
+                mediainfo = MTVMEDIA.foundations3()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "fuubar1":
                 mediainfo = MTVMEDIA.fuubar1()
                 await websocket.send(json.dumps(mediainfo))
@@ -698,6 +702,10 @@ async def handle_message(websocket):
 
             elif command == "strangenewworldss2":
                 mediainfo = MTVMEDIA.strangenewworldss2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "strangenewworldss3":
+                mediainfo = MTVMEDIA.strangenewworldss3()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "tngs1":

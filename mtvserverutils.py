@@ -276,6 +276,11 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def foundation3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Foundation' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     def fuubar1(self):
         command = "SELECT * FROM tvshows WHERE catagory='FuuBar' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
@@ -543,6 +548,11 @@ class Media:
     
     def strangenewworldss2(self):
         command = "SELECT * FROM tvshows WHERE catagory='StrangeNewWorlds' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def strangenewworldss3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='StrangeNewWorlds' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
