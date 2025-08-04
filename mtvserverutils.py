@@ -276,7 +276,7 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def foundation3(self):
+    def foundations3(self):
         command = "SELECT * FROM tvshows WHERE catagory='Foundation' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
