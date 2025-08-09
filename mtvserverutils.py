@@ -780,3 +780,13 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='IronHeart' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def wednesday1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Wednesday' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def wednesday2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Wednesday' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
