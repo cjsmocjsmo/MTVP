@@ -65,6 +65,7 @@ class ProcessTVShows:
         self.loki = re.compile("Loki")
         self.secretinvasion = re.compile("SecretInvasion")
         self.wandavision = re.compile("WandaVision")
+        self.wednesday = re.compile("Wednesday")
         self.skeletoncrew = re.compile("SkeletonCrew")
         self.talesoftheunderworld = re.compile("TalesOfTheUnderworld")
         self.ironheart = re.compile("IronHeart")
@@ -188,6 +189,8 @@ class ProcessTVShows:
             catagory = "SecretInvasion"
         elif re.search(self.wandavision, tv):
             catagory = "WandaVision"
+        elif re.search(self.wednesday, tv):
+            catagory = "Wednesday"
         elif re.search(self.talesoftheunderworld, tv):
             catagory = "TalesOfTheUnderworld"
         elif re.search(self.ironheart, tv):
