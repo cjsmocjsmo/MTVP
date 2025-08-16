@@ -436,6 +436,17 @@ async def handle_message(websocket):
                 xmen_data = MTVMEDIA.xmen()
                 await websocket.send(json.dumps(xmen_data))
 
+
+
+
+
+
+
+
+
+
+
+
             elif command == "alteredcarbons1":
                 mediainfo = MTVMEDIA.alteredcarbons1()
                 await websocket.send(json.dumps(mediainfo))
@@ -444,15 +455,15 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.alteredcarbons2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "columbia":
+            elif command == "columbias1":
                 mediainfo = MTVMEDIA.columbia()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "cowboybebop":
+            elif command == "cowboybebops1":
                 mediainfo = MTVMEDIA.cowboybebop()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "fallout":
+            elif command == "fallouts1":
                 mediainfo = MTVMEDIA.fallout()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -484,19 +495,19 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.foundations3()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "fuubar1":
+            elif command == "fuubars1":
                 mediainfo = MTVMEDIA.fuubar1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "fuubar2":
+            elif command == "fuubars2":
                 mediainfo = MTVMEDIA.fuubar2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "hford19231":
+            elif command == "hford1923s1":
                 mediainfo = MTVMEDIA.hford19231()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "hford19232":
+            elif command == "hford1923s2":
                 mediainfo = MTVMEDIA.hford19232()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -528,15 +539,15 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.lostinspaces3()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "mastersoftheuniverse":
-                mediainfo = MTVMEDIA.mastersoftheuniverse()
-                await websocket.send(json.dumps(mediainfo))
+            # elif command == "mastersoftheuniverse":
+            #     mediainfo = MTVMEDIA.mastersoftheuniverse()
+            #     await websocket.send(json.dumps(mediainfo))
 
-            elif command == "monarchlegacyofmonsters":
+            elif command == "monarchlegacyofmonsterss1":
                 mediainfo = MTVMEDIA.monarchlegacyofmonsters()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "nightsky":
+            elif command == "nightskys1":
                 mediainfo = MTVMEDIA.nightsky()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -568,19 +579,19 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.raisedbywolvess2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "shogun":
+            elif command == "shoguns1":
                 mediainfo = MTVMEDIA.shogun()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "silo1":
+            elif command == "silos1":
                 mediainfo = MTVMEDIA.silo1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "silo2":
+            elif command == "silos2":
                 mediainfo = MTVMEDIA.silo2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "thecontinental":
+            elif command == "thecontinentals1":
                 mediainfo = MTVMEDIA.thecontinental()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -592,19 +603,19 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.thelastofus2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "thelordoftheringstheringsofpower":
+            elif command == "thelordoftheringstheringsofpowers1":
                 mediainfo = MTVMEDIA.thelordoftheringstheringsofpower()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wheeloftime1":
+            elif command == "wheeloftimes1":
                 mediainfo = MTVMEDIA.wheeloftime1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wheeloftime2":
+            elif command == "wheeloftimes2":
                 mediainfo = MTVMEDIA.wheeloftime2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wheeloftime3":
+            elif command == "wheeloftimes3":
                 mediainfo = MTVMEDIA.wheeloftime3()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -676,11 +687,11 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.picards2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "prodigy1":
+            elif command == "prodigys1":
                 mediainfo = MTVMEDIA.prodigy1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "prodigy2":
+            elif command == "prodigys2":
                 mediainfo = MTVMEDIA.prodigy2()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -764,23 +775,23 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.voyagers7()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "acolyte":
+            elif command == "acolytes1":
                 mediainfo = MTVMEDIA.acolyte()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "ahsoka":
+            elif command == "ahsokas1":
                 mediainfo = MTVMEDIA.ahsoka()
                 await websocket.send(json.dumps(mediainfo))
             
-            elif command == "andor1":
+            elif command == "andors1":
                 mediainfo = MTVMEDIA.andor1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "andor2":
+            elif command == "andors2":
                 mediainfo = MTVMEDIA.andor2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "bookofbobafett":
+            elif command == "bookofbobafetts1":
                 mediainfo = MTVMEDIA.bookofbobafett()
                 await websocket.send(json.dumps(mediainfo))
                 
@@ -796,15 +807,15 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.mandalorians3()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "obiwankenobi":
+            elif command == "obiwankenobis1":
                 mediainfo = MTVMEDIA.obiwankenobi()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "talesoftheempire":
+            elif command == "talesoftheempires1":
                 mediainfo = MTVMEDIA.talesoftheempire()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "talesofthejedi":
+            elif command == "talesofthejedis1":
                 mediainfo = MTVMEDIA.talesofthejedi()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -828,11 +839,11 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.visionss2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "falconwintersoldier":
+            elif command == "falconwintersoldiers1":
                 mediainfo = MTVMEDIA.falconwintersoldier()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "hawkeye":
+            elif command == "hawkeyes1":
                 mediainfo = MTVMEDIA.hawkeye()
                 await websocket.send(json.dumps(mediainfo))
 
@@ -852,51 +863,51 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.lokis2()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "moonknight":
+            elif command == "moonknights1":
                 mediainfo = MTVMEDIA.moonknight()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "secretinvasion":
+            elif command == "secretinvasions1":
                 mediainfo = MTVMEDIA.secretinvasion()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "shehulk":
+            elif command == "shehulks1":
                 mediainfo = MTVMEDIA.shehulk()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wandavision":
+            elif command == "wandavisions1":
                 mediainfo = MTVMEDIA.wandavision()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "skeletoncrew":
+            elif command == "skeletoncrews1":
                 mediainfo = MTVMEDIA.skeletoncrew()
                 await websocket.send(json.dumps(mediainfo))
             
-            elif command == "mobland":
+            elif command == "moblands1":
                 mediainfo = MTVMEDIA.mobland()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "talesofthejedi":
+            elif command == "talesofthejedis1":
                 mediainfo = MTVMEDIA.talesofthejedi()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "talesoftheunderworld":
+            elif command == "talesoftheunderworlds1":
                 mediainfo = MTVMEDIA.talesoftheunderworld()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "columbia":
-                mediainfo = MTVMEDIA.columbia()
-                await websocket.send(json.dumps(mediainfo))
+            # elif command == "columbias1":
+            #     mediainfo = MTVMEDIA.columbia()
+            #     await websocket.send(json.dumps(mediainfo))
 
-            elif command == "ironheart":
+            elif command == "ironhearts1":
                 mediainfo = MTVMEDIA.ironheart()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wednesday1":
+            elif command == "wednesdays1":
                 mediainfo = MTVMEDIA.wednesday()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "wednesday2":
+            elif command == "wednesdays2":
                 mediainfo = MTVMEDIA.wednesday2()
                 await websocket.send(json.dumps(mediainfo))
             
