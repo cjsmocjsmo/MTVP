@@ -932,7 +932,7 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "wednesdays1":
-                mediainfo = MTVMEDIA.wednesday()
+                mediainfo = MTVMEDIA.wednesday1()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "wednesdays2":
