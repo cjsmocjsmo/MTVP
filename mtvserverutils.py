@@ -626,6 +626,41 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def deepspacenines1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def deepspacenines2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def deepspacenines3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def deepspacenines4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def deepspacenines5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def deepspacenines6(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='06' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def deepspacenines7(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='07' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     def acolyte(self):
         command = "SELECT * FROM tvshows WHERE catagory='Acolyte' ORDER BY Episode ASC;"
         self.cursor.execute(command)

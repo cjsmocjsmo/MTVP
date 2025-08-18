@@ -18,7 +18,7 @@ def mtv_walk_dirs(directory):
         for file in files:
             fname = os.path.join(root, file)
             ext = os.path.splitext(fname)[1]
-            if ext == ".mp4":
+            if ext == ".mp4" or ext == ".mkv":
                 medialist.append(fname)
     return medialist
 

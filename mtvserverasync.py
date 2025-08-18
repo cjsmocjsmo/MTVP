@@ -775,6 +775,34 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.voyagers7()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "deepspacenines1":
+                mediainfo = MTVMEDIA.deepspacenines1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "deepspacenines2":
+                mediainfo = MTVMEDIA.deepspacenines2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "deepspacenines3":
+                mediainfo = MTVMEDIA.deepspacenines3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "deepspacenines4":
+                mediainfo = MTVMEDIA.deepspacenines4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "deepspacenines5":
+                mediainfo = MTVMEDIA.deepspacenines5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "deepspacenines6":
+                mediainfo = MTVMEDIA.deepspacenines6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "deepspacenines7":
+                mediainfo = MTVMEDIA.deepspacenines7()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "acolytes1":
                 mediainfo = MTVMEDIA.acolyte()
                 await websocket.send(json.dumps(mediainfo))
