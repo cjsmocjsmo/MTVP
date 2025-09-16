@@ -48,6 +48,7 @@ class ProcessTVShows:
         self.tng = re.compile("TNG")
         self.voyager = re.compile("Voyager")
         self.deepspacenine = re.compile("DeepSpaceNine")
+        self.tonyandziva = re.compile("TonyAndZiva")
 
         self.acolyte = re.compile("Acolyte")
         self.andor = re.compile("Andor")
@@ -199,6 +200,10 @@ class ProcessTVShows:
             catagory = "TalesOfTheUnderworld"
         elif re.search(self.ironheart, tv):
             catagory = "IronHeart"
+        elif re.search(self.tonyandziva, tv):
+            catagory = "TonyAndZiva"
+        else:
+            catagory = "Unknown"
         return catagory
 
     def get_name(self, tv):
