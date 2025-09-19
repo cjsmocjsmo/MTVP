@@ -923,10 +923,6 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.talesoftheunderworld()
                 await websocket.send(json.dumps(mediainfo))
 
-            # elif command == "columbias1":
-            #     mediainfo = MTVMEDIA.columbia()
-            #     await websocket.send(json.dumps(mediainfo))
-
             elif command == "ironhearts1":
                 mediainfo = MTVMEDIA.ironheart()
                 await websocket.send(json.dumps(mediainfo))
@@ -941,6 +937,34 @@ async def handle_message(websocket):
 
             elif command == "tonyandzivas1":
                 mediainfo = MTVMEDIA.tonyandzivas1()
+                await websocket.send(json.dumps(mediainfo))
+            
+            elif command == "ncishawaiis1":
+                mediainfo = MTVMEDIA.ncishawaiis1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncishawaiis2":
+                mediainfo = MTVMEDIA.ncishawaiis2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncishawaiis3":
+                mediainfo = MTVMEDIA.ncishawaiis3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisneworleanss1":
+                mediainfo = MTVMEDIA.ncisneworleanss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncissydneys1":
+                mediainfo = MTVMEDIA.ncissydneys1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisoriginss1":
+                mediainfo = MTVMEDIA.ncisoriginss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncis":
+                mediainfo = MTVMEDIA.ncis()
                 await websocket.send(json.dumps(mediainfo))
             
     except Exception as e:

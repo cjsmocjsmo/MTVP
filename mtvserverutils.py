@@ -830,3 +830,33 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='TonyAndZiva' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def ncishawaiis1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISHawaii' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncishawaiis2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISHawaii' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncishawaiis3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISHawaii' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncisneworleanss1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncissydneys1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISSydney' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncisorigins1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISOrigins' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()

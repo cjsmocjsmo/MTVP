@@ -48,6 +48,12 @@ class ProcessTVShows:
         self.tng = re.compile("TNG")
         self.voyager = re.compile("Voyager")
         self.deepspacenine = re.compile("DeepSpaceNine")
+        self.ncis = re.compile("NCIS")
+        self.ncishawaii = re.compile("NCISHawaii")
+        self.ncisneworleans = re.compile("NCISNewOrleans")
+        self.ncisorigins = re.compile("NCISOrigins")
+        self.ncissydney = re.compile("NCISSydney")
+        self.ncisla = re.compile("NCISLA")
         self.tonyandziva = re.compile("TonyAndZiva")
 
         self.acolyte = re.compile("Acolyte")
@@ -200,6 +206,18 @@ class ProcessTVShows:
             catagory = "TalesOfTheUnderworld"
         elif re.search(self.ironheart, tv):
             catagory = "IronHeart"
+        elif re.search(self.ncis, tv):
+            catagory = "NCIS"
+        elif re.search(self.ncishawaii, tv):
+            catagory = "NCISHawaii"
+        elif re.search(self.ncisneworleans, tv):
+            catagory = "NCISNewOrleans"
+        elif re.search(self.ncisorigins, tv):
+            catagory = "NCISOrigins"
+        elif re.search(self.ncissydney, tv):
+            catagory = "NCISSydney"
+        elif re.search(self.ncisla, tv):
+            catagory = "NCISLA"
         elif re.search(self.tonyandziva, tv):
             catagory = "TonyAndZiva"
         else:
