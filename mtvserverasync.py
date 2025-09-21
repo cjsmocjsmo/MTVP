@@ -955,16 +955,188 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.ncisneworleanss1()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "ncisneworleanss2":
+                mediainfo = MTVMEDIA.ncisneworleanss2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisneworleanss3":
+                mediainfo = MTVMEDIA.ncisneworleanss3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisneworleanss4":
+                mediainfo = MTVMEDIA.ncisneworleanss4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisneworleanss5":
+                mediainfo = MTVMEDIA.ncisneworleanss5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisneworleanss6":
+                mediainfo = MTVMEDIA.ncisneworleanss6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncisneworleanss7":
+                mediainfo = MTVMEDIA.ncisneworleanss7()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "ncissydneys1":
                 mediainfo = MTVMEDIA.ncissydneys1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncissydneys2":
+                mediainfo = MTVMEDIA.ncissydneys2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncissydneys3":
+                mediainfo = MTVMEDIA.ncissydneys3()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "ncisoriginss1":
                 mediainfo = MTVMEDIA.ncisoriginss1()
                 await websocket.send(json.dumps(mediainfo))
 
-            elif command == "ncis":
+            elif command == "nciss1":
                 mediainfo = MTVMEDIA.ncis()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss2":
+                mediainfo = MTVMEDIA.nciss2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss3":
+                mediainfo = MTVMEDIA.nciss3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss4":
+                mediainfo = MTVMEDIA.nciss4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss5":
+                mediainfo = MTVMEDIA.nciss5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss6":
+                mediainfo = MTVMEDIA.nciss6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss7":
+                mediainfo = MTVMEDIA.nciss7()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss8":
+                mediainfo = MTVMEDIA.nciss8()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss9":
+                mediainfo = MTVMEDIA.nciss9()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss10":
+                mediainfo = MTVMEDIA.nciss10()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss11":
+                mediainfo = MTVMEDIA.nciss11()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss12":
+                mediainfo = MTVMEDIA.nciss12()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss13":
+                mediainfo = MTVMEDIA.nciss13()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss14":
+                mediainfo = MTVMEDIA.nciss14()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss15":
+                mediainfo = MTVMEDIA.nciss15()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss16":
+                mediainfo = MTVMEDIA.nciss16()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss17":
+                mediainfo = MTVMEDIA.nciss17()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss18":
+                mediainfo = MTVMEDIA.nciss18()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss19":
+                mediainfo = MTVMEDIA.nciss19()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss20":
+                mediainfo = MTVMEDIA.nciss20()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss21":
+                mediainfo = MTVMEDIA.nciss21()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "nciss22":
+                mediainfo = MTVMEDIA.nciss22()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas1":
+                mediainfo = MTVMEDIA.ncislas1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas2":
+                mediainfo = MTVMEDIA.ncislas2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas3":
+                mediainfo = MTVMEDIA.ncislas3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas4":
+                mediainfo = MTVMEDIA.ncislas4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas5":
+                mediainfo = MTVMEDIA.ncislas5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas6":
+                mediainfo = MTVMEDIA.ncislas6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas7":
+                mediainfo = MTVMEDIA.ncislas7()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas8":
+                mediainfo = MTVMEDIA.ncislas8()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas9":
+                mediainfo = MTVMEDIA.ncislas9()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas10":
+                mediainfo = MTVMEDIA.ncislas10()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas11":
+                mediainfo = MTVMEDIA.ncislas11()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas12":
+                mediainfo = MTVMEDIA.ncislas12()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas13":
+                mediainfo = MTVMEDIA.ncislas13()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "ncislas14":
+                mediainfo = MTVMEDIA.ncislas14()
                 await websocket.send(json.dumps(mediainfo))
             
     except Exception as e:

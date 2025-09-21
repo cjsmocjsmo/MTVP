@@ -850,13 +850,233 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def ncisneworleanss2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncisneworleanss3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncisneworleanss4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncisneworleanss5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncisneworleanss6(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='06' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncisneworleanss7(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISNewOrleans' AND season='07' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
     
     def ncissydneys1(self):
         command = "SELECT * FROM tvshows WHERE catagory='NCISSydney' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def ncissydneys2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISSydney' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncissydneys3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISSydney' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
 
     def ncisorigins1(self):
         command = "SELECT * FROM tvshows WHERE catagory='NCISOrigins' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss6(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='06' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss7(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='07' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def nciss8(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='08' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss9(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='09' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss10(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='10' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def nciss11(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='11' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss12(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='12' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def nciss13(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='13' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss14(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='14' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss15(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='15' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def nciss16(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='16' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def nciss17(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='17' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss18(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='18' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss19(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='19' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss20(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='20' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def nciss21(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='21' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def nciss22(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCIS' AND season='22' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas6(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='06' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas7(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='07' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas8(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='08' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas9(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='09' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas10(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='10' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas11(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='11' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def ncislas12(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='12' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncislas13(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='13' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def ncislas14(self):
+        command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='14' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
