@@ -996,7 +996,7 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "nciss1":
-                mediainfo = MTVMEDIA.ncis()
+                mediainfo = MTVMEDIA.ncis1()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "nciss2":
