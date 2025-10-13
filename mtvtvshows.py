@@ -48,6 +48,7 @@ class ProcessTVShows:
         self.tng = re.compile("TNG")
         self.voyager = re.compile("Voyager")
         self.deepspacenine = re.compile("DeepSpaceNine")
+        self.continues = re.compile("Continues")
 
         self.ncis = re.compile("NCISNCIS")
         self.ncishawaii = re.compile("NCISHawaii")
@@ -157,6 +158,10 @@ class ProcessTVShows:
             catagory = "Voyager"
         elif re.search(self.deepspacenine, tv):
             catagory = "DeepSpaceNine"
+        elif re.search(self.continues, tv):
+            catagory = "Continues"
+
+
         elif re.search(self.acolyte, tv):
             catagory = "Acolyte"
         elif re.search(self.andor, tv):

@@ -654,10 +654,15 @@ class Media:
     def deepspacenines6(self):
         command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='06' ORDER BY Episode ASC;"
         self.cursor.execute(command)
-        return self._fetch_all_as_dict()
+        return self._fetch_all_as_dict() 
 
     def deepspacenines7(self):
         command = "SELECT * FROM tvshows WHERE catagory='DeepSpaceNine' AND season='07' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def continues1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Continues' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 

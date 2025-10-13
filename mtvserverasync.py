@@ -803,6 +803,11 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.deepspacenines7()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "continues1":
+                mediainfo = MTVMEDIA.continues1()
+                await websocket.send(json.dumps(mediainfo))
+
+
             elif command == "acolytes1":
                 mediainfo = MTVMEDIA.acolyte()
                 await websocket.send(json.dumps(mediainfo))
