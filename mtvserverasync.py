@@ -1143,6 +1143,10 @@ async def handle_message(websocket):
             elif command == "ncislas14":
                 mediainfo = MTVMEDIA.ncislas14()
                 await websocket.send(json.dumps(mediainfo))
+
+            elif command == "dmvs1":
+                mediainfo = MTVMEDIA.dmvs1()
+                await websocket.send(json.dumps(mediainfo))
             
     except Exception as e:
         logging.error(f"Exception in handle_message: {e}")

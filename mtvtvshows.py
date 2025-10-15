@@ -82,6 +82,8 @@ class ProcessTVShows:
         self.ironheart = re.compile("IronHeart")
         self.episea = re.compile("\sS\d{2}E\d{2}\s")
 
+        self.dmv = re.compile("DMV")
+
     def get_tvid(self, tv):
         encoded_string = tv.encode('utf-8')
         md5_hash = hashlib.md5()
@@ -160,6 +162,9 @@ class ProcessTVShows:
             catagory = "DeepSpaceNine"
         elif re.search(self.continues, tv):
             catagory = "Continues"
+
+        elif re.search(self.dmv, tv):
+            catagory = "DMV"
 
 
         elif re.search(self.acolyte, tv):
