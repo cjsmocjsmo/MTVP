@@ -80,7 +80,7 @@ class ProcessImages:
                 "Idx": idx+1,
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
-            logging.info(f"Processing image: {media_info}")
+            # logging.info(f"Processing image: {media_info}")
             
             try:
                 self.cursor.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
