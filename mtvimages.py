@@ -7,6 +7,14 @@ import re
 import subprocess
 import sqlite3
 from pprint import pprint
+import logging
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+log_file = os.getenv('MTV_SERVER_LOG')
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class ProcessImages:
     def __init__(self, imgs, conn, cursor):
@@ -19,7 +27,7 @@ class ProcessImages:
         img_dir = os.getenv("MTV_THUMBNAIL_PATH")
         if not os.path.exists(img_dir):
             subprocess.run(["mkdir", img_dir])
-            print(f"Created directory")
+            logging.info(f"Created directory: {img_dir}")
 
     def create_thumbnail(self, img):
         thumb_dir = os.getenv("MTV_THUMBNAIL_PATH")
@@ -45,7 +53,8 @@ class ProcessImages:
             start = match.start()
             return img[:start]
         else:
-            print("No match")
+            logging.warning(f"No regex match found for image: {img}")
+            return img
 
     def get_thumb_path(self, img):
         new_dir = os.getenv("MTV_THUMBNAIL_PATH")
@@ -71,7 +80,7 @@ class ProcessImages:
                 "Idx": idx+1,
                 "HttpThumbPath": self.get_http_thumb_path(thumb),
             }
-            pprint(media_info)
+            logging.info(f"Processing image: {media_info}")
             
             try:
                 self.cursor.execute('''INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath)
@@ -89,9 +98,9 @@ class ProcessImages:
                 self.conn.commit()
                 
             except sqlite3.IntegrityError as e:
-                print(f'Error: {e}')
+                logging.error(f'SQLite IntegrityError in ProcessImages: {e}')
             except sqlite3.OperationalError as e:
-                print(f"Error: {e}")
+                logging.error(f"SQLite OperationalError in ProcessImages: {e}")
         
 class ProcessTVShowImages:
     def __init__(self, imgs):
@@ -101,7 +110,7 @@ class ProcessTVShowImages:
         img_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
         if not os.path.exists(img_dir):
             subprocess.run(["mkdir", img_dir])
-            print(f"Created directory")
+            logging.info(f"Created TV thumbnail directory: {img_dir}")
 
     def create_thumbnail(self, img_path):
         thumb_dir = os.getenv("MTV_TV_THUMBNAIL_PATH")
@@ -109,7 +118,7 @@ class ProcessTVShowImages:
         fname = os.path.split(img)[1]
         fname = ".".join((fname, "jpg"))
         save_path = os.path.join(thumb_dir, fname)
-        print(f"Saving thumbnail to\n\t {save_path}")
+        logging.info(f"Saving thumbnail to: {save_path}")
 
         thumb = Image.open(img_path)
         thumb.thumbnail((300, 300))
@@ -118,6 +127,6 @@ class ProcessTVShowImages:
     
     def process_tv_thumbs(self):
         self.tv_thumb_dir_check()
-        print(self.imglist)
+        logging.info(f"Processing {len(self.imglist)} TV show images")
         for img in self.imglist:
             self.create_thumbnail(img)

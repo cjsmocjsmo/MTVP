@@ -6,17 +6,12 @@ from pprint import pprint
 import re
 import sqlite3
 import logging
+from dotenv import load_dotenv
 
-# Ensure log directory exists
-log_dir = '/usr/share/MTV'
-log_file = '/usr/share/MTV/media_info.log'
+# Load environment variables from .env file
+load_dotenv()
 
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir, exist_ok=True)
-
-# Create log file if it doesn't exist
-if not os.path.exists(log_file):
-    open(log_file, 'a').close()
+log_file = os.getenv('MTV_SERVER_LOG')
 
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(message)s')
 
@@ -255,8 +250,8 @@ class ProcessTVShows:
             new_start = start + 1
             return tv[:new_start]
         else:
-            print("No match")
-            print(tv)
+            logging.error(f"No regex match found for TV show: {tv}")
+            return tv
 
     def get_season(self, tv):
         tvu = tv.upper()
@@ -291,7 +286,7 @@ class ProcessTVShows:
                 "Idx": idx+1,
             }
             
-            logging.info(media_info)
+            logging.info(f"Processing TV show: {media_info}")
 
             try:
                 self.cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
@@ -309,10 +304,10 @@ class ProcessTVShows:
                 self.conn.commit()
                 
             except sqlite3.IntegrityError as e:
-                print(f"Error: {e}")
+                logging.error(f"SQLite IntegrityError: {e}")
                 continue
             except sqlite3.OperationalError as e:
-                print(f"Error: {e}")
+                logging.error(f"SQLite OperationalError: {e}")
                 continue
 
 class UpdateTVShows:

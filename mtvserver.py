@@ -1,6 +1,21 @@
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
+import logging
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+log_file = os.getenv('MTV_SERVER_LOG')
+log_dir = os.path.dirname(log_file)
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir, exist_ok=True)
+if not os.path.exists(log_file):
+    open(log_file, 'a').close()
+
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
@@ -15,25 +30,25 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         self.clients.add(self)
-        print("WebSocket opened")
+        logging.info("WebSocket opened")
 
     def on_message(self, message):
         if message == "add":
             # Add a song to the playlist
-            print("Song added")
+            logging.info("Song added")
         elif message == "play":
             # Start playback
-            print("Playback started")
+            logging.info("Playback started")
         elif message == "pause":
             # Pause playback
-            print("Playback paused")
+            logging.info("Playback paused")
         elif message == "stop":
             # Stop playback
-            print("Playback stopped")
+            logging.info("Playback stopped")
 
     def on_close(self):
         self.clients.remove(self)
-        print("WebSocket closed")
+        logging.info("WebSocket closed")
 
     def check_origin(self, origin):
         return True  # Allow all origins

@@ -5,6 +5,14 @@ import os
 import re
 from pprint import pprint
 import sqlite3
+import logging
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+log_file = os.getenv('MTV_SERVER_LOG')
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class ProcessMovies:
     def __init__(self, movs, conn, cursor):
@@ -249,9 +257,9 @@ class ProcessMovies:
                 self.conn.commit()
                 
             except sqlite3.IntegrityError as e:
-                print(f"Error: {e}")
+                logging.error(f"SQLite IntegrityError in ProcessMovies: {e}")
             except sqlite3.OperationalError as e:
-                print(f"Error: {e}")
+                logging.error(f"SQLite OperationalError in ProcessMovies: {e}")
 
 class UpdateMovies:
     def __init__(self, conn, cursor):

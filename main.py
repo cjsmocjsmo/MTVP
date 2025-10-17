@@ -8,6 +8,7 @@ import os
 from pprint import pprint
 import sqlite3
 import utils
+import logging
 from dotenv import load_dotenv
 
 CWD = os.getcwd()
@@ -15,6 +16,17 @@ CWD = os.getcwd()
 class Main:
     def __init__(self):
         load_dotenv()
+        
+        # Set up logging
+        log_file = os.getenv('MTV_SERVER_LOG')
+        log_dir = os.path.dirname(log_file)
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir, exist_ok=True)
+        if not os.path.exists(log_file):
+            open(log_file, 'a').close()
+            
+        logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        
         self.conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
         self.cursor = self.conn.cursor()
 
@@ -41,7 +53,7 @@ class Main:
             mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
 
         except sqlite3.OperationalError as e:
-            print(e)
+            logging.error(f"SQLite OperationalError in main(): {e}")
         finally:
             self.conn.close()
             # self.cursor.close()
@@ -70,7 +82,7 @@ class Main:
             
 
         except sqlite3.OperationalError as e:
-            print(e)
+            logging.error(f"SQLite OperationalError in update(): {e}")
         finally:
             self.conn.close()
             # self.cursor.close()

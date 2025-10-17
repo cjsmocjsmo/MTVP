@@ -18,9 +18,20 @@ player = instance.media_player_new()
 
 load_dotenv()
 
+# Ensure log directory and file exist
+log_file = os.getenv('MTV_SERVER_LOG')
+log_dir = os.path.dirname(log_file)
+
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir, exist_ok=True)
+
+# Create log file if it doesn't exist
+if not os.path.exists(log_file):
+    open(log_file, 'a').close()
+
 logging.basicConfig(
     level=logging.INFO,
-    filename='/usr/share/MTV/mtv.log',
+    filename=log_file,
     filemode='a',  # Append mode
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
@@ -128,8 +139,7 @@ async def handle_message(websocket):
                         media_path = await get_media_path_from_media_id(media_id)
                         player.set_media(vlc.Media(media_path))
                         player.set_fullscreen(True)
-                        print(f"Starting mediaplayer with the path:\n{media_path}")
-                        logging.info(f"Starting mediaplayer with the path:\n{media_path}")
+                        logging.info(f"Starting mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
                     logging.error(f"Error fetching media path: {e}")
@@ -142,8 +152,7 @@ async def handle_message(websocket):
                         media_path = await get_media_path_from_media_tv_id(media_tv_id)
                         player.set_media(vlc.Media(media_path))
                         player.set_fullscreen(True)
-                        print(f"Starting mediaplayer with the path:\n{media_path}")
-                        logging.info(f"Starting mediaplayer with the path:\n{media_path}")
+                        logging.info(f"Starting TV mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
                     logging.error(f"Error setting player path with mediapath: {e}")
