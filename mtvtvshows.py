@@ -7,7 +7,18 @@ import re
 import sqlite3
 import logging
 
-logging.basicConfig(filename='/usr/share/MTV/media_info.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+# Ensure log directory exists
+log_dir = '/usr/share/MTV'
+log_file = '/usr/share/MTV/media_info.log'
+
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir, exist_ok=True)
+
+# Create log file if it doesn't exist
+if not os.path.exists(log_file):
+    open(log_file, 'a').close()
+
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(message)s')
 
 class ProcessTVShows:
     def __init__(self, tvshows, conn, cursor):
