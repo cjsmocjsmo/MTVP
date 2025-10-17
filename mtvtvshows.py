@@ -286,7 +286,7 @@ class ProcessTVShows:
                 "Idx": idx+1,
             }
             
-            logging.info(f"Processing TV show: {media_info}")
+            # logging.info(f"Processing TV show: {media_info}")
 
             try:
                 self.cursor.execute('''INSERT INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx)
