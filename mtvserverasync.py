@@ -1156,6 +1156,26 @@ async def handle_message(websocket):
             elif command == "dmvs1":
                 mediainfo = MTVMEDIA.dmvs1()
                 await websocket.send(json.dumps(mediainfo))
+
+            elif command == "personofinterests1":
+                mediainfo = MTVMEDIA.personofinterests1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "personofinterests2":
+                mediainfo = MTVMEDIA.personofinterests2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "personofinterests3":
+                mediainfo = MTVMEDIA.personofinterests3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "personofinterests4":
+                mediainfo = MTVMEDIA.personofinterests4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "personofinterests5":
+                mediainfo = MTVMEDIA.personofinterests5()
+                await websocket.send(json.dumps(mediainfo))
             
     except Exception as e:
         logging.error(f"Exception in handle_message: {e}")

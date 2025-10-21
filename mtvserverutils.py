@@ -1090,3 +1090,28 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='DMV' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def personofinterests1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PersonOfInterest' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def personofinterests2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PersonOfInterest' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def personofinterests3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PersonOfInterest' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def personofinterests4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PersonOfInterest' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def personofinterests5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PersonOfInterest' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
