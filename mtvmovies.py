@@ -72,7 +72,7 @@ class ProcessMovies:
         self.trolls = re.compile("Trolls")
         self.vandam = re.compile("VanDam")
         self.xmen = re.compile("XMen")
-        self.crap = re.compile(r"\s(")
+        self.crap = re.compile(r"s(")
         
 
     def get_year(self, mov):
