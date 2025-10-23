@@ -76,8 +76,8 @@ class ProcessMovies:
         
 
     def get_year(self, mov):
-        searchstr1 = re.compile(r"(")
-        searchstr2 = re.compile(r")")
+        searchstr1 = re.compile(r"\(")
+        searchstr2 = re.compile(r"\)")
         start = 0
         end = 0
         match1 = re.search(searchstr1, mov)
