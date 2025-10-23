@@ -21,7 +21,7 @@ class ProcessImages:
         self.conn = conn
         self.cursor = cursor
         self.imglist = imgs
-        self.search = re.compile("\s\(")
+        self.search = re.compile(r"\s(")
 
     def thumb_dir_check(self):
         img_dir = os.getenv("MTV_THUMBNAIL_PATH")

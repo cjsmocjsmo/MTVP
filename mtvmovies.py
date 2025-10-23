@@ -72,12 +72,12 @@ class ProcessMovies:
         self.trolls = re.compile("Trolls")
         self.vandam = re.compile("VanDam")
         self.xmen = re.compile("XMen")
-        self.crap = re.compile("\s\(")
+        self.crap = re.compile(r"\s(")
         
 
     def get_year(self, mov):
-        searchstr1 = re.compile("\(")
-        searchstr2 = re.compile("\)")
+        searchstr1 = re.compile(r"(")
+        searchstr2 = re.compile(r")")
         start = 0
         end = 0
         match1 = re.search(searchstr1, mov)
