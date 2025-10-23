@@ -86,7 +86,7 @@ class ProcessTVShows:
         self.skeletoncrew = re.compile("SkeletonCrew")
         self.talesoftheunderworld = re.compile("TalesOfTheUnderworld")
         self.ironheart = re.compile("IronHeart")
-        self.episea = re.compile("\sS\d{2}E\d{2}\s")
+        self.episea = re.compile(r"\sS\d{2}E\d{2}\s")
 
         self.dmv = re.compile("DMV")
 
