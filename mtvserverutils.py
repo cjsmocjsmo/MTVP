@@ -745,6 +745,11 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='Visions' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def visionss3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Visions' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
     
     def falconwintersoldier(self):
         command = "SELECT * FROM tvshows WHERE catagory='FalconWinterSoldier' ORDER BY Episode ASC;"
@@ -821,12 +826,12 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def wednesday1(self):
+    def wednesdays1(self):
         command = "SELECT * FROM tvshows WHERE catagory='Wednesday' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def wednesday2(self):
+    def wednesdays2(self):
         command = "SELECT * FROM tvshows WHERE catagory='Wednesday' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()

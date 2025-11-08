@@ -881,6 +881,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.visionss2()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "visionss3":
+                mediainfo = MTVMEDIA.visionss3()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "falconwintersoldiers1":
                 mediainfo = MTVMEDIA.falconwintersoldier()
                 await websocket.send(json.dumps(mediainfo))
@@ -942,11 +946,11 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "wednesdays1":
-                mediainfo = MTVMEDIA.wednesday1()
+                mediainfo = MTVMEDIA.wednesdays1()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "wednesdays2":
-                mediainfo = MTVMEDIA.wednesday2()
+                mediainfo = MTVMEDIA.wednesdays2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "tonyandzivas1":
