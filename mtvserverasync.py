@@ -580,6 +580,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.prehistoricplanets2()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "prehistoricplanets3":
+                mediainfo = MTVMEDIA.prehistoricplanets3()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "raisedbywolvess1":
                 mediainfo = MTVMEDIA.raisedbywolvess1()
                 await websocket.send(json.dumps(mediainfo))
