@@ -87,6 +87,7 @@ class ProcessTVShows:
         self.talesoftheunderworld = re.compile("TalesOfTheUnderworld")
         self.ironheart = re.compile("IronHeart")
         self.personofinterest = re.compile("PersonOfInterest")
+        self.percyjacksonandtheolympians = re.compile("PercyJacksonAndTheOlympians")
         self.episea = re.compile(r"\sS\d{2}E\d{2}\s")
 
         self.dmv = re.compile("DMV")
@@ -240,6 +241,8 @@ class ProcessTVShows:
             catagory = "TonyAndZiva"
         elif re.search(self.personofinterest, tv):
             catagory = "PersonOfInterest"
+        elif re.search(self.percyjacksonandtheolympians, tv):
+            catagory = "PercyJacksonAndTheOlympians"
         else:
             catagory = "Unknown"
         return catagory

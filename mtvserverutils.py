@@ -242,7 +242,12 @@ class Media:
         return self._fetch_all_as_dict()
     
     def fallout(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Fallout' ORDER BY Episode ASC;"
+        command = "SELECT * FROM tvshows WHERE catagory='Fallout' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def fallout2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Fallout' AND season ='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
@@ -363,6 +368,16 @@ class Media:
     
     def orvilles3(self):
         command = "SELECT * FROM tvshows WHERE catagory='Orville' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def percyjacksonandtheolympianss1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PercyJacksonAndTheOlympians' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def percyjacksonandtheolympianss2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='PercyJacksonAndTheOlympians' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     

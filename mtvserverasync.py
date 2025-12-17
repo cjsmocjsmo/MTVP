@@ -476,6 +476,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.fallout()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "fallouts2":
+                mediainfo == MTVMEDIA.fallout2()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "forallmankinds1":
                 mediainfo = MTVMEDIA.forallmankinds1()
                 await websocket.send(json.dumps(mediainfo))
@@ -570,6 +574,14 @@ async def handle_message(websocket):
 
             elif command == "orvilles3":
                 mediainfo = MTVMEDIA.orvilles3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "percyjacksonandtheolympianss1":
+                mediainfo = MTVMEDIA.percyjacksonandtheolympianss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "percyjacksonandtheolympianss2":
+                mediainfo = MTVMEDIA.percyjacksonandtheolympianss2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "prehistoricplanets1":
