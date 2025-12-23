@@ -55,6 +55,7 @@ class ProcessMovies:
         self.oldies = re.compile("Oldies")
         self.panda = re.compile("Panda")
         self.pirates = re.compile("Pirates")
+        self.predator = re.compile("Predator")
         self.riddick = re.compile("Riddick")
         self.science = re.compile("Science")
         self.sci_fi = re.compile("SciFi")
@@ -171,6 +172,8 @@ class ProcessMovies:
             catagory = "Panda"
         elif re.search(self.pirates, mov):
             catagory = "Pirates"
+        elif re.search(self.predator, mov):
+            catagory = "Predator"
         elif re.search(self.riddick, mov):
             catagory = "Riddick"
         elif re.search(self.science, mov):

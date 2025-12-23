@@ -377,6 +377,10 @@ async def handle_message(websocket):
                 pirates_data = MTVMEDIA.pirates()
                 await websocket.send(json.dumps(pirates_data))
 
+            elif command == "predator":
+                predator_data = MTVMEDIA.predator()
+                await websocket.send(json.dumps(predator_data))
+
             elif command == "riddick":
                 riddick_data = MTVMEDIA.riddick()
                 await websocket.send(json.dumps(riddick_data))
