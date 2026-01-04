@@ -245,6 +245,10 @@ async def handle_message(websocket):
                 arnold_data = MTVMEDIA.arnold()
                 await websocket.send(json.dumps(arnold_data))
 
+            elif command == "avatar":
+                avatar_data = MTVMEDIA.avatar()
+                await websocket.send(json.dumps(avatar_data))
+
             elif command == "brucelee":
                 brucelee_data = MTVMEDIA.brucelee()
                 await websocket.send(json.dumps(brucelee_data))

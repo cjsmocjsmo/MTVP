@@ -20,6 +20,7 @@ class ProcessMovies:
         self.cursor = cursor
         self.movlist = movs
         self.action = re.compile("Action")
+        self.avatar = re.compile("Avatar")
         self.chuck_norris = re.compile("ChuckNorris")
         self.arnold = re.compile("Arnold")
         self.bruce_lee = re.compile("BruceLee")
@@ -106,6 +107,8 @@ class ProcessMovies:
             catagory = "Action"
         elif re.search(self.arnold, mov):
             catagory = "Arnold"
+        elif re.search(self.avatar, mov):
+            catagory = "Avatar"
         elif re.search(self.bruce_lee, mov):
             catagory = "BruceLee"
         elif re.search(self.bruce_willis, mov):
