@@ -190,8 +190,7 @@ class Media:
         return self._fetch_all_as_dict()
     
     def stooges(self):
-        command = "SELECT * FROM movies WHERE catagory='Stooges' ORDER BY year DESC;"
-        self.cursor.execute(command)
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Stooges' ORDER BY year DESC;")
         return self._fetch_all_as_dict()
     
     def superheros(self):
