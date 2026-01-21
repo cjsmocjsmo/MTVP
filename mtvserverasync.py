@@ -815,6 +815,21 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.continues1()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "jetsonss1":
+                mediainfo = MTVMEDIA.jetsonss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "jetsonss2":
+                mediainfo = MTVMEDIA.jetsonss2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "jonnyquests1":
+                mediainfo = MTVMEDIA.jonnyquests1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "jonnyquests2":
+                mediainfo = MTVMEDIA.jonnyquests2()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "acolytes1":
                 mediainfo = MTVMEDIA.acolyte()

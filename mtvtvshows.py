@@ -44,6 +44,10 @@ class ProcessTVShows:
         self.thelastofus = re.compile("TheLastOfUs")
         self.thelordoftheringstheringsofpower = re.compile("TheLordOfTheRingsTheRingsOfPower")
         self.wheeloftime = re.compile("WheelOfTime")
+        self.jetsons = re.compile("Jetsons")
+        self.jonnyquest = re.compile("JonnyQuest")
+
+
         self.discovery = re.compile("Discovery")
         self.enterprise = re.compile("Enterprise")
         self.lowerdecks = re.compile("LowerDecks")
