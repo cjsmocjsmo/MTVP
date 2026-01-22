@@ -178,6 +178,11 @@ class ProcessTVShows:
         elif re.search(self.dmv, tv):
             catagory = "DMV"
 
+        elif re.search(self.jetsons, tv):
+            catagory = "Jetsons"
+        elif re.search(self.jonnyquest, tv):
+            catagory = "JonnyQuest"
+
 
         elif re.search(self.acolyte, tv):
             catagory = "Acolyte"
