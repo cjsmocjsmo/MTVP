@@ -166,14 +166,17 @@ async def handle_message(websocket):
 
             elif command == "play":
                 player.play()
+                UTILS.set_state("true")
                 await websocket.send(json.dumps({"status": "playing"}))
             
             elif command == "pause":
                 player.pause()
+                UTILS.set_state("false")
                 await websocket.send(json.dumps({"status": "paused"}))
 
             elif command == "stop":
                 player.stop()
+                UTILS.set_state("false")
                 await websocket.send(json.dumps({"status": "stopped"}))
 
             elif command == "next":

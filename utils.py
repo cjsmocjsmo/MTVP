@@ -129,3 +129,22 @@ def python3_websockets_check():
         return True
     else:
         return False
+    
+def set_state(appstate):
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM state")
+    cursor.execute("INSERT INTO state (Playing) VALUES (?)", (appstate,))
+    conn.commit()
+    conn.close()
+
+def get_state():
+    conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+    cursor = conn.cursor()
+    cursor.execute("SELECT Playing FROM state ORDER BY id DESC LIMIT 1")
+    result = cursor.fetchone()
+    conn.close()
+    if result:
+        return result[0]
+    else:
+        return None

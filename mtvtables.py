@@ -45,6 +45,11 @@ class CreateTables:
             Idx INTEGER NOT NULL,
             HttpThumbPath TEXT NOT NULL
          )""")
+        
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS state (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Playing TEXT NOT NULL
+         )""")
 
 
 
