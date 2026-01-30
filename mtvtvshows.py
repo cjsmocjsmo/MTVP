@@ -59,6 +59,7 @@ class ProcessTVShows:
         self.voyager = re.compile("Voyager")
         self.deepspacenine = re.compile("DeepSpaceNine")
         self.continues = re.compile("Continues")
+        self.starfleetacademy = re.compile("StarFleetAcademy")
 
         self.ncis = re.compile("NCISNCIS")
         self.ncishawaii = re.compile("NCISHawaii")

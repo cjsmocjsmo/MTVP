@@ -693,6 +693,14 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def starfleetacademys1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='StarfleetAcademy' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+
+
+
     def acolyte(self):
         command = "SELECT * FROM tvshows WHERE catagory='Acolyte' ORDER BY Episode ASC;"
         self.cursor.execute(command)
