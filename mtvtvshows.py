@@ -175,6 +175,8 @@ class ProcessTVShows:
             catagory = "DeepSpaceNine"
         elif re.search(self.continues, tv):
             catagory = "Continues"
+        elif re.search(self.starfleetacademy, tv):
+            catagory = "StarfleetAcademy"
 
         elif re.search(self.dmv, tv):
             catagory = "DMV"

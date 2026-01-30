@@ -535,9 +535,9 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.lostinspaces3()
                 await websocket.send(json.dumps(mediainfo))
 
-            # elif command == "mastersoftheuniverse":
-            #     mediainfo = MTVMEDIA.mastersoftheuniverse()
-            #     await websocket.send(json.dumps(mediainfo))
+            elif command == "mastersoftheuniverse":
+                mediainfo = MTVMEDIA.mastersoftheuniverse()
+                await websocket.send(json.dumps(mediainfo))
 
             elif command == "monarchlegacyofmonsterss1":
                 mediainfo = MTVMEDIA.monarchlegacyofmonsters()
