@@ -233,6 +233,20 @@ class Media:
         self.cursor.execute("SELECT * FROM movies WHERE catagory='XMen' ORDER BY year DESC")
         return self._fetch_all_as_dict()
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     def alteredcarbons1(self):
         command = "SELECT * FROM tvshows WHERE catagory='AlteredCarbon' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
@@ -248,13 +262,13 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def fallout(self):
+    def fallouts1(self):
         command = "SELECT * FROM tvshows WHERE catagory='Fallout' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
-    def fallout2(self):
-        command = "SELECT * FROM tvshows WHERE catagory='Fallout' AND season ='02' ORDER BY Episode ASC;"
+    def fallouts2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='Fallout' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
@@ -858,6 +872,11 @@ class Media:
 
     def ironheart(self):
         command = "SELECT * FROM tvshows WHERE catagory='IronHeart' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def wonderman(self):
+        command = "SELECT * FROM tvshows WHERE catagory='WonderMan' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 

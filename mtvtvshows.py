@@ -20,34 +20,50 @@ class ProcessTVShows:
         self.conn = conn
         self.cursor = cursor
         self.tvlist = tvshows
+        self.episea = re.compile(r"\sS\d{2}E\d{2}\s")
+
+        #action
+        self.shogun = re.compile("Shogun")
+        self.thecontinental = re.compile("TheContinental")
+        self.mobland = re.compile("MobLand")
+
+        #comedy
+        self.fuubar = re.compile("FuuBar")
+        self.dmv = re.compile("DMV")
+
+        #fantasy
+        self.houseofthedragon = re.compile("HouseOfTheDragon")
+        self.thelordoftheringstheringsofpower = re.compile("TheLordOfTheRingsTheRingsOfPower")
+        self.wheeloftime = re.compile("WheelOfTime")
+        self.wednesday = re.compile("Wednesday")
+        self.percyjacksonandtheolympians = re.compile("PercyJacksonAndTheOlympians")
+
+        #sci-fi
         self.alteredcarbon = re.compile("AlteredCarbon")
         self.forallmankind = re.compile("ForAllManKind")
         self.foundation = re.compile("Foundation")
-        self.fuubar = re.compile("FuuBar")
-        self.hford1923 = re.compile("HFord1923")
         self.halo = re.compile("Halo")
-        self.houseofthedragon = re.compile("HouseOfTheDragon")
         self.lostinspace = re.compile("LostInSpace")
-        self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
-        self.mobland = re.compile("MobLand")
         self.monarchlegacyofmonsters = re.compile("MonarchLegacyOfMonsters")
         self.nightsky = re.compile("NightSky")
         self.orville = re.compile("Orville")
-        self.prehistoricplanet = re.compile("PrehistoricPlanet")
         self.raisedbywolves = re.compile("RaisedByWolves")
-        self.shogun = re.compile("Shogun")
         self.silo = re.compile("Silo")
-        self.columbia = re.compile("Columbia")
         self.cowboybebop = re.compile("CowboyBebop")
         self.fallout = re.compile("Fallout")
-        self.thecontinental = re.compile("TheContinental")
+
+        #science
+        self.columbia = re.compile("Columbia")
+        self.prehistoricplanet = re.compile("PrehistoricPlanet")
         self.thelastofus = re.compile("TheLastOfUs")
-        self.thelordoftheringstheringsofpower = re.compile("TheLordOfTheRingsTheRingsOfPower")
-        self.wheeloftime = re.compile("WheelOfTime")
+        self.personofinterest = re.compile("PersonOfInterest")
+
+        #cartoons
         self.jetsons = re.compile("Jetsons")
         self.jonnyquest = re.compile("JonnyQuest")
+        self.mastersoftheuniverse = re.compile("MastersOfTheUniverse")
 
-
+        #startrek
         self.discovery = re.compile("Discovery")
         self.enterprise = re.compile("Enterprise")
         self.lowerdecks = re.compile("LowerDecks")
@@ -61,6 +77,7 @@ class ProcessTVShows:
         self.continues = re.compile("Continues")
         self.starfleetacademy = re.compile("StarFleetAcademy")
 
+        #ncis
         self.ncis = re.compile("NCISNCIS")
         self.ncishawaii = re.compile("NCISHawaii")
         self.ncisneworleans = re.compile("NCISNewOrleans")
@@ -69,6 +86,7 @@ class ProcessTVShows:
         self.ncisla = re.compile("NCISLA")
         self.tonyandziva = re.compile("TonyAndZiva")
 
+        #starwars
         self.acolyte = re.compile("Acolyte")
         self.andor = re.compile("Andor")
         self.mandalorian = re.compile("Mandalorian")
@@ -79,6 +97,8 @@ class ProcessTVShows:
         self.obiwankenobi = re.compile("ObiWanKenobi")
         self.talesofthejedi = re.compile("TalesOfTheJedi")
         self.visions = re.compile("Visions")
+
+        #mcu
         self.falconwintersoldier = re.compile("FalconWinterSoldier")
         self.iamgroot = re.compile("IAmGroot")
         self.moonknight = re.compile("MoonKnight")
@@ -87,15 +107,13 @@ class ProcessTVShows:
         self.loki = re.compile("Loki")
         self.secretinvasion = re.compile("SecretInvasion")
         self.wandavision = re.compile("WandaVision")
-        self.wednesday = re.compile("Wednesday")
         self.skeletoncrew = re.compile("SkeletonCrew")
         self.talesoftheunderworld = re.compile("TalesOfTheUnderworld")
         self.ironheart = re.compile("IronHeart")
-        self.personofinterest = re.compile("PersonOfInterest")
-        self.percyjacksonandtheolympians = re.compile("PercyJacksonAndTheOlympians")
-        self.episea = re.compile(r"\sS\d{2}E\d{2}\s")
+        self.wonderman = re.compile("WonderMan")
 
-        self.dmv = re.compile("DMV")
+        #westerns
+        self.hford1923 = re.compile("HFord1923")
 
     def get_tvid(self, tv):
         encoded_string = tv.encode('utf-8')
@@ -105,54 +123,70 @@ class ProcessTVShows:
 
     def get_catagory(self, tv):
         catagory = ""
-        if re.search(self.alteredcarbon, tv):
+
+        #action
+        if re.search(self.shogun, tv):
+            catagory = "Shogun"
+        elif re.search(self.thecontinental, tv):
+            catagory = "TheContinental"
+        elif re.search(self.mobland, tv):
+            catagory = "MobLand"
+
+        #cartoons
+        elif re.search(self.mastersoftheuniverse, tv):
+            catagory = "MastersOfTheUniverse"
+        elif re.search(self.jetsons, tv):
+            catagory = "Jetsons"
+        elif re.search(self.jonnyquest, tv):
+            catagory = "JonnyQuest"
+
+        #comedy
+        elif re.search(self.fuubar, tv):
+            catagory = "FuuBar"
+        elif re.search(self.dmv, tv):
+            catagory = "DMV"
+
+        #fantasy
+        elif re.search(self.houseofthedragon, tv):
+            catagory = "HouseOfTheDragon"
+        elif re.search(self.wheeloftime, tv):
+            catagory = "WheelOfTime"
+        elif re.search(self.thelordoftheringstheringsofpower, tv):
+            catagory = "TheLordOfTheRingsTheRingsOfPower"
+        elif re.search(self.wednesday, tv):
+            catagory = "Wednesday"
+        elif re.search(self.percyjacksonandtheolympians, tv):
+            catagory = "PercyJacksonAndTheOlympians"
+
+        #sci-fi
+        elif re.search(self.alteredcarbon, tv):
             catagory = "AlteredCarbon"
         elif re.search(self.forallmankind, tv):
             catagory = "ForAllManKind"
         elif re.search(self.foundation, tv):
             catagory = "Foundation"
-        elif re.search(self.fuubar, tv):
-            catagory = "FuuBar"
-        elif re.search(self.hford1923, tv):
-            catagory = "HFord1923"
         elif re.search(self.halo, tv):
             catagory = "Halo"
-        elif re.search(self.houseofthedragon, tv):
-            catagory = "HouseOfTheDragon"
         elif re.search(self.lostinspace, tv):
             catagory = "LostInSpace"
-        elif re.search(self.mastersoftheuniverse, tv):
-            catagory = "MastersOfTheUniverse"
-        elif re.search(self.mobland, tv):
-            catagory = "MobLand"
         elif re.search(self.monarchlegacyofmonsters, tv):
             catagory = "MonarchLegacyOfMonsters"
         elif re.search(self.nightsky, tv):
             catagory = "NightSky"
         elif re.search(self.orville, tv):
             catagory = "Orville"
-        elif re.search(self.prehistoricplanet, tv):
-            catagory = "PrehistoricPlanet"
         elif re.search(self.raisedbywolves, tv):
             catagory = "RaisedByWolves"
-        elif re.search(self.shogun, tv):
-            catagory = "Shogun"
         elif re.search(self.silo, tv):
             catagory = "Silo"
-        elif re.search(self.columbia, tv):
-            catagory = "Columbia"
         elif re.search(self.cowboybebop, tv):
             catagory = "CowboyBebop"
         elif re.search(self.fallout, tv):
             catagory = "Fallout"
-        elif re.search(self.thecontinental, tv):
-            catagory = "TheContinental"
         elif re.search(self.thelastofus, tv):
             catagory = "TheLastOfUs"
-        elif re.search(self.thelordoftheringstheringsofpower, tv):
-            catagory = "TheLordOfTheRingsTheRingsOfPower"
-        elif re.search(self.wheeloftime, tv):
-            catagory = "WheelOfTime"
+        
+        #startrek
         elif re.search(self.discovery, tv):
             catagory = "Discovery"
         elif re.search(self.enterprise, tv):
@@ -178,15 +212,7 @@ class ProcessTVShows:
         elif re.search(self.starfleetacademy, tv):
             catagory = "StarfleetAcademy"
 
-        elif re.search(self.dmv, tv):
-            catagory = "DMV"
-
-        elif re.search(self.jetsons, tv):
-            catagory = "Jetsons"
-        elif re.search(self.jonnyquest, tv):
-            catagory = "JonnyQuest"
-
-
+        #starwars
         elif re.search(self.acolyte, tv):
             catagory = "Acolyte"
         elif re.search(self.andor, tv):
@@ -207,14 +233,10 @@ class ProcessTVShows:
             catagory = "TalesOfTheJedi"
         elif re.search(self.visions, tv):
             catagory = "Visions"
-        elif re.search(self.obiwankenobi, tv):
-            catagory = "ObiWanKenobi"
-        elif re.search(self.talesofthejedi, tv):
-            catagory = "TalesOfTheJedi"
-        elif re.search(self.visions, tv):
-            catagory = "Visions"
         elif re.search(self.skeletoncrew, tv):
             catagory = "SkeletonCrew"
+
+        #mcu
         elif re.search(self.falconwintersoldier, tv):
             catagory = "FalconWinterSoldier"
         elif re.search(self.iamgroot, tv):
@@ -231,12 +253,14 @@ class ProcessTVShows:
             catagory = "SecretInvasion"
         elif re.search(self.wandavision, tv):
             catagory = "WandaVision"
-        elif re.search(self.wednesday, tv):
-            catagory = "Wednesday"
         elif re.search(self.talesoftheunderworld, tv):
             catagory = "TalesOfTheUnderworld"
         elif re.search(self.ironheart, tv):
             catagory = "IronHeart"
+        elif re.search(self.wonderman, tv):
+            catagory = "WonderMan"
+        
+        #ncis
         elif re.search(self.ncishawaii, tv):
             catagory = "NCISHawaii"
         elif re.search(self.ncisneworleans, tv):
@@ -251,10 +275,18 @@ class ProcessTVShows:
             catagory = "NCIS"    
         elif re.search(self.tonyandziva, tv):
             catagory = "TonyAndZiva"
+
+        #science
         elif re.search(self.personofinterest, tv):
             catagory = "PersonOfInterest"
-        elif re.search(self.percyjacksonandtheolympians, tv):
-            catagory = "PercyJacksonAndTheOlympians"
+        elif re.search(self.columbia, tv):
+            catagory = "Columbia"
+        elif re.search(self.prehistoricplanet, tv):
+            catagory = "PrehistoricPlanet"
+
+        #westerns
+        elif re.search(self.hford1923, tv):
+            catagory = "HFord1923"
         else:
             catagory = "Unknown"
         return catagory

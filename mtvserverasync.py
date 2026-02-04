@@ -460,7 +460,7 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "fallouts2":
-                mediainfo == MTVMEDIA.fallout2()
+                mediainfo == MTVMEDIA.fallouts2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "forallmankinds1":
