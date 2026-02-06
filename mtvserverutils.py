@@ -875,8 +875,8 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def wonderman(self):
-        command = "SELECT * FROM tvshows WHERE catagory='WonderMan' ORDER BY Episode ASC;"
+    def wondermans1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='WonderMan' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 

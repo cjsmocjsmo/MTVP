@@ -815,6 +815,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.continues1()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "starfleetacademys1":
+                mediainfo = MTVMEDIA.starfleetacademys1()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "jetsonss1":
                 mediainfo = MTVMEDIA.jetsonss1()
                 await websocket.send(json.dumps(mediainfo))
@@ -1193,6 +1197,10 @@ async def handle_message(websocket):
 
             elif command == "personofinterests5":
                 mediainfo = MTVMEDIA.personofinterests5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "wondermans1":
+                mediainfo = MTVMEDIA.wondermans1()
                 await websocket.send(json.dumps(mediainfo))
             
     except Exception as e:
