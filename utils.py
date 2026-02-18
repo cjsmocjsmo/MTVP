@@ -95,18 +95,18 @@ def sqlite3_check():
     else:
         return False
     
-def vlc_check():
-    vlc = subprocess.run(["apt-cache", "policy", "vlc"])
-    if vlc.returncode == 0:
+def mpv_check():
+    mpv = subprocess.run(["apt-cache", "policy", "mpv"])
+    if mpv.returncode == 0:
         return True
     else:
         return False
-    
-def python3_vlc_check():
-    pvlc = subprocess.run(["apt-cache", "policy", "python3-vlc"])
-    if pvlc.returncode == 0:
+
+def python3_mpv_check():
+    try:
+        import mpv
         return True
-    else:
+    except ImportError:
         return False
     
 def python3_pil_check():

@@ -23,8 +23,8 @@ def setup():
     
     if args.install:
         print(f"utils.sqlite3_check(): {utils.sqlite3_check()}")
-        print(f"utils.vlc_check(): {utils.vlc_check()}")
-        print(f"utils.python3_vlc_check(): {utils.python3_vlc_check()}")
+        print(f"utils.mpv_check(): {utils.mpv_check()}")
+        print(f"utils.python3_mpv_check(): {utils.python3_mpv_check()}")
         print(f"utils.python3_pil_check(): {utils.python3_pil_check()}")
         print(f"utils.python3_dotenv_check(): {utils.python3_dotenv_check()}")
         print(f"utils.python3_websockets_check(): {utils.python3_websockets_check()}")
@@ -33,13 +33,13 @@ def setup():
             print("Sqlite3 is not installed. Install with:\n")
             print("\tsudo apt-get -y install sqlite3")
             exit()
-        if not utils.vlc_check():
-            print("VLC is not installed. Install with:\n")
-            print("\tsudo apt-get -y install vlc")
+        if not utils.mpv_check():
+            print("mpv is not installed. Install with:\n")
+            print("\tsudo apt-get -y install mpv")
             exit()
-        if not utils.python3_vlc_check():
-            print("Python3 VLC is not installed. Install with:\n")
-            print("\tsudo apt-get -y install python3-vlc")
+        if not utils.python3_mpv_check():
+            print("Python3 mpv is not installed. Install with:\n")
+            print("\tpip install python-mpv")
             exit()
         if not utils.python3_pil_check():
             print("Python3 PIL is not installed. Install with:\n")
