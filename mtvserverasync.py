@@ -1,4 +1,5 @@
-import vlc
+# import vlc
+from mpv import MPV
 # import time
 import asyncio
 import websockets
@@ -12,9 +13,8 @@ import os
 import utils as UTILS
 
 
-# Initialize VLC player
-instance = vlc.Instance()
-player = instance.media_player_new()
+# Initialize MPV player
+player = MPV()
 
 load_dotenv()
 
@@ -36,6 +36,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
+# import time
 MTVMEDIA = mtvserverutils.Media()
 
 async def get_media_path_from_media_id(media_id):
@@ -43,7 +44,6 @@ async def get_media_path_from_media_id(media_id):
     Retrieves the media_path from the db using the media_id.
     """
     try:
-        # Use 'with' to manage the database connection
         with sqlite3.connect(os.getenv("MTV_DB_PATH")) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT Path FROM movies WHERE MovId = ?", (media_id,))
@@ -137,9 +137,9 @@ async def handle_message(websocket):
                     media_id = data.get("media_id")
                     if media_id:
                         media_path = await get_media_path_from_media_id(media_id)
-                        player.set_media(vlc.Media(media_path))
-                        player.set_fullscreen(True)
-                        logging.info(f"Starting mediaplayer with the path: {media_path}")
+                        player.play(media_path)
+                        player.fullscreen = True
+                        logging.info(f"Starting mpv mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
                     logging.error(f"Error fetching media path: {e}")
@@ -150,9 +150,9 @@ async def handle_message(websocket):
                     media_tv_id = data.get("media_tv_id")
                     if media_tv_id:
                         media_path = await get_media_path_from_media_tv_id(media_tv_id)
-                        player.set_media(vlc.Media(media_path))
-                        player.set_fullscreen(True)
-                        logging.info(f"Starting TV mediaplayer with the path: {media_path}")
+                        player.play(media_path)
+                        player.fullscreen = True
+                        logging.info(f"Starting TV mpv mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
                     logging.error(f"Error setting player path with mediapath: {e}")
@@ -170,9 +170,6 @@ async def handle_message(websocket):
             
             elif command == "pause":
                 player.pause()
-                await websocket.send(json.dumps({"status": "paused"}))
-
-            elif command == "stop":
                 player.stop()
                 await websocket.send(json.dumps({"status": "stopped"}))
 
@@ -183,9 +180,6 @@ async def handle_message(websocket):
 
             elif command == "previous":
                 current_time = player.get_time()
-                player.set_time(current_time - 35000)
-                await websocket.send(json.dumps({"status": "previous"}))
-
             elif command == "weather":
                 weather_data = await get_weather_for_belfair_wa()
                 await websocket.send(json.dumps(weather_data))
