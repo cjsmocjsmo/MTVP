@@ -169,17 +169,26 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps({"status": "playing"}))
             
             elif command == "pause":
-                player.pause()
-                player.stop()
-                await websocket.send(json.dumps({"status": "stopped"}))
+                 # Toggle pause using mpv property
+                 player.pause = not getattr(player, 'pause', False)
+                 await websocket.send(json.dumps({"status": "paused" if player.pause else "playing"}))
 
             elif command == "next":
-                current_time = player.get_time()
-                player.set_time(current_time + 35000)
-                await websocket.send(json.dumps({"status": "next"}))
+                    # Seek forward 35 seconds using mpv command
+                    try:
+                        player.command('seek', 35, 'relative')
+                        await websocket.send(json.dumps({"status": "next"}))
+                    except Exception as e:
+                        await websocket.send(json.dumps({"status": "error", "message": str(e)}))
 
             elif command == "previous":
-                current_time = player.get_time()
+                    # Seek backward 35 seconds using mpv command
+                    try:
+                        player.command('seek', -35, 'relative')
+                        await websocket.send(json.dumps({"status": "previous"}))
+                    except Exception as e:
+                        await websocket.send(json.dumps({"status": "error", "message": str(e)}))
+            
             elif command == "weather":
                 weather_data = await get_weather_for_belfair_wa()
                 await websocket.send(json.dumps(weather_data))
