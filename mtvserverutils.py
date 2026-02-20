@@ -1194,3 +1194,23 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='JonnyQuest' AND season='02' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def darkwindss1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DarkWinds' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def darkwindss2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DarkWinds' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def darkwindss3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DarkWinds' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def darkwindss4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='DarkWinds' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()

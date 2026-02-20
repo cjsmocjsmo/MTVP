@@ -26,6 +26,7 @@ class ProcessTVShows:
         self.shogun = re.compile("Shogun")
         self.thecontinental = re.compile("TheContinental")
         self.mobland = re.compile("MobLand")
+        self.darkwinds = re.compile("DarkWinds")
 
         #comedy
         self.fuubar = re.compile("FuuBar")
@@ -131,6 +132,8 @@ class ProcessTVShows:
             catagory = "TheContinental"
         elif re.search(self.mobland, tv):
             catagory = "MobLand"
+        elif re.search(self.darkwinds, tv):
+            catagory = "DarkWinds"
 
         #cartoons
         elif re.search(self.mastersoftheuniverse, tv):
