@@ -164,6 +164,10 @@ async def handle_message(websocket):
                     search_results = MTVMEDIA.search(phrase)
                     await websocket.send(json.dumps(search_results))
 
+            elif command == "stop":
+                player.stop()
+                await websocket.send(json.dumps({"status": "stopped"}))
+
             elif command == "play":
                 player.play()
                 await websocket.send(json.dumps({"status": "playing"}))
