@@ -259,6 +259,10 @@ async def handle_message(websocket):
                 chucknorris_data = MTVMEDIA.chucknorris()
                 await websocket.send(json.dumps(chucknorris_data)) 
 
+            elif command == "clinteastwood":
+                clinteastwood_data = MTVMEDIA.clinteastwood()
+                await websocket.send(json.dumps(clinteastwood_data))
+
             elif command == "comedy":
                 comedy_data = MTVMEDIA.comedy()
                 await websocket.send(json.dumps(comedy_data))

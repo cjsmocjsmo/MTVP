@@ -21,43 +21,59 @@ class ProcessMovies:
         self.movlist = movs
         self.action = re.compile("Action")
         self.avatar = re.compile("Avatar")
-        self.chuck_norris = re.compile("ChuckNorris")
         self.arnold = re.compile("Arnold")
+
         self.bruce_lee = re.compile("BruceLee")
         self.bruce_willis = re.compile("BruceWillis")
         self.buzz = re.compile("Buzz")
+
         self.cartoons = re.compile("Cartoons")
         self.charlie_brown = re.compile("CharlieBrown")
         self.cheechandchong = re.compile("CheechAndChong")
         self.chuck_norris = re.compile("ChuckNorris")
+        self.clint_eastwood = re.compile("ClintEastwood")
         self.comedy = re.compile("Comedy")
+
         self.documentary = re.compile("Documentary")
         self.drama = re.compile("Drama")
+
         self.fantasy = re.compile("Fantasy")
+
         self.ghost_busters = re.compile("GhostBusters")
         self.godzilla = re.compile("Godzilla")
+
         self.harrison_ford = re.compile("HarrisonFord")
         self.harry_potter = re.compile("HarryPotter")
         self.hellboy = re.compile("HellBoy")
+
         self.indiana_jones = re.compile("IndianaJones")
+
         self.james_bond = re.compile("JamesBond")
         self.john_wayne = re.compile("JohnWayne")
         self.john_wick = re.compile("JohnWick")
         self.jurassic_park = re.compile("JurassicPark")
+
         self.kevin_costner = re.compile("KevinCostner")
         self.kingsman = re.compile("Kingsman")
+
         self.lego = re.compile("Lego")
+
         self.meninblack = re.compile("MenInBlack")
         self.minions = re.compile("Minions")
         self.misc = re.compile("Misc")
         self.musicvids = re.compile("MusicVids")
+
         self.nature = re.compile("Nature")
         self.nicolas_cage = re.compile("NicolasCage")
+
         self.oldies = re.compile("Oldies")
+
         self.panda = re.compile("Panda")
         self.pirates = re.compile("Pirates")
         self.predator = re.compile("Predator")
+
         self.riddick = re.compile("Riddick")
+
         self.science = re.compile("Science")
         self.sci_fi = re.compile("SciFi")
         self.stalone = re.compile("Stalone")
@@ -66,14 +82,18 @@ class ProcessMovies:
         self.stooges = re.compile("Stooges")
         self.super_heros = re.compile("SuperHeros")
         self.superman = re.compile("SuperMan")
+
         self.the_rock = re.compile("TheRock")
         self.tinker_bell = re.compile("TinkerBell")
         self.tom_cruize = re.compile("TomCruize")
         self.transformers = re.compile("Transformers")
         self.tremors = re.compile("Tremors")
         self.trolls = re.compile("Trolls")
+
         self.vandam = re.compile("VanDam")
+
         self.xmen = re.compile("XMen")
+
         self.crap = re.compile(r" \(")
         
 
@@ -123,6 +143,8 @@ class ProcessMovies:
             catagory = "CheechAndChong"
         elif re.search(self.chuck_norris, mov):
             catagory = "ChuckNorris"
+        elif re.search(self.clint_eastwood, mov):
+            catagory = "ClintEastwood"
         elif re.search(self.comedy, mov):
             catagory = "Comedy"
         elif re.search(self.documentary, mov):

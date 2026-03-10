@@ -60,6 +60,10 @@ class Media:
     def chucknorris(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='ChuckNorris' ORDER BY year DESC")
         return self._fetch_all_as_dict()
+    
+    def clinteastwood(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='ClintEastwood' ORDER BY year DESC")
+        return self._fetch_all_as_dict()
 
     def documentary(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Documentary' ORDER BY year DESC")
