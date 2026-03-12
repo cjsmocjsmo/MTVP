@@ -56,7 +56,6 @@ class Main:
             videos = utils.mtv_walk_dirs(os.getenv("MTV_VIDEOS_PATH"))
             mtvvideos.ProcessVideos(videos, self.conn, self.cursor).process(videos)
 
-
         except sqlite3.OperationalError as e:
             logging.error(f"SQLite OperationalError in main(): {e}")
         finally:
