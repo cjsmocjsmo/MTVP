@@ -4,6 +4,7 @@ import mtvmovies
 import mtvtvshows
 import mtvimages
 import mtvtables
+import mtvvideos
 import os
 from pprint import pprint
 import sqlite3
@@ -51,6 +52,10 @@ class Main:
 
             movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
             mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
+
+            videos = utils.mtv_walk_dirs(os.getenv("MTV_VIDEOS_PATH"))
+            mtvvideos.ProcessVideos(videos, self.conn, self.cursor).process(videos)
+
 
         except sqlite3.OperationalError as e:
             logging.error(f"SQLite OperationalError in main(): {e}")

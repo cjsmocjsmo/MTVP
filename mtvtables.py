@@ -46,6 +46,15 @@ class CreateTables:
             HttpThumbPath TEXT NOT NULL
          )""")
 
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS videos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            VidId TEXT NOT NULL UNIQUE,
+            VidPath TEXT NOT NULL,
+            Size TEXT NOT NULL,
+            Name TEXT NOT NULL,
+            Idx INTEGER NOT NULL
+         )""")
+
 
 
         
