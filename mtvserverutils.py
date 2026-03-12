@@ -1218,3 +1218,8 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='DarkWinds' AND season='04' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def homevids(self):
+        command = "SELECT * FROM videos;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()

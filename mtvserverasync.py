@@ -1228,7 +1228,11 @@ async def handle_message(websocket):
 
             elif command == "darkwindss4":
                 mediainfo = MTVMEDIA.darkwindss4()
-                await websocket.send(json.dumps(mediainfo))     
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "homevids":
+                mediainfo = MTVMEDIA.homevids()
+                await websocket.send(json.dumps(mediainfo)) 
             
     except Exception as e:
         logging.error(f"Exception in handle_message: {e}")
