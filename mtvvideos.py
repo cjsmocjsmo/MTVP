@@ -61,6 +61,7 @@ class ProcessVideos:
 
                     self.cursor.execute("INSERT INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)", (vid_id, vid, size, name, idx))
                     self.conn.commit()
+                    print(f"Inserted video into database: {name}")
                     logging.info(f"Inserted video into database: {name}")
                 except sqlite3.Error as e:
                     logging.error(f"SQLite error while processing video {name}: {e}")
