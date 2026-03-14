@@ -81,7 +81,29 @@ async def get_media_path_from_media_tv_id(media_tv_id):
         return None
     except Exception as e:
         logging.error(f"Error fetching media path: {e}")
-        return None      
+        return None  
+
+async def get_media_path_from_video_id(video_id):
+    """
+    Retrieves the media_path from the db using the video_id.
+    """
+    try:
+        with sqlite3.connect(os.getenv("MTV_DB_PATH")) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT VidPath FROM videos WHERE VidId = ?", (video_id,))
+            result = cursor.fetchone()
+            if result:
+                media_path = result[0]
+                return media_path
+            else:
+                logging.error(f"No media path found for video_id: {video_id}")
+                return None
+    except sqlite3.Error as e:
+        logging.error(f"SQLite error: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error fetching media path: {e}")
+        return None    
 
 async def get_weather_for_belfair_wa():
     """
@@ -153,6 +175,19 @@ async def handle_message(websocket):
                         player.play(media_path)
                         player.fullscreen = True
                         logging.info(f"Starting TV mpv mediaplayer with the path: {media_path}")
+                        await websocket.send(json.dumps({"status": "media_set"}))
+                except Exception as e:
+                    logging.error(f"Error setting player path with mediapath: {e}")
+                    return None
+
+            elif command == "set_video_media":
+                try:
+                    video_id = data.get("video_id")
+                    if video_id:
+                        media_path = await get_media_path_from_video_id(video_id)
+                        player.play(media_path)
+                        player.fullscreen = True
+                        logging.info(f"Starting video mpv mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
                     logging.error(f"Error setting player path with mediapath: {e}")
