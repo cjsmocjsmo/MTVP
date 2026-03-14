@@ -45,6 +45,7 @@ class ProcessVideos:
     def process(self):
         idx = 0
         for vid in self.vids:
+            print(vid)
             if self.vid.search(vid) or self.avi.search(vid) or self.mp4.search(vid) or self.mpg.search(vid) or self.dcvid.search(vid):
                 try:
                     vid_id = self.vid_id(vid)

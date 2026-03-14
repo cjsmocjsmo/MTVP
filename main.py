@@ -41,17 +41,17 @@ class Main:
         try:
             mtvtables.CreateTables().create_tables()
 
-            tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-            mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
+            # tvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
+            # mtvtvshows.ProcessTVShows(tvshows, self.conn, self.cursor).process()
 
-            tvimages = utils.tv_img_walk_dirs(os.getenv("MTV_TV_POSTER_PATH"))
-            mtvimages.ProcessTVShowImages(tvimages).process_tv_thumbs()
+            # tvimages = utils.tv_img_walk_dirs(os.getenv("MTV_TV_POSTER_PATH"))
+            # mtvimages.ProcessTVShowImages(tvimages).process_tv_thumbs()
 
-            images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
-            mtvimages.ProcessImages(images, self.conn, self.cursor).process()
+            # images = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
+            # mtvimages.ProcessImages(images, self.conn, self.cursor).process()
 
-            movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-            mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
+            # movs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
+            # mtvmovies.ProcessMovies(movs, self.conn, self.cursor).process()
 
             videos = utils.mtv_walk_dirs(os.getenv("MTV_VIDEOS_PATH"))
             print(videos)
