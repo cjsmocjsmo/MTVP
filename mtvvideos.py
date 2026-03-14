@@ -18,12 +18,13 @@ class ProcessVideos:
     def __init__(self, vids, conn, cursor):
         self.conn = conn
         self.cursor = cursor
-        self.vids = vids
+        self.vidlist = vids
         self.vid = re.compile(r'VIDEO')
         self.avi = re.compile(r'AVI')
         self.mp4 = re.compile(r'MP4')
         self.mpg = re.compile(r'MPG')
         self.dcvid = re.compile(r'dcamVids')
+        print(f"Initialized ProcessVideos with {len(vids)} videos.")
 
     def vid_id(self, file_path):
         sha256_hash = hashlib.sha256()
@@ -43,14 +44,14 @@ class ProcessVideos:
         return str(os.path.getsize(path))
 
     def process(self):
-        idx = 0
-        for vid in self.vids:
-            print(vid)
-            if self.vid.search(vid) or self.avi.search(vid) or self.mp4.search(vid) or self.mpg.search(vid) or self.dcvid.search(vid):
+        print(f"Processing {len(self.vidlist)} videos...")
+        for idx, v in enumerate(self.vidlist):
+            print(v)
+            if self.vid.search(v) or self.avi.search(v) or self.mp4.search(v) or self.mpg.search(v) or self.dcvid.search(v):
                 try:
-                    vid_id = self.vid_id(vid)
-                    name = self.vid_name(vid)
-                    size = self.vid_size(vid)
+                    vid_id = self.vid_id(v)
+                    name = self.vid_name(v)
+                    size = self.vid_size(v)
                     idx += 1
 
                     self.cursor.execute("SELECT * FROM videos WHERE VidId = ?", (vid_id,))
@@ -60,7 +61,7 @@ class ProcessVideos:
                         logging.info(f"Video already exists in database: {name}")
                         continue
 
-                    self.cursor.execute("INSERT INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)", (vid_id, vid, size, name, idx))
+                    self.cursor.execute("INSERT INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)", (vid_id, v, size, name, idx))
                     self.conn.commit()
                     print(f"Inserted video into database: {name}")
                     logging.info(f"Inserted video into database: {name}")
