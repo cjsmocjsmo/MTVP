@@ -161,6 +161,7 @@ async def handle_message(websocket):
                         media_path = await get_media_path_from_media_id(media_id)
                         player.play(media_path)
                         player.fullscreen = True
+                        player.volume = 100
                         logging.info(f"Starting mpv mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
@@ -174,6 +175,7 @@ async def handle_message(websocket):
                         media_path = await get_media_path_from_media_tv_id(media_tv_id)
                         player.play(media_path)
                         player.fullscreen = True
+                        player.volume = 100
                         logging.info(f"Starting TV mpv mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
@@ -187,6 +189,7 @@ async def handle_message(websocket):
                         media_path = await get_media_path_from_video_id(video_id)
                         player.play(media_path)
                         player.fullscreen = True
+                        player.volume = 100
                         logging.info(f"Starting video mpv mediaplayer with the path: {media_path}")
                         await websocket.send(json.dumps({"status": "media_set"}))
                 except Exception as e:
