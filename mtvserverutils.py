@@ -1219,6 +1219,46 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def forgedinfires1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forgedinfires2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forgedinfires3(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='03' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def forgedinfires4(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='04' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forgedinfires5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
+    def forgedinfires6(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='06' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forgedinfires7(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='07' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forgedinfires8(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='08' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     def homevids(self):
         command = "SELECT * FROM videos;"
         self.cursor.execute(command)

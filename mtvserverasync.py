@@ -1268,6 +1268,38 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.darkwindss4()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "forgedinfires1":
+                mediainfo = MTVMEDIA.forgedinfires1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires2":
+                mediainfo = MTVMEDIA.forgedinfires2()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires3":
+                mediainfo = MTVMEDIA.forgedinfires3()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires4":
+                mediainfo = MTVMEDIA.forgedinfires4()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires5":
+                mediainfo = MTVMEDIA.forgedinfires5()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires6":
+                mediainfo = MTVMEDIA.forgedinfires6()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires7":
+                mediainfo = MTVMEDIA.forgedinfires7()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "forgedinfires8":
+                mediainfo = MTVMEDIA.forgedinfires8()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "homevids":
                 mediainfo = MTVMEDIA.homevids()
                 await websocket.send(json.dumps(mediainfo)) 
