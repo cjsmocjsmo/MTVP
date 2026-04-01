@@ -294,12 +294,56 @@ class UpdateMovies:
         self.conn = conn
         self.cursor = cursor
     
-    def get_all_movie_images(self):
+    def movie_image_paths_from_db(self):
         self.cursor.execute("SELECT Path FROM images")
         rows = self.cursor.fetchall()
         return [row[0] for row in rows]
-    
-    def get_all_movie_paths(self):
+
+    def movie_paths_from_db(self):
         self.cursor.execute("SELECT Path FROM movies")
         rows = self.cursor.fetchall()
         return [row[0] for row in rows]
+    
+    def movie_image_paths_from_disk(self):
+        img_paths = []
+        for root, dirs, files in os.walk(os.getenv("MTV_POSTER_PATH")):
+            for file in files:
+                if file.endswith((".jpg", ".jpeg", ".png")):
+                    img_paths.append(os.path.join(root, file))
+        return img_paths
+
+    def movie_paths_from_disk(self):
+        #walk the dir at MTV_MOVIES_PATH
+        mov_paths = []
+        for root, dirs, files in os.walk(os.getenv("MTV_MOVIES_PATH")):
+            for file in files:
+                if file.endswith((".mp4", ".mkv", ".avi")):
+                    mov_paths.append(os.path.join(root, file))
+        return mov_paths
+    
+    def check_for_mov_updates(self):
+        db_mov_paths = set(self.movie_paths_from_db())
+        disk_mov_paths = set(self.movie_paths_from_disk())
+        db_img_paths = set(self.movie_image_paths_from_db())
+        disk_img_paths = set(self.movie_image_paths_from_disk())
+
+        new_movs = [mov for mov in disk_mov_paths if mov not in db_mov_paths]
+
+        new_movs_images = [img for img in disk_img_paths if img not in db_img_paths]
+        
+        return new_movs, new_movs_images
+
+    def updateMovs(self):
+        new_movs, new_movs_images = self.check_for_update()
+        nmcount = len(new_movs)
+        nmicount = len(new_movs_images)
+        logging.info(f"Found {nmcount} new movies and {nmicount} new images.")
+        
+        if new_movs:
+            logging.info(f"New movies found: {new_movs}")
+            ProcessMovies(new_movs, self.conn, self.cursor).process()
+        else:
+            logging.info("No new movies found.")
+        
+        
+

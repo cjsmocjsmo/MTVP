@@ -371,14 +371,33 @@ class UpdateTVShows:
         self.conn = conn
         self.cursor = cursor
     
-    def get_all_tvshow_paths(self):
+    def tvshow_paths_from_db(self):
         self.cursor.execute("SELECT Path FROM tvshows")
         rows = self.cursor.fetchall()
         return [row[0] for row in rows]
     
-    def get_all_tvshow_images(self):
-        self.cursor.execute("SELECT Path FROM images")
-        rows = self.cursor.fetchall()
-        return [row[0] for row in rows]
+    def tvshow_paths_from_disk(self):
+        medialist = []
+        for root, dirs, files in os.walk(os.getenv("MTV_TV_PATH")):
+            for file in files:
+                fname = os.path.join(root, file)
+                ext = os.path.splitext(fname)[1]
+                if ext in [".mp4", ".mkv", ".avi"]:
+                    medialist.append(fname)
+        return medialist
     
+    def check_for_tv_updates(self):
+        db_paths = set(self.tvshow_paths_from_db())
+        disk_paths = set(self.tvshow_paths_from_disk())
+        
+        new_tv_paths = [path for path in disk_paths if path not in db_paths]
+        return new_tv_paths
+
+    def updateTV(self):
+        new_tv_paths = self.check_for_tv_updates()
+        if new_tv_paths:
+            logging.info(f"New TV shows found: {new_tv_paths}")
+            processor = ProcessTVShows(new_tv_paths, self.conn, self.cursor).process()
+        else:
+            logging.info("No new TV shows found.")
     

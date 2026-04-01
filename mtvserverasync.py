@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 import sqlite3
 import os
 import utils as UTILS
+import mtvmovies as MTVMOVIES
+import mtvtvshows as MTVTVSHOWS
 
 
 # Initialize MPV player
@@ -254,7 +256,13 @@ async def handle_message(websocket):
                 tvsizeondisk = UTILS.tvshows_size_on_disk()
                 await websocket.send(json.dumps(tvsizeondisk))
 
+            elif command == "checkformovupdates":
+                update_data = MTVMOVIES.check_for_mov_updates()
+                await websocket.send(json.dumps(update_data))
 
+            elif command == "checkfortvupdates":
+                update_data = MTVTVSHOWS.check_for_tv_updates()
+                await websocket.send(json.dumps(update_data))
 
 
             elif command == "action":
