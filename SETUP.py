@@ -3,12 +3,11 @@ import argparse
 import main
 import os
 import subprocess
-from pprint import pprint
 from dotenv import load_dotenv
 import utils
 import asyncio
 import mtvserverasync
-
+import mtvmovies as MTVMovies
 import docker
 
 CWD = os.getcwd()

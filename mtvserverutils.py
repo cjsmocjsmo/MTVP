@@ -295,6 +295,11 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='ForAllManKind' AND season='04' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+    def forallmankinds5(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForAllManKind' AND season='05' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
     
     def foundations1(self):
         command = "SELECT * FROM tvshows WHERE catagory='Foundation' AND season='01' ORDER BY Episode ASC;"

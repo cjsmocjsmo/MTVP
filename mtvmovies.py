@@ -324,14 +324,14 @@ class UpdateMovies:
     def check_for_mov_updates(self):
         db_mov_paths = set(self.movie_paths_from_db())
         disk_mov_paths = set(self.movie_paths_from_disk())
-        db_img_paths = set(self.movie_image_paths_from_db())
-        disk_img_paths = set(self.movie_image_paths_from_disk())
+        #db_img_paths = set(self.movie_image_paths_from_db())
+        #disk_img_paths = set(self.movie_image_paths_from_disk())
 
         new_movs = [mov for mov in disk_mov_paths if mov not in db_mov_paths]
 
-        new_movs_images = [img for img in disk_img_paths if img not in db_img_paths]
+        #new_movs_images = [img for img in disk_img_paths if img not in db_img_paths]
         
-        return new_movs, new_movs_images
+        return new_movs
 
     def updateMovs(self):
         new_movs, new_movs_images = self.check_for_update()
