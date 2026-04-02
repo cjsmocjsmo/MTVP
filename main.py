@@ -65,27 +65,14 @@ class Main:
 
     def update(self):
         try:
-            dirtvshows = utils.mtv_walk_dirs(os.getenv("MTV_TV_PATH"))
-            dbtvshows = mtvtvshows.UpdateTVShows(self.conn, self.cursor).get_all_tvshow_paths()
-            new_tvshows = [tvshow for tvshow in dirtvshows if tvshow not in dbtvshows]
-            mtvtvshows.ProcessTVShows(new_tvshows, self.conn, self.cursor).process()
-
-            dirtvshowimages = utils.tv_img_walk_dirs(os.getenv("MTV_TV_POSTER_PATH"))
-            dbtvshowimages = mtvtvshows.UpdateTVShows(self.conn, self.cursor).get_all_tvshow_images()
-            new_tvshowimages = [tvshowimage for tvshowimage in dirtvshowimages if tvshowimage not in dbtvshowimages]
-            mtvimages.ProcessTVShowImages(new_tvshowimages).process_tv_thumbs()
-
-            dirmovs = utils.mtv_walk_dirs(os.getenv("MTV_MOVIES_PATH"))
-            dbmovs = mtvmovies.UpdateMovies(self.conn, self.cursor).get_all_movie_paths()
-            new_movs = [mov for mov in dirmovs if mov not in dbmovs]
-            mtvmovies.ProcessMovies(new_movs, self.conn, self.cursor).process()
-
-            dirmovimages = utils.img_walk_dirs(os.getenv("MTV_POSTER_PATH"))
-            dbmovimages = mtvmovies.UpdateMovies(self.conn, self.cursor).get_all_movie_images()
-            new_movimages = [movimage for movimage in dirmovimages if movimage not in dbmovimages]
-            mtvimages.ProcessImages(new_movimages, self.conn, self.cursor).process()
+            Movresults = mtvmovies.UpdateMovies(self.conn, self.cursor).check_for_movie_updates()
+            if Movresults:
+                mtvmovies.UpdateMovies(self.conn, self.cursor).update_movies()
             
-
+            TVresults = mtvtvshows.UpdateTVShows(self.conn, self.cursor).check_for_tv_updates()
+            if TVresults:
+                mtvtvshows.UpdateTVShows(self.conn, self.cursor).updateTV()
+            
         except sqlite3.OperationalError as e:
             logging.error(f"SQLite OperationalError in update(): {e}")
         finally:
