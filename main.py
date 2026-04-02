@@ -65,9 +65,9 @@ class Main:
 
     def update(self):
         try:
-            Movresults = mtvmovies.UpdateMovies(self.conn, self.cursor).check_for_movie_updates()
+            Movresults = mtvmovies.UpdateMovies(self.conn, self.cursor).check_for_mov_updates()
             if Movresults:
-                mtvmovies.UpdateMovies(self.conn, self.cursor).update_movies()
+                mtvmovies.UpdateMovies(self.conn, self.cursor).updateMovs()
             
             TVresults = mtvtvshows.UpdateTVShows(self.conn, self.cursor).check_for_tv_updates()
             if TVresults:
