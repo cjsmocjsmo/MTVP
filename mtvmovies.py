@@ -334,10 +334,9 @@ class UpdateMovies:
         return new_movs
 
     def updateMovs(self):
-        new_movs, new_movs_images = self.check_for_update()
+        new_movs = self.check_for_mov_updates()
         nmcount = len(new_movs)
-        nmicount = len(new_movs_images)
-        logging.info(f"Found {nmcount} new movies and {nmicount} new images.")
+        logging.info(f"Found {nmcount} new movies.")
         
         if new_movs:
             logging.info(f"New movies found: {new_movs}")
