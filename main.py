@@ -66,11 +66,11 @@ class Main:
     def update(self):
         try:
             Movresults = mtvmovies.UpdateMovies(self.conn, self.cursor).check_for_mov_updates()
-            if Movresults:
+            if len(Movresults) != 0:
                 mtvmovies.UpdateMovies(self.conn, self.cursor).updateMovs()
             
             TVresults = mtvtvshows.UpdateTVShows(self.conn, self.cursor).check_for_tv_updates()
-            if TVresults:
+            if len(TVresults) != 0:
                 mtvtvshows.UpdateTVShows(self.conn, self.cursor).updateTV()
             
         except sqlite3.OperationalError as e:

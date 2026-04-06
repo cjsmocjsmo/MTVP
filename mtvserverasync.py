@@ -257,12 +257,18 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(tvsizeondisk))
 
             elif command == "checkformovupdates":
-                update_data = MTVMOVIES.check_for_mov_updates()
+                conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+                cursor = conn.cursor()
+                update_data = MTVMOVIES.UpdateMovies(conn, cursor).check_for_mov_updates()
                 await websocket.send(json.dumps(update_data))
+                conn.close()
 
             elif command == "checkfortvupdates":
-                update_data = MTVTVSHOWS.check_for_tv_updates()
+                conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
+                cursor = conn.cursor()
+                update_data = MTVTVSHOWS.UpdateTVShows(conn, cursor).check_for_tv_updates()
                 await websocket.send(json.dumps(update_data))
+                conn.close()
 
 
             elif command == "action":
