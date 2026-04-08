@@ -485,7 +485,10 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='WheelOfTime' AND season='03' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
-    
+
+
+
+#StarTrek
     def discoverys1(self):
         command = "SELECT * FROM tvshows WHERE catagory='Discovery' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
@@ -723,7 +726,7 @@ class Media:
 
 
 
-
+#starwars
     def acolyte(self):
         command = "SELECT * FROM tvshows WHERE catagory='Acolyte' ORDER BY Episode ASC;"
         self.cursor.execute(command)
@@ -809,6 +812,14 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
+    def maulshadowlords1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='MaulShadowLord' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+
+
+#mcu
     def falconwintersoldier(self):
         command = "SELECT * FROM tvshows WHERE catagory='FalconWinterSoldier' ORDER BY Episode ASC;"
         self.cursor.execute(command)
@@ -899,6 +910,9 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+
+
+#NCIS
     def tonyandzivas1(self):
         command = "SELECT * FROM tvshows WHERE catagory='TonyAndZiva' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
@@ -1153,6 +1167,9 @@ class Media:
         command = "SELECT * FROM tvshows WHERE catagory='NCISLA' AND season='14' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+
+
+
 
     def dmvs1(self):
         command = "SELECT * FROM tvshows WHERE catagory='DMV' AND season='01' ORDER BY Episode ASC;"

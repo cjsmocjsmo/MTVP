@@ -966,6 +966,10 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.visionss3()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "maulshadowlords1":
+                mediainfo = MTVMEDIA.maulshadowlords1()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "falconwintersoldiers1":
                 mediainfo = MTVMEDIA.falconwintersoldier()
                 await websocket.send(json.dumps(mediainfo))

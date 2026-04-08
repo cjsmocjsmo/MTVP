@@ -99,6 +99,7 @@ class ProcessTVShows:
         self.obiwankenobi = re.compile("ObiWanKenobi")
         self.talesofthejedi = re.compile("TalesOfTheJedi")
         self.visions = re.compile("Visions")
+        self.maulshadowlord = re.compile("MaulShadowLord")
 
         #mcu
         self.falconwintersoldier = re.compile("FalconWinterSoldier")
@@ -239,6 +240,9 @@ class ProcessTVShows:
             catagory = "Visions"
         elif re.search(self.skeletoncrew, tv):
             catagory = "SkeletonCrew"
+        elif re.search(self.maulshadowlord, tv):
+            catagory = "MaulShadowLord"
+
 
         #mcu
         elif re.search(self.falconwintersoldier, tv):
