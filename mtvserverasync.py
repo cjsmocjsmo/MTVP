@@ -1385,9 +1385,9 @@ async def servermain():
 
     # Start both websocket and static file servers concurrently
     ws_server = websockets.serve(handle_message, "10.0.4.41", 8765)
-    static_server = await asyncio.start_server(static_file_server, "0.0.0.0", 8080)
+    static_server = await asyncio.start_server(static_file_server, "10.0.4.41", 8080)
     print("WebSocket server running on ws://10.0.4.41:8765/")
-    print("Static file server running on http://0.0.0.0:8080/thumbnails/... and /tvthumbnails/...")
+    print("Static file server running on http://10.0.4.41:8080/thumbnails/... and /tvthumbnails/...")
     async with static_server:
         await asyncio.gather(ws_server, static_server.serve_forever())
 
