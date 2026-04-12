@@ -376,10 +376,16 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
     
-    def monarchlegacyofmonsters(self):
+    def monarchlegacyofmonsterss1(self):
         command = "SELECT * FROM tvshows WHERE catagory='MonarchLegacyOfMonsters' ORDER BY Episode ASC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
+    
+    def monarchlegacyofmonsterss2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='MonarchLegacyOfMonsters' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     
     def nightsky(self):
         command = "SELECT * FROM tvshows WHERE catagory='NightSky' ORDER BY Episode ASC;"

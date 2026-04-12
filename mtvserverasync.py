@@ -1,6 +1,4 @@
-# import vlc
 from mpv import MPV
-# import time
 import asyncio
 import websockets
 import requests
@@ -603,7 +601,11 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "monarchlegacyofmonsterss1":
-                mediainfo = MTVMEDIA.monarchlegacyofmonsters()
+                mediainfo = MTVMEDIA.monarchlegacyofmonsterss1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "monarchlegacyofmonsterss2":
+                mediainfo = MTVMEDIA.monarchlegacyofmonsterss2()
                 await websocket.send(json.dumps(mediainfo))
 
             elif command == "nightskys1":
