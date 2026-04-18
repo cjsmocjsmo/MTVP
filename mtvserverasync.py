@@ -1,6 +1,8 @@
 from mpv import MPV
 import asyncio
 import websockets
+import urllib.parse
+import mimetypes
 import requests
 import json
 import logging
@@ -1329,8 +1331,67 @@ async def handle_message(websocket):
     finally:
         logging.info("WebSocket connection closed")
 async def servermain():
-    async with websockets.serve(handle_message, "10.0.4.41", 8765):
-        await asyncio.Future()  # Run forever
+
+    async def static_file_server(reader, writer):
+        request = await reader.readline()
+        if not request:
+            writer.close()
+            await writer.wait_closed()
+            return
+
+        try:
+            method, path, *_ = request.decode().split()
+        except Exception:
+            writer.close()
+            await writer.wait_closed()
+            return
+
+        path = urllib.parse.unquote(path)
+        static_paths = {
+            '/thumbnails': '/usr/share/MTV/thumbnails',
+            '/tvthumbnails': '/usr/share/MTV/tvthumbnails',
+        }
+        for prefix, folder in static_paths.items():
+            if path.startswith(prefix):
+                rel_path = path[len(prefix):].lstrip('/')
+                file_path = os.path.join(folder, rel_path)
+                if os.path.isfile(file_path):
+                    mime, _ = mimetypes.guess_type(file_path)
+                    mime = mime or 'application/octet-stream'
+                    try:
+                        with open(file_path, 'rb') as f:
+                            content = f.read()
+                        response = (
+                            "HTTP/1.1 200 OK\r\n"
+                            f"Content-Type: {mime}\r\n"
+                            f"Content-Length: {len(content)}\r\n"
+                            "Connection: close\r\n"
+                            "\r\n"
+                        ).encode() + content
+                    except Exception:
+                        response = b"HTTP/1.1 500 Internal Server Error\r\n\r\n"
+                else:
+                    response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+                writer.write(response)
+                await writer.drain()
+                writer.close()
+                await writer.wait_closed()
+                return
+
+        # Not a static file request
+        response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+        writer.write(response)
+        await writer.drain()
+        writer.close()
+        await writer.wait_closed()
+
+    # Start both websocket and static file servers concurrently
+    ws_server = websockets.serve(handle_message, "10.0.4.41", 8765)
+    static_server = await asyncio.start_server(static_file_server, "10.0.4.41", 8080)
+    print("WebSocket server running on ws://10.0.4.41:8765/")
+    print("Static file server running on http://10.0.4.41:8080/thumbnails/... and /tvthumbnails/...")
+    async with static_server:
+        await asyncio.gather(ws_server, static_server.serve_forever())
 
 if __name__ == "__main__":
     asyncio.run(servermain())
