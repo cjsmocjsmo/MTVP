@@ -1,0 +1,49 @@
+.EEEE
+======================================================================
+ERROR: test_movie_count (__main__.TestUtils.test_movie_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/pipi/HD/MTV/MTVP/test_utils.py", line 10, in test_movie_count
+    count = utils.movie_count()
+            ^^^^^^^^^^^^^^^^^^^
+  File "/media/pipi/HD/MTV/MTVP/utils.py", line 34, in movie_count
+    cursor.execute("SELECT COUNT(*) FROM movies")
+sqlite3.OperationalError: no such table: movies
+
+======================================================================
+ERROR: test_movies_size_on_disk (__main__.TestUtils.test_movies_size_on_disk)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/pipi/HD/MTV/MTVP/test_utils.py", line 20, in test_movies_size_on_disk
+    size = utils.movies_size_on_disk()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/pipi/HD/MTV/MTVP/utils.py", line 49, in movies_size_on_disk
+    cursor.execute("SELECT Size FROM movies")
+sqlite3.OperationalError: no such table: movies
+
+======================================================================
+ERROR: test_tvshow_count (__main__.TestUtils.test_tvshow_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/pipi/HD/MTV/MTVP/test_utils.py", line 15, in test_tvshow_count
+    count = utils.tvshow_count()
+            ^^^^^^^^^^^^^^^^^^^^
+  File "/media/pipi/HD/MTV/MTVP/utils.py", line 41, in tvshow_count
+    cursor.execute("SELECT COUNT(*) FROM tvshows")
+sqlite3.OperationalError: no such table: tvshows
+
+======================================================================
+ERROR: test_tvshows_size_on_disk (__main__.TestUtils.test_tvshows_size_on_disk)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/pipi/HD/MTV/MTVP/test_utils.py", line 25, in test_tvshows_size_on_disk
+    size = utils.tvshows_size_on_disk()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/pipi/HD/MTV/MTVP/utils.py", line 65, in tvshows_size_on_disk
+    cursor.execute("SELECT Size FROM tvshows")
+sqlite3.OperationalError: no such table: tvshows
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.013s
+
+FAILED (errors=4)
