@@ -1287,6 +1287,16 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def thepitts1(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ThePitts' AND season='01' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def thepitts2(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ThePitts' AND season='02' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     def homevids(self):
         command = "SELECT * FROM videos;"
         self.cursor.execute(command)

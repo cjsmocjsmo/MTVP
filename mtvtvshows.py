@@ -59,6 +59,7 @@ class ProcessTVShows:
         self.thelastofus = re.compile("TheLastOfUs")
         self.personofinterest = re.compile("PersonOfInterest")
         self.forgedinfire = re.compile("ForgedInFire")
+        self.thepitt = re.compile("ThePitt")
 
         #cartoons
         self.jetsons = re.compile("Jetsons")
@@ -293,6 +294,8 @@ class ProcessTVShows:
             catagory = "PrehistoricPlanet"
         elif re.search(self.forgedinfire, tv):
             catagory = "ForgedInFire"
+        elif re.search(self.thepitt, tv):
+            catagory = "ThePitt"
 
         #westerns
         elif re.search(self.hford1923, tv):

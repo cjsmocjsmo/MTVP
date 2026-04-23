@@ -1322,6 +1322,14 @@ async def handle_message(websocket):
                 mediainfo = MTVMEDIA.forgedinfires8()
                 await websocket.send(json.dumps(mediainfo))
 
+            elif command == "thepits1":
+                mediainfo = MTVMEDIA.thepits1()
+                await websocket.send(json.dumps(mediainfo))
+
+            elif command == "thepits2":
+                mediainfo = MTVMEDIA.thepits2()
+                await websocket.send(json.dumps(mediainfo))
+
             elif command == "homevids":
                 mediainfo = MTVMEDIA.homevids()
                 await websocket.send(json.dumps(mediainfo)) 
