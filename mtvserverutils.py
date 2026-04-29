@@ -144,6 +144,10 @@ class Media:
     def misc(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Misc' ORDER BY year DESC")
         return self._fetch_all_as_dict()
+
+    def mummy(self):
+        self.cursor.execute("SELECT * FROM movies WHERE catagory='Mummy' ORDER BY year DESC")
+        return self._fetch_all_as_dict()
     
     def nature(self):
         self.cursor.execute("SELECT * FROM movies WHERE catagory='Nature' ORDER BY year DESC")

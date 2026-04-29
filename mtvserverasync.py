@@ -399,6 +399,10 @@ async def handle_message(websocket):
                 musicvids_data = MTVMEDIA.musicvids()
                 await websocket.send(json.dumps(musicvids_data))
 
+            elif command == "mummy":
+                mummy_data = MTVMEDIA.mummy()
+                await websocket.send(json.dumps(mummy_data))
+
             elif command == "nature":
                 nature_data = MTVMEDIA.nature()
                 await websocket.send(json.dumps(nature_data))

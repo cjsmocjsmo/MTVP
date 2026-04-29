@@ -62,6 +62,7 @@ class ProcessMovies:
         self.minions = re.compile("Minions")
         self.misc = re.compile("Misc")
         self.musicvids = re.compile("MusicVids")
+        self.mummy = re.compile("MummyVids")
 
         self.nature = re.compile("Nature")
         self.nicolas_cage = re.compile("NicolasCage")
@@ -187,6 +188,8 @@ class ProcessMovies:
             catagory = "Misc"
         elif re.search(self.musicvids, mov):
             catagory = "MusicVids"
+        elif re.search(self.mummy, mov):
+            catagory = "Mummy"
         elif re.search(self.nature, mov):
             catagory = "Nature"
         elif re.search(self.nicolas_cage, mov):
