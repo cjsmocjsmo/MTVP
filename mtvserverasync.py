@@ -263,12 +263,23 @@ async def handle_message(websocket):
                 await websocket.send(json.dumps(update_data))
                 conn.close()
 
+            elif command == "updatemovs":
+                update_data = MTVMOVIES.UpdateMovies().updateMovs()
+                await websocket.send(json.dumps(update_data))
+                conn.close()
+
             elif command == "checkfortvupdates":
                 conn = sqlite3.connect(os.getenv("MTV_DB_PATH"))
                 cursor = conn.cursor()
                 update_data = MTVTVSHOWS.UpdateTVShows(conn, cursor).check_for_tv_updates()
                 await websocket.send(json.dumps(update_data))
                 conn.close()
+
+            elif command == "updatetvs":
+                update_data = MTVTVSHOWS.UpdateTVShows().updateTV()
+                await websocket.send(json.dumps(update_data))
+                conn.close()
+
 
 
             elif command == "action":

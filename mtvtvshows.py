@@ -402,9 +402,5 @@ class UpdateTVShows:
 
     def updateTV(self):
         new_tv_paths = self.check_for_tv_updates()
-        if new_tv_paths:
-            logging.info(f"New TV shows found: {new_tv_paths}")
-            processor = ProcessTVShows(new_tv_paths, self.conn, self.cursor).process()
-        else:
-            logging.info("No new TV shows found.")
+        ProcessTVShows(new_tv_paths, self.conn, self.cursor).process()
     

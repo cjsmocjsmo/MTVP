@@ -327,25 +327,16 @@ class UpdateMovies:
     def check_for_mov_updates(self):
         db_mov_paths = set(self.movie_paths_from_db())
         disk_mov_paths = set(self.movie_paths_from_disk())
-        #db_img_paths = set(self.movie_image_paths_from_db())
-        #disk_img_paths = set(self.movie_image_paths_from_disk())
         print(db_mov_paths)
         new_movs = [mov for mov in disk_mov_paths if mov not in db_mov_paths]
-
-        #new_movs_images = [img for img in disk_img_paths if img not in db_img_paths]
-        
         return new_movs
 
     def updateMovs(self):
         new_movs = self.check_for_mov_updates()
+        ProcessMovies(new_movs, self.conn, self.cursor).process()
+
         nmcount = len(new_movs)
         logging.info(f"Found {nmcount} new movies.")
-        
-        if new_movs:
-            logging.info(f"New movies found: {new_movs}")
-            ProcessMovies(new_movs, self.conn, self.cursor).process()
-        else:
-            logging.info("No new movies found.")
         
         
 
