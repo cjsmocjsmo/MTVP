@@ -14,7 +14,45 @@ func HandleSpecialCategoryCommand(conn *websocket.Conn, db *sql.DB, command stri
 	var err error
 	switch command {
 	// Media action commands (map to CategoryMovies)
-	case "action", "arnold", "avatar", "brucelee", "brucewillis", "buzz", "cartoons", "charliebrown", "cheechandchong", "chucknorris", "clinteastwood", "comedy", "documentary", "drama", "fantasy", "ghostbusters", "godzilla", "harrisonford", "harrypotter", "hellboy", "indianajones", "jamesbond", "johnwayne", "johnwick", "jurassicpark", "kevincostner", "kingsman", "lego", "meninblack", "minions", "misc", "musicvids", "nature", "nicolascage", "oldies", "panda", "pirates", "predator", "riddick", "science", "scifi", "stalone", "startrek", "starwars", "stooges", "superheros", "superman", "therock", "tinkerbell", "tomcruize", "transformers", "tremors", "trolls", "vandam", "xmen":
+	case "action", "arnold", "avatar":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "brucelee", "brucewillis", "buzz":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "cartoons", "charliebrown", "cheechandchong", "chucknorris", "clinteastwood", "comedy":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "documentary", "drama":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "fantasy":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "ghostbusters", "godzilla":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "harrisonford", "harrypotter", "hellboy":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "indianajones":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "jamesbond", "johnwayne", "johnwick", "jurassicpark":
+		results, err= mtvMedia.CategoryMovies(command)
+	case "kevincostner", "kingsman":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "lego":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "meninblack", "minions", "misc", "musicvids":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "nature", "nicolascage":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "oldies":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "panda", "pirates", "predator":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "riddick":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "science", "scifi", "stalone", "startrek", "starwars", "stooges", "superheros", "superman":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "therock", "tinkerbell", "tomcruize", "transformers", "tremors", "trolls":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "vandam":
+		results, err = mtvMedia.CategoryMovies(command)
+	case "xmen":
 		results, err = mtvMedia.CategoryMovies(command)
 	// TV/season and special category commands
 	case "alteredcarbons1":

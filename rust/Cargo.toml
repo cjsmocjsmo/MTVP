@@ -1,0 +1,25 @@
+[package]
+name = "mtv-server-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Async runtime (replaces asyncio)
+tokio = { version = "1.36", features = ["full"] }
+# WebSockets (replaces websockets)
+tokio-tungstenite = "0.21"
+futures-util = "0.3"
+# Database (replaces sqlite3)
+rusqlite = { version = "0.31", features = ["bundled"] }
+# JSON handling (replaces json)
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# HTTP client (replaces requests)
+reqwest = { version = "0.11", features = ["json"] }
+# Environment variables (replaces dotenv)
+dotenv = "0.15"
+# MPV Interface (replaces python-mpv)
+mpv-client = "0.3"
+# Logging
+log = "0.4"
+simple_logger = "4.3"

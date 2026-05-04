@@ -6,5 +6,6 @@ import (
 
 // LoadEnv loads environment variables from a .env file
 func LoadEnv() error {
-	return godotenv.Load()
+	// if this fails try "../../env/.env"
+	return godotenv.Load("../env/.env")
 }
