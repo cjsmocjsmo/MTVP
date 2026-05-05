@@ -12,7 +12,7 @@ class Media:
         columns = [column[0] for column in self.cursor.description]
         return [dict(zip(columns, row)) for row in self.cursor.fetchall()]
     
-    def search(self, search):
+    def mtvsearch(self, search):
         command = f"SELECT * FROM movies WHERE name LIKE '%{search}%' ORDER BY year DESC;"
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
