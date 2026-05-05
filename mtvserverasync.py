@@ -18,7 +18,7 @@ import mtvtvshows as MTVTVSHOWS
 # Initialize MPV player
 player = MPV()
 
-load_dotenv()
+load_dotenv(dotenv_path="./env/.env")
 
 # Ensure log directory and file exist
 log_file = os.getenv('MTV_SERVER_LOG')
