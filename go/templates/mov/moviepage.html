@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pagetitle">Movies</title>
+    <style>
+        body { background: #181818; color: #f0f0f0; font-family: Arial, sans-serif; }
+        h1 { text-align: center; }
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1em;
+            padding: 2em;
+        }
+        .img-grid img {
+            width: 100%;
+            border-radius: 8px;
+            background: #222;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="header">Movies</h1>
+    <div class="img-grid" id="images"></div>
+    <script>
+    // Get category from query string
+    function getCategory() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('cat') || 'action';
+    }
+    const category = getCategory();
+    document.getElementById('pagetitle').innerText = category.charAt(0).toUpperCase() + category.slice(1) + ' Movies';
+    document.getElementById('header').innerText = category.charAt(0).toUpperCase() + category.slice(1) + ' Movies';
+    // Connect to WebSocket server and request images for the category
+    const ws = new WebSocket(`ws://${window.location.hostname}:8765/ws`);
+    ws.onopen = function() {
+        ws.send(category);
+    };
+    ws.onmessage = function(event) {
+        let images = [];
+        try {
+            const resp = JSON.parse(event.data);
+            images = resp.images || [];
+        } catch (e) {
+            document.getElementById('images').innerText = 'Error loading images.';
+            return;
+        }
+        const container = document.getElementById('images');
+        container.innerHTML = '';
+        images.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            container.appendChild(img);
+        });
+    };
+    ws.onerror = function() {
+        document.getElementById('images').innerText = 'WebSocket error.';
+    };
+    </script>
+</body>
+</html>

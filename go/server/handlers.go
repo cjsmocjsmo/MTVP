@@ -3,52 +3,77 @@ package server
 import (
 	"database/sql"
 	"encoding/json"
-	"log"
-	"github.com/gorilla/websocket"
-)
-
-type WSCommand struct {
-	Command   string      `json:"command"`
-	MediaID   string      `json:"media_id,omitempty"`
-	MediaTVID string      `json:"media_tv_id,omitempty"`
 	VideoID   string      `json:"video_id,omitempty"`
 	Phrase    string      `json:"phrase,omitempty"`
 }
-
-type WSResponse map[string]interface{}
-
-func HandleWS(conn *websocket.Conn, db *sql.DB) {
-	defer conn.Close()
-	for {
-		_, msg, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("WebSocket read error:", err)
-			break
-		}
-		var cmd WSCommand
-		if err := json.Unmarshal(msg, &cmd); err != nil {
-			log.Println("Invalid WS command:", err)
-			conn.WriteJSON(WSResponse{"status": "error", "message": "invalid command"})
-			continue
-		}
-		resp := processCommand(cmd, db)
-		if err := conn.WriteJSON(resp); err != nil {
-			log.Println("WebSocket write error:", err)
-			break
-		}
+	default:
+		// Treat any other command as a movie category
+		images := getCategoryMovieImages(db, cmd.Command)
+		return WSResponse{"images": images}
 	}
 }
 
-func processCommand(cmd WSCommand, db *sql.DB) WSResponse {
-	switch cmd.Command {
-	case "movcount":
-		return WSResponse{"count": getMovieCount(db)}
-	case "tvcount":
-		return WSResponse{"count": getTVShowCount(db)}
-	// Add more command cases as needed
+type WSResponse map[string]interface{}
+func getCategoryMovieImages(db *sql.DB, category string) []string {
+	// Use category in a LIKE query (case-insensitive)
+	query := "SELECT Path FROM movies WHERE LOWER(Title) LIKE ?"
+	likePattern := "%" + category + "%"
+	rows, err := db.Query(query, likePattern)
+	if err != nil {
+		log.Println("DB error (category images):", err)
+		return nil
+	}
+	defer rows.Close()
+	var images []string
+	for rows.Next() {
+		var path string
+		if err := rows.Scan(&path); err == nil {
+			images = append(images, "/thumbnails/"+path)
+		}
+	}
+	return images
+}
+
+	}
+		// Example: select all movies with 'Arnold' in the title (customize as needed)
+		rows, err := db.Query("SELECT Path FROM movies WHERE Title LIKE '%Arnold%'")
+		if err != nil {
+			log.Println("DB error (arnold images):", err)
+			return nil
+		}
+		defer rows.Close()
+		var images []string
+		for rows.Next() {
+			var path string
+			if err := rows.Scan(&path); err == nil {
+				images = append(images, "/thumbnails/"+path)
+			}
+		}
+		return images
+	}
 	default:
 		return WSResponse{"status": "unknown command"}
 	}
+}
+
+// getActionMovieImages queries the DB for action movies and returns a list of image URLs
+func getActionMovieImages(db *sql.DB) []string {
+	// Example: select all movies with 'Action' in the title (customize as needed)
+	rows, err := db.Query("SELECT Path FROM movies WHERE Title LIKE '%Action%'")
+	if err != nil {
+		log.Println("DB error (action images):", err)
+		return nil
+	}
+	defer rows.Close()
+	var images []string
+	for rows.Next() {
+		var path string
+		if err := rows.Scan(&path); err == nil {
+			// Assume images are served from /thumbnails/ and path is the filename
+			images = append(images, "/thumbnails/"+path)
+		}
+	}
+	return images
 }
 
 func getMovieCount(db *sql.DB) int {
