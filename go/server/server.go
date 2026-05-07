@@ -2,27 +2,12 @@ package server
 
 import (
 	"database/sql"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
-	"github.com/gorilla/websocket"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/gorilla/websocket"
 )
-// indexHandler serves the main page using Go's html/template
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	tmplPath := filepath.Join("go", "templates", "index.html")
-	tmpl, err := template.ParseFiles(tmplPath)
-	if err != nil {
-		http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = tmpl.Execute(w, nil)
-	if err != nil {
-		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
-	}
-}
 
 func wsHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +44,6 @@ func StartServer() {
 	log.Println("Starting WebSocket server on ws://" + wsAddr + ":8765/ws")
 	log.Println("Starting static file server on http://" + wsAddr + ":8080/thumbnails/ and /tvthumbnails/")
 
-	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/ws", wsHandler(db))
 	http.Handle("/thumbnails/", staticFileHandler("/thumbnails/", "/usr/share/MTV/thumbnails"))
 	http.Handle("/tvthumbnails/", staticFileHandler("/tvthumbnails/", "/usr/share/MTV/tvthumbnails"))

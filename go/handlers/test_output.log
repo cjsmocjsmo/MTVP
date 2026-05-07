@@ -1,0 +1,15 @@
+=== RUN   TestHandleSpecialCategoryCommand
+--- PASS: TestHandleSpecialCategoryCommand (0.00s)
+=== RUN   TestHandleUtilityCommand
+--- PASS: TestHandleUtilityCommand (0.00s)
+=== RUN   TestSearchMedia_Movies
+--- PASS: TestSearchMedia_Movies (0.01s)
+=== RUN   TestSearchMedia_TVShows
+    search_test.go:49: 
+        	Error Trace:	/media/pipi/HD/MTV/MTVP/go/handlers/search_test.go:49
+        	Error:      	Should be true
+        	Test:       	TestSearchMedia_TVShows
+--- FAIL: TestSearchMedia_TVShows (0.00s)
+FAIL
+FAIL	mtvp/handlers	0.033s
+FAIL

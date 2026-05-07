@@ -1,4 +1,3 @@
-
 package server
 
 import (
@@ -10,6 +9,9 @@ import (
     "database/sql"
     "log"
     "github.com/gorilla/websocket"
+    "html/template"
+    "path/filepath"
+    "net/http"
 )
 
 // PlayerManager manages the media player process and state
@@ -565,4 +567,24 @@ func getTVShowCount(db *sql.DB) int {
         return 0
     }
     return count
+}
+
+// indexHandler serves the main page using Go's html/template
+func indexHandlerWithPath(tmplPath string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		tmpl, err := template.ParseFiles(tmplPath)
+		if err != nil {
+			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		}
+	}
+}
+
+// Legacy handler for production use
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	indexHandlerWithPath(filepath.Join("go", "templates", "index.html"))(w, r)
 }
