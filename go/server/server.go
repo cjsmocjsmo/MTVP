@@ -47,6 +47,9 @@ func StartServer() {
 	http.HandleFunc("/ws", wsHandler(db))
 	http.Handle("/thumbnails/", staticFileHandler("/thumbnails/", "/usr/share/MTV/thumbnails"))
 	http.Handle("/tvthumbnails/", staticFileHandler("/tvthumbnails/", "/usr/share/MTV/tvthumbnails"))
+	http.Handle("/templates/", staticFileHandler("/templates/", "go/templates/"))
+	http.Handle("/static/css/", staticFileHandler("/static/css/", "go/static/css/"))
+	http.Handle("/static/js/", staticFileHandler("/static/js/", "go/static/js/"))
 
 	go func() {
 		if err := http.ListenAndServe(wsAddr+":8765", nil); err != nil {

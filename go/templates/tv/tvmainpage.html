@@ -3,36 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pagetitle">Movies</title>
-    <style>
+    <title id="pagetitle">TV Shows</title>
+    <link rel="stylesheet" href="/static/css/mtv.css">
+    <!-- <style>
         body { background: #181818; color: #f0f0f0; font-family: Arial, sans-serif; }
         h1 { text-align: center; }
-        .img-grid {
+        .tv-cat-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1em;
             padding: 2em;
         }
-        .img-grid img {
-            width: 100%;
+        .tv-cat-grid-item {
+            background: #282828;
             border-radius: 8px;
-            background: #222;
+            padding: 1em;
+            text-align: center;
+            transition: background 0.3s ease;
         }
-    </style>
+    </style> -->
 </head>
 <body>
-    <div>
-        <p>Action</p>
-        <p>Cartoons</p>
-        <p>Comedy</p>
-        <p>Fantasy</p>
-        <p>MCU</p>
-        <p>NCIS</p>
-        <p>Science</p>
-        <p>SciFi</p>
-        <p>Star Trek</p>
-        <p>Star Wars</p>
-        <p>Westerns</p>
+    <div class="tv-cat-grid">
+        <a class="tv-cat-grid-item" href="/templates/tv/tvactionpage.html"><p>Action</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvcartoonspage.html"><p>Cartoons</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvcomedypage.html"><p>Comedy</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvfantasypage.html"><p>Fantasy</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvmcupage.html"><p>MCU</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvncispage.html"><p>NCIS</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvsciencepage.html"><p>Science</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvscifipage.html"><p>SciFi</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvstartrekpage.html"><p>Star Trek</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvstarwarspage.html"><p>Star Wars</p></a>
+        <a class="tv-cat-grid-item" href="/templates/tv/tvwesternspage.html"><p>Westerns</p></a>
     </div>
 </body>
 </html>

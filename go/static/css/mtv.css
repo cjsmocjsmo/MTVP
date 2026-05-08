@@ -1,0 +1,53 @@
+body { 
+        font-family: sans-serif, Arial;
+        background: #181818;
+        color: #f0f0f0;
+        font-family: Arial, sans-serif;
+}
+
+#header { 
+    text-align: center;
+    margin: 0.5em;
+}
+        
+.img-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1em;
+    padding: 2em;
+}
+        
+.img-grid img {
+    width: 100%;
+    border-radius: 8px;
+    background: #222;
+}
+
+.tv-cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1em;
+    padding: 2em;
+}
+
+.tv-cat-grid-item {
+    background: #282828;
+    border-radius: 8px;
+    padding: 1em;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.movlist {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(10, 1fr);
+	column-gap: 4em;
+	row-gap: 0.25em;
+}
+
+p.mov {
+	font-size: 1.75em;
+	justify-self: center;
+	align-self: center;
+}

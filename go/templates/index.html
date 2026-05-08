@@ -6,34 +6,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MTV Movie List</title>
-	<style>
-		.movlist {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: repeat(10, 1fr);
-			column-gap: 4em;
-			row-gap: 0.25em;
-		}
-		p.mov {
-			font-size: 1.75em;
-			justify-self: center;
-			align-self: center;
-		}
-		body {
-			font-family: Arial, sans-serif;
-			background: #181818;
-			color: #f0f0f0;
-			margin: 0;
-			padding: 0;
-		}
-		h1 {
-			text-align: center;
-			margin-top: 1em;
-		}
-	</style>
+	<link rel="stylesheet" href="/static/css/mtv.css">
 </head>
 <body>
-	<h1>MTV Movie List</h1>
+	<h1 id="header">MTV Movie List</h1>
 	<div class="movlist">
 		<a href='/templates/mov/moviepage.html?cat=action'><p class="mov">Action</p></a>
 		<a href='/templates/mov/moviepage.html?cat=arnold'><p class="mov">Arnold</p></a>
