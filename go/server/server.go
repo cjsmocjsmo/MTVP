@@ -74,6 +74,44 @@ func StartServer() {
 	http.HandleFunc("/clinteastwood", ClintEastwoodPageHandler(db))
 	// Register /comedy route for Comedy movies page
 	http.HandleFunc("/comedy", ComedyPageHandler(db))
+	// Register /documentary route for Documentary movies page
+	http.HandleFunc("/documentary", DocumentaryPageHandler(db))
+	// Register /drama route for Drama movies page
+	http.HandleFunc("/drama", DramaPageHandler(db))
+	// Register /fantasy route for Fantasy movies page
+	http.HandleFunc("/fantasy", FantasyPageHandler(db))
+	// Register /ghostbusters route for Ghostbusters movies page
+	http.HandleFunc("/ghostbusters", GhostbustersPageHandler(db))
+	// Register /godzilla route for Godzilla movies page
+	http.HandleFunc("/godzilla", GodzillaPageHandler(db))
+	// Register /harrisonford route for Harrison Ford movies page
+	http.HandleFunc("/harrisonford", HarrisonFordPageHandler(db))
+	// Register /harrypotter route for Harry Potter movies page
+	http.HandleFunc("/harrypotter", HarryPotterPageHandler(db))
+	// Register /hellboy route for Hellboy movies page
+	http.HandleFunc("/hellboy", HellboyPageHandler(db))
+	// Register /homevids route for Home Vids movies page
+	http.HandleFunc("/homevids", HomeVidsPageHandler(db))
+	// Register /indianajones route for Indiana Jones movies page
+	http.HandleFunc("/indianajones", IndianaJonesPageHandler(db))
+	// Register /jamesbond route for James Bond movies page
+	http.HandleFunc("/jamesbond", JamesBondPageHandler(db))
+	// Register /johnwayne route for John Wayne movies page
+	http.HandleFunc("/johnwayne", JohnWaynePageHandler(db))
+	// Register /johnwick route for John Wick movies page
+	http.HandleFunc("/johnwick", JohnWickPageHandler(db))
+	// Register /jurrasicpark route for Jurassic Park movies page
+	http.HandleFunc("/jurrasicpark", JurrasicParkPageHandler(db))
+	// Register /kevincostner route for Kevin Costner movies page
+	http.HandleFunc("/kevincostner", KevinCostnerPageHandler(db))
+	// Register /kingsman route for Kingsman movies page
+	http.HandleFunc("/kingsman", KingsmanPageHandler(db))
+	// Register /lego route for Lego movies page
+	http.HandleFunc("/lego", LegoPageHandler(db))
+	// Register /meninblack route for Men in Black movies page
+	http.HandleFunc("/meninblack", MenInBlackPageHandler(db))
+	// Register /minions route for Minions movies page
+	http.HandleFunc("/minions", MinionsPageHandler(db))
 
 	go func() {
 		if err := http.ListenAndServe(wsAddr+":8765", nil); err != nil {
