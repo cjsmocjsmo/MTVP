@@ -112,6 +112,58 @@ func StartServer() {
 	http.HandleFunc("/meninblack", MenInBlackPageHandler(db))
 	// Register /minions route for Minions movies page
 	http.HandleFunc("/minions", MinionsPageHandler(db))
+	// Register /misc route for Misc movies page
+	http.HandleFunc("/misc", MiscPageHandler(db))
+	// Register /mummy route for Mummy movies page
+	http.HandleFunc("/mummy", MummyPageHandler(db))
+	// Register /musicvids route for Music Videos page
+	http.HandleFunc("/musicvids", MusicVidsPageHandler(db))
+	// Register /xmen route for X-Men movies page
+	http.HandleFunc("/xmen", XmenPageHandler(db))
+	// Register /vandam route for Van Damme movies page
+	http.HandleFunc("/vandam", VandamPageHandler(db))
+	// Register /trolls route for Trolls movies page
+	http.HandleFunc("/trolls", TrollsPageHandler(db))
+	// Register /tremors route for Tremors movies page
+	http.HandleFunc("/tremors", TremorsPageHandler(db))
+	// Register /transformers route for Transformers movies page
+	http.HandleFunc("/transformers", TransformersPageHandler(db))
+	// Register /scifi route for Sci-Fi movies page
+	http.HandleFunc("/scifi", SciFiPageHandler(db))
+	// Register /science route for Science movies page
+	http.HandleFunc("/science", SciencePageHandler(db))
+	// Register /nature route for Nature movies page
+	http.HandleFunc("/nature", NaturePageHandler(db))
+	// Register /nicolascage route for Nicolas Cage movies page
+	http.HandleFunc("/nicolascage", NicolasCagePageHandler(db))
+	// Register /oldies route for Oldies movies page
+	http.HandleFunc("/oldies", OldiesPageHandler(db))
+	// Register /pandas route for Pandas movies page
+	http.HandleFunc("/pandas", PandasPageHandler(db))
+	// Register /pirates route for Pirates movies page
+	http.HandleFunc("/pirates", PiratesPageHandler(db))
+	// Register /predator route for Predator movies page
+	http.HandleFunc("/predator", PredatorPageHandler(db))
+	// Register /riddick route for Riddick movies page
+	http.HandleFunc("/riddick", RiddickPageHandler(db))
+	// Register /stalone route for Stallone movies page
+	http.HandleFunc("/stalone", StalonePageHandler(db))
+	// Register /startrek route for Star Trek movies page
+	http.HandleFunc("/startrek", StarTrekPageHandler(db))
+	// Register /starwars route for Star Wars movies page
+	http.HandleFunc("/starwars", StarWarsPageHandler(db))
+	// Register /stooges route for Stooges movies page
+	http.HandleFunc("/stooges", StoogesPageHandler(db))
+	// Register /superheroes route for Superheroes movies page
+	http.HandleFunc("/superheroes", SuperheroesPageHandler(db))
+	// Register /superman route for Superman movies page
+	http.HandleFunc("/superman", SupermanPageHandler(db))
+	// Register /therock route for The Rock movies page
+	http.HandleFunc("/therock", TheRockPageHandler(db))
+	// Register /tinkerbell route for Tinkerbell movies page
+	http.HandleFunc("/tinkerbell", TinkerbellPageHandler(db))
+	// Register /tomcruize route for Tom Cruise movies page
+	http.HandleFunc("/tomcruize", TomCruizePageHandler(db))
 
 	go func() {
 		if err := http.ListenAndServe(wsAddr+":8765", nil); err != nil {
