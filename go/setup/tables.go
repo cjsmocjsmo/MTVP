@@ -6,14 +6,25 @@ import (
 
 func createTables(db *sql.DB) error {
 	movieTable := `CREATE TABLE IF NOT EXISTS movies (
-		MovId INTEGER PRIMARY KEY,
-		Title TEXT,
-		Path TEXT
+		Name TEXT,
+		Year TEXT,
+		PosterAddr TEXT,
+		Size INTEGER,
+		Path TEXT,
+		Idx INTEGER,
+		MovId TEXT PRIMARY KEY,
+		Catagory TEXT,
+		HttpThumbPath TEXT
 	);`
 	tvTable := `CREATE TABLE IF NOT EXISTS tvshows (
-		TvId INTEGER PRIMARY KEY,
-		Title TEXT,
-		Path TEXT
+		TvId TEXT PRIMARY KEY,
+		Size INTEGER,
+		Catagory TEXT,
+		Name TEXT,
+		Season TEXT,
+		Episode TEXT,
+		Path TEXT,
+		Idx INTEGER
 	);`
 	_, err := db.Exec(movieTable)
 	if err != nil {

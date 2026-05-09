@@ -46,19 +46,31 @@ func TestInsertMovies(t *testing.T) {
 	assert.NoError(t, err)
 	defer db.Close()
 
-	_, err = db.Exec(`CREATE TABLE movies (Name TEXT, Year TEXT, PosterAddr TEXT, Size INTEGER, Path TEXT, Idx INTEGER, MovId TEXT, Catagory TEXT, HttpThumbPath TEXT)`)
-	assert.NoError(t, err)
+	       _, err = db.Exec(`CREATE TABLE movies (
+		       Name TEXT,
+		       Year TEXT,
+		       PosterAddr TEXT,
+		       Size INTEGER,
+		       Path TEXT,
+		       Idx INTEGER,
+		       MovId TEXT PRIMARY KEY,
+		       Catagory TEXT,
+		       HttpThumbPath TEXT
+	       )`)
+	       assert.NoError(t, err)
 
-	tmpDir := t.TempDir()
-	moviePath := filepath.Join(tmpDir, "Test Movie (2022).mkv")
-	os.WriteFile(moviePath, []byte("test"), 0644)
+	       tmpDir := t.TempDir()
+	       moviePath := filepath.Join(tmpDir, "Test Movie (2022).mkv")
+	       os.WriteFile(moviePath, []byte("test"), 0644)
 
-	err = InsertMovies(db, []string{moviePath}, 0)
-	assert.NoError(t, err)
+	       err = InsertMovies(db, []string{moviePath}, 0)
+	       assert.NoError(t, err)
 
-	row := db.QueryRow("SELECT Name, Year FROM movies WHERE Path=?", moviePath)
-	var name, year string
-	assert.NoError(t, row.Scan(&name, &year))
-	assert.Equal(t, "Test Movie", name)
-	assert.Equal(t, "2022", year)
+	       row := db.QueryRow("SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath FROM movies WHERE Path=?", moviePath)
+	       var name, year, posterAddr, movId, catagory, httpThumbPath string
+	       var size, idx int64
+	       assert.NoError(t, row.Scan(&name, &year, &posterAddr, &size, &moviePath, &idx, &movId, &catagory, &httpThumbPath))
+	       assert.Equal(t, "Test Movie", name)
+	       assert.Equal(t, "2022", year)
+	       assert.Equal(t, moviePath, moviePath)
 }
