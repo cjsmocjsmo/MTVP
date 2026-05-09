@@ -50,6 +50,12 @@ func StartServer() {
 	http.Handle("/templates/", staticFileHandler("/templates/", "go/templates/"))
 	http.Handle("/static/css/", staticFileHandler("/static/css/", "go/static/css/"))
 	http.Handle("/static/js/", staticFileHandler("/static/js/", "go/static/js/"))
+	// Register /action route for action movies page
+	http.HandleFunc("/action", ActionPageHandler(db))
+	// Register /arnold route for Arnold movies page
+	http.HandleFunc("/arnold", ArnoldPageHandler(db))
+	// Register /avatar route for Avatar movies page
+	http.HandleFunc("/avatar", AvatarPageHandler(db))
 
 	go func() {
 		if err := http.ListenAndServe(wsAddr+":8765", nil); err != nil {

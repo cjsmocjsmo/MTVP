@@ -1,3 +1,4 @@
+
 package server
 
 import (
@@ -13,6 +14,65 @@ import (
     "path/filepath"
     "net/http"
 )
+
+
+
+// ActionPageHandler serves the action movies page with images from the DB
+func ActionPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getActionMovieImages(db)
+        tmpl, err := template.ParseFiles("go/templates/mov/movactionpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ArnoldPageHandler serves the Arnold movies page with images from the DB
+func ArnoldPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "arnold")
+        tmpl, err := template.ParseFiles("go/templates/mov/movarnoldpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// AvatarPageHandler serves the Avatar movies page with images from the DB
+func AvatarPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "avatar")
+        tmpl, err := template.ParseFiles("go/templates/mov/movavatarpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
 // PlayerManager manages the media player process and state
 type PlayerManager struct {

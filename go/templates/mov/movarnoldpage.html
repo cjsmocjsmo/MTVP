@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Arnold Movies</title>
+	<link rel="stylesheet" href="/static/css/mtv.css">
+</head>
+<body>
+	<h1>Arnold Movies</h1>
+	<div class="mov-images-grid">
+        {{range .Images}}
+            <img src="{{.}}" alt="Arnold Movie" class="mov-img"/>
+        {{else}}
+            <p>No Arnold movie images found.</p>
+        {{end}}     
+	</div>
+</body>
+</html>
