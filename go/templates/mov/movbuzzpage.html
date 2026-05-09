@@ -1,0 +1,24 @@
+(The file is empty)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Buzz Movies</title>
+	<link rel="stylesheet" href="/static/css/mtv.css">
+</head>
+<body>
+    <div id="navbar">
+        <a href="/static/index.html"><button class="navbarbtn">Home</button></a>
+        <a href="/static/mov/movmainpage.html"><button class="navbarbtn">Movies</button></a>
+        <a href="/static/tv/tvmainpage.html"><button class="navbarbtn">TV Shows</button></a>
+    </div>
+	<h1>Buzz Movies</h1>
+	<div class="mov-images-grid">
+		{{range .Images}}
+			<img src="{{.}}" alt="Buzz Movie" class="mov-img" />
+		{{else}}
+			<p>No Buzz movie images found.</p>
+		{{end}}
+	</div>
+</body>
+</html>

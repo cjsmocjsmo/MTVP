@@ -1,4 +1,5 @@
 
+
 package server
 
 import (
@@ -14,8 +15,6 @@ import (
     "path/filepath"
     "net/http"
 )
-
-
 
 // ActionPageHandler serves the action movies page with images from the DB
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
@@ -73,6 +72,192 @@ func AvatarPageHandler(db *sql.DB) http.HandlerFunc {
         }
     }
 }
+
+// BruceLeePageHandler serves the Bruce Lee movies page with images from the DB
+func BruceLeePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "brucelee")
+        tmpl, err := template.ParseFiles("go/templates/mov/movbruceleepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// BruceWillisPageHandler serves the Bruce Willis movies page with images from the DB
+func BruceWillisPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "brucewillis")
+        tmpl, err := template.ParseFiles("go/templates/mov/movbrucewillispage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// BuzzPageHandler serves the Buzz movies page with images from the DB
+func BuzzPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "buzz")
+        tmpl, err := template.ParseFiles("go/templates/mov/movbuzzpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// CartoonsPageHandler serves the Cartoons movies page with images from the DB
+func CartoonsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "cartoons")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcartoonspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// CharlieBrownPageHandler serves the Charlie Brown movies page with images from the DB
+func CharlieBrownPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "charliebrown")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcharliebrownpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// CheechAndChongPageHandler serves the Cheech and Chong movies page with images from the DB
+func CheechAndChongPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "cheechandchong")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcheechandchongpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ChuckNorrisPageHandler serves the Chuck Norris movies page with images from the DB
+func ChuckNorrisPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "chucknorris")
+        tmpl, err := template.ParseFiles("go/templates/mov/movchucknorrispage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ClintEastwoodPageHandler serves the Clint Eastwood movies page with images from the DB
+func ClintEastwoodPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "clinteastwood")
+        tmpl, err := template.ParseFiles("go/templates/mov/movclinteastwoodpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ComedyPageHandler serves the Comedy movies page with images from the DB
+func ComedyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "comedy")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcomedypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // PlayerManager manages the media player process and state
 type PlayerManager struct {

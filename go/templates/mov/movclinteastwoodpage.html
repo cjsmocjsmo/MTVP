@@ -1,0 +1,19 @@
+(The file is empty)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Clint Eastwood Movies</title>
+	<link rel="stylesheet" href="/static/css/mtv.css">
+</head>
+<body>
+	<h1>Clint Eastwood Movies</h1>
+	<div class="mov-images-grid">
+		{{range .Images}}
+			<img src="{{.}}" alt="Clint Eastwood Movie" class="mov-img" />
+		{{else}}
+			<p>No Clint Eastwood movie images found.</p>
+		{{end}}
+	</div>
+</body>
+</html>

@@ -56,6 +56,24 @@ func StartServer() {
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
 	// Register /avatar route for Avatar movies page
 	http.HandleFunc("/avatar", AvatarPageHandler(db))
+	// Register /brucelee route for Bruce Lee movies page
+	http.HandleFunc("/brucelee", BruceLeePageHandler(db))
+	// Register /brucewillis route for Bruce Willis movies page
+	http.HandleFunc("/brucewillis", BruceWillisPageHandler(db))
+	// Register /buzz route for Buzz movies page
+	http.HandleFunc("/buzz", BuzzPageHandler(db))
+	// Register /cartoons route for Cartoons movies page
+	http.HandleFunc("/cartoons", CartoonsPageHandler(db))
+	// Register /charliebrown route for Charlie Brown movies page
+	http.HandleFunc("/charliebrown", CharlieBrownPageHandler(db))
+	// Register /cheechandchong route for Cheech and Chong movies page
+	http.HandleFunc("/cheechandchong", CheechAndChongPageHandler(db))
+	// Register /chucknorris route for Chuck Norris movies page
+	http.HandleFunc("/chucknorris", ChuckNorrisPageHandler(db))
+	// Register /clinteastwood route for Clint Eastwood movies page
+	http.HandleFunc("/clinteastwood", ClintEastwoodPageHandler(db))
+	// Register /comedy route for Comedy movies page
+	http.HandleFunc("/comedy", ComedyPageHandler(db))
 
 	go func() {
 		if err := http.ListenAndServe(wsAddr+":8765", nil); err != nil {
