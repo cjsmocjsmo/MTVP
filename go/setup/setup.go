@@ -10,9 +10,9 @@ import (
 
 // Run executes the setup process: creates tables and populates the DB
 func Run() error {
-	dbPath := os.Getenv("MTV_DB_PATH")
+	dbPath := os.Getenv("MTVGO_DB_PATH")
 	if dbPath == "" {
-		return fmt.Errorf("MTV_DB_PATH not set in environment")
+		return fmt.Errorf("MTVGO_DB_PATH not set in environment")
 	}
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {

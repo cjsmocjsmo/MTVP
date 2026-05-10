@@ -30,14 +30,14 @@ func staticFileHandler(prefix, dir string) http.Handler {
 }
 
 func StartServer() {
-	dbPath := os.Getenv("MTV_DB_PATH")
+	dbPath := os.Getenv("MTVGO_DB_PATH")
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		log.Fatal("Failed to open DB:", err)
 	}
 	defer db.Close()
 
-	wsAddr := os.Getenv("MTV_SERVER_ADDR")
+	wsAddr := os.Getenv("MTVGO_SERVER_ADDR")
 	if wsAddr == "" {
 		wsAddr = "0.0.0.0"
 	}
@@ -166,12 +166,14 @@ func StartServer() {
 	http.HandleFunc("/tomcruize", TomCruizePageHandler(db))
 
 	go func() {
-		if err := http.ListenAndServe(wsAddr+":8765", nil); err != nil {
+		var port = os.Getenv("MTVGO_SERVER_PORT")
+		if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
 			log.Fatal("WebSocket server error:", err)
 		}
 	}()
 
-	if err := http.ListenAndServe(wsAddr+":8080", nil); err != nil {
+	var staticPort = os.Getenv("MTVGO_STATIC_SERVER_PORT")
+	if err := http.ListenAndServe(wsAddr+":"+staticPort, nil); err != nil {
 		log.Fatal("Static file server error:", err)
 	}
 }

@@ -8,7 +8,7 @@ import (
 // Dummy data population for demonstration. Replace with real directory walking and parsing logic.
 
 func populateMovies(db *sql.DB) error {
-	movieDir := os.Getenv("MTV_MOVIES_PATH")
+	movieDir := os.Getenv("MTVGO_MOVIES_PATH")
 	if movieDir == "" {
 		return nil // or error if required
 	}
@@ -22,9 +22,9 @@ func populateMovies(db *sql.DB) error {
 	}
 
 	// Images for movies
-	imgDir := os.Getenv("MTV_POSTER_PATH")
-	thumbDir := os.Getenv("MTV_THUMBNAIL_PATH")
-	serverAddr := os.Getenv("MTV_SERVER_ADDR")
+	imgDir := os.Getenv("MTVGO_POSTER_PATH")
+	thumbDir := os.Getenv("MTVGO_THUMBNAIL_PATH")
+	serverAddr := os.Getenv("MTVGO_SERVER_ADDR")
 	if imgDir != "" && thumbDir != "" && serverAddr != "" {
 		imgExts := []string{".jpg"}
 		imgPaths, err := WalkMediaDirs(imgDir, imgExts)
@@ -38,7 +38,7 @@ func populateMovies(db *sql.DB) error {
 }
 
 func populateTVShows(db *sql.DB) error {
-	tvDir := os.Getenv("MTV_TV_PATH")
+	tvDir := os.Getenv("MTVGO_TV_PATH")
 	if tvDir == "" {
 		return nil // or error if required
 	}
@@ -52,9 +52,9 @@ func populateTVShows(db *sql.DB) error {
 	}
 
 	// TV show images
-	imgDir := os.Getenv("MTV_TV_POSTER_PATH")
-	thumbDir := os.Getenv("MTV_TV_THUMBNAIL_PATH")
-	serverAddr := os.Getenv("MTV_SERVER_ADDR")
+	imgDir := os.Getenv("MTVGO_TV_POSTER_PATH")
+	thumbDir := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
+	serverAddr := os.Getenv("MTVGO_SERVER_ADDR")
 	if imgDir != "" && thumbDir != "" && serverAddr != "" {
 		imgExts := []string{".jpg"}
 		imgPaths, err := WalkMediaDirs(imgDir, imgExts)
@@ -68,7 +68,7 @@ func populateTVShows(db *sql.DB) error {
 }
 
 func populateVideos(db *sql.DB) error {
-	vidDir := os.Getenv("MTV_VIDEOS_PATH")
+	vidDir := os.Getenv("MTVGO_VIDEOS_PATH")
 	if vidDir == "" {
 		return nil // or error if required
 	}
