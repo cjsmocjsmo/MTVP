@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Continental - All Seasons</title>
+    <link rel="stylesheet" href="/static/css/mtv.css">
+</head>
+<body>
+    <h1>The Continental - All Seasons</h1>
+    {{ if .Seasons }}
+        {{ range $season, $episodes := .Seasons }}
+            <h2>Season {{ $season }}</h2>
+            <div class="season-block">
+                {{ if $episodes }}
+                    <ul>
+                    {{ range $ep := $episodes }}
+                        <li>
+                            <strong>Episode {{ index $ep "Episode" }}</strong>: {{ index $ep "Title" }}
+                            {{ with (index $ep "Description") }}<br><em>{{ . }}</em>{{ end }}
+                        </li>
+                    {{ end }}
+                    </ul>
+                {{ else }}
+                    <p>No episodes found for this season.</p>
+                {{ end }}
+            </div>
+        {{ end }}
+    {{ else }}
+        <p>No seasons found for The Continental.</p>
+    {{ end }}
+</body>
+</html>

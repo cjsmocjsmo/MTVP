@@ -345,10 +345,13 @@ async def servermain():
         await writer.wait_closed()
 
     # Start both websocket and static file servers concurrently
-    ws_server = websockets.serve(handle_message, "10.0.4.41", 8765)
-    static_server = await asyncio.start_server(static_file_server, "10.0.4.41", 8080)
-    print("WebSocket server running on ws://10.0.4.41:8765/")
-    print("Static file server running on http://10.0.4.41:8080/thumbnails/... and /tvthumbnails/...")
+    main_server_addr = os.getenv("MTV_SERVER_ADDR")
+    main_server_port = int(os.getenv("MTV_MAIN_SERVER_PORT"))
+    ws_server = websockets.serve(handle_message, main_server_addr, main_server_port)
+    static_server_port = int(os.getenv("MTV_STATIC_SERVER_PORT"))
+    static_server = await asyncio.start_server(static_file_server, main_server_addr, static_server_port)
+    print(f"WebSocket server running on ws://{main_server_addr}:{main_server_port}/")
+    print(f"Static file server running on http://{main_server_addr}:{static_server_port}/thumbnails/... and /tvthumbnails/...")
     async with static_server:
         await asyncio.gather(ws_server, static_server.serve_forever())
 

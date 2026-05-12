@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobland - All Seasons</title>
+    <link rel="stylesheet" href="/static/css/mtv.css">
+</head>
+<body>
+    <div id="navbar">
+        <a href="/templates/index.html"><button class="navbarbtn">Home</button></a>
+        <a href="/templates/mov/movmainpage.html"><button class="navbarbtn">Movies</button></a>
+        <a href="/templates/tv/tvmainpage.html"><button class="navbarbtn">TV Shows</button></a>
+    </div>
+    <h1>Mobland</h1>
+    <div class="epi-div">
+        {{range $season, $episodes := .Seasons}}
+        <div class="season-block">
+            <h2>Season {{$season}}</h2>
+            <ul>
+            {{range $episodes}}
+                <li>Episode {{.Episode}}: {{.Name}}</li>
+            {{end}}
+            </ul>
+        </div>
+        {{end}}
+    </div>
+</body>
+</html>
