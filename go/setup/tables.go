@@ -26,28 +26,32 @@ func createTables(db *sql.DB) error {
 		Path TEXT,
 		Idx INTEGER
 	);`
-	       _, err := db.Exec(movieTable)
-	       if err != nil {
-		       return err
-	       }
-	       _, err = db.Exec(tvTable)
-	       if err != nil {
-		       return err
-	       }
-	       imagesTable := `CREATE TABLE IF NOT EXISTS images (
-		       ImgId TEXT,
-		       Path TEXT,
-		       ImgPath TEXT,
-		       Size INTEGER,
-		       Name TEXT,
-		       ThumbPath TEXT,
-		       Idx INTEGER,
-		       HttpThumbPath TEXT
-	       );`
-	       _, err = db.Exec(imagesTable)
-	       if err != nil {
-		       return err
-	       }
+		       log.Println("[SETUP] Creating movies table...")
+		       _, err := db.Exec(movieTable)
+		       if err != nil {
+			       return err
+		       }
+		       log.Println("[SETUP] Creating tvshows table...")
+		       _, err = db.Exec(tvTable)
+		       if err != nil {
+			       return err
+		       }
+		       log.Println("[SETUP] Creating images table...")
+		       imagesTable := `CREATE TABLE IF NOT EXISTS images (
+			       ImgId TEXT,
+			       Path TEXT,
+			       ImgPath TEXT,
+			       Size INTEGER,
+			       Name TEXT,
+			       ThumbPath TEXT,
+			       Idx INTEGER,
+			       HttpThumbPath TEXT
+		       );`
+		       _, err = db.Exec(imagesTable)
+		       if err != nil {
+			       return err
+		       }
+		       log.Println("[SETUP] Creating videos table...")
 		       videosTable := `CREATE TABLE IF NOT EXISTS videos (
 			       VidId TEXT PRIMARY KEY,
 			       VidPath TEXT,
