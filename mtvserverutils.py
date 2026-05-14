@@ -1291,6 +1291,16 @@ class Media:
         self.cursor.execute(command)
         return self._fetch_all_as_dict()
 
+    def forgedinfires9(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='09' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+    
+    def forgedinfires10(self):
+        command = "SELECT * FROM tvshows WHERE catagory='ForgedInFire' AND season='10' ORDER BY Episode ASC;"
+        self.cursor.execute(command)
+        return self._fetch_all_as_dict()
+
     def thepitts1(self):
         command = "SELECT * FROM tvshows WHERE catagory='ThePitts' AND season='01' ORDER BY Episode ASC;"
         self.cursor.execute(command)
