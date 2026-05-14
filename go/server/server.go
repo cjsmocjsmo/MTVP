@@ -38,19 +38,7 @@ func StartServer() {
 	}
 	defer db.Close()
 
-	       wsAddr := os.Getenv("MTVGO_RAW_ADDR")
-	       if wsAddr == "" {
-		       wsAddr = "0.0.0.0"
-	       }
-	       // Remove protocol if present
-	       cleanAddr := wsAddr
-	    //    if len(cleanAddr) > 7 && cleanAddr[:7] == "http://" {
-		//        cleanAddr = cleanAddr[7:]
-	    //    } else if len(cleanAddr) > 8 && cleanAddr[:8] == "https://" {
-		//        cleanAddr = cleanAddr[8:]
-	    //    }
-	    //    log.Println("Starting WebSocket server on ws://" + cleanAddr + ":8765/ws")
-	    //    log.Println("Starting static file server on http://" + cleanAddr + ":8080/thumbnails/ and /tvthumbnails/")
+	       
 
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
@@ -116,7 +104,22 @@ func StartServer() {
 	http.HandleFunc("/tvactionshogun", ShogunPageHandler(db))
 	http.HandleFunc("/tvactionthecontinental", TheContinentalPageHandler(db))
 
+	// wsAddr := os.Getenv("MTVGO_RAW_ADDR")
+	// if wsAddr == "" {
+	// 	wsAddr = "0.0.0.0"
+	// }
+	// // Remove protocol if present
+	// cleanAddr := wsAddr
+	//     //    if len(cleanAddr) > 7 && cleanAddr[:7] == "http://" {
+	// 	//        cleanAddr = cleanAddr[7:]
+	//     //    } else if len(cleanAddr) > 8 && cleanAddr[:8] == "https://" {
+	// 	//        cleanAddr = cleanAddr[8:]
+	//     //    }
+	// log.Println("Starting WebSocket server on ws://" + cleanAddr + ":8765/ws")
+	// log.Println("Starting static file server on http://" + cleanAddr + ":8080/thumbnails/ and /tvthumbnails/")
+	
 	go func() {
+		wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 		var port = os.Getenv("MTVGO_SERVER_PORT")
 		println(wsAddr+":"+port)
 		if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
