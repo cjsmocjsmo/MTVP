@@ -8,6 +8,20 @@ import (
 )
 
 func TestCreateTables(t *testing.T) {
+               // Check videos table columns
+               foundFields = map[string]bool{}
+               rows4, err := db.Query("PRAGMA table_info(videos)")
+               assert.NoError(t, err)
+               defer rows4.Close()
+               for rows4.Next() {
+                       err := rows4.Scan(&cid, &name, &ctype, &notnull, &dfltValue, &pk)
+                       assert.NoError(t, err)
+                       foundFields[name] = true
+               }
+               expectedFields = []string{"VidId", "VidPath", "Size", "Name", "Idx"}
+               for _, field := range expectedFields {
+                       assert.True(t, foundFields[field], "videos table missing field: %s", field)
+               }
 	db, err := sql.Open("sqlite3", ":memory:")
 	assert.NoError(t, err)
 	defer db.Close()

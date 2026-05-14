@@ -48,5 +48,16 @@ func createTables(db *sql.DB) error {
 	       if err != nil {
 		       return err
 	       }
-	       return nil
+		       videosTable := `CREATE TABLE IF NOT EXISTS videos (
+			       VidId TEXT PRIMARY KEY,
+			       VidPath TEXT,
+			       Size INTEGER,
+			       Name TEXT,
+			       Idx INTEGER
+		       );`
+		       _, err = db.Exec(videosTable)
+		       if err != nil {
+			       return err
+		       }
+		       return nil
 }
