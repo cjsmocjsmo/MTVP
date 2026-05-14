@@ -49,8 +49,8 @@ func StartServer() {
 
 		// Serve static files from templates at root
 		http.Handle("/", staticFileHandler("/", "templates"))
-		// Serve /static/ from go/static for CSS, JS, etc.
-		http.Handle("/static/", staticFileHandler("/static/", "go/static"))
+		// Serve /static/ from static for CSS, JS, etc.
+		http.Handle("/static/", staticFileHandler("/static/", "static"))
 
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
