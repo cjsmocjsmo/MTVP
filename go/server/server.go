@@ -28,11 +28,13 @@ func wsHandler(db *sql.DB) http.HandlerFunc {
 func staticFileHandler(prefix, dir string) http.Handler {
 	fs := http.FileServer(http.Dir(dir))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		 log.Printf("[staticFileHandler] Requested URL: %s", r.URL.Path)
-		 // Compute the actual file path being accessed
-		 filePath := dir + r.URL.Path
-		 log.Printf("[staticFileHandler] Accessing file: %s", filePath)
-		 fs.ServeHTTP(w, r)
+		       log.Printf("[staticFileHandler] Requested URL: %s", r.URL.Path)
+		       filePath := dir + r.URL.Path
+		       log.Printf("[staticFileHandler] Accessing file: %s", filePath)
+		       if r.URL.Path == "/static/css/mtv.css" {
+			       log.Printf("[staticFileHandler] Serving CSS file: %s", filePath)
+		       }
+		       fs.ServeHTTP(w, r)
 	})
 }
 
@@ -47,6 +49,8 @@ func StartServer() {
 
 		// Serve static files from templates at root
 		http.Handle("/", staticFileHandler("/", "templates"))
+		// Serve /static/ from go/static for CSS, JS, etc.
+		http.Handle("/static/", staticFileHandler("/static/", "go/static"))
 
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
