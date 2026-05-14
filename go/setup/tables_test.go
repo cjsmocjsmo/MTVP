@@ -48,4 +48,19 @@ func TestCreateTables(t *testing.T) {
        for _, field := range expectedFields {
                assert.True(t, foundFields[field], "tvshows table missing field: %s", field)
        }
+
+       // Check images table columns
+       foundFields = map[string]bool{}
+       rows3, err := db.Query("PRAGMA table_info(images)")
+       assert.NoError(t, err)
+       defer rows3.Close()
+       for rows3.Next() {
+               err := rows3.Scan(&cid, &name, &ctype, &notnull, &dfltValue, &pk)
+               assert.NoError(t, err)
+               foundFields[name] = true
+       }
+       expectedFields = []string{"ImgId", "Path", "ImgPath", "Size", "Name", "ThumbPath", "Idx", "HttpThumbPath"}
+       for _, field := range expectedFields {
+               assert.True(t, foundFields[field], "images table missing field: %s", field)
+       }
 }
