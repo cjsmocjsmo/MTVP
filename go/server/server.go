@@ -38,7 +38,8 @@ func StartServer() {
 	}
 	defer db.Close()
 
-	       
+		// Serve static files from go/templates at root
+		http.Handle("/", staticFileHandler("/", "go/templates"))
 
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
