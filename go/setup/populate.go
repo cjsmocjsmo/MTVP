@@ -3,6 +3,7 @@ package setup
 import (
 	"database/sql"
 	"os"
+	"log"
 )
 
 // Dummy data population for demonstration. Replace with real directory walking and parsing logic.
