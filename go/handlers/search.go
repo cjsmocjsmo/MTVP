@@ -7,9 +7,14 @@ import (
 // SearchMedia searches movies and tvshows for the phrase in title/name
 func SearchMedia(db *sql.DB, phrase string) []map[string]interface{} {
 	results := []map[string]interface{}{}
-	query := `SELECT * FROM movies WHERE Title LIKE ? UNION SELECT * FROM tvshows WHERE Name LIKE ?`
-	likePhrase := "%" + phrase + "%"
-	rows, err := db.Query(query, likePhrase, likePhrase)
+	   query := `
+		   SELECT Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath
+		   FROM movies WHERE Name LIKE ?
+		   UNION ALL
+		   SELECT Name, '' as Year, '' as PosterAddr, Size, Path, Idx, TvId as MovId, Catagory, '' as HttpThumbPath
+		   FROM tvshows WHERE Name LIKE ?`
+	   likePhrase := "%" + phrase + "%"
+	   rows, err := db.Query(query, likePhrase, likePhrase)
 	if err != nil {
 		return results
 	}

@@ -1,72 +1,1900 @@
+
+
 package server
 
 import (
-	"database/sql"
-	"encoding/json"
-	"log"
-	"github.com/gorilla/websocket"
+    "os/exec"
+    "sync"
+    "net"
+    "encoding/json"
+    "time"
+    "database/sql"
+    "log"
+    "fmt"
+    "github.com/gorilla/websocket"
+    "html/template"
+    "path/filepath"
+    "net/http"
 )
 
-type WSCommand struct {
-	Command   string      `json:"command"`
-	MediaID   string      `json:"media_id,omitempty"`
-	MediaTVID string      `json:"media_tv_id,omitempty"`
-	VideoID   string      `json:"video_id,omitempty"`
-	Phrase    string      `json:"phrase,omitempty"`
+// ActionPageHandler serves the action movies page with images from the DB
+func ActionPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getActionMovieImages(db)
+        tmpl, err := template.ParseFiles("go/templates/mov/movactionpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
 }
+
+// ArnoldPageHandler serves the Arnold movies page with images from the DB
+func ArnoldPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "arnold")
+        tmpl, err := template.ParseFiles("go/templates/mov/movarnoldpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// AvatarPageHandler serves the Avatar movies page with images from the DB
+func AvatarPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "avatar")
+        tmpl, err := template.ParseFiles("go/templates/mov/movavatarpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// BruceLeePageHandler serves the Bruce Lee movies page with images from the DB
+func BruceLeePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "brucelee")
+        tmpl, err := template.ParseFiles("go/templates/mov/movbruceleepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// BruceWillisPageHandler serves the Bruce Willis movies page with images from the DB
+func BruceWillisPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "brucewillis")
+        tmpl, err := template.ParseFiles("go/templates/mov/movbrucewillispage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// BuzzPageHandler serves the Buzz movies page with images from the DB
+func BuzzPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "buzz")
+        tmpl, err := template.ParseFiles("go/templates/mov/movbuzzpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// CartoonsPageHandler serves the Cartoons movies page with images from the DB
+func CartoonsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "cartoons")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcartoonspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// CharlieBrownPageHandler serves the Charlie Brown movies page with images from the DB
+func CharlieBrownPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "charliebrown")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcharliebrownpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// CheechAndChongPageHandler serves the Cheech and Chong movies page with images from the DB
+func CheechAndChongPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "cheechandchong")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcheechandchongpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ChuckNorrisPageHandler serves the Chuck Norris movies page with images from the DB
+func ChuckNorrisPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "chucknorris")
+        tmpl, err := template.ParseFiles("go/templates/mov/movchucknorrispage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ClintEastwoodPageHandler serves the Clint Eastwood movies page with images from the DB
+func ClintEastwoodPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "clinteastwood")
+        tmpl, err := template.ParseFiles("go/templates/mov/movclinteastwoodpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ComedyPageHandler serves the Comedy movies page with images from the DB
+func ComedyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "comedy")
+        tmpl, err := template.ParseFiles("go/templates/mov/movcomedypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// DocumentaryPageHandler serves the Documentary movies page with images from the DB
+func DocumentaryPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "documentary")
+        tmpl, err := template.ParseFiles("go/templates/mov/movdocumentarypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// DramaPageHandler serves the Drama movies page with images from the DB
+func DramaPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "drama")
+        tmpl, err := template.ParseFiles("go/templates/mov/movdramapage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// FantasyPageHandler serves the Fantasy movies page with images from the DB
+func FantasyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "fantasy")
+        tmpl, err := template.ParseFiles("go/templates/mov/movfantasypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// GhostbustersPageHandler serves the Ghostbusters movies page with images from the DB
+func GhostbustersPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "ghostbusters")
+        tmpl, err := template.ParseFiles("go/templates/mov/movghostbusterspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// GodzillaPageHandler serves the Godzilla movies page with images from the DB
+func GodzillaPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "godzilla")
+        tmpl, err := template.ParseFiles("go/templates/mov/movgodzillapage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// HarrisonFordPageHandler serves the Harrison Ford movies page with images from the DB
+func HarrisonFordPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "harrisonford")
+        tmpl, err := template.ParseFiles("go/templates/mov/movharrisonfordpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// HarryPotterPageHandler serves the Harry Potter movies page with images from the DB
+func HarryPotterPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "harrypotter")
+        tmpl, err := template.ParseFiles("go/templates/mov/movharrypotterpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// HellboyPageHandler serves the Hellboy movies page with images from the DB
+func HellboyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "hellboy")
+        tmpl, err := template.ParseFiles("go/templates/mov/movhellboypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// HomeVidsPageHandler serves the Home Vids movies page with images from the DB
+func HomeVidsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "homevids")
+        tmpl, err := template.ParseFiles("go/templates/mov/movhomevidspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// IndianaJonesPageHandler serves the Indiana Jones movies page with images from the DB
+func IndianaJonesPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "indianajones")
+        tmpl, err := template.ParseFiles("go/templates/mov/movindianajonespage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// JamesBondPageHandler serves the James Bond movies page with images from the DB
+func JamesBondPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "jamesbond")
+        tmpl, err := template.ParseFiles("go/templates/mov/movjamesbondpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// JohnWaynePageHandler serves the John Wayne movies page with images from the DB
+func JohnWaynePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "johnwayne")
+        tmpl, err := template.ParseFiles("go/templates/mov/movjohnwaynepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// JohnWickPageHandler serves the John Wick movies page with images from the DB
+func JohnWickPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "johnwick")
+        tmpl, err := template.ParseFiles("go/templates/mov/movjohnwickpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// JurrasicParkPageHandler serves the Jurassic Park movies page with images from the DB
+func JurrasicParkPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "jurassicpark")
+        tmpl, err := template.ParseFiles("go/templates/mov/movjurrasicparkpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// KevinCostnerPageHandler serves the Kevin Costner movies page with images from the DB
+func KevinCostnerPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "kevincostner")
+        tmpl, err := template.ParseFiles("go/templates/mov/movkevincostnerpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// KingsmanPageHandler serves the Kingsman movies page with images from the DB
+func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "kingsman")
+        tmpl, err := template.ParseFiles("go/templates/mov/movkingsmanpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// LegoPageHandler serves the Lego movies page with images from the DB
+func LegoPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "lego")
+        tmpl, err := template.ParseFiles("go/templates/mov/movlegopage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MenInBlackPageHandler serves the Men in Black movies page with images from the DB
+func MenInBlackPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "meninblack")
+        tmpl, err := template.ParseFiles("go/templates/mov/movmeninblackpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MinionsPageHandler serves the Minions movies page with images from the DB
+func MinionsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "minions")
+        tmpl, err := template.ParseFiles("go/templates/mov/movminionspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MiscPageHandler serves the Misc movies page with images from the DB
+func MiscPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "misc")
+        tmpl, err := template.ParseFiles("go/templates/mov/movmiscpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MummyPageHandler serves the Mummy movies page with images from the DB
+func MummyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "mummy")
+        tmpl, err := template.ParseFiles("go/templates/mov/movmummypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MusicVidsPageHandler serves the Music Videos page with images from the DB
+func MusicVidsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "musicvids")
+        tmpl, err := template.ParseFiles("go/templates/mov/movmusicvidspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// NaturePageHandler serves the Nature movies page with images from the DB
+func NaturePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "nature")
+        tmpl, err := template.ParseFiles("go/templates/mov/movnaturepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// NicolasCagePageHandler serves the Nicolas Cage movies page with images from the DB
+func NicolasCagePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "nicolascage")
+        tmpl, err := template.ParseFiles("go/templates/mov/movnicolascagepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// OldiesPageHandler serves the Oldies movies page with images from the DB
+func OldiesPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "oldies")
+        tmpl, err := template.ParseFiles("go/templates/mov/movoldiespage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// PandasPageHandler serves the Pandas movies page with images from the DB
+func PandasPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "pandas")
+        tmpl, err := template.ParseFiles("go/templates/mov/movpandaspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// PiratesPageHandler serves the Pirates movies page with images from the DB
+func PiratesPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "pirates")
+        tmpl, err := template.ParseFiles("go/templates/mov/movpiratespage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// PredatorPageHandler serves the Predator movies page with images from the DB
+func PredatorPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "predator")
+        tmpl, err := template.ParseFiles("go/templates/mov/movpredatorpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// RiddickPageHandler serves the Riddick movies page with images from the DB
+func RiddickPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "riddick")
+        tmpl, err := template.ParseFiles("go/templates/mov/movriddickpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// SciencePageHandler serves the Science movies page with images from the DB
+func SciencePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "science")
+        tmpl, err := template.ParseFiles("go/templates/mov/movsciencepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// SciFiPageHandler serves the Sci-Fi movies page with images from the DB
+func SciFiPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "scifi")
+        tmpl, err := template.ParseFiles("go/templates/mov/movscifipage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// StalonePageHandler serves the Stallone movies page with images from the DB
+func StalonePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "stalone")
+        tmpl, err := template.ParseFiles("go/templates/mov/movstalonepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// StarTrekPageHandler serves the Star Trek movies page with images from the DB
+func StarTrekPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "startrek")
+        tmpl, err := template.ParseFiles("go/templates/mov/movstartrekpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// StarWarsPageHandler serves the Star Wars movies page with images from the DB
+func StarWarsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "starwars")
+        tmpl, err := template.ParseFiles("go/templates/mov/movstarwarspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// StoogesPageHandler serves the Stooges movies page with images from the DB
+func StoogesPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "stooges")
+        tmpl, err := template.ParseFiles("go/templates/mov/movstoogespage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// SuperheroesPageHandler serves the Superheroes movies page with images from the DB
+func SuperheroesPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "superheroes")
+        tmpl, err := template.ParseFiles("go/templates/mov/movsuperherospage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// SupermanPageHandler serves the Superman movies page with images from the DB
+func SupermanPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "superman")
+        tmpl, err := template.ParseFiles("go/templates/mov/movsupermanpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TheRockPageHandler serves The Rock movies page with images from the DB
+func TheRockPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "therock")
+        tmpl, err := template.ParseFiles("go/templates/mov/movtherockpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TinkerbellPageHandler serves the Tinkerbell movies page with images from the DB
+func TinkerbellPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "tinkerbell")
+        tmpl, err := template.ParseFiles("go/templates/mov/movtinkerbellpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TomCruizePageHandler serves the Tom Cruise movies page with images from the DB
+func TomCruizePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "tomcruize")
+        tmpl, err := template.ParseFiles("go/templates/mov/movtomcruizepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TransformersPageHandler serves the Transformers movies page with images from the DB
+func TransformersPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "transformers")
+        tmpl, err := template.ParseFiles("go/templates/mov/movtransformerspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TremorsPageHandler serves the Tremors movies page with images from the DB
+func TremorsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "tremors")
+        tmpl, err := template.ParseFiles("go/templates/mov/movtremorspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TrollsPageHandler serves the Trolls movies page with images from the DB
+func TrollsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "trolls")
+        tmpl, err := template.ParseFiles("go/templates/mov/movtrollspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// VandamPageHandler serves the Van Damme movies page with images from the DB
+func VandamPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "vandam")
+        tmpl, err := template.ParseFiles("go/templates/mov/movvandampage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// XmenPageHandler serves the X-Men movies page with images from the DB
+func XmenPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        images := getCategoryMovieImages(db, "xmen")
+        tmpl, err := template.ParseFiles("go/templates/mov/movxmenpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Images []string
+        }{Images: images}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MoblandPageHandler serves all seasons of Mobland with episode info
+func MoblandPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 4; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Mobland", seasonNum)
+            if err != nil {
+                log.Println("DB error (Mobland S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactionmobland.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// DarkWindsPageHandler serves all seasons of Dark Winds with episode info
+func DarkWindsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // We'll support up to 4 seasons, but this is extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 4; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "DarkWinds", seasonNum)
+            if err != nil {
+                log.Println("DB error (DarkWinds S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactiondarkwinds.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// ShogunPageHandler serves all seasons of Shogun with episode info
+func ShogunPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 4; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Shogun", seasonNum)
+            if err != nil {
+                log.Println("DB error (Shogun S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactionshogun.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TheContinentalPageHandler serves all seasons of The Continental with episode info
+func TheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 4; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TheContinental", seasonNum)
+            if err != nil {
+                log.Println("DB error (TheContinental S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactionthecontinental.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// PlayerManager manages the media player process and state
+type PlayerManager struct {
+    mu      sync.Mutex
+    cmd     *exec.Cmd
+    playing bool
+    paused  bool
+    ipcSock string
+}
+
+var player = &PlayerManager{ipcSock: "/tmp/mpvsocket"}
+
+func (p *PlayerManager) StartMPV(path string) error {
+    p.mu.Lock()
+    defer p.mu.Unlock()
+    if p.cmd != nil && p.playing {
+        p.cmd.Process.Kill()
+        time.Sleep(500 * time.Millisecond)
+    }
+    _ = exec.Command("rm", "-f", p.ipcSock).Run()
+    p.cmd = exec.Command("mpv", "--fs", "--volume=100", "--input-ipc-server="+p.ipcSock, path)
+    err := p.cmd.Start()
+    if err == nil {
+        p.playing = true
+        p.paused = false
+    }
+    return err
+}
+
+func (p *PlayerManager) StopMPV() {
+    p.mu.Lock()
+    defer p.mu.Unlock()
+    if p.cmd != nil && p.playing {
+        p.cmd.Process.Kill()
+        p.playing = false
+        p.paused = false
+    }
+}
+
+func (p *PlayerManager) sendMPVCommand(cmd interface{}) error {
+    conn, err := net.Dial("unix", p.ipcSock)
+    if err != nil {
+        return err
+    }
+    defer conn.Close()
+    b, _ := json.Marshal(cmd)
+    _, err = conn.Write(append(b, '\n'))
+    return err
+}
+
+func (p *PlayerManager) Pause() error {
+    return p.sendMPVCommand(map[string]interface{}{
+        "command": []interface{}{ "set_property", "pause", true },
+    })
+}
+
+func (p *PlayerManager) Play() error {
+    return p.sendMPVCommand(map[string]interface{}{
+        "command": []interface{}{ "set_property", "pause", false },
+    })
+}
+
+func (p *PlayerManager) Next() error {
+    return p.sendMPVCommand(map[string]interface{}{
+        "command": []interface{}{ "seek", 35, "relative" },
+    })
+}
+
+func (p *PlayerManager) Previous() error {
+    return p.sendMPVCommand(map[string]interface{}{
+        "command": []interface{}{ "seek", -35, "relative" },
+    })
+}
+
+func HandleWS(conn *websocket.Conn, db *sql.DB) {
+    defer conn.Close()
+    for {
+        _, message, err := conn.ReadMessage()
+        if err != nil {
+            log.Println("WebSocket read error:", err)
+            break
+        }
+        var data map[string]interface{}
+        if err := json.Unmarshal(message, &data); err != nil {
+            log.Println("JSON unmarshal error:", err)
+            continue
+        }
+        command, _ := data["command"].(string)
+        switch command {
+        case "set_media":
+            mediaID, _ := data["media_id"].(string)
+            if mediaID != "" {
+                var path string
+                err := db.QueryRow("SELECT Path FROM movies WHERE MovId = ?", mediaID).Scan(&path)
+                if err != nil {
+                    sendJSON(conn, map[string]interface{}{ "status": "error", "message": "media not found" })
+                } else {
+                    if err := player.StartMPV(path); err != nil {
+                        sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+                    } else {
+                        sendJSON(conn, map[string]interface{}{ "status": "media_set" })
+                    }
+                }
+            }
+        case "stop":
+            player.StopMPV()
+            sendJSON(conn, map[string]interface{}{ "status": "stopped" })
+        case "play":
+            if err := player.Play(); err != nil {
+                sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+            } else {
+                sendJSON(conn, map[string]interface{}{ "status": "playing" })
+            }
+        case "pause":
+            if err := player.Pause(); err != nil {
+                sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+            } else {
+                sendJSON(conn, map[string]interface{}{ "status": "paused" })
+            }
+        case "next":
+            if err := player.Next(); err != nil {
+                sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+            } else {
+                sendJSON(conn, map[string]interface{}{ "status": "next" })
+            }
+        case "previous":
+            if err := player.Previous(); err != nil {
+                sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+            } else {
+                sendJSON(conn, map[string]interface{}{ "status": "previous" })
+            }
+        case "search":
+            phrase, _ := data["phrase"].(string)
+            results := getCategoryMovieImages(db, phrase)
+            resp := map[string]interface{}{ "results": results }
+            sendJSON(conn, resp)
+        case "movcount":
+            count := getMovieCount(db)
+            sendJSON(conn, map[string]interface{}{ "movcount": count })
+        case "tvcount":
+            count := getTVShowCount(db)
+            sendJSON(conn, map[string]interface{}{ "tvcount": count })
+        case "test":
+            sendJSON(conn, map[string]interface{}{ "status": "It worked" })
+        // Movie categories
+        case "action", "arnold", "avatar", 
+            "brucelee", "brucewillis", "buzz",
+            "cartoons", "charliebrown", "cheechandchong", "chucknorris", "clinteastwood", "comedy",
+            "drama", "documentary",
+            "fantasy",
+            "ghostbusters", "godzilla",
+            "harrisonford", "harrypotter", "hellboy",
+            "indianajones",
+            "jamesbond", "johnwayne", "johnwick", "jurassicpark",
+            "kevincostner", "kingsman",
+            "lego",
+            "meninblack", "minions", "misc", "musicvids", "mummy",
+            "nature", "nicolascage",
+            "oldies",
+            "panda", "pirates", "predator",
+            "riddick", 
+            "science", "scifi", "stalone", "startrek", "starwars", "stooges", "superheros", "superman",
+            "therock", "tinkerbell", "tomcruize", "transformers", "tremors", "trolls",
+			"vandam",
+			"xmen":
+            results := getCategoryMovieImages(db, command)
+            sendJSON(conn, map[string]interface{}{ "images": results })
+        // TV show categories (full parity with mtvserverutils.py)
+        case "alteredcarbons1", "alteredcarbons2",
+			 "cowboybebop", "columbia",
+			 "fallouts1", "fallouts2",
+             "forallmankinds1", "forallmankinds2", "forallmankinds3", "forallmankinds4", "forallmankinds5",
+             "foundations1", "foundations2", "foundations3",
+			 "fuubar1", "fuubar2",
+			 "hford19231", "hford19232",
+             "halos1", "halos2",
+		  	 "houseofthedragons1", "houseofthedragons2",
+			 "lostinspaces1", "lostinspaces2", "lostinspaces3",
+			 "mastersoftheuniverse",
+			 "mobland",
+			 "monarchlegacyofmonsterss1", "monarchlegacyofmonsterss2",
+             "nightsky",
+			 "orvilles1", "orvilles2", "orvilles3",
+			 "percyjacksonandtheolympianss1", "percyjacksonandtheolympianss2",
+			 "prehistoricplanets1", "prehistoricplanets2", "prehistoricplanets3",
+             "raisedbywolvess1", "raisedbywolvess2",
+			 "shogun",
+			 "silo1", "silo2", 
+			 "thecontinental",
+			 "thelastofus1", "thelastofus2",
+			 "thelordoftheringstheringsofpower",
+			 "wheeloftime1", "wheeloftime2", "wheeloftime3",
+			 "wednesdays1", "wednesdays2",
+
+             "discoverys1", "discoverys2", "discoverys3", "discoverys4", "discoverys5",
+             "enterprises1", "enterprises2", "enterprises3", "enterprises4",
+             "lowerdeckss1", "lowerdeckss2", "lowerdeckss3", "lowerdeckss4", "lowerdeckss5",
+             "picards1", "picards2",
+             "prodigy1", "prodigy2",
+             "sttvs1", "sttvs2", "sttvs3",
+             "strangenewworldss1", "strangenewworldss2", "strangenewworldss3",
+             "tngs1", "tngs2", "tngs3", "tngs4", "tngs5", "tngs6", "tngs7",
+             "voyagers1", "voyagers2", "voyagers3", "voyagers4", "voyagers5", "voyagers6", "voyagers7",
+             "deepspacenines1", "deepspacenines2", "deepspacenines3", "deepspacenines4", "deepspacenines5", "deepspacenines6", "deepspacenines7",
+             "continues1", "starfleetacademys1",
+
+             "acolyte", "ahsoka", "andor1", "andor2", "bookofbobafett",
+             "mandalorians1", "mandalorians2", "mandalorians3", "obiwankenobi",
+             "talesoftheempire", "talesofthejedi", "thebadbatchs1", "thebadbatchs2", "thebadbatchs3",
+             "visionss1", "visionss2", "visionss3", "maulshadowlords1",
+
+             "falconwintersoldier", "hawkeye", "iamgroots1", "iamgroots2",
+             "lokis1", "lokis2", "moonknight", "secretinvasion", "shehulk", "wandavision",
+             "skeletoncrew",  "talesoftheunderworld",  "ironheart", "wondermans1",
+              
+            "tonyandzivas1",
+            "nciss1", "nciss2", "nciss3", "nciss4", "nciss5", "nciss6", "nciss7", "nciss8", "nciss9", "nciss10", "nciss11", "nciss12", "nciss13", "nciss14", "nciss15", "nciss16", "nciss17", "nciss18", "nciss19", "nciss20", "nciss21", "nciss22", "nciss23", "nciss24",
+            "ncislas1", "ncislas2", "ncislas3", "ncislas4", "ncislas5", "ncislas6", "ncislas7", "ncislas8", "ncislas9", "ncislas10", "ncislas11", "ncislas12", "ncislas13", "ncislas14",
+            "ncissydneys1", "ncissydneys2", "ncissydneys3",
+            "ncisorigins1",
+            "ncishawaiis1", "ncishawaiis2", "ncishawaiis3",
+            "ncisneworleanss1", "ncisneworleanss2", "ncisneworleanss3", "ncisneworleanss4", 
+            "ncisneworleanss5", "ncisneworleanss6", "ncisneworleanss7":
+            results := getCategoryTVShowEpisodes(db, command)
+            sendJSON(conn, map[string]interface{}{ "episodes": results })
+        default:
+            sendJSON(conn, map[string]interface{}{ "status": "unknown command" })
+        }
+    }
+}
+
+func getCategoryTVShowEpisodes(db *sql.DB, key string) []map[string]interface{} {
+    var cat, season string
+    switch key {
+    case "nciss1":
+        cat, season = "NCIS", "01"
+    case "nciss2":
+        cat, season = "NCIS", "02"
+    case "nciss3":
+        cat, season = "NCIS", "03"
+    case "nciss4":
+        cat, season = "NCIS", "04"
+    case "nciss5":
+        cat, season = "NCIS", "05"
+    case "nciss6":
+        cat, season = "NCIS", "06"
+    case "nciss7":
+        cat, season = "NCIS", "07"
+    case "nciss8":
+        cat, season = "NCIS", "08"
+    case "nciss9":
+        cat, season = "NCIS", "09"
+    case "nciss10":
+        cat, season = "NCIS", "10"
+    case "nciss11":
+        cat, season = "NCIS", "11"
+    case "nciss12":
+        cat, season = "NCIS", "12"
+    case "nciss13":
+        cat, season = "NCIS", "13"
+    case "nciss14":
+        cat, season = "NCIS", "14"
+    case "nciss15":
+        cat, season = "NCIS", "15"
+    case "nciss16":
+        cat, season = "NCIS", "16"
+    case "nciss17":
+        cat, season = "NCIS", "17"
+    case "nciss18":
+        cat, season = "NCIS", "18"
+    case "nciss19":
+        cat, season = "NCIS", "19"
+    case "nciss20":
+        cat, season = "NCIS", "20"
+    case "nciss21":
+        cat, season = "NCIS", "21"
+    case "nciss22":
+        cat, season = "NCIS", "22"
+    case "nciss23":
+        cat, season = "NCIS", "23"
+    case "nciss24":
+        cat, season = "NCIS", "24"
+    case "ncislas1":
+        cat, season = "NCISLA", "01"
+    case "ncislas2":
+        cat, season = "NCISLA", "02"
+    case "ncislas3":
+        cat, season = "NCISLA", "03"
+    case "ncislas4":
+        cat, season = "NCISLA", "04"
+    case "ncislas5":
+        cat, season = "NCISLA", "05"
+    case "ncislas6":
+        cat, season = "NCISLA", "06"
+    case "ncislas7":
+        cat, season = "NCISLA", "07"
+    case "ncislas8":
+        cat, season = "NCISLA", "08"
+    case "ncislas9":
+        cat, season = "NCISLA", "09"
+    case "ncislas10":
+        cat, season = "NCISLA", "10"
+    case "ncislas11":
+        cat, season = "NCISLA", "11"
+    case "ncislas12":
+        cat, season = "NCISLA", "12"
+    case "ncislas13":
+        cat, season = "NCISLA", "13"
+    case "ncislas14":
+        cat, season = "NCISLA", "14"
+    case "ncissydneys1":
+        cat, season = "NCISSydney", "01"
+    case "ncissydneys2":
+        cat, season = "NCISSydney", "02"
+    case "ncissydneys3":
+        cat, season = "NCISSydney", "03"
+    case "ncisorigins1":
+        cat, season = "NCISOrigins", "01"
+    case "alteredcarbons1":
+        cat, season = "AlteredCarbon", "01"
+    case "alteredcarbons2":
+        cat, season = "AlteredCarbon", "02"
+    case "cowboybebop":
+        cat = "CowboyBebop"
+    case "fallouts1":
+        cat, season = "Fallout", "01"
+    case "fallouts2":
+        cat, season = "Fallout", "02"
+    case "forallmankinds1":
+        cat, season = "ForAllManKind", "01"
+    case "forallmankinds2":
+        cat, season = "ForAllManKind", "02"
+    case "forallmankinds3":
+        cat, season = "ForAllManKind", "03"
+    case "forallmankinds4":
+        cat, season = "ForAllManKind", "04"
+    case "forallmankinds5":
+        cat, season = "ForAllManKind", "05"
+    case "foundations1":
+        cat, season = "Foundation", "01"
+    case "foundations2":
+        cat, season = "Foundation", "02"
+    case "foundations3":
+        cat, season = "Foundation", "03"
+    case "fuubar1":
+        cat, season = "FuuBar", "01"
+    case "fuubar2":
+        cat, season = "FuuBar", "02"
+    case "hford19231":
+        cat, season = "HFord1923", "01"
+    case "hford19232":
+        cat, season = "HFord1923", "02"
+    case "halos1":
+        cat, season = "Halo", "01"
+    case "halos2":
+        cat, season = "Halo", "02"
+    case "houseofthedragons1":
+        cat, season = "HouseOfTheDragon", "01"
+    case "houseofthedragons2":
+        cat, season = "HouseOfTheDragon", "02"
+    case "lostinspaces1":
+        cat, season = "LostInSpace", "01"
+    case "lostinspaces2":
+        cat, season = "LostInSpace", "02"
+    case "lostinspaces3":
+        cat, season = "LostInSpace", "03"
+    case "mastersoftheuniverse":
+        cat = "MastersOfTheUniverse"
+    case "monarchlegacyofmonsterss1":
+        cat = "MonarchLegacyOfMonsters"
+    case "monarchlegacyofmonsterss2":
+        cat, season = "MonarchLegacyOfMonsters", "02"
+    case "nightsky":
+        cat = "NightSky"
+    case "orvilles1":
+        cat, season = "Orville", "01"
+    case "orvilles2":
+        cat, season = "Orville", "02"
+    case "orvilles3":
+        cat, season = "Orville", "03"
+    case "percyjacksonandtheolympianss1":
+        cat, season = "PercyJacksonAndTheOlympians", "01"
+    case "percyjacksonandtheolympianss2":
+        cat, season = "PercyJacksonAndTheOlympians", "02"
+    case "prehistoricplanets1":
+        cat, season = "PrehistoricPlanet", "01"
+    case "prehistoricplanets2":
+        cat, season = "PrehistoricPlanet", "02"
+    case "prehistoricplanets3":
+        cat, season = "PrehistoricPlanet", "03"
+    case "raisedbywolvess1":
+        cat, season = "RaisedByWolves", "01"
+    case "raisedbywolvess2":
+        cat, season = "RaisedByWolves", "02"
+    case "shogun":
+        cat = "Shogun"
+    case "silo1":
+        cat, season = "Silo", "01"
+    case "silo2":
+        cat, season = "Silo", "02"
+    case "thecontinental":
+        cat = "TheContinental"
+    case "thelastofus1":
+        cat, season = "TheLastOfUs", "01"
+    case "thelastofus2":
+        cat, season = "TheLastOfUs", "02"
+    case "thelordoftheringstheringsofpower":
+        cat = "TheLordOfTheRingsTheRingsOfPower"
+    case "wheeloftime1":
+        cat, season = "WheelOfTime", "01"
+    case "wheeloftime2":
+        cat, season = "WheelOfTime", "02"
+    case "wheeloftime3":
+        cat, season = "WheelOfTime", "03"
+    case "discoverys1":
+        cat, season = "Discovery", "01"
+    case "discoverys2":
+        cat, season = "Discovery", "02"
+    case "discoverys3":
+        cat, season = "Discovery", "03"
+    case "discoverys4":
+        cat, season = "Discovery", "04"
+    case "discoverys5":
+        cat, season = "Discovery", "05"
+    case "enterprises1":
+        cat, season = "Enterprise", "01"
+    case "enterprises2":
+        cat, season = "Enterprise", "02"
+    case "enterprises3":
+        cat, season = "Enterprise", "03"
+    case "enterprises4":
+        cat, season = "Enterprise", "04"
+    case "lowerdeckss1":
+        cat, season = "LowerDecks", "01"
+    case "lowerdeckss2":
+        cat, season = "LowerDecks", "02"
+    case "lowerdeckss3":
+        cat, season = "LowerDecks", "03"
+    case "lowerdeckss4":
+        cat, season = "LowerDecks", "04"
+    case "lowerdeckss5":
+        cat, season = "LowerDecks", "05"
+    }
+    var rows *sql.Rows
+    var err error
+    if season != "" {
+        rows, err = db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", cat, season)
+    } else {
+        rows, err = db.Query("SELECT * FROM tvshows WHERE catagory=? ORDER BY Episode ASC", cat)
+    }
+    if err != nil {
+        log.Println("DB error (tvshow episodes):", err)
+        return nil
+    }
+    defer rows.Close()
+    cols, _ := rows.Columns()
+    results := []map[string]interface{}{}
+    for rows.Next() {
+        vals := make([]interface{}, len(cols))
+        valPtrs := make([]interface{}, len(cols))
+        for i := range vals {
+            valPtrs[i] = &vals[i]
+        }
+        if err := rows.Scan(valPtrs...); err == nil {
+            row := make(map[string]interface{})
+            for i, col := range cols {
+                b, ok := vals[i].([]byte)
+                if ok {
+                    row[col] = string(b)
+                } else {
+                    row[col] = vals[i]
+                }
+            }
+            results = append(results, row)
+        }
+    }
+    return results
+}
+
+
+
+func sendJSON(conn *websocket.Conn, v interface{}) {
+    msg, err := json.Marshal(v)
+    if err != nil {
+        log.Println("JSON marshal error:", err)
+        return
+    }
+    if err := conn.WriteMessage(websocket.TextMessage, msg); err != nil {
+        log.Println("WebSocket write error:", err)
+    }
+}
+
 
 type WSResponse map[string]interface{}
 
-func HandleWS(conn *websocket.Conn, db *sql.DB) {
-	defer conn.Close()
-	for {
-		_, msg, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("WebSocket read error:", err)
-			break
-		}
-		var cmd WSCommand
-		if err := json.Unmarshal(msg, &cmd); err != nil {
-			log.Println("Invalid WS command:", err)
-			conn.WriteJSON(WSResponse{"status": "error", "message": "invalid command"})
-			continue
-		}
-		resp := processCommand(cmd, db)
-		if err := conn.WriteJSON(resp); err != nil {
-			log.Println("WebSocket write error:", err)
-			break
-		}
-	}
+// getCategoryMovieImages queries the DB for movies in a given category and returns a list of image URLs
+func getCategoryMovieImages(db *sql.DB, category string) []string {
+    query := "SELECT Path FROM movies WHERE LOWER(Title) LIKE ?"
+    likePattern := "%" + category + "%"
+    rows, err := db.Query(query, likePattern)
+    if err != nil {
+        log.Println("DB error (category images):", err)
+        return nil
+    }
+    defer rows.Close()
+    var images []string
+    for rows.Next() {
+        var path string
+        if err := rows.Scan(&path); err == nil {
+            images = append(images, "/thumbnails/"+path)
+        }
+    }
+    return images
 }
 
-func processCommand(cmd WSCommand, db *sql.DB) WSResponse {
-	switch cmd.Command {
-	case "movcount":
-		return WSResponse{"count": getMovieCount(db)}
-	case "tvcount":
-		return WSResponse{"count": getTVShowCount(db)}
-	// Add more command cases as needed
-	default:
-		return WSResponse{"status": "unknown command"}
-	}
+
+// getActionMovieImages queries the DB for action movies and returns a list of image URLs
+func getActionMovieImages(db *sql.DB) []string {
+    rows, err := db.Query("SELECT Path FROM movies WHERE Title LIKE '%Action%'")
+    if err != nil {
+        log.Println("DB error (action images):", err)
+        return nil
+    }
+    defer rows.Close()
+    var images []string
+    for rows.Next() {
+        var path string
+        if err := rows.Scan(&path); err == nil {
+            images = append(images, "/thumbnails/"+path)
+        }
+    }
+    return images
 }
+
 
 func getMovieCount(db *sql.DB) int {
-	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM movies").Scan(&count)
-	if err != nil {
-		log.Println("DB error (movcount):", err)
-		return 0
-	}
-	return count
+    var count int
+    err := db.QueryRow("SELECT COUNT(*) FROM movies").Scan(&count)
+    if err != nil {
+        log.Println("DB error (movcount):", err)
+        return 0
+    }
+    return count
 }
 
+
 func getTVShowCount(db *sql.DB) int {
-	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM tvshows").Scan(&count)
-	if err != nil {
-		log.Println("DB error (tvcount):", err)
-		return 0
+    var count int
+    err := db.QueryRow("SELECT COUNT(*) FROM tvshows").Scan(&count)
+    if err != nil {
+        log.Println("DB error (tvcount):", err)
+        return 0
+    }
+    return count
+}
+
+// indexHandler serves the main page using Go's html/template
+func indexHandlerWithPath(tmplPath string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		tmpl, err := template.ParseFiles(tmplPath)
+		if err != nil {
+			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		}
 	}
-	return count
+}
+
+// Legacy handler for production use
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	indexHandlerWithPath(filepath.Join("go", "templates", "index.html"))(w, r)
 }

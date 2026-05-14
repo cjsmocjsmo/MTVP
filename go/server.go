@@ -45,7 +45,7 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		command, _ := data["command"].(string)
 
 				       // ...existing code...
-				       var dbPath = os.Getenv("MTV_DB_PATH")
+				       var dbPath = os.Getenv("MTVGO_DB_PATH")
 				       db, err := sql.Open("sqlite3", dbPath)
 				       if err != nil {
 					       log.Printf("DB open error: %v", err)

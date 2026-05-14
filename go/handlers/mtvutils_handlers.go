@@ -156,7 +156,7 @@ func HandleUtilityCommand(conn *websocket.Conn, db *sql.DB, command string) {
 		conn.WriteMessage(websocket.TextMessage, resp)
 	case "checkformovupdates":
 		// Compare movie files on disk with DB and insert new ones
-		movieDir := os.Getenv("MTV_MOVIES_PATH")
+		movieDir := os.Getenv("MTVGO_MOVIES_PATH")
 		rows, err := db.Query("SELECT Path FROM movies")
 		if err != nil {
 			log.Printf("checkformovupdates: DB query failed: %v", err)
@@ -197,7 +197,7 @@ func HandleUtilityCommand(conn *websocket.Conn, db *sql.DB, command string) {
 		conn.WriteMessage(websocket.TextMessage, resp)
 	case "checkfortvupdates":
 		// Compare TV show files on disk with DB and insert new ones
-		tvDir := os.Getenv("MTV_TV_PATH")
+		tvDir := os.Getenv("MTVGO_TV_PATH")
 		rows, err := db.Query("SELECT Path FROM tvshows")
 		if err != nil {
 			log.Printf("checkfortvupdates: DB query failed: %v", err)
