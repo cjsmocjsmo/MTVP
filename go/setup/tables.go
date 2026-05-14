@@ -2,6 +2,7 @@ package setup
 
 import (
 	"database/sql"
+	"log"
 )
 
 func createTables(db *sql.DB) error {
