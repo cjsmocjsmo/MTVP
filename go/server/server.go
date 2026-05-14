@@ -118,8 +118,8 @@ func StartServer() {
 	// log.Println("Starting WebSocket server on ws://" + cleanAddr + ":8765/ws")
 	// log.Println("Starting static file server on http://" + cleanAddr + ":8080/thumbnails/ and /tvthumbnails/")
 	
+	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 	go func() {
-		wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 		var port = os.Getenv("MTVGO_SERVER_PORT")
 		println(wsAddr+":"+port)
 		if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
