@@ -29,11 +29,12 @@ func staticFileHandler(prefix, dir string) http.Handler {
 	fs := http.FileServer(http.Dir(dir))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		       log.Printf("[staticFileHandler] Requested URL: %s", r.URL.Path)
-		       filePath := dir + r.URL.Path
-		       log.Printf("[staticFileHandler] Accessing file: %s", filePath)
-		       if r.URL.Path == "/static/css/mtv.css" {
-			       log.Printf("[staticFileHandler] Serving CSS file: %s", filePath)
-		       }
+			       relPath := strings.TrimPrefix(r.URL.Path, prefix)
+			       filePath := dir + relPath
+			       log.Printf("[staticFileHandler] Accessing file: %s", filePath)
+			       if r.URL.Path == "/static/css/mtv.css" {
+				       log.Printf("[staticFileHandler] Serving CSS file: %s", filePath)
+			       }
 		       fs.ServeHTTP(w, r)
 	})
 }
