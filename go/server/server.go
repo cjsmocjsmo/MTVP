@@ -26,7 +26,14 @@ func wsHandler(db *sql.DB) http.HandlerFunc {
 }
 
 func staticFileHandler(prefix, dir string) http.Handler {
-	return http.StripPrefix(prefix, http.FileServer(http.Dir(dir)))
+	fs := http.FileServer(http.Dir(dir))
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		 log.Printf("[staticFileHandler] Requested URL: %s", r.URL.Path)
+		 // Compute the actual file path being accessed
+		 filePath := dir + r.URL.Path
+		 log.Printf("[staticFileHandler] Accessing file: %s", filePath)
+		 fs.ServeHTTP(w, r)
+	})
 }
 
 func StartServer() {
