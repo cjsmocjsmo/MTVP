@@ -151,7 +151,8 @@ func StartServer() {
 		       staticPort := os.Getenv("MTVGO_STATIC_SERVER_PORT")
 		       println(wsAddr+":"+staticPort)
 		       mux := http.NewServeMux()
-		       mux.Handle("/static/", staticFileHandler("/static/", "../static"))
+			   mux.Handle("/static/", staticFileHandler("/static/", "../static"))
+			   mux.Handle("/css/", staticFileHandler("/css/", "static/css"))
 			   mux.Handle("/", staticFileHandler("/", "static/templates"))
 		       if err := http.ListenAndServe(wsAddr+":"+staticPort, mux); err != nil {
 			       log.Fatal("Static file server error:", err)
