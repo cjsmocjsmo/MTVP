@@ -1881,7 +1881,7 @@ type WSResponse map[string]interface{}
 
 // getCategoryMovieImages queries the DB for movies in a given category and returns a list of image URLs
 func getCategoryMovieImages(db *sql.DB, category string) []string {
-    query := "SELECT Path FROM movies WHERE LOWER(Title) LIKE ?"
+    query := "SELECT Path FROM movies WHERE LOWER(Name) LIKE ?"
     likePattern := "%" + category + "%"
     rows, err := db.Query(query, likePattern)
     if err != nil {
@@ -1902,7 +1902,7 @@ func getCategoryMovieImages(db *sql.DB, category string) []string {
 
 // getActionMovieImages queries the DB for action movies and returns a list of image URLs
 func getActionMovieImages(db *sql.DB) []string {
-    rows, err := db.Query("SELECT Path FROM movies WHERE Title LIKE '%Action%'")
+    rows, err := db.Query("SELECT Path FROM movies WHERE Name LIKE '%Action%'")
     if err != nil {
         log.Println("DB error (action images):", err)
         return nil
