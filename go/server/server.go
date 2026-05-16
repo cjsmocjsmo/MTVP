@@ -27,22 +27,26 @@ func wsHandler(db *sql.DB) http.HandlerFunc {
 }
 
 func staticFileHandler(prefix, dir string) http.Handler {
-	fs := http.FileServer(http.Dir(dir))
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("[staticFileHandler] Requested URL: %s", r.URL.Path)
-		relPath := strings.TrimPrefix(r.URL.Path, prefix)
-		// Ensure there is exactly one slash between dir and relPath
-		filePath := dir
-		if !strings.HasSuffix(dir, "/") && relPath != "" {
-		   filePath += "/"
-		}
-		filePath += relPath
-		    log.Printf("[staticFileHandler] Accessing file: %s", filePath)
-		    if r.URL.Path == "/static/css/mtv.css" {
-		       log.Printf("[staticFileHandler] Serving CSS file: %s", filePath)
-		    }
-		fs.ServeHTTP(w, r)
-	})
+		log.Printf("[staticFileHandler] Initializing for prefix: '%s', dir: '%s'", prefix, dir)
+		fs := http.FileServer(http.Dir(dir))
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			log.Printf("[staticFileHandler] Incoming request: Method=%s, URL=%s, RemoteAddr=%s, UserAgent=%s", r.Method, r.URL.Path, r.RemoteAddr, r.UserAgent())
+			relPath := strings.TrimPrefix(r.URL.Path, prefix)
+			filePath := dir
+			if !strings.HasSuffix(dir, "/") && relPath != "" {
+				filePath += "/"
+			}
+			filePath += relPath
+			log.Printf("[staticFileHandler] Mapped URL '%s' to file path '%s'", r.URL.Path, filePath)
+			fileInfo, err := os.Stat(filePath)
+			if err != nil {
+				log.Printf("[staticFileHandler] File not found or error: %v", err)
+			} else {
+				log.Printf("[staticFileHandler] File exists: %s (size: %d bytes, mode: %s)", filePath, fileInfo.Size(), fileInfo.Mode())
+			}
+			fs.ServeHTTP(w, r)
+			log.Printf("[staticFileHandler] Finished serving: %s", r.URL.Path)
+		})
 }
 
 func StartServer() {
@@ -57,8 +61,17 @@ func StartServer() {
 		// Serve static files from templates at root
 		//http.Handle("/", staticFileHandler("/", "templates"))
 		// Serve /static/ from static for CSS, JS, etc.
-	// staticPath := os.Getenv("MTVGO_STATIC_SERVER_PATH")
-	http.Handle("/static/", staticFileHandler("/static/", "./static/"))
+	log.Println("[StartServer] Creating static file handler for /static/ route")
+	staticDir := "./static/"
+	absStaticDir, err := os.Getwd()
+	if err == nil {
+		absStaticDir = absStaticDir + "/static"
+	} else {
+		absStaticDir = staticDir
+	}
+	log.Printf("[StartServer] Using static directory: %s", absStaticDir)
+	http.Handle("/static/", staticFileHandler("/static/", staticDir))
+	log.Println("[StartServer] Static file handler registered for /static/")
 
 	http.HandleFunc("/", HomePageHandler())
 	http.HandleFunc("/action", ActionPageHandler(db))
