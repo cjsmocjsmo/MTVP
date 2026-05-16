@@ -154,6 +154,7 @@ func StartServer() {
 	http.HandleFunc("/ws", wsHandler(db))
 	http.HandleFunc("/xmen", XmenPageHandler(db))
 		// Register TV show pages
+	http.HandleFunc("/tvactionpage", TVActionPageHandler())
 	http.HandleFunc("/tvactiondarkwinds", DarkWindsPageHandler(db))
 	http.HandleFunc("/tvactionmobland", MoblandPageHandler(db))
 	http.HandleFunc("/tvactionshogun", ShogunPageHandler(db))

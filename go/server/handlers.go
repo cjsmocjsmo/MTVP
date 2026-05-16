@@ -1,5 +1,6 @@
 
 
+
 package server
 
 import (
@@ -48,7 +49,7 @@ func MainMoviePageHandler() http.HandlerFunc {
 }
 
 // TvMainPageHandler serves the main TV page (tvmainpage.html)
-func MainTVPageHandler() http.HandlerFunc {
+func TVActionPageHandler() http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         tmpl, err := template.ParseFiles("templates/tv/tvmainpage.html")
         if err != nil {
@@ -61,6 +62,7 @@ func MainTVPageHandler() http.HandlerFunc {
         }
     }
 }
+
 
 // ActionPageHandler serves the action movies page with images from the DB
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
