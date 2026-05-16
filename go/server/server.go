@@ -149,28 +149,28 @@ func StartServer() {
 	// }()
 
 	// Static server for /thumbnails (MTVGO_THUMBNAIL_PATH)
-	go func() {
-	    thumbPort := os.Getenv("MTVGO_MOV_STATIC_SERVER_PORT")
-	    thumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
-	    println(wsAddr+":"+thumbPort+" serving /thumbnails from "+thumbPath)
-	    mux := http.NewServeMux()
-	    mux.Handle("/thumbnails/", staticFileHandler("/thumbnails/", thumbPath))
-	    if err := http.ListenAndServe(wsAddr+":"+thumbPort, mux); err != nil {
-	       log.Fatal("Thumbnail static server error:", err)
-	    }
-	}()
+	// go func() {
+	//     thumbPort := os.Getenv("MTVGO_MOV_STATIC_SERVER_PORT")
+	//     thumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
+	//     println(wsAddr+":"+thumbPort+" serving /thumbnails from "+thumbPath)
+	//     mux := http.NewServeMux()
+	//     mux.Handle("/thumbnails/", staticFileHandler("/thumbnails/", thumbPath))
+	//     if err := http.ListenAndServe(wsAddr+":"+thumbPort, mux); err != nil {
+	//        log.Fatal("Thumbnail static server error:", err)
+	//     }
+	// }()
 
 	// Static server for /tvthumbnails (MTVGO_TV_THUMBNAIL_PATH)
-	go func() {
-	    tvThumbPort := os.Getenv("MTVGO_TV_STATIC_SERVER_PORT")
-	    tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
-	    println(wsAddr+":"+tvThumbPort+" serving /tvthumbnails from "+tvThumbPath)
-	    mux := http.NewServeMux()
-	    mux.Handle("/tvthumbnails/", staticFileHandler("/tvthumbnails/", tvThumbPath))
-	    if err := http.ListenAndServe(wsAddr+":"+tvThumbPort, mux); err != nil {
-	       log.Fatal("TV Thumbnail static server error:", err)
-	    }
-	}()
+	// go func() {
+	//     tvThumbPort := os.Getenv("MTVGO_TV_STATIC_SERVER_PORT")
+	//     tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
+	//     println(wsAddr+":"+tvThumbPort+" serving /tvthumbnails from "+tvThumbPath)
+	//     mux := http.NewServeMux()
+	//     mux.Handle("/tvthumbnails/", staticFileHandler("/tvthumbnails/", tvThumbPath))
+	//     if err := http.ListenAndServe(wsAddr+":"+tvThumbPort, mux); err != nil {
+	//        log.Fatal("TV Thumbnail static server error:", err)
+	//     }
+	// }()
 
 	// Block forever
 	select {}
