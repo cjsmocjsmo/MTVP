@@ -11,14 +11,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-movThumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
-http.Handle("/thumbnails/", http.StripPrefix("/thumbnails/", http.FileServer(http.Dir(movThumbPath))))
-log.Println("[StartServer] File server registered for /thumbnails ->", movThumbPath)
 
-// Serve TV thumbnails from /usr/share/MTV/gotvthumbnails/ at /tvhumbnails
-tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
-http.Handle("/tvhumbnails/", http.StripPrefix("/tvhumbnails/", http.FileServer(http.Dir(tvThumbPath))))
-log.Println("[StartServer] File server registered for /tvhumbnails ->", tvThumbPath)
 
 
 func wsHandler(db *sql.DB) http.HandlerFunc {
@@ -101,6 +94,15 @@ func StartServer() {
 		log.Printf("[staticFileHandler] Finished serving: %s", r.URL.Path)
 	}))
 	log.Println("[StartServer] Static file handler registered for /static/")
+
+	movThumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
+	http.Handle("/thumbnails/", http.StripPrefix("/thumbnails/", http.FileServer(http.Dir(movThumbPath))))
+	log.Println("[StartServer] File server registered for /thumbnails ->", movThumbPath)
+
+	// Serve TV thumbnails from /usr/share/MTV/gotvthumbnails/ at /tvhumbnails
+	tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
+	http.Handle("/tvhumbnails/", http.StripPrefix("/tvhumbnails/", http.FileServer(http.Dir(tvThumbPath))))
+	log.Println("[StartServer] File server registered for /tvhumbnails ->", tvThumbPath)
 
 	http.HandleFunc("/", HomePageHandler())
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
