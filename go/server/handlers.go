@@ -1,17 +1,5 @@
 // HomePageHandler serves the index.html page for the root path
-func HomePageHandler() http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
-        tmpl, err := template.ParseFiles("templates/index.html")
-        if err != nil {
-            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
-            return
-        }
-        err = tmpl.Execute(w, nil)
-        if err != nil {
-            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
-        }
-    }
-}
+
 
 
 package server
@@ -30,6 +18,20 @@ import (
     "path/filepath"
     "net/http"
 )
+
+func HomePageHandler() http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/index.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
 // ActionPageHandler serves the action movies page with images from the DB
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {

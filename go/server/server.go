@@ -59,7 +59,7 @@ func StartServer() {
 		// Serve /static/ from static for CSS, JS, etc.
 	http.Handle("/static/", staticFileHandler("/static/", "../static"))
 
-	http.HandleFunc("/", HomePageHandler(db))
+	http.HandleFunc("/", HomePageHandler())
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
 	http.HandleFunc("/avatar", AvatarPageHandler(db))
