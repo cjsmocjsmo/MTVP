@@ -94,7 +94,7 @@ func StartServer() {
 
 	http.HandleFunc("/", HomePageHandler())
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
-	http.HandleFunc("/maintvpage", MainTVPageHandler())
+	http.HandleFunc("/maintvpage", MainTVPageHandler(db))
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
 	http.HandleFunc("/avatar", AvatarPageHandler(db))

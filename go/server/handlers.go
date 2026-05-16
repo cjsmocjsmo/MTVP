@@ -48,6 +48,20 @@ func MainMoviePageHandler() http.HandlerFunc {
     }
 }
 
+func MainTVPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/tv/tvmainpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
 // TvMainPageHandler serves the main TV page (tvmainpage.html)
 func TVActionPageHandler() http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
