@@ -1,3 +1,4 @@
+
 package server
 
 import (
@@ -92,6 +93,8 @@ func StartServer() {
 	log.Println("[StartServer] Static file handler registered for /static/")
 
 	http.HandleFunc("/", HomePageHandler())
+	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
+	http.HandleFunc("/maintvpage", MainTVPageHandler())
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
 	http.HandleFunc("/avatar", AvatarPageHandler(db))

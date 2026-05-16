@@ -1,5 +1,3 @@
-// HomePageHandler serves the index.html page for the root path
-
 
 
 package server
@@ -19,9 +17,40 @@ import (
     "net/http"
 )
 
+// HomePageHandler serves the index.html page for the root path
 func HomePageHandler() http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         tmpl, err := template.ParseFiles("templates/index.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// MovMainPageHandler serves the main movies page (movmainpage.html)
+func MainMoviePageHandler() http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/mov/movmainpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TvMainPageHandler serves the main TV page (tvmainpage.html)
+func MainTVPageHandler() http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/tv/tvmainpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
