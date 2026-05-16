@@ -57,7 +57,8 @@ func StartServer() {
 		// Serve static files from templates at root
 		//http.Handle("/", staticFileHandler("/", "templates"))
 		// Serve /static/ from static for CSS, JS, etc.
-	http.Handle("/static/", staticFileHandler("/static/", "../static"))
+	staticPath := os.Getenv("MTVGO_STATIC_SERVER_PATH")
+	http.Handle("/static/", staticFileHandler("/static/", staticPath))
 
 	http.HandleFunc("/", HomePageHandler())
 	http.HandleFunc("/action", ActionPageHandler(db))
