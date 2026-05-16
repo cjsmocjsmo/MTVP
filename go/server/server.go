@@ -57,7 +57,8 @@ func StartServer() {
 		// Serve static files from templates at root
 		//http.Handle("/", staticFileHandler("/", "templates"))
 		// Serve /static/ from static for CSS, JS, etc.
-		http.Handle("/static/", staticFileHandler("/static/", "../static"))
+	http.Handle("/static/", staticFileHandler("/static/", "../static"))
+
 	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
@@ -123,66 +124,52 @@ func StartServer() {
 	http.HandleFunc("/tvactionshogun", ShogunPageHandler(db))
 	http.HandleFunc("/tvactionthecontinental", TheContinentalPageHandler(db))
 
-	// wsAddr := os.Getenv("MTVGO_RAW_ADDR")
-	// if wsAddr == "" {
-	// 	wsAddr = "0.0.0.0"
-	// }
-	// // Remove protocol if present
-	// cleanAddr := wsAddr
-	//     //    if len(cleanAddr) > 7 && cleanAddr[:7] == "http://" {
-	// 	//        cleanAddr = cleanAddr[7:]
-	//     //    } else if len(cleanAddr) > 8 && cleanAddr[:8] == "https://" {
-	// 	//        cleanAddr = cleanAddr[8:]
-	//     //    }
-	// log.Println("Starting WebSocket server on ws://" + cleanAddr + ":8765/ws")
-	// log.Println("Starting static file server on http://" + cleanAddr + ":8080/thumbnails/ and /tvthumbnails/")
-	
-	       wsAddr := os.Getenv("MTVGO_RAW_ADDR")
-	       go func() {
-		       var port = os.Getenv("MTVGO_SERVER_PORT")
-		       println(wsAddr+":"+port)
-		       if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
-			       log.Fatal("WebSocket server error:", err)
-		       }
-	       }()
+	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
+	go func() {
+	    var port = os.Getenv("MTVGO_SERVER_PORT")
+	    println(wsAddr+":"+port)
+	    if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
+	       log.Fatal("WebSocket server error:", err)
+	    }
+	}()
 
-	       // Static server for /static/ and templates (main static)
-	       go func() {
-		       staticPort := os.Getenv("MTVGO_STATIC_SERVER_PORT")
-		       println(wsAddr+":"+staticPort)
-		       mux := http.NewServeMux()
-			   mux.Handle("/static/", staticFileHandler("/static/", "../static"))
-			   mux.Handle("/css/", staticFileHandler("/css/", "static/css"))
-			   mux.Handle("/", staticFileHandler("/", "static/templates"))
-		       if err := http.ListenAndServe(wsAddr+":"+staticPort, mux); err != nil {
-			       log.Fatal("Static file server error:", err)
-		       }
-	       }()
+	// Static server for /static/ and templates (main static)
+	go func() {
+	    staticPort := os.Getenv("MTVGO_STATIC_SERVER_PORT")
+	    println(wsAddr+":"+staticPort)
+	    mux := http.NewServeMux()
+	   mux.Handle("/static/", staticFileHandler("/static/", "../static"))
+	   mux.Handle("/css/", staticFileHandler("/css/", "static/css"))
+	   mux.Handle("/", staticFileHandler("/", "static/templates"))
+	    if err := http.ListenAndServe(wsAddr+":"+staticPort, mux); err != nil {
+	       log.Fatal("Static file server error:", err)
+	    }
+	}()
 
-	       // Static server for /thumbnails (MTVGO_THUMBNAIL_PATH)
-	       go func() {
-		       thumbPort := os.Getenv("MTVGO_MOV_STATIC_SERVER_PORT")
-		       thumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
-		       println(wsAddr+":"+thumbPort+" serving /thumbnails from "+thumbPath)
-		       mux := http.NewServeMux()
-		       mux.Handle("/thumbnails/", staticFileHandler("/thumbnails/", thumbPath))
-		       if err := http.ListenAndServe(wsAddr+":"+thumbPort, mux); err != nil {
-			       log.Fatal("Thumbnail static server error:", err)
-		       }
-	       }()
+	// Static server for /thumbnails (MTVGO_THUMBNAIL_PATH)
+	go func() {
+	    thumbPort := os.Getenv("MTVGO_MOV_STATIC_SERVER_PORT")
+	    thumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
+	    println(wsAddr+":"+thumbPort+" serving /thumbnails from "+thumbPath)
+	    mux := http.NewServeMux()
+	    mux.Handle("/thumbnails/", staticFileHandler("/thumbnails/", thumbPath))
+	    if err := http.ListenAndServe(wsAddr+":"+thumbPort, mux); err != nil {
+	       log.Fatal("Thumbnail static server error:", err)
+	    }
+	}()
 
-	       // Static server for /tvthumbnails (MTVGO_TV_THUMBNAIL_PATH)
-	       go func() {
-		       tvThumbPort := os.Getenv("MTVGO_TV_STATIC_SERVER_PORT")
-		       tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
-		       println(wsAddr+":"+tvThumbPort+" serving /tvthumbnails from "+tvThumbPath)
-		       mux := http.NewServeMux()
-		       mux.Handle("/tvthumbnails/", staticFileHandler("/tvthumbnails/", tvThumbPath))
-		       if err := http.ListenAndServe(wsAddr+":"+tvThumbPort, mux); err != nil {
-			       log.Fatal("TV Thumbnail static server error:", err)
-		       }
-	       }()
+	// Static server for /tvthumbnails (MTVGO_TV_THUMBNAIL_PATH)
+	go func() {
+	    tvThumbPort := os.Getenv("MTVGO_TV_STATIC_SERVER_PORT")
+	    tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
+	    println(wsAddr+":"+tvThumbPort+" serving /tvthumbnails from "+tvThumbPath)
+	    mux := http.NewServeMux()
+	    mux.Handle("/tvthumbnails/", staticFileHandler("/tvthumbnails/", tvThumbPath))
+	    if err := http.ListenAndServe(wsAddr+":"+tvThumbPort, mux); err != nil {
+	       log.Fatal("TV Thumbnail static server error:", err)
+	    }
+	}()
 
-	       // Block forever
-	       select {}
-	}
+	// Block forever
+	select {}
+}
