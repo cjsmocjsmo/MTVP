@@ -1,3 +1,17 @@
+// HomePageHandler serves the index.html page for the root path
+func HomePageHandler() http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/index.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
 
 package server
@@ -21,7 +35,7 @@ import (
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getActionMovieImages(db)
-        tmpl, err := template.ParseFiles("go/templates/mov/movactionpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movactionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -40,7 +54,7 @@ func ActionPageHandler(db *sql.DB) http.HandlerFunc {
 func ArnoldPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "arnold")
-        tmpl, err := template.ParseFiles("go/templates/mov/movarnoldpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movarnoldpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -59,7 +73,7 @@ func ArnoldPageHandler(db *sql.DB) http.HandlerFunc {
 func AvatarPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "avatar")
-        tmpl, err := template.ParseFiles("go/templates/mov/movavatarpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movavatarpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -78,7 +92,7 @@ func AvatarPageHandler(db *sql.DB) http.HandlerFunc {
 func BruceLeePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "brucelee")
-        tmpl, err := template.ParseFiles("go/templates/mov/movbruceleepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movbruceleepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -97,7 +111,7 @@ func BruceLeePageHandler(db *sql.DB) http.HandlerFunc {
 func BruceWillisPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "brucewillis")
-        tmpl, err := template.ParseFiles("go/templates/mov/movbrucewillispage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movbrucewillispage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -116,7 +130,7 @@ func BruceWillisPageHandler(db *sql.DB) http.HandlerFunc {
 func BuzzPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "buzz")
-        tmpl, err := template.ParseFiles("go/templates/mov/movbuzzpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movbuzzpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -135,7 +149,7 @@ func BuzzPageHandler(db *sql.DB) http.HandlerFunc {
 func CartoonsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "cartoons")
-        tmpl, err := template.ParseFiles("go/templates/mov/movcartoonspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movcartoonspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -154,7 +168,7 @@ func CartoonsPageHandler(db *sql.DB) http.HandlerFunc {
 func CharlieBrownPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "charliebrown")
-        tmpl, err := template.ParseFiles("go/templates/mov/movcharliebrownpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movcharliebrownpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -173,7 +187,7 @@ func CharlieBrownPageHandler(db *sql.DB) http.HandlerFunc {
 func CheechAndChongPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "cheechandchong")
-        tmpl, err := template.ParseFiles("go/templates/mov/movcheechandchongpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movcheechandchongpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -192,7 +206,7 @@ func CheechAndChongPageHandler(db *sql.DB) http.HandlerFunc {
 func ChuckNorrisPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "chucknorris")
-        tmpl, err := template.ParseFiles("go/templates/mov/movchucknorrispage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movchucknorrispage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -211,7 +225,7 @@ func ChuckNorrisPageHandler(db *sql.DB) http.HandlerFunc {
 func ClintEastwoodPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "clinteastwood")
-        tmpl, err := template.ParseFiles("go/templates/mov/movclinteastwoodpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movclinteastwoodpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -230,7 +244,7 @@ func ClintEastwoodPageHandler(db *sql.DB) http.HandlerFunc {
 func ComedyPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "comedy")
-        tmpl, err := template.ParseFiles("go/templates/mov/movcomedypage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movcomedypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -249,7 +263,7 @@ func ComedyPageHandler(db *sql.DB) http.HandlerFunc {
 func DocumentaryPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "documentary")
-        tmpl, err := template.ParseFiles("go/templates/mov/movdocumentarypage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movdocumentarypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -268,7 +282,7 @@ func DocumentaryPageHandler(db *sql.DB) http.HandlerFunc {
 func DramaPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "drama")
-        tmpl, err := template.ParseFiles("go/templates/mov/movdramapage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movdramapage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -287,7 +301,7 @@ func DramaPageHandler(db *sql.DB) http.HandlerFunc {
 func FantasyPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "fantasy")
-        tmpl, err := template.ParseFiles("go/templates/mov/movfantasypage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movfantasypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -306,7 +320,7 @@ func FantasyPageHandler(db *sql.DB) http.HandlerFunc {
 func GhostbustersPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "ghostbusters")
-        tmpl, err := template.ParseFiles("go/templates/mov/movghostbusterspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movghostbusterspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -325,7 +339,7 @@ func GhostbustersPageHandler(db *sql.DB) http.HandlerFunc {
 func GodzillaPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "godzilla")
-        tmpl, err := template.ParseFiles("go/templates/mov/movgodzillapage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movgodzillapage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -344,7 +358,7 @@ func GodzillaPageHandler(db *sql.DB) http.HandlerFunc {
 func HarrisonFordPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "harrisonford")
-        tmpl, err := template.ParseFiles("go/templates/mov/movharrisonfordpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movharrisonfordpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -363,7 +377,7 @@ func HarrisonFordPageHandler(db *sql.DB) http.HandlerFunc {
 func HarryPotterPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "harrypotter")
-        tmpl, err := template.ParseFiles("go/templates/mov/movharrypotterpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movharrypotterpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -382,7 +396,7 @@ func HarryPotterPageHandler(db *sql.DB) http.HandlerFunc {
 func HellboyPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "hellboy")
-        tmpl, err := template.ParseFiles("go/templates/mov/movhellboypage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movhellboypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -401,7 +415,7 @@ func HellboyPageHandler(db *sql.DB) http.HandlerFunc {
 func HomeVidsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "homevids")
-        tmpl, err := template.ParseFiles("go/templates/mov/movhomevidspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movhomevidspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -420,7 +434,7 @@ func HomeVidsPageHandler(db *sql.DB) http.HandlerFunc {
 func IndianaJonesPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "indianajones")
-        tmpl, err := template.ParseFiles("go/templates/mov/movindianajonespage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movindianajonespage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -439,7 +453,7 @@ func IndianaJonesPageHandler(db *sql.DB) http.HandlerFunc {
 func JamesBondPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "jamesbond")
-        tmpl, err := template.ParseFiles("go/templates/mov/movjamesbondpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movjamesbondpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -458,7 +472,7 @@ func JamesBondPageHandler(db *sql.DB) http.HandlerFunc {
 func JohnWaynePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "johnwayne")
-        tmpl, err := template.ParseFiles("go/templates/mov/movjohnwaynepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movjohnwaynepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -477,7 +491,7 @@ func JohnWaynePageHandler(db *sql.DB) http.HandlerFunc {
 func JohnWickPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "johnwick")
-        tmpl, err := template.ParseFiles("go/templates/mov/movjohnwickpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movjohnwickpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -496,7 +510,7 @@ func JohnWickPageHandler(db *sql.DB) http.HandlerFunc {
 func JurrasicParkPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "jurassicpark")
-        tmpl, err := template.ParseFiles("go/templates/mov/movjurrasicparkpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movjurrasicparkpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -515,7 +529,7 @@ func JurrasicParkPageHandler(db *sql.DB) http.HandlerFunc {
 func KevinCostnerPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "kevincostner")
-        tmpl, err := template.ParseFiles("go/templates/mov/movkevincostnerpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movkevincostnerpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -534,7 +548,7 @@ func KevinCostnerPageHandler(db *sql.DB) http.HandlerFunc {
 func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "kingsman")
-        tmpl, err := template.ParseFiles("go/templates/mov/movkingsmanpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movkingsmanpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -553,7 +567,7 @@ func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
 func LegoPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "lego")
-        tmpl, err := template.ParseFiles("go/templates/mov/movlegopage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movlegopage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -572,7 +586,7 @@ func LegoPageHandler(db *sql.DB) http.HandlerFunc {
 func MenInBlackPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "meninblack")
-        tmpl, err := template.ParseFiles("go/templates/mov/movmeninblackpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movmeninblackpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -591,7 +605,7 @@ func MenInBlackPageHandler(db *sql.DB) http.HandlerFunc {
 func MinionsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "minions")
-        tmpl, err := template.ParseFiles("go/templates/mov/movminionspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movminionspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -610,7 +624,7 @@ func MinionsPageHandler(db *sql.DB) http.HandlerFunc {
 func MiscPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "misc")
-        tmpl, err := template.ParseFiles("go/templates/mov/movmiscpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movmiscpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -629,7 +643,7 @@ func MiscPageHandler(db *sql.DB) http.HandlerFunc {
 func MummyPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "mummy")
-        tmpl, err := template.ParseFiles("go/templates/mov/movmummypage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movmummypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -648,7 +662,7 @@ func MummyPageHandler(db *sql.DB) http.HandlerFunc {
 func MusicVidsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "musicvids")
-        tmpl, err := template.ParseFiles("go/templates/mov/movmusicvidspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movmusicvidspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -667,7 +681,7 @@ func MusicVidsPageHandler(db *sql.DB) http.HandlerFunc {
 func NaturePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "nature")
-        tmpl, err := template.ParseFiles("go/templates/mov/movnaturepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movnaturepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -686,7 +700,7 @@ func NaturePageHandler(db *sql.DB) http.HandlerFunc {
 func NicolasCagePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "nicolascage")
-        tmpl, err := template.ParseFiles("go/templates/mov/movnicolascagepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movnicolascagepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -705,7 +719,7 @@ func NicolasCagePageHandler(db *sql.DB) http.HandlerFunc {
 func OldiesPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "oldies")
-        tmpl, err := template.ParseFiles("go/templates/mov/movoldiespage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movoldiespage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -724,7 +738,7 @@ func OldiesPageHandler(db *sql.DB) http.HandlerFunc {
 func PandasPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "pandas")
-        tmpl, err := template.ParseFiles("go/templates/mov/movpandaspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movpandaspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -743,7 +757,7 @@ func PandasPageHandler(db *sql.DB) http.HandlerFunc {
 func PiratesPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "pirates")
-        tmpl, err := template.ParseFiles("go/templates/mov/movpiratespage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movpiratespage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -762,7 +776,7 @@ func PiratesPageHandler(db *sql.DB) http.HandlerFunc {
 func PredatorPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "predator")
-        tmpl, err := template.ParseFiles("go/templates/mov/movpredatorpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movpredatorpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -781,7 +795,7 @@ func PredatorPageHandler(db *sql.DB) http.HandlerFunc {
 func RiddickPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "riddick")
-        tmpl, err := template.ParseFiles("go/templates/mov/movriddickpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movriddickpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -800,7 +814,7 @@ func RiddickPageHandler(db *sql.DB) http.HandlerFunc {
 func SciencePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "science")
-        tmpl, err := template.ParseFiles("go/templates/mov/movsciencepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movsciencepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -819,7 +833,7 @@ func SciencePageHandler(db *sql.DB) http.HandlerFunc {
 func SciFiPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "scifi")
-        tmpl, err := template.ParseFiles("go/templates/mov/movscifipage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movscifipage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -838,7 +852,7 @@ func SciFiPageHandler(db *sql.DB) http.HandlerFunc {
 func StalonePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "stalone")
-        tmpl, err := template.ParseFiles("go/templates/mov/movstalonepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movstalonepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -857,7 +871,7 @@ func StalonePageHandler(db *sql.DB) http.HandlerFunc {
 func StarTrekPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "startrek")
-        tmpl, err := template.ParseFiles("go/templates/mov/movstartrekpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movstartrekpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -876,7 +890,7 @@ func StarTrekPageHandler(db *sql.DB) http.HandlerFunc {
 func StarWarsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "starwars")
-        tmpl, err := template.ParseFiles("go/templates/mov/movstarwarspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movstarwarspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -895,7 +909,7 @@ func StarWarsPageHandler(db *sql.DB) http.HandlerFunc {
 func StoogesPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "stooges")
-        tmpl, err := template.ParseFiles("go/templates/mov/movstoogespage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movstoogespage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -914,7 +928,7 @@ func StoogesPageHandler(db *sql.DB) http.HandlerFunc {
 func SuperheroesPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "superheroes")
-        tmpl, err := template.ParseFiles("go/templates/mov/movsuperherospage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movsuperherospage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -933,7 +947,7 @@ func SuperheroesPageHandler(db *sql.DB) http.HandlerFunc {
 func SupermanPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "superman")
-        tmpl, err := template.ParseFiles("go/templates/mov/movsupermanpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movsupermanpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -952,7 +966,7 @@ func SupermanPageHandler(db *sql.DB) http.HandlerFunc {
 func TheRockPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "therock")
-        tmpl, err := template.ParseFiles("go/templates/mov/movtherockpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movtherockpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -971,7 +985,7 @@ func TheRockPageHandler(db *sql.DB) http.HandlerFunc {
 func TinkerbellPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "tinkerbell")
-        tmpl, err := template.ParseFiles("go/templates/mov/movtinkerbellpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movtinkerbellpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -990,7 +1004,7 @@ func TinkerbellPageHandler(db *sql.DB) http.HandlerFunc {
 func TomCruizePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "tomcruize")
-        tmpl, err := template.ParseFiles("go/templates/mov/movtomcruizepage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movtomcruizepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1009,7 +1023,7 @@ func TomCruizePageHandler(db *sql.DB) http.HandlerFunc {
 func TransformersPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "transformers")
-        tmpl, err := template.ParseFiles("go/templates/mov/movtransformerspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movtransformerspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1028,7 +1042,7 @@ func TransformersPageHandler(db *sql.DB) http.HandlerFunc {
 func TremorsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "tremors")
-        tmpl, err := template.ParseFiles("go/templates/mov/movtremorspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movtremorspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1047,7 +1061,7 @@ func TremorsPageHandler(db *sql.DB) http.HandlerFunc {
 func TrollsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "trolls")
-        tmpl, err := template.ParseFiles("go/templates/mov/movtrollspage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movtrollspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1066,7 +1080,7 @@ func TrollsPageHandler(db *sql.DB) http.HandlerFunc {
 func VandamPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "vandam")
-        tmpl, err := template.ParseFiles("go/templates/mov/movvandampage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movvandampage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1085,7 +1099,7 @@ func VandamPageHandler(db *sql.DB) http.HandlerFunc {
 func XmenPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "xmen")
-        tmpl, err := template.ParseFiles("go/templates/mov/movxmenpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movxmenpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1138,7 +1152,7 @@ func MoblandPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactionmobland.html")
+        tmpl, err := template.ParseFiles("templates/tv/action/tvactionmobland.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1191,7 +1205,7 @@ func DarkWindsPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactiondarkwinds.html")
+        tmpl, err := template.ParseFiles("templates/tv/action/tvactiondarkwinds.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1244,7 +1258,7 @@ func ShogunPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactionshogun.html")
+        tmpl, err := template.ParseFiles("templates/tv/action/tvactionshogun.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1297,7 +1311,7 @@ func TheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("go/templates/tv/action/tvactionthecontinental.html")
+        tmpl, err := template.ParseFiles("templates/tv/action/tvactionthecontinental.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return

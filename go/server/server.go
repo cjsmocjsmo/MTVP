@@ -55,10 +55,10 @@ func StartServer() {
 	defer db.Close()
 
 		// Serve static files from templates at root
-		http.Handle("/", staticFileHandler("/", "templates"))
+		//http.Handle("/", staticFileHandler("/", "templates"))
 		// Serve /static/ from static for CSS, JS, etc.
 		http.Handle("/static/", staticFileHandler("/static/", "../static"))
-
+	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/action", ActionPageHandler(db))
 	http.HandleFunc("/arnold", ArnoldPageHandler(db))
 	http.HandleFunc("/avatar", AvatarPageHandler(db))
