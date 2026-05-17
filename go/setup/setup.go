@@ -1,3 +1,4 @@
+
 package setup
 
 import (
@@ -5,8 +6,19 @@ import (
 	"fmt"
 	"os"
 	"log"
+	"time"
 	_ "github.com/mattn/go-sqlite3"
 )
+// NowFunc and SinceFunc allow main.go to time setup without importing time directly
+var NowFunc = func() interface{} {
+	return time.Now()
+}
+var SinceFunc = func(start interface{}) string {
+	if t, ok := start.(time.Time); ok {
+		return time.Since(t).String()
+	}
+	return "unknown"
+}
 
 // Run executes the setup process: creates tables and populates the DB
 func Run() error {

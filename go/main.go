@@ -14,13 +14,14 @@ func main() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	// Run setup to populate the database
+	// Time the setup process
+	start := setup.NowFunc()
 	err = setup.Run()
 	if err != nil {
 		log.Fatalf("Setup failed: %v", err)
 	}
-
-	log.Println("Setup completed successfully.")
+	elapsed := setup.SinceFunc(start)
+	log.Printf("Setup completed successfully. Elapsed time: %s", elapsed)
 
 	// Start the server (WebSocket and static files)
 	server.StartServer()
