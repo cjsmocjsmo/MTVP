@@ -82,6 +82,7 @@ func TVActionPageHandler() http.HandlerFunc {
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "Action")
+        fmt.Println("Fetched action movie images from DB:", len(images))
         tmpl, err := template.ParseFiles("templates/mov/movactionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
