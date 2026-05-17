@@ -10,6 +10,9 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"runtime"
+	"sync"
+	"strconv"
 
 	_ "image/png"
 )
@@ -80,24 +83,87 @@ func resizeImage(img image.Image, maxW, maxH int) image.Image {
 }
 
 func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, serverAddr string) error {
-	for idx, path := range imgPaths {
-		imgId := GenerateImgId(path)
-		name := strings.TrimSuffix(filepath.Base(path), filepath.Ext(path))
-		thumbPath, err := CreateThumbnail(path, thumbDir)
-		if err != nil {
-			return fmt.Errorf("failed to create thumbnail for %s: %w", path, err)
-		}
-		fileInfo, err := os.Stat(thumbPath)
-		if err != nil {
-			return err
-		}
-		size := fileInfo.Size()
-		httpThumbPath := fmt.Sprintf("%s:8080/thumbnails/%s", serverAddr, filepath.Base(thumbPath))
-		_, err = db.Exec(`INSERT OR IGNORE INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-			imgId, path, path, size, name, thumbPath, idx+idxStart+1, httpThumbPath)
-		if err != nil {
-			return fmt.Errorf("failed to insert image %s: %w", path, err)
+	type job struct {
+		idx  int
+		path string
+	}
+	type result struct {
+		idx         int
+		path        string
+		imgId       string
+		name        string
+		thumbPath   string
+		size        int64
+		httpThumbPath string
+		err         error
+	}
+
+	numWorkers := runtime.NumCPU()
+	if env := os.Getenv("MTVGO_IMAGE_WORKERS"); env != "" {
+		if n, err := strconv.Atoi(env); err == nil && n > 0 {
+			numWorkers = n
 		}
 	}
-	return nil
+
+	jobs := make(chan job, len(imgPaths))
+	results := make(chan result, len(imgPaths))
+	var wg sync.WaitGroup
+
+	worker := func() {
+		defer wg.Done()
+		for j := range jobs {
+			imgId := GenerateImgId(j.path)
+			name := strings.TrimSuffix(filepath.Base(j.path), filepath.Ext(j.path))
+			thumbPath, err := CreateThumbnail(j.path, thumbDir)
+			if err != nil {
+				results <- result{idx: j.idx, path: j.path, err: fmt.Errorf("failed to create thumbnail for %s: %w", j.path, err)}
+				continue
+			}
+			fileInfo, err := os.Stat(thumbPath)
+			if err != nil {
+				results <- result{idx: j.idx, path: j.path, err: err}
+				continue
+			}
+			size := fileInfo.Size()
+			httpThumbPath := fmt.Sprintf("%s:8080/thumbnails/%s", serverAddr, filepath.Base(thumbPath))
+			results <- result{
+				idx: j.idx, path: j.path, imgId: imgId, name: name, thumbPath: thumbPath, size: size, httpThumbPath: httpThumbPath, err: nil,
+			}
+		}
+	}
+
+	for i := 0; i < numWorkers; i++ {
+		wg.Add(1)
+		go worker()
+	}
+
+	for idx, path := range imgPaths {
+		jobs <- job{idx, path}
+	}
+	close(jobs)
+
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	var firstErr error
+	inserts := make([]result, len(imgPaths))
+	for res := range results {
+		if res.err != nil && firstErr == nil {
+			firstErr = res.err
+		}
+		inserts[res.idx] = res
+	}
+	for _, res := range inserts {
+		if res.err != nil {
+			continue
+		}
+		_, err := db.Exec(`INSERT OR IGNORE INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+			res.imgId, res.path, res.path, res.size, res.name, res.thumbPath, res.idx+idxStart+1, res.httpThumbPath)
+		if err != nil && firstErr == nil {
+			firstErr = fmt.Errorf("failed to insert image %s: %w", res.path, err)
+		}
+	}
+	return firstErr
 }
