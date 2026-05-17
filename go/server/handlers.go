@@ -81,14 +81,14 @@ func TVActionPageHandler() http.HandlerFunc {
 // ActionPageHandler serves the action movies page with images from the DB
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        images := getCategoryMovieImages(db, "action")
+        images := getCategoryMovieImages(db, "Action")
         tmpl, err := template.ParseFiles("templates/mov/movactionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -107,7 +107,7 @@ func ArnoldPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -126,7 +126,7 @@ func AvatarPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -145,7 +145,7 @@ func BruceLeePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -164,7 +164,7 @@ func BruceWillisPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -183,7 +183,7 @@ func BuzzPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -202,7 +202,7 @@ func CartoonsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -221,7 +221,7 @@ func CharlieBrownPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -240,7 +240,7 @@ func CheechAndChongPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -259,7 +259,7 @@ func ChuckNorrisPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -278,7 +278,7 @@ func ClintEastwoodPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -297,7 +297,7 @@ func ComedyPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -316,7 +316,7 @@ func DocumentaryPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -335,7 +335,7 @@ func DramaPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -354,7 +354,7 @@ func FantasyPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -373,7 +373,7 @@ func GhostbustersPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -392,7 +392,7 @@ func GodzillaPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -411,7 +411,7 @@ func HarrisonFordPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -430,7 +430,7 @@ func HarryPotterPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -449,7 +449,7 @@ func HellboyPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -468,7 +468,7 @@ func HomeVidsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -487,7 +487,7 @@ func IndianaJonesPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -506,7 +506,7 @@ func JamesBondPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -525,7 +525,7 @@ func JohnWaynePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -544,7 +544,7 @@ func JohnWickPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -563,7 +563,7 @@ func JurrasicParkPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -582,7 +582,7 @@ func KevinCostnerPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -601,7 +601,7 @@ func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -620,7 +620,7 @@ func LegoPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -639,7 +639,7 @@ func MenInBlackPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -658,7 +658,7 @@ func MinionsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -677,7 +677,7 @@ func MiscPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -696,7 +696,7 @@ func MummyPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -715,7 +715,7 @@ func MusicVidsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -734,7 +734,7 @@ func NaturePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -753,7 +753,7 @@ func NicolasCagePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -772,7 +772,7 @@ func OldiesPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -791,7 +791,7 @@ func PandasPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -810,7 +810,7 @@ func PiratesPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -829,7 +829,7 @@ func PredatorPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -848,7 +848,7 @@ func RiddickPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -867,7 +867,7 @@ func SciencePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -886,7 +886,7 @@ func SciFiPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -905,7 +905,7 @@ func StalonePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -924,7 +924,7 @@ func StarTrekPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -943,7 +943,7 @@ func StarWarsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -962,7 +962,7 @@ func StoogesPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -981,7 +981,7 @@ func SuperheroesPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1000,7 +1000,7 @@ func SupermanPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1019,7 +1019,7 @@ func TheRockPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1038,7 +1038,7 @@ func TinkerbellPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1057,7 +1057,7 @@ func TomCruizePageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1076,7 +1076,7 @@ func TransformersPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1095,7 +1095,7 @@ func TremorsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1114,7 +1114,7 @@ func TrollsPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1133,7 +1133,7 @@ func VandamPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1152,7 +1152,7 @@ func XmenPageHandler(db *sql.DB) http.HandlerFunc {
             return
         }
         data := struct {
-            Images []string
+            Images []map[string]interface{}
         }{Images: images}
         err = tmpl.Execute(w, data)
         if err != nil {
@@ -1880,23 +1880,36 @@ func sendJSON(conn *websocket.Conn, v interface{}) {
 type WSResponse map[string]interface{}
 
 // getCategoryMovieImages queries the DB for movies in a given category and returns a list of image URLs
-func getCategoryMovieImages(db *sql.DB, category string) []string {
-    query := "SELECT HttpThumbPath FROM movies WHERE LOWER(Name) LIKE ?"
-    likePattern := "%" + category + "%"
-    rows, err := db.Query(query, likePattern)
+func getCategoryMovieImages(db *sql.DB, category string) []map[string]interface{} {
+    query := "SELECT * FROM movies WHERE Catagory=?"
+    rows, err := db.Query(query, category)
     if err != nil {
         log.Println("DB error (category images):", err)
         return nil
     }
     defer rows.Close()
-    var images []string
+    cols, _ := rows.Columns()
+    results := []map[string]interface{}{}
     for rows.Next() {
-        var path string
-        if err := rows.Scan(&path); err == nil {
-            images = append(images, path)
+        vals := make([]interface{}, len(cols))
+        valPtrs := make([]interface{}, len(cols))
+        for i := range vals {
+            valPtrs[i] = &vals[i]
+        }
+        if err := rows.Scan(valPtrs...); err == nil {
+            row := make(map[string]interface{})
+            for i, col := range cols {
+                b, ok := vals[i].([]byte)
+                if ok {
+                    row[col] = string(b)
+                } else {
+                    row[col] = vals[i]
+                }
+            }
+            results = append(results, row)
         }
     }
-    return images
+    return results
 }
 
 
