@@ -207,14 +207,14 @@ func InsertMovies(db *sql.DB, moviePaths []string, idxStart int) error {
 		if err != nil {
 			return err
 		}
-		fmt.Println("path:", path)
+		// fmt.Println("path:", path)
 		filename := filepath.Base(path)
 		movId := GenerateMD5(path)
 		name := GetMovieName(filename)
 		year := GetMovieYear(filename)
 		size := fileInfo.Size()
 		poster := strings.TrimSuffix(path, filepath.Ext(path)) + ".jpg"
-		fmt.Println("Poster path:", poster)
+		// fmt.Println("Poster path:", poster)
 		catagory := GetMovieCategory(filename)
 		thumbPath := GetHttpThumbPath(filename)
 		_, err = db.Exec(`INSERT OR IGNORE INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,

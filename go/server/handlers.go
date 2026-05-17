@@ -1902,7 +1902,7 @@ func getCategoryMovieImages(db *sql.DB, category string) []string {
 
 // getActionMovieImages queries the DB for action movies and returns a list of image URLs
 func getActionMovieImages(db *sql.DB) []string {
-    rows, err := db.Query("SELECT Path FROM movies WHERE Name LIKE '%Action%'")
+    rows, err := db.Query("SELECT HttpThumbPath FROM movies WHERE Name LIKE '%Action%'")
     if err != nil {
         log.Println("DB error (action images):", err)
         return nil
@@ -1912,7 +1912,7 @@ func getActionMovieImages(db *sql.DB) []string {
     for rows.Next() {
         var path string
         if err := rows.Scan(&path); err == nil {
-            images = append(images, "/thumbnails/"+path)
+            images = append(images, path)
         }
     }
     return images
