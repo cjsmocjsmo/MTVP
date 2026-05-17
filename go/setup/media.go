@@ -74,119 +74,120 @@ func GetMovieYear(filename string) string {
 
 func GetMovieCategory(filename string) string {
 	catagory := ""
-	if strings.Contains(filename, "Action") {
+	fn := filepath.Dir(filename)
+	if strings.Contains(fn, "Action") {
 		catagory = "Action"
-	} else if strings.Contains(filename, "Arnold") {
+	} else if strings.Contains(fn, "Arnold") {
 		catagory = "Arnold"
-	} else if strings.Contains(filename, "Avatar") {
+	} else if strings.Contains(fn, "Avatar") {
 		catagory = "Avatar"
-	} else if strings.Contains(filename, "BruceLee") {
+	} else if strings.Contains(fn, "BruceLee") {
 		catagory = "BruceLee"
-	} else if strings.Contains(filename, "BruceWillis") {
+	} else if strings.Contains(fn, "BruceWillis") {
 		catagory = "BruceWillis"
-	} else if strings.Contains(filename, "Buzz") {
+	} else if strings.Contains(fn, "Buzz") {
 		catagory = "Buzz"
-	} else if strings.Contains(filename, "Cartoons") {
+	} else if strings.Contains(fn, "Cartoons") {
 		catagory = "Cartoons"
-	} else if strings.Contains(filename, "CharlieBrown") {
+	} else if strings.Contains(fn, "CharlieBrown") {
 		catagory = "CharlieBrown"
-	} else if strings.Contains(filename, "CheechAndChong") {
+	} else if strings.Contains(fn, "CheechAndChong") {
 		catagory = "CheechAndChong"
-	} else if strings.Contains(filename, "ChuckNorris") {
+	} else if strings.Contains(fn, "ChuckNorris") {
 		catagory = "ChuckNorris"
-	} else if strings.Contains(filename, "ClintEastwood") {
+	} else if strings.Contains(fn, "ClintEastwood") {
 		catagory = "ClintEastwood"
-	} else if strings.Contains(filename, "Comedy") {
+	} else if strings.Contains(fn, "Comedy") {
 		catagory = "Comedy"
-	} else if strings.Contains(filename, "Documentary") {
+	} else if strings.Contains(fn, "Documentary") {
 		catagory = "Documentary"
-	} else if strings.Contains(filename, "Drama") {
+	} else if strings.Contains(fn, "Drama") {
 		catagory = "Drama"
-	} else if strings.Contains(filename, "Fantasy") {
+	} else if strings.Contains(fn, "Fantasy") {
 		catagory = "Fantasy"
-	} else if strings.Contains(filename, "GhostBusters") {
+	} else if strings.Contains(fn, "GhostBusters") {
 		catagory = "GhostBusters"
-	} else if strings.Contains(filename, "Godzilla") {
+	} else if strings.Contains(fn, "Godzilla") {
 		catagory = "Godzilla"
-	} else if strings.Contains(filename, "HarrisonFord") {
+	} else if strings.Contains(fn, "HarrisonFord") {
 		catagory = "HarrisonFord"
-	} else if strings.Contains(filename, "HarryPotter") {
+	} else if strings.Contains(fn, "HarryPotter") {
 		catagory = "HarryPotter"
-	} else if strings.Contains(filename, "HellBoy") {
+	} else if strings.Contains(fn, "HellBoy") {
 		catagory = "HellBoy"
-	} else if strings.Contains(filename, "HomeVids") {
+	} else if strings.Contains(fn, "HomeVids") {
 		catagory = "HomeVids"
-	} else if strings.Contains(filename, "IndianaJones") {
+	} else if strings.Contains(fn, "IndianaJones") {
 		catagory = "IndianaJones"
-	} else if strings.Contains(filename, "JamesBond") {
+	} else if strings.Contains(fn, "JamesBond") {
 		catagory = "JamesBond"
-	} else if strings.Contains(filename, "JohnWayne") {
+	} else if strings.Contains(fn, "JohnWayne") {
 		catagory = "JohnWayne"
-	} else if strings.Contains(filename, "JohnWick") {
+	} else if strings.Contains(fn, "JohnWick") {
 		catagory = "JohnWick"
-	} else if strings.Contains(filename, "JurassicPark") {
+	} else if strings.Contains(fn, "JurassicPark") {
 		catagory = "JurassicPark"
-	} else if strings.Contains(filename, "KevinCostner") {
+	} else if strings.Contains(fn, "KevinCostner") {
 		catagory = "KevinCostner"
-	} else if strings.Contains(filename, "KingsMan") {
+	} else if strings.Contains(fn, "KingsMan") {
 		catagory = "KingsMan"
-	} else if strings.Contains(filename, "Lego") {
+	} else if strings.Contains(fn, "Lego") {
 		catagory = "Lego"
-	} else if strings.Contains(filename, "MenInBlack") {
+	} else if strings.Contains(fn, "MenInBlack") {
 		catagory = "MenInBlack"
-	} else if strings.Contains(filename, "Minions") {
+	} else if strings.Contains(fn, "Minions") {
 		catagory = "Minions"
-	} else if strings.Contains(filename, "Misc") {
+	} else if strings.Contains(fn, "Misc") {
 		catagory = "Misc"
-	} else if strings.Contains(filename, "Mummy") {
+	} else if strings.Contains(fn, "Mummy") {
 		catagory = "Mummy"
-	} else if strings.Contains(filename, "MusicVids") {
+	} else if strings.Contains(fn, "MusicVids") {
 		catagory = "MusicVids"
-	} else if strings.Contains(filename, "Nature") {
+	} else if strings.Contains(fn, "Nature") {
 		catagory = "Nature"
-	} else if strings.Contains(filename, "NicolasCage") {
+	} else if strings.Contains(fn, "NicolasCage") {
 		catagory = "NicolasCage"
-	} else if strings.Contains(filename, "Oldies") {
+	} else if strings.Contains(fn, "Oldies") {
 		catagory = "Oldies"
-	} else if strings.Contains(filename, "Pandas") {
+	} else if strings.Contains(fn, "Pandas") {
 		catagory = "Pandas"
-	} else if strings.Contains(filename, "Pirates") {
+	} else if strings.Contains(fn, "Pirates") {
 		catagory = "Pirates"
-	} else if strings.Contains(filename, "Predator") {
+	} else if strings.Contains(fn, "Predator") {
 		catagory = "Predator"
-	} else if strings.Contains(filename, "Riddick") {
+	} else if strings.Contains(fn, "Riddick") {
 		catagory = "Riddick"
-	} else if strings.Contains(filename, "SciFi") {
+	} else if strings.Contains(fn, "SciFi") {
 		catagory = "SciFi"
-	} else if strings.Contains(filename, "Science") {
+	} else if strings.Contains(fn, "Science") {
 		catagory = "Science"
-	} else if strings.Contains(filename, "StarWars") {
+	} else if strings.Contains(fn, "StarWars") {
 		catagory = "StarWars"
-	} else if strings.Contains(filename, "Stalone") {
+	} else if strings.Contains(fn, "Stalone") {
 		catagory = "Stalone"
-	} else if strings.Contains(filename, "StarTrek") {
+	} else if strings.Contains(fn, "StarTrek") {
 		catagory = "StarTrek"
-	} else if strings.Contains(filename, "Stooges") {
+	} else if strings.Contains(fn, "Stooges") {
 		catagory = "Stooges"
-	} else if strings.Contains(filename, "SuperHeros") {
+	} else if strings.Contains(fn, "SuperHeros") {
 		catagory = "SuperHeros"
-	} else if strings.Contains(filename, "Superman") {
+	} else if strings.Contains(fn, "Superman") {
 		catagory = "Superman"
-	} else if strings.Contains(filename, "TheRock") {
+	} else if strings.Contains(fn, "TheRock") {
 		catagory = "TheRock"
-	} else if strings.Contains(filename, "TinkerBell") {
+	} else if strings.Contains(fn, "TinkerBell") {
 		catagory = "TinkerBell"
-	} else if strings.Contains(filename, "TomCruise") {
+	} else if strings.Contains(fn, "TomCruise") {
 		catagory = "TomCruise"
-	} else if strings.Contains(filename, "Tremors") {
+	} else if strings.Contains(fn, "Tremors") {
 		catagory = "Tremors"
-	} else if strings.Contains(filename, "Transformers") {
+	} else if strings.Contains(fn, "Transformers") {
 		catagory = "Transformers"
-	} else if strings.Contains(filename, "Trolls") {
+	} else if strings.Contains(fn, "Trolls") {
 		catagory = "Trolls"
-	} else if strings.Contains(filename, "VanDam") {
+	} else if strings.Contains(fn, "VanDam") {
 		catagory = "VanDam"
-	} else if strings.Contains(filename, "XMen") {
+	} else if strings.Contains(fn, "XMen") {
 		catagory = "XMen"
 	}
 	return catagory
