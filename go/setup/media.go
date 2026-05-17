@@ -79,12 +79,14 @@ func InsertMovies(db *sql.DB, moviePaths []string, idxStart int) error {
 		if err != nil {
 			return err
 		}
+		fmt.Println("path:", path)
 		filename := filepath.Base(path)
 		movId := GenerateMD5(path)
 		name := GetMovieName(filename)
 		year := GetMovieYear(filename)
 		size := fileInfo.Size()
 		poster := strings.TrimSuffix(path, filepath.Ext(path)) + ".jpg"
+		fmt.Println("Poster path:", poster)
 		category := "" // TODO: implement category logic as in Python
 		thumbPath := "" // TODO: implement HTTP thumb path logic
 		_, err = db.Exec(`INSERT OR IGNORE INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
