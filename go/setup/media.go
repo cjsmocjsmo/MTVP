@@ -195,7 +195,8 @@ func GetMovieCategory(filename string) string {
 func GetHttpThumbPath(filename string) string {
 	servAddr := os.Getenv("MTVGO_SERVER_ADDR")
 	port := os.Getenv("MTVGO_SERVER_PORT")
-	fn := filepath.Base(filename)
+	fn1 := strings.TrimSuffix(filename, filepath.Ext(filename))
+	fn := filepath.Base(fn1)
 	httpThumbPath := servAddr + ":" + port + "/thumbnails/" + fn + ".jpg"
 	return httpThumbPath
 }
