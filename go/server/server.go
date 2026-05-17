@@ -123,7 +123,7 @@ func StartServer() {
 	http.HandleFunc("/documentary", DocumentaryPageHandler(db))
 	http.HandleFunc("/drama", DramaPageHandler(db))
 	http.HandleFunc("/fantasy", FantasyPageHandler(db))
-	http.HandleFunc("/ghostbusters", GhostbustersPageHandler(db))
+	http.HandleFunc("/ghostbusters", GhostBustersPageHandler(db))
 	http.HandleFunc("/godzilla", GodzillaPageHandler(db))
 	http.HandleFunc("/harrisonford", HarrisonFordPageHandler(db))
 	http.HandleFunc("/harrypotter", HarryPotterPageHandler(db))
