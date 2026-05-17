@@ -155,7 +155,7 @@ func StartServer() {
 	http.HandleFunc("/stalone", StalonePageHandler(db))
 	http.HandleFunc("/startrek", StarTrekPageHandler(db))
 	http.HandleFunc("/stooges", StoogesPageHandler(db))
-	http.HandleFunc("/superheroes", SuperheroesPageHandler(db))
+	http.HandleFunc("/superheros", SuperHerosPageHandler(db))
 	http.HandleFunc("/superman", SuperManPageHandler(db))
 	http.HandleFunc("/therock", TheRockPageHandler(db))
 	http.HandleFunc("/tinkerbell", TinkerbellPageHandler(db))

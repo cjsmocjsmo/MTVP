@@ -990,10 +990,10 @@ func StoogesPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
-// SuperheroesPageHandler serves the Superheroes movies page with images from the DB
-func SuperheroesPageHandler(db *sql.DB) http.HandlerFunc {
+// SuperHerosPageHandler serves the SuperHeros movies page with images from the DB
+func SuperHerosPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        images := getCategoryMovieImages(db, "Superheroes")
+        images := getCategoryMovieImages(db, "SuperHeros")
         tmpl, err := template.ParseFiles("templates/mov/movsuperherospage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
