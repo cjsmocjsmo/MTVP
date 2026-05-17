@@ -1893,7 +1893,7 @@ func getCategoryMovieImages(db *sql.DB, category string) []string {
     for rows.Next() {
         var path string
         if err := rows.Scan(&path); err == nil {
-            images = append(images, "/thumbnails/"+path)
+            images = append(images, path)
         }
     }
     return images

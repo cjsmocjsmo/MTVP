@@ -125,7 +125,7 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 				continue
 			}
 			size := fileInfo.Size()
-			httpThumbPath := fmt.Sprintf("%s:8080/thumbnails/%s", serverAddr, filepath.Base(thumbPath))
+			httpThumbPath := fmt.Sprintf("/thumbnails/%s", filepath.Base(thumbPath))
 			results <- result{
 				idx: j.idx, path: j.path, imgId: imgId, name: name, thumbPath: thumbPath, size: size, httpThumbPath: httpThumbPath, err: nil,
 			}
