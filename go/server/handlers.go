@@ -365,7 +365,7 @@ func FantasyPageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // GhostbustersPageHandler serves the Ghostbusters movies page with images from the DB
-func GhostBustersPageHandler(db *sql.DB) http.HandlerFunc {
+func GhostbustersPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "GhostBusters")
         tmpl, err := template.ParseFiles("templates/mov/movghostbusterspage.html")
@@ -630,7 +630,7 @@ func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
 
 
 // LegoPageHandler serves the Lego movies page with images from the DB
-func LegosPageHandler(db *sql.DB) http.HandlerFunc {
+func LegoPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "Lego")
         tmpl, err := template.ParseFiles("templates/mov/movlegopage.html")
