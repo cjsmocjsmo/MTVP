@@ -215,10 +215,10 @@ func InsertMovies(db *sql.DB, moviePaths []string, idxStart int) error {
 		size := fileInfo.Size()
 		poster := strings.TrimSuffix(path, filepath.Ext(path)) + ".jpg"
 		fmt.Println("Poster path:", poster)
-		category := GetMovieCategory(filename)
+		catagory := GetMovieCategory(filename)
 		thumbPath := GetHttpThumbPath(filename)
-		_, err = db.Exec(`INSERT OR IGNORE INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Category, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-			name, year, poster, size, path, idx+idxStart+1, movId, category, thumbPath)
+		_, err = db.Exec(`INSERT OR IGNORE INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			name, year, poster, size, path, idx+idxStart+1, movId, catagory, thumbPath)
 		if err != nil {
 			return fmt.Errorf("failed to insert movie %s: %w", path, err)
 		}
