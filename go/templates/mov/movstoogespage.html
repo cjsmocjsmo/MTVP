@@ -14,7 +14,7 @@
 	<h1>Stooges Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Stooges Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Stooges Movie" class="mov-img" />
 		{{else}}
 			<p>No Stooges movie images found.</p>
 		{{end}}

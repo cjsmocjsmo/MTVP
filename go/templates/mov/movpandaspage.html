@@ -14,7 +14,7 @@
 	<h1>Pandas Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Pandas Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Pandas Movie" class="mov-img" />
 		{{else}}
 			<p>No Pandas movie images found.</p>
 		{{end}}

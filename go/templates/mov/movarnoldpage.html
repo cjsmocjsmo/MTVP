@@ -10,11 +10,11 @@
         <a href="/"><button class="navbarbtn">Home</button></a>
         <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
-    </div>>
+    </div>
 	<h1>Arnold Movies</h1>
 	<div class="mov-images-grid">
         {{range .Images}}
-            <img src="{{.}}" alt="Arnold Movie" class="mov-img"/>
+            <img id={{.MovID}} src="{{.HttpThubPath}}" alt="Arnold Movie" class="mov-img"/>
         {{else}}
             <p>No Arnold movie images found.</p>
         {{end}}     

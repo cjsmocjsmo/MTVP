@@ -15,7 +15,7 @@
 	<h1>Harrison Ford Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Harrison Ford Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Harrison Ford Movie" class="mov-img" />
 		{{else}}
 			<p>No Harrison Ford movie images found.</p>
 		{{end}}

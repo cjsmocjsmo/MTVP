@@ -15,7 +15,7 @@
 	<h1>Lego Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Lego Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Lego Movie" class="mov-img" />
 		{{else}}
 			<p>No Lego movie images found.</p>
 		{{end}}

@@ -14,7 +14,7 @@
 	<h1>Men in Black Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Men in Black Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Men in Black Movie" class="mov-img" />
 		{{else}}
 			<p>No Men in Black movie images found.</p>
 		{{end}}

@@ -190,9 +190,7 @@ func GetMovieCategory(filename string) string {
 	} else if strings.Contains(fn, "XMen") {
 		catagory = "XMen"
 	}
-	fmt.Println(filename)
-	fmt.Println(fn)
-	fmt.Println(catagory)
+	
 	return catagory
 }
 

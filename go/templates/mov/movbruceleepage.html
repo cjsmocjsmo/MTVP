@@ -14,7 +14,7 @@
 	<h1>Bruce Lee Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Bruce Lee Movie" class="mov-img" />
+			<img id={{.MovID}} src="{{.HttpThumbPath}}" alt="Bruce Lee Movie" class="mov-img" />
 		{{else}}
 			<p>No Bruce Lee movie images found.</p>
 		{{end}}

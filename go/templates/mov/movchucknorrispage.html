@@ -14,7 +14,7 @@
 	<h1>Chuck Norris Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Chuck Norris Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Chuck Norris Movie" class="mov-img" />
 		{{else}}
 			<p>No Chuck Norris movie images found.</p>
 		{{end}}

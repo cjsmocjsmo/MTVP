@@ -14,7 +14,7 @@
 	<h1>Music Videos</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Music Video" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Music Video" class="mov-img" />
 		{{else}}
 			<p>No music video images found.</p>
 		{{end}}

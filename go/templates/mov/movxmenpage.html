@@ -14,7 +14,7 @@
 	<h1>X-Men Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="X-Men Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="X-Men Movie" class="mov-img" />
 		{{else}}
 			<p>No X-Men movie images found.</p>
 		{{end}}

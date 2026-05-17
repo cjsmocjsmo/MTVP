@@ -14,7 +14,7 @@
 	<h1>Avatar Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Avatar Movie" class="mov-img" />
+			<img id={{.MovID}} src="{{.HttpThumbPath}}" alt="Avatar Movie" class="mov-img" />
 		{{else}}
 			<p>No Avatar movie images found.</p>
 		{{end}}

@@ -14,7 +14,7 @@
 	<h1>Trolls Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Trolls Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Trolls Movie" class="mov-img" />
 		{{else}}
 			<p>No Trolls movie images found.</p>
 		{{end}}

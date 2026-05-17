@@ -15,7 +15,7 @@
 	<h1>Kingsman Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img src="{{.}}" alt="Kingsman Movie" class="mov-img" />
+			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Kingsman Movie" class="mov-img" />
 		{{else}}
 			<p>No Kingsman movie images found.</p>
 		{{end}}
