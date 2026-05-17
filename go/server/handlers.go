@@ -555,10 +555,10 @@ func JohnWickPageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // JurrasicParkPageHandler serves the Jurassic Park movies page with images from the DB
-func JurrasicParkPageHandler(db *sql.DB) http.HandlerFunc {
+func JurassicParkPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         images := getCategoryMovieImages(db, "JurassicPark")
-        tmpl, err := template.ParseFiles("templates/mov/movjurrasicparkpage.html")
+        tmpl, err := template.ParseFiles("templates/mov/movjurassicparkpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1010,9 +1010,9 @@ func SuperheroesPageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // SupermanPageHandler serves the Superman movies page with images from the DB
-func SupermanPageHandler(db *sql.DB) http.HandlerFunc {
+func SuperManPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        images := getCategoryMovieImages(db, "Superman")
+        images := getCategoryMovieImages(db, "SuperMan")
         tmpl, err := template.ParseFiles("templates/mov/movsupermanpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
@@ -1050,7 +1050,7 @@ func TheRockPageHandler(db *sql.DB) http.HandlerFunc {
 // TinkerbellPageHandler serves the Tinkerbell movies page with images from the DB
 func TinkerbellPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        images := getCategoryMovieImages(db, "Tinkerbell")
+        images := getCategoryMovieImages(db, "TinkerBell")
         tmpl, err := template.ParseFiles("templates/mov/movtinkerbellpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
