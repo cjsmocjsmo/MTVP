@@ -1,5 +1,6 @@
 package setup
 
+
 import (
 	"crypto/sha256"
 	"database/sql"
@@ -7,6 +8,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
+	"sync"
+	"strconv"
 )
 
 func GenerateVidId(path string) (string, error) {
@@ -30,22 +34,87 @@ func GenerateVidId(path string) (string, error) {
 }
 
 func InsertVideos(db *sql.DB, vidPaths []string, idxStart int) error {
-	for idx, path := range vidPaths {
-		vidId, err := GenerateVidId(path)
-		if err != nil {
-			return fmt.Errorf("failed to hash video %s: %w", path, err)
-		}
-		name := filepath.Base(path)
-		fileInfo, err := os.Stat(path)
-		if err != nil {
-			return err
-		}
-		size := fileInfo.Size()
-		_, err = db.Exec(`INSERT OR IGNORE INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)`,
-			vidId, path, size, name, idx+idxStart+1)
-		if err != nil {
-			return fmt.Errorf("failed to insert video %s: %w", path, err)
+	type job struct {
+		idx  int
+		path string
+	}
+	type result struct {
+		idx   int
+		path  string
+		vidId string
+		size  int64
+		name  string
+		err   error
+	}
+
+	// Get number of workers from env, fallback to NumCPU if not set or invalid
+	numWorkers := runtime.NumCPU()
+	if env := os.Getenv("MTVGO_VIDEO_WORKERS"); env != "" {
+		if n, err := strconv.Atoi(env); err == nil && n > 0 {
+			numWorkers = n
 		}
 	}
-	return nil
+
+	jobs := make(chan job, len(vidPaths))
+	results := make(chan result, len(vidPaths))
+	var wg sync.WaitGroup
+
+	// Worker: hash and stat only (no DB)
+	worker := func() {
+		defer wg.Done()
+		for j := range jobs {
+			vidId, err := GenerateVidId(j.path)
+			if err != nil {
+				results <- result{idx: j.idx, path: j.path, err: fmt.Errorf("failed to hash video %s: %w", j.path, err)}
+				continue
+			}
+			name := filepath.Base(j.path)
+			fileInfo, err := os.Stat(j.path)
+			if err != nil {
+				results <- result{idx: j.idx, path: j.path, err: err}
+				continue
+			}
+			size := fileInfo.Size()
+			results <- result{idx: j.idx, path: j.path, vidId: vidId, size: size, name: name, err: nil}
+		}
+	}
+
+	// Start workers
+	for i := 0; i < numWorkers; i++ {
+		wg.Add(1)
+		go worker()
+	}
+
+	// Send jobs
+	for idx, path := range vidPaths {
+		jobs <- job{idx, path}
+	}
+	close(jobs)
+
+	// Wait for workers to finish
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	// Collect results and do DB inserts serially
+	var firstErr error
+	inserts := make([]result, len(vidPaths))
+	for res := range results {
+		if res.err != nil && firstErr == nil {
+			firstErr = res.err
+		}
+		inserts[res.idx] = res
+	}
+	for _, res := range inserts {
+		if res.err != nil {
+			continue
+		}
+		_, err := db.Exec(`INSERT OR IGNORE INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)`,
+			res.vidId, res.path, res.size, res.name, res.idx+idxStart+1)
+		if err != nil && firstErr == nil {
+			firstErr = fmt.Errorf("failed to insert video %s: %w", res.path, err)
+		}
+	}
+	return firstErr
 }
