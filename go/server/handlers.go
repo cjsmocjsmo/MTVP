@@ -65,7 +65,7 @@ func MainTVPageHandler(db *sql.DB) http.HandlerFunc {
 // TvMainPageHandler serves the main TV page (tvmainpage.html)
 func TVActionPageHandler() http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        tmpl, err := template.ParseFiles("templates/tv/tvactionpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/action/tvactionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
