@@ -99,10 +99,10 @@ func StartServer() {
 	http.Handle("/thumbnails/", http.StripPrefix("/thumbnails/", http.FileServer(http.Dir(movThumbPath))))
 	log.Println("[StartServer] File server registered for /thumbnails ->", movThumbPath)
 
-	// Serve TV thumbnails from /usr/share/MTV/gotvthumbnails/ at /tvhumbnails
+	// Serve TV thumbnails from /usr/share/MTV/gotvthumbnails/ at /tvthumbnails
 	tvThumbPath := os.Getenv("MTVGO_TV_THUMBNAIL_PATH")
-	http.Handle("/tvhumbnails/", http.StripPrefix("/tvhumbnails/", http.FileServer(http.Dir(tvThumbPath))))
-	log.Println("[StartServer] File server registered for /tvhumbnails ->", tvThumbPath)
+	http.Handle("/tvthumbnails/", http.StripPrefix("/tvthumbnails/", http.FileServer(http.Dir(tvThumbPath))))
+	log.Println("[StartServer] File server registered for /tvthumbnails ->", tvThumbPath)
 
 	http.HandleFunc("/", HomePageHandler())
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
