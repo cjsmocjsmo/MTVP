@@ -81,7 +81,7 @@ func TVActionPageHandler() http.HandlerFunc {
 // ActionPageHandler serves the action movies page with images from the DB
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        images := getActionMovieImages(db)
+        images := getCategoryMovieImages(db, "action")
         tmpl, err := template.ParseFiles("templates/mov/movactionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
@@ -1881,7 +1881,7 @@ type WSResponse map[string]interface{}
 
 // getCategoryMovieImages queries the DB for movies in a given category and returns a list of image URLs
 func getCategoryMovieImages(db *sql.DB, category string) []string {
-    query := "SELECT Path FROM movies WHERE LOWER(Name) LIKE ?"
+    query := "SELECT HttpThumbPath FROM movies WHERE LOWER(Name) LIKE ?"
     likePattern := "%" + category + "%"
     rows, err := db.Query(query, likePattern)
     if err != nil {
@@ -1900,23 +1900,7 @@ func getCategoryMovieImages(db *sql.DB, category string) []string {
 }
 
 
-// getActionMovieImages queries the DB for action movies and returns a list of image URLs
-func getActionMovieImages(db *sql.DB) []string {
-    rows, err := db.Query("SELECT HttpThumbPath FROM movies WHERE Name LIKE '%Action%'")
-    if err != nil {
-        log.Println("DB error (action images):", err)
-        return nil
-    }
-    defer rows.Close()
-    var images []string
-    for rows.Next() {
-        var path string
-        if err := rows.Scan(&path); err == nil {
-            images = append(images, path)
-        }
-    }
-    return images
-}
+
 
 
 func getMovieCount(db *sql.DB) int {
