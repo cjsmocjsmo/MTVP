@@ -95,6 +95,7 @@ func StartServer() {
 	}))
 	log.Println("[StartServer] Static file handler registered for /static/")
 
+	// Serve movie thumbnails from /usr/share/MTV/gothumbnails/ at /thumbnails
 	movThumbPath := os.Getenv("MTVGO_THUMBNAIL_PATH")
 	http.Handle("/thumbnails/", http.StripPrefix("/thumbnails/", http.FileServer(http.Dir(movThumbPath))))
 	log.Println("[StartServer] File server registered for /thumbnails ->", movThumbPath)
