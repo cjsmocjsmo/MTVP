@@ -149,7 +149,7 @@ func GetMovieCategory(filename string) string {
 		catagory = "NicolasCage"
 	} else if strings.Contains(fn, "Oldies") {
 		catagory = "Oldies"
-	} else if strings.Contains(fn, "Pandas") {
+	} else if strings.Contains(fn, "Panda") {
 		catagory = "Pandas"
 	} else if strings.Contains(fn, "Pirates") {
 		catagory = "Pirates"
