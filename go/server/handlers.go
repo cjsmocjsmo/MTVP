@@ -611,6 +611,24 @@ func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // LegoPageHandler serves the Lego movies page with images from the DB
 func LegoPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
