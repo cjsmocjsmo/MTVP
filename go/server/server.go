@@ -168,10 +168,10 @@ func StartServer() {
 	http.HandleFunc("/xmen", XmenPageHandler(db))
 		// Register TV show pages
 	http.HandleFunc("/tvactionpage", TVActionPageHandler())
-	http.HandleFunc("/tvactiondarkwinds", DarkWindsPageHandler(db))
-	http.HandleFunc("/tvactionmobland", MoblandPageHandler(db))
-	http.HandleFunc("/tvactionshogun", ShogunPageHandler(db))
-	http.HandleFunc("/tvactionthecontinental", TheContinentalPageHandler(db))
+	http.HandleFunc("/tvactiondarkwinds", TVDarkWindsPageHandler(db))
+	http.HandleFunc("/tvactionmobland", TVMoblandPageHandler(db))
+	http.HandleFunc("/tvactionshogun", TVShogunPageHandler(db))
+	http.HandleFunc("/tvactionthecontinental", TVTheContinentalPageHandler(db))
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 	go func() {

@@ -9,16 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIndexHandler(t *testing.T) {
-	tmpDir := t.TempDir()
-	tmplPath := filepath.Join(tmpDir, "index.html")
-	err := os.WriteFile(tmplPath, []byte("<html><body>Test</body></html>"), 0644)
-	assert.NoError(t, err)
-
+func TestHomePageHandler(t *testing.T) {
 	req := httptest.NewRequest("GET", "/", nil)
 	rw := httptest.NewRecorder()
 
-	handler := indexHandlerWithPath(tmplPath)
+	handler := HomePageHandler()
 	handler(rw, req)
 	resp := rw.Result()
 	assert.Equal(t, http.StatusOK, resp.StatusCode)

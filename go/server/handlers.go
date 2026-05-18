@@ -14,7 +14,7 @@ import (
     "fmt"
     "github.com/gorilla/websocket"
     "html/template"
-    "path/filepath"
+    // "path/filepath"
     "net/http"
 )
 
@@ -47,36 +47,6 @@ func MainMoviePageHandler() http.HandlerFunc {
         }
     }
 }
-
-func MainTVPageHandler(db *sql.DB) http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
-        tmpl, err := template.ParseFiles("templates/tv/tvmainpage.html")
-        if err != nil {
-            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
-            return
-        }
-        err = tmpl.Execute(w, nil)
-        if err != nil {
-            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
-        }
-    }
-}
-
-// TvMainPageHandler serves the main TV page (tvmainpage.html)
-func TVActionPageHandler() http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
-        tmpl, err := template.ParseFiles("templates/tv/action/tvactionpage.html")
-        if err != nil {
-            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
-            return
-        }
-        err = tmpl.Execute(w, nil)
-        if err != nil {
-            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
-        }
-    }
-}
-
 
 // ActionPageHandler serves the action movies page with images from the DB
 func ActionPageHandler(db *sql.DB) http.HandlerFunc {
@@ -610,24 +580,6 @@ func KingsmanPageHandler(db *sql.DB) http.HandlerFunc {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // LegoPageHandler serves the Lego movies page with images from the DB
 func LegoPageHandler(db *sql.DB) http.HandlerFunc {
@@ -1180,8 +1132,71 @@ func XmenPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+func MainTVPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/tv/tvmainpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+// TvMainPageHandler serves the main TV page (tvmainpage.html)
+func TVActionPageHandler() http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/tv/action/tvactionpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
 // MoblandPageHandler serves all seasons of Mobland with episode info
-func MoblandPageHandler(db *sql.DB) http.HandlerFunc {
+func TVMoblandPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
@@ -1234,7 +1249,7 @@ func MoblandPageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // DarkWindsPageHandler serves all seasons of Dark Winds with episode info
-func DarkWindsPageHandler(db *sql.DB) http.HandlerFunc {
+func TVDarkWindsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // We'll support up to 4 seasons, but this is extendable
         seasons := map[string][]map[string]interface{}{}
@@ -1287,7 +1302,7 @@ func DarkWindsPageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // ShogunPageHandler serves all seasons of Shogun with episode info
-func ShogunPageHandler(db *sql.DB) http.HandlerFunc {
+func TVShogunPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
@@ -1340,7 +1355,7 @@ func ShogunPageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // TheContinentalPageHandler serves all seasons of The Continental with episode info
-func TheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
+func TVTheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
@@ -1391,6 +1406,24 @@ func TheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1956,22 +1989,3 @@ func getTVShowCount(db *sql.DB) int {
     return count
 }
 
-// indexHandler serves the main page using Go's html/template
-func indexHandlerWithPath(tmplPath string) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		tmpl, err := template.ParseFiles(tmplPath)
-		if err != nil {
-			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-		err = tmpl.Execute(w, nil)
-		if err != nil {
-			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
-		}
-	}
-}
-
-// Legacy handler for production use
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	indexHandlerWithPath(filepath.Join("go", "templates", "index.html"))(w, r)
-}
