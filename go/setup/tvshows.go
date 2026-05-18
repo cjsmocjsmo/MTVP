@@ -60,11 +60,6 @@ func GetTVShowCategory(name string) string {
 	fn2 := filepath.Dir(name)
 	cleaned := filepath.Clean(fn2)
 	parts := strings.Split(cleaned, string(os.PathSeparator))
-	fmt.Println(name)
-	fmt.Println(fn2)
-	fmt.Println(cleaned)
-	fmt.Println(parts)
-	fmt.Println(parts[len(parts)-2])
 	if len(parts) > 0 {
 		return parts[len(parts)-2]
 	} else {
