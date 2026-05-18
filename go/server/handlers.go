@@ -1462,7 +1462,7 @@ func TVMastersOfTheUniversePageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/action/tvcartoonsmastersoftheuniverse.html")
+        tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsmastersoftheuniversepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1514,7 +1514,7 @@ func TVFlintstonesPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/action/tvcartoonsflintstones.html")
+        tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsflintstonespage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1566,7 +1566,7 @@ func TVJetsonsPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/action/tvcartoonsjetsons.html")
+        tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsjetsonspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1618,7 +1618,7 @@ func TVJohnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/action/tvcartoonsjohnyquest.html")
+        tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsjohnyquestpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return

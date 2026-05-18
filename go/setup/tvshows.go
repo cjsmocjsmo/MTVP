@@ -56,6 +56,17 @@ func GetTVShowEpisode(filename string) string {
 	return ""
 }
 
+func GetTVShowCategory(name string) string {
+	fn2 := filepath.Dir(name)
+	cleaned := filepath.Clean(fn2)
+	parts := strings.Split(cleaned, string(os.PathSeparator))
+	if len(parts) > 0 {
+		return parts[len(parts)-1]
+	} else {
+		return "Unknown"
+	}
+}
+
 func InsertTVShows(db *sql.DB, tvPaths []string, idxStart int) error {
 	for idx, path := range tvPaths {
 		fileInfo, err := os.Stat(path)
@@ -68,7 +79,7 @@ func InsertTVShows(db *sql.DB, tvPaths []string, idxStart int) error {
 		season := GetTVShowSeason(filename)
 		episode := GetTVShowEpisode(filename)
 		size := fileInfo.Size()
-		category := "" // TODO: implement category logic as in Python
+		category := GetTVShowCategory(name)
 		_, err = db.Exec(`INSERT OR IGNORE INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 			tvId, size, category, name, season, episode, path, idx+idxStart+1)
 		if err != nil {
