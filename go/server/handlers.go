@@ -1202,7 +1202,7 @@ func TVMoblandPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Mobland", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "MobLand", seasonNum)
             if err != nil {
                 log.Println("DB error (Mobland S", seasonNum, "): ", err)
                 continue
@@ -1581,15 +1581,15 @@ func TVJetsonsPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
-func TVJohnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
+func TVJonnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Johny Quest", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Jonny Quest", seasonNum)
             if err != nil {
-                log.Println("DB error (Johny Quest S", seasonNum, "): ", err)
+                log.Println("DB error (Jonny Quest S", seasonNum, "): ", err)
                 continue
             }
             defer rows.Close()
@@ -1618,7 +1618,7 @@ func TVJohnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsjohnyquestpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsjonnyquestpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return

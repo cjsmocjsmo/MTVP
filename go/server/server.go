@@ -177,7 +177,7 @@ func StartServer() {
 	http.HandleFunc("/tvcartoonsmastersoftheuniverse", TVMastersOfTheUniversePageHandler(db))
 	http.HandleFunc("/tvcartoonsflintstones", TVFlintstonesPageHandler(db))
 	http.HandleFunc("/tvcartoonsjetsons", TVJetsonsPageHandler(db))
-	http.HandleFunc("/tvcartoonsjohnyquest", TVJohnyQuestPageHandler(db))
+	http.HandleFunc("/tvcartoonsjonnyquest", TVJonnyQuestPageHandler(db))
 
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
