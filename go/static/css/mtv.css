@@ -7,12 +7,14 @@
   background: #121212;
   color: #f0f0f0;
 } */
+
 body {
   display: block;
   min-height: 100vh;
   background: #121212;
   color: #f0f0f0;
 }
+
 #header { 
     text-align: center;
     margin: 0.5em;
@@ -81,4 +83,35 @@ body {
     object-fit: cover;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.sea-epi-div {
+
+
+}
+
+.sea-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+
+}
+
+.epi-div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25em;
+
+}
+
+.epi-div-item {
+    width: 1.5em;
+    height: 1em;
+    background: #282828;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 12px;
 }
