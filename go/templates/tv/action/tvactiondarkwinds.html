@@ -19,7 +19,7 @@
             <h2>Season {{$season}}</h2>
             <div class="epi-div">
             {{range $episodes}}
-                <button id={{.TvId}} class="epi-div-item">Episode {{.Episode}}</button>
+                <button id={{.TvId}} class="epi-div-item">{{.Episode}}</button>
             {{end}}
             </div>
         </div>
