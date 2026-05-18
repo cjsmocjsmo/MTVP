@@ -11,27 +11,18 @@
         <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
     </div>
-    <h1>Shogun - All Seasons</h1>
-    {{ if .Seasons }}
-        {{ range $season, $episodes := .Seasons }}
-            <h2>Season {{ $season }}</h2>
-            <div class="season-block">
-                {{ if $episodes }}
-                    <ul>
-                    {{ range $ep := $episodes }}
-                        <li>
-                            <strong>Episode {{ index $ep "Episode" }}</strong>: {{ index $ep "Title" }}
-                            {{ with (index $ep "Description") }}<br><em>{{ . }}</em>{{ end }}
-                        </li>
-                    {{ end }}
-                    </ul>
-                {{ else }}
-                    <p>No episodes found for this season.</p>
-                {{ end }}
+    <h1>Shogun</h1>
+    <div class="sea-epi-div">
+        {{range $season, $episodes := .Seasons}}
+        <div class="sea-div">
+            <h2>Season {{$season}}</h2>
+            <div class="epi-div">
+            {{range $episodes}}
+                <button id={{.TvId}} class="epi-div-item">{{.Episode}}</button>
+            {{end}}
             </div>
-        {{ end }}
-    {{ else }}
-        <p>No seasons found for Shogun.</p>
-    {{ end }}
+        </div>
+        {{end}}
+    </div>
 </body>
 </html>

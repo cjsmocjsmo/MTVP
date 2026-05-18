@@ -1200,7 +1200,7 @@ func TVMoblandPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Mobland", seasonNum)
             if err != nil {
@@ -1307,7 +1307,7 @@ func TVShogunPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Shogun", seasonNum)
             if err != nil {
@@ -1360,7 +1360,7 @@ func TVTheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TheContinental", seasonNum)
             if err != nil {
@@ -1429,7 +1429,7 @@ func TVMastersOfTheUniversePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "MastersOfTheUniverse", seasonNum)
             if err != nil {
@@ -1481,7 +1481,7 @@ func TVFlintstonesPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Flintstones", seasonNum)
             if err != nil {
@@ -1533,7 +1533,7 @@ func TVJetsonsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Jetsons", seasonNum)
             if err != nil {
@@ -1585,7 +1585,7 @@ func TVJohnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 4; i++ {
+        for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Johny Quest", seasonNum)
             if err != nil {
@@ -1632,11 +1632,6 @@ func TVJohnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
         }
     }
 }
-
-
-
-
-
 
 
 

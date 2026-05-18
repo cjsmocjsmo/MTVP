@@ -13,15 +13,15 @@
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
     </div>
     <h1>Mobland</h1>
-    <div class="epi-div">
+    <div class="sea-epi-div">
         {{range $season, $episodes := .Seasons}}
-        <div class="season-block">
+        <div class="sea-div">
             <h2>Season {{$season}}</h2>
-            <ul>
+            <div class="epi-div">
             {{range $episodes}}
-                <li>Episode {{.Episode}}: {{.Name}}</li>
+                <button id={{.TvId}} class="epi-div-item">{{.Episode}}</button>
             {{end}}
-            </ul>
+            </div>
         </div>
         {{end}}
     </div>
