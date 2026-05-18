@@ -64,9 +64,9 @@ func GetTVShowCategory(name string) string {
 	fmt.Println(fn2)
 	fmt.Println(cleaned)
 	fmt.Println(parts)
-	fmt.Println(parts[len(parts)-1])
+	fmt.Println(parts[len(parts)-2])
 	if len(parts) > 0 {
-		return parts[len(parts)-1]
+		return parts[len(parts)-2]
 	} else {
 		return "Unknown"
 	}
