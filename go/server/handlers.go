@@ -2076,7 +2076,7 @@ func TVFalconAndTheWinterSoldierPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcufalconandthewintersoldierpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcufalconandwintersoldierpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
