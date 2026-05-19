@@ -2610,7 +2610,7 @@ func TVNCISHawaiiPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncishawaiipage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncishawaiipage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2662,7 +2662,7 @@ func TVNCISLAPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncislapage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncislapage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2714,7 +2714,7 @@ func TVNCISNewOrleansPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisneworleanspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncisneworleanspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2766,7 +2766,7 @@ func TVNCISOriginsPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisoriginspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncisoriginspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2818,7 +2818,7 @@ func TVNCISNCISPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncispage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncisncispage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2870,7 +2870,7 @@ func TVNCISSydneyPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncissydneypage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncissydneypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2922,7 +2922,7 @@ func TVNCISZivaAndTonyPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncistoniandzivapage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncisncistoniandzivapage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
