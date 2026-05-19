@@ -209,7 +209,7 @@ func StartServer() {
 	http.HandleFunc("/tvncisorigings", TVNCISOriginsPageHandler(db))
 	http.HandleFunc("/tvncisncis", TVNCISNCISPageHandler(db))
 	http.HandleFunc("/tvncissydney", TVNCISSydneyPageHandler(db))
-	http.HandleFunc("/tvnciszivaandtoni", TVNCISTonyAndZivaPageHandler(db))
+	http.HandleFunc("/tvncistoniandziva", TVNCISTonyAndZivaPageHandler(db))
 
 
 

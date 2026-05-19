@@ -2631,7 +2631,7 @@ func TVNCISLAPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS LA", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISLA", seasonNum)
             if err != nil {
                 log.Println("DB error (NCIS LA S", seasonNum, "): ", err)
                 continue
@@ -2683,7 +2683,7 @@ func TVNCISNewOrleansPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS New Orleans", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISNewOrleans", seasonNum)
             if err != nil {
                 log.Println("DB error (NCIS New Orleans S", seasonNum, "): ", err)
                 continue
@@ -2735,7 +2735,7 @@ func TVNCISOriginsPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS Origins", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISOrigins", seasonNum)
             if err != nil {
                 log.Println("DB error (NCIS Origins S", seasonNum, "): ", err)
                 continue
@@ -2787,7 +2787,7 @@ func TVNCISNCISPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISNCIS", seasonNum)
             if err != nil {
                 log.Println("DB error (NCIS S", seasonNum, "): ", err)
                 continue
@@ -2839,7 +2839,7 @@ func TVNCISSydneyPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS Sydney", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISSydney", seasonNum)
             if err != nil {
                 log.Println("DB error (NCIS Sydney S", seasonNum, "): ", err)
                 continue
