@@ -183,6 +183,14 @@ func StartServer() {
 	http.HandleFunc("/tvcomedydmvpage", TVDMVPageHandler(db))
 	http.HandleFunc("/tvcomedyfubarpage", TVFubarPageHandler(db))
 
+	http.HandleFunc("/tvfantasypage", TVFantasyPageHandler())
+	http.HandleFunc("/tvfantasylordoftherings", TVLordOfTheRingsPageHandler(db))
+	http.HandleFunc("/tvfantasyhouseofthedragon", TVHouseOfTheDragonPageHandler(db))
+	http.HandleFunc("/tvfantasypercyjacksonandtheolympians", TVPercyJacksonAndTheOlympiansPageHandler(db))
+	http.HandleFunc("/tvfantasywednesday", TVWednesdayPageHandler(db))
+	http.HandleFunc("/tvfantasywheelofTime", TVWheelOfTimePageHandler(db))
+
+	
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 	go func() {
