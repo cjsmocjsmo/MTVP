@@ -1802,7 +1802,7 @@ func TVLordOfTheRingsPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvlordoftheringspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasylordoftheringstheringsofpowerpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1854,7 +1854,7 @@ func TVHouseOfTheDragonPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvhouseofthedragonpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasyhouseofthedragonpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1906,7 +1906,7 @@ func TVPercyJacksonAndTheOlympiansPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvpercyjacksonandtheolympianspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasypercyjacksonandtheolympianspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -1958,7 +1958,7 @@ func TVWednesdayPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvwednesdaypage.html")
+        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasywednesdaypage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2010,7 +2010,7 @@ func TVWheelOfTimePageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvwheeloftimepage.html")
+        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasywheeloftimepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
