@@ -2507,7 +2507,7 @@ func TVWandaVisionPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
-func TVWondermanPageHandler(db *sql.DB) http.HandlerFunc {
+func TVWonderManPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
