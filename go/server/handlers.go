@@ -2076,7 +2076,7 @@ func TVFalconAndTheWinterSoldierPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvfalconandthewintersoldierpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcufalconandthewintersoldierpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2128,7 +2128,7 @@ func TVHawkeyePageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvhawkeyepage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcuhawkeyepage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2180,7 +2180,7 @@ func TVIAmGrootPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tviamgrootpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcuiamgrootpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2232,7 +2232,7 @@ func TVIronHeartPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvironheartpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcuironheartpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2284,7 +2284,7 @@ func TVLokiPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvlokipage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmculokipage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2336,7 +2336,7 @@ func TVMoonKnightPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmoonknightpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcumoonknightpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2388,7 +2388,7 @@ func TVSecretInvasionPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvsecretinvasionpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcusecretinvasionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2440,7 +2440,7 @@ func TVSheHulkPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvshehulkpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcushehulkpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -2492,7 +2492,7 @@ func TVWandaVisionPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/mcu/tvwandavisionpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/mcu/tvmcuwandavisionpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
