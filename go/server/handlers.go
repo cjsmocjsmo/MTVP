@@ -1823,7 +1823,7 @@ func TVHouseOfTheDragonPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "House of the Dragon", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "HouseOfTheDragon", seasonNum)
             if err != nil {
                 log.Println("DB error (House of the Dragon S", seasonNum, "): ", err)
                 continue
@@ -1875,7 +1875,7 @@ func TVPercyJacksonAndTheOlympiansPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Percy Jackson and the Olympians", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "PercyJacksonAndTheOlympians", seasonNum)
             if err != nil {
                 log.Println("DB error (Percy Jackson and the Olympians S", seasonNum, "): ", err)
                 continue
@@ -1979,7 +1979,7 @@ func TVWheelOfTimePageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Wheel of Time", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "WheelOfTime", seasonNum)
             if err != nil {
                 log.Println("DB error (Wheel of Time S", seasonNum, "): ", err)
                 continue
