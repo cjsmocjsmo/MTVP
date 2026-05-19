@@ -1906,7 +1906,7 @@ func TVPercyJacksonAndTheOlympiansPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasypercyjacksonandtheolympianspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvfantasypercyjacksonpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
