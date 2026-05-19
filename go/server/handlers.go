@@ -2885,15 +2885,15 @@ func TVNCISSydneyPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
-func TVNCISZivaAndToniPageHandler(db *sql.DB) http.HandlerFunc {
+func TVNCISZivaAndTonyPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS Ziva and Toni", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCIS Ziva and Tony", seasonNum)
             if err != nil {
-                log.Println("DB error (NCIS Ziva and Toni S", seasonNum, "): ", err)
+                log.Println("DB error (NCIS Ziva and Tony S", seasonNum, "): ", err)
                 continue
             }
             defer rows.Close()
@@ -2922,7 +2922,7 @@ func TVNCISZivaAndToniPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/ncis/tvnciszivaandtonipage.html")
+        tmpl, err := template.ParseFiles("templates/tv/ncis/tvncistoniandzivapage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
