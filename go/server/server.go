@@ -190,6 +190,18 @@ func StartServer() {
 	http.HandleFunc("/tvfantasywednesday", TVWednesdayPageHandler(db))
 	http.HandleFunc("/tvfantasywheeloftime", TVWheelOfTimePageHandler(db))
 
+	http.HandleFunc("/tvmcupage", TVMCUPageHandler())
+	http.HandleFunc("/tvfalconandthewintersoldier", TVFalconAndTheWinterSoldierPageHandler(db))
+	http.HandleFunc("/tvhawkeye", TVHawkeyePageHandler(db))
+	http.HandleFunc("/tviamgroot", TVIAmGrootPageHandler(db))
+	http.HandleFunc("/tvironheart", TVIronHeartPageHandler(db))
+	http.HandleFunc("/tvloki", TVLokiPageHandler(db))
+	http.HandleFunc("/tvmoonknight", TVMoonKnightPageHandler(db))
+	http.HandleFunc("/tvsecretinvasion", TVSecretInvasionPageHandler(db))
+	http.HandleFunc("/tvshehulk", TVSheHulkPageHandler(db))
+	http.HandleFunc("/tvwandavision", TVWandaVisionPageHandler(db))
+	http.HandleFunc("/tvwonderman", TVWonderManPageHandler(db))
+
 
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
