@@ -202,6 +202,16 @@ func StartServer() {
 	http.HandleFunc("/tvwandavision", TVWandaVisionPageHandler(db))
 	http.HandleFunc("/tvwonderman", TVWonderManPageHandler(db))
 
+	http.HandleFunc("/tvncispage", TVNCISPageHandler())
+	http.HandleFunc("/tvncishawaii", TVNCISHawaiiPageHandler(db))
+	http.HandleFunc("/tvncisneworleans", TVNCISNewOrleansPageHandler(db))
+	http.HandleFunc("/tvncisla", TVNCISLAPageHandler(db))
+	http.HandleFunc("/tvncisorigings", TVNCISOriginsPageHandler(db))
+	http.HandleFunc("/tvncisncis", TVNCISNCISPageHandler(db))
+	http.HandleFunc("/tvncissydney", TVNCISSydneyPageHandler(db))
+	http.HandleFunc("/tvnciszivaandtoni", TVNCISZivaAndTonyPageHandler(db))
+
+
 
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
