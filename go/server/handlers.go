@@ -1705,9 +1705,9 @@ func TVFubarPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Fubar", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "FuuBar", seasonNum)
             if err != nil {
-                log.Println("DB error (Fubar S", seasonNum, "): ", err)
+                log.Println("DB error (FuuBar S", seasonNum, "): ", err)
                 continue
             }
             defer rows.Close()
@@ -1736,7 +1736,7 @@ func TVFubarPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/comedy/tvcomedyfubarpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/comedy/tvcomedyfuubarpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
