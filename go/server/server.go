@@ -235,17 +235,17 @@ func StartServer() {
 
 	http.HandleFunc("/tvstartrekpage", TVStarTrekPageHandler())
 	http.HandleFunc("/tvstartrekcontinues", TVStarTrekContinuesPageHandler(db))
-	http.HandleFunc("/tvstartrekdeepspacenine", TVStarTrekDeepSpaceNinePageHandler(db))
-	http.HandleFunc("/tvstartrekdiscovery", TVStarTrekDiscoveryPageHandler(db))
-	http.HandleFunc("/tvstartrekenterprise", TVStarTrekEnterprisePageHandler(db))
-	http.HandleFunc("/tvstartreklowerdecks", TVStarTrekLowerDecksPageHandler(db))
-	http.HandleFunc("/tvstartrekpicard", TVStarTrekPicardPageHandler(db))
-	http.HandleFunc("/tvstartrekprodigy", TVStarTrekProdigyPageHandler(db))
-	http.HandleFunc("/tvstartrekstarfleetacademy", TVStarTrekStarfleetAcademyPageHandler(db))
-	http.HandleFunc("/tvstartrekstrangenewworlds", TVStarTrekStrangeNewWorldsPageHandler(db))
-	http.HandleFunc("/tvstartreksttv", TVStarTrekSTTVPageHandler(db))
-	http.HandleFunc("/tvstartrektng", TVStarTrekTNGPageHandler(db))
-	http.HandleFunc("/tvstartrekvoyager", TVStarTrekVoyagerPageHandler(db))
+	http.HandleFunc("/tvstartrekdeepspacenine", TVDeepSpaceNinePageHandler(db))
+	http.HandleFunc("/tvstartrekdiscovery", TVDiscoveryPageHandler(db))
+	http.HandleFunc("/tvstartrekenterprise", TVEnterprisePageHandler(db))
+	http.HandleFunc("/tvstartreklowerdecks", TVLowerDecksPageHandler(db))
+	http.HandleFunc("/tvstartrekpicard", TVPicardPageHandler(db))
+	http.HandleFunc("/tvstartrekprodigy", TVProdigyPageHandler(db))
+	http.HandleFunc("/tvstartrekstarfleetacademy", TVStarFleetAcademyPageHandler(db))
+	http.HandleFunc("/tvstartrekstrangenewworlds", TVStrangeNewWorldsPageHandler(db))
+	http.HandleFunc("/tvstartreksttv", TVSTTVPageHandler(db))
+	http.HandleFunc("/tvstartrektng", TVTNGPageHandler(db))
+	http.HandleFunc("/tvstartrekvoyager", TVVoyagerPageHandler(db))
 
 
 
