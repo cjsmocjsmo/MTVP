@@ -3382,7 +3382,7 @@ func TVForAllMankindPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 5; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "ForAllMankind", seasonNum)
             if err != nil {
@@ -3434,7 +3434,7 @@ func TVFoundationPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Foundation", seasonNum)
             if err != nil {
@@ -3538,7 +3538,7 @@ func TVLostInSpacePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "LostInSpace", seasonNum)
             if err != nil {
@@ -3694,7 +3694,7 @@ func TVOrvillePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Orville", seasonNum)
             if err != nil {
@@ -3883,7 +3883,7 @@ func TVLastOfUsPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/scifi/tvscifilastofuspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/scifi/tvscifithelastofuspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
