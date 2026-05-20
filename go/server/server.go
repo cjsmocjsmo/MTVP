@@ -233,7 +233,19 @@ func StartServer() {
 	http.HandleFunc("/tvscifisilo", TVSiloPageHandler(db))
 	http.HandleFunc("/tvscifilastofus", TVLastOfUsPageHandler(db))
 
-
+	http.HandleFunc("/tvstartrekpage", TVStarTrekPageHandler())
+	http.HandleFunc("/tvstartrekcontinues", TVStarTrekContinuesPageHandler(db))
+	http.HandleFunc("/tvstartrekdeepspacenine", TVStarTrekDeepSpaceNinePageHandler(db))
+	http.HandleFunc("/tvstartrekdiscovery", TVStarTrekDiscoveryPageHandler(db))
+	http.HandleFunc("/tvstartrekenterprise", TVStarTrekEnterprisePageHandler(db))
+	http.HandleFunc("/tvstartreklowerdecks", TVStarTrekLowerDecksPageHandler(db))
+	http.HandleFunc("/tvstartrekpicard", TVStarTrekPicardPageHandler(db))
+	http.HandleFunc("/tvstartrekprodigy", TVStarTrekProdigyPageHandler(db))
+	http.HandleFunc("/tvstartrekstarfleetacademy", TVStarTrekStarfleetAcademyPageHandler(db))
+	http.HandleFunc("/tvstartrekstrangenewworlds", TVStarTrekStrangeNewWorldsPageHandler(db))
+	http.HandleFunc("/tvstartreksttv", TVStarTrekSTTVPageHandler(db))
+	http.HandleFunc("/tvstartrektng", TVStarTrekTNGPageHandler(db))
+	http.HandleFunc("/tvstartrekvoyager", TVStarTrekVoyagerPageHandler(db))
 
 
 

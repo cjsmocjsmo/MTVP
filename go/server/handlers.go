@@ -2574,7 +2574,7 @@ func TVNCISHawaiiPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISHawaii", seasonNum)
             if err != nil {
@@ -2626,7 +2626,7 @@ func TVNCISLAPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 13; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISLA", seasonNum)
             if err != nil {
@@ -2678,7 +2678,7 @@ func TVNCISNewOrleansPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 7; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISNewOrleans", seasonNum)
             if err != nil {
@@ -2782,7 +2782,7 @@ func TVNCISNCISPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 23; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISNCIS", seasonNum)
             if err != nil {
@@ -2834,7 +2834,7 @@ func TVNCISSydneyPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISSydney", seasonNum)
             if err != nil {
@@ -3384,7 +3384,7 @@ func TVForAllMankindPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 5; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "ForAllMankind", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "ForAllManKind", seasonNum)
             if err != nil {
                 log.Println("DB error (For All Mankind S", seasonNum, "): ", err)
                 continue
@@ -3898,10 +3898,539 @@ func TVLastOfUsPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
+func TVStarTrekPageHandler() http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartrekpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        err = tmpl.Execute(w, nil)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
+func TVStarTrekContinuesPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "StarTrekContinues", seasonNum)
+            if err != nil {
+                log.Println("DB error (StarTrekContinues S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartrekcontinuespage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
+func TVDeepSpaceNinePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "DeepSpaceNine", seasonNum)
+            if err != nil {
+                log.Println("DB error (DeepSpaceNine S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartrekdeepspaceninepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
+func TVDiscoveryPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Discovery", seasonNum)
+            if err != nil {
+                log.Println("DB error (Discovery S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartrekdiscoverypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
+func TVEnterprisePageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Enterprise", seasonNum)
+            if err != nil {
+                log.Println("DB error (Enterprise S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartrekenterprisepage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+func TVLowerDecksPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "LowerDecks", seasonNum)
+            if err != nil {
+                log.Println("DB error (LowerDecks S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartreklowerdeckspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+func TVPicardPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Picard", seasonNum)
+            if err != nil {
+                log.Println("DB error (Picard S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/startrek/tvstartrekpicardpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+func TVProdigyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Prodigy", seasonNum)
+            if err != nil {
+                log.Println("DB error (Prodigy S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/starfleet/tvstarfleetprodigypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+func TVStarFleetAcademyPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "StarFleetAcademy", seasonNum)
+            if err != nil {
+                log.Println("DB error (StarFleetAcademy S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/starfleet/tvstarfleetacademypage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+func TVStrangeNewWorldsPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "StrangeNewWorlds", seasonNum)
+            if err != nil {
+                log.Println("DB error (StrangeNewWorlds S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/scifi/tvscifistrangenewworldspage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
+
+func TVSTTVPageHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        // Support up to 4 seasons, extendable
+        seasons := map[string][]map[string]interface{}{}
+        for i := 1; i <= 2; i++ {
+            seasonNum := fmt.Sprintf("%02d", i)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "STTV", seasonNum)
+            if err != nil {
+                log.Println("DB error (STTV S", seasonNum, "): ", err)
+                continue
+            }
+            defer rows.Close()
+            cols, _ := rows.Columns()
+            episodes := []map[string]interface{}{}
+            for rows.Next() {
+                vals := make([]interface{}, len(cols))
+                valPtrs := make([]interface{}, len(cols))
+                for i := range vals {
+                    valPtrs[i] = &vals[i]
+                }
+                if err := rows.Scan(valPtrs...); err == nil {
+                    row := make(map[string]interface{})
+                    for i, col := range cols {
+                        b, ok := vals[i].([]byte)
+                        if ok {
+                            row[col] = string(b)
+                        } else {
+                            row[col] = vals[i]
+                        }
+                    }
+                    episodes = append(episodes, row)
+                }
+            }
+            if len(episodes) > 0 {
+                seasons[seasonNum] = episodes
+            }
+        }
+        tmpl, err := template.ParseFiles("templates/tv/scifi/tvscifisttvpage.html")
+        if err != nil {
+            http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        data := struct {
+            Seasons map[string][]map[string]interface{}
+        }{Seasons: seasons}
+        err = tmpl.Execute(w, data)
+        if err != nil {
+            http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+        }
+    }
+}
 
 
 
