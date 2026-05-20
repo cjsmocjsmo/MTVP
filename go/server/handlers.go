@@ -1139,33 +1139,6 @@ func XmenPageHandler(db *sql.DB) http.HandlerFunc {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 func MainTVPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         tmpl, err := template.ParseFiles("templates/tv/tvmainpage.html")
@@ -5070,13 +5043,13 @@ func TVTalesOfTheJediPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
-func TVTalesOfTheUnderWorldPageHandler(db *sql.DB) http.HandlerFunc {
+func TVTalesOfTheUnderworldPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 7; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TalesOfTheUnderWorld", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TalesOfTheUnderworld", seasonNum)
             if err != nil {
                 log.Println("DB error (TalesOfTheUnderWorld S", seasonNum, "): ", err)
                 continue
@@ -5225,16 +5198,6 @@ func TVVisionsPageHandler(db *sql.DB) http.HandlerFunc {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 func TVWesternsPageHandler() http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
