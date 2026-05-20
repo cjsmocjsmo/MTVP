@@ -218,7 +218,19 @@ func StartServer() {
 	http.HandleFunc("/tvscienceprehistoricplanet", TVPreHistoricPlanetPageHandler(db))
 	http.HandleFunc("/tvsciencethepitt", TVThePittPageHandler(db))
 
-
+	http.HandleFunc("/tvscifipage", TVSciFiPageHandler())
+	http.HandleFunc("/tvscifialteredcarbon", TVAlteredCarbonPageHandler(db))
+	http.HandleFunc("/tvscififallout", TVFalloutPageHandler(db))
+	http.HandleFunc("/tvscififorallmankind", TVForAllMankindPageHandler(db))
+	http.HandleFunc("/tvscififoundation", TVFoundationPageHandler(db))
+	http.HandleFunc("/tvscifihalo", TVHaloPageHandler(db))
+	http.HandleFunc("/tvscifilostinspace", TVLostInSpacePageHandler(db))
+	http.HandleFunc("/tvscifimonarchlegacyofmonsters", TVMonarchLegacyOfMonstersPageHandler(db))
+	http.HandleFunc("/tvscifinightsky", TVNightSkyPageHandler(db))
+	http.HandleFunc("/tvscifiorville", TVOrvillePageHandler(db))
+	http.HandleFunc("/tvscifiraisedbywolves", TVRaisedByWolvesPageHandler(db))
+	http.HandleFunc("/tvscifisilo", TVSiloPageHandler(db))
+	http.HandleFunc("/tvscifilastofus", TVLastOfUsPageHandler(db))
 
 
 
