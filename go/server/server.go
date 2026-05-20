@@ -247,6 +247,26 @@ func StartServer() {
 	http.HandleFunc("/tvstartrektng", TVTNGPageHandler(db))
 	http.HandleFunc("/tvstartrekvoyager", TVVoyagerPageHandler(db))
 
+	http.HandleFunc("/tvstarwarspage", TVStarWarsPageHandler())
+	http.HandleFunc("/tvstarwarsacolyte", TVAcolytePageHandler(db))
+	http.HandleFunc("/tvstarwarsahsoka", TVAhsokaPageHandler(db))
+	http.HandleFunc("/tvstarwarsandor", TVAndorPageHandler(db))
+	http.HandleFunc("/tvstarwarsbookofboobafett", TVBookOfBobafettPageHandler(db))
+	http.HandleFunc("/tvstarwarsmandalorian", TVMandalorianPageHandler(db))
+	http.HandleFunc("/tvstarwarsmaulshadowlord", TVMaulShadowLordPageHandler(db))
+	http.HandleFunc("/tvstarwarsobiwankenobi", TVObiWanKenobiPageHandler(db))
+	http.HandleFunc("/tvstarwarsskeletoncrew", TVSkeletonCrewPageHandler(db))
+	http.HandleFunc("/tvstarwarstalesoftheempire", TVTalesOfTheEmpirePageHandler(db))
+	http.HandleFunc("/tvstarwarstalesofthejedi", TVTalesOfTheJediPageHandler(db))
+	http.HandleFunc("/tvstarwarstalesoftheunderworld", TVTalesOfTheUnderWorldPageHandler(db))
+	http.HandleFunc("/tvstarwarsthebadbatch", TVTheBadBatchPageHandler(db))
+	http.HandleFunc("/tvstarwarsvisions", TVVisionsPageHandler(db))
+
+
+
+
+
+
 
 
 
