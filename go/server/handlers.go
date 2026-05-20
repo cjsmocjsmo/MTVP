@@ -1480,7 +1480,7 @@ func TVFlintstonesPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Flintstones", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TheFlintstones", seasonNum)
             if err != nil {
                 log.Println("DB error (Flintstones S", seasonNum, "): ", err)
                 continue
@@ -5055,7 +5055,7 @@ func TVTalesOfTheJediPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/starwars/tvstarwarstalesofthejedi.html")
+        tmpl, err := template.ParseFiles("templates/tv/starwars/tvstarwarstalesofthejedipage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -5107,7 +5107,7 @@ func TVTalesOfTheUnderWorldPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/fantasy/tvstarwarstalesoftheunderworldpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/starwars/tvstarwarstalesoftheunderworldpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
