@@ -3968,7 +3968,7 @@ func TVDeepSpaceNinePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 7; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "DeepSpaceNine", seasonNum)
             if err != nil {
@@ -4020,7 +4020,7 @@ func TVDiscoveryPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 5; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Discovery", seasonNum)
             if err != nil {
@@ -4072,7 +4072,7 @@ func TVEnterprisePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 4; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Enterprise", seasonNum)
             if err != nil {
@@ -4124,7 +4124,7 @@ func TVLowerDecksPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 5; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "LowerDecks", seasonNum)
             if err != nil {
@@ -4332,7 +4332,7 @@ func TVStrangeNewWorldsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "StrangeNewWorlds", seasonNum)
             if err != nil {
@@ -4384,7 +4384,7 @@ func TVSTTVPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 3; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "STTV", seasonNum)
             if err != nil {
@@ -4436,7 +4436,7 @@ func TVTNGPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 7; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TNG", seasonNum)
             if err != nil {
@@ -4488,7 +4488,7 @@ func TVVoyagerPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         // Support up to 4 seasons, extendable
         seasons := map[string][]map[string]interface{}{}
-        for i := 1; i <= 2; i++ {
+        for i := 1; i <= 7; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
             rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Voyager", seasonNum)
             if err != nil {
