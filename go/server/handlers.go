@@ -2015,7 +2015,7 @@ func TVFalconAndTheWinterSoldierPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "FalconAndTheWinterSoldier", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "FalconWinterSoldier", seasonNum)
             if err != nil {
                 log.Println("DB error (Falcon and the Winter Soldier S", seasonNum, "): ", err)
                 continue
@@ -4255,7 +4255,7 @@ func TVStarFleetAcademyPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "StarFleetAcademy", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "StarfleetAcademy", seasonNum)
             if err != nil {
                 log.Println("DB error (StarFleetAcademy S", seasonNum, "): ", err)
                 continue
