@@ -114,3 +114,58 @@ body {
     border-radius: 12px;
     font-size: 0.9em;
 }
+
+
+
+
+
+
+
+.sticky-footer {
+      background-color: #ffffff;
+      border-top: 1px solid #d2d2d7;
+      padding: 1rem 2rem;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .footer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Button Styling */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #0071e3;
+      color: white;
+      min-width: 90px;
+    }
+
+    .btn:hover {
+      background-color: #0077ed;
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Specific style for Back to distinguish it slightly */
+    #btn-back {
+      background-color: #86868b;
+    }
+    #btn-back:hover {
+      background-color: #98989d;
+    }
