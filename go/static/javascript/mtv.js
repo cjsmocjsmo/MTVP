@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
     const btnBack = document.getElementById('btn-back');
     const btnPlay = document.getElementById('btn-play');
     const btnPause = document.getElementById('btn-pause');
@@ -32,4 +32,4 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add your custom logic here (e.g., next page, next track)
         });
     }
-});
+// });
