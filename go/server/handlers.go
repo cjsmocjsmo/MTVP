@@ -4764,7 +4764,7 @@ func TVMandalorianPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 7; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "The Mandalorian", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Mandalorian", seasonNum)
             if err != nil {
                 log.Println("DB error (The Mandalorian S", seasonNum, "): ", err)
                 continue
@@ -5159,7 +5159,7 @@ func TVTheBadBatchPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/starwars/tvthebadbatchpage.html")
+        tmpl, err := template.ParseFiles("templates/tv/starwars/tvstarwarsthebadbatchpage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
@@ -5211,7 +5211,7 @@ func TVVisionsPageHandler(db *sql.DB) http.HandlerFunc {
                 seasons[seasonNum] = episodes
             }
         }
-        tmpl, err := template.ParseFiles("templates/tv/starwars/tvvisionspage.html")
+        tmpl, err := template.ParseFiles("templates/tv/starwars/tvstarwarsvisionspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
