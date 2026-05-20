@@ -127,8 +127,7 @@ body {
 
 
 .sticky-footer {
-      background-color: #ffffff;
-      border-top: 1px solid #d2d2d7;
+      background-color: black;
       padding: 1rem 2rem;
       position: sticky;
       bottom: 0;
@@ -142,6 +141,7 @@ body {
       gap: 1rem;
       max-width: 600px;
       margin: 0 auto;
+
     }
 
     /* Button Styling */
