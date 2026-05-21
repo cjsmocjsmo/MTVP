@@ -105,7 +105,7 @@ func StartServer() {
 	http.Handle("/tvthumbnails/", http.StripPrefix("/tvthumbnails/", http.FileServer(http.Dir(tvThumbPath))))
 	log.Println("[StartServer] File server registered for /tvthumbnails ->", tvThumbPath)
 
-	http.HandleFunc("/", HomePageHandler())
+	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
 	http.HandleFunc("/maintvpage", MainTVPageHandler(db))
 	http.HandleFunc("/action", ActionPageHandler(db))

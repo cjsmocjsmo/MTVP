@@ -19,14 +19,27 @@ import (
 )
 
 // HomePageHandler serves the index.html page for the root path
-func HomePageHandler() http.HandlerFunc {
+func HomePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
+        movCount := getMovieCount(db)
+        tvCount := getTVShowCount(db)
+        videoCount := getVideoCount(db)
+        type Stats struct {
+            TotalMovies    int
+            TotalTVShows   int
+            TotalVideos    int
+        }
+        stats := Stats{
+            TotalMovies:  movCount,
+            TotalTVShows: tvCount,
+            TotalVideos:  videoCount,
+        }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
         }
-        err = tmpl.Execute(w, nil)
+        err = tmpl.Execute(w, stats)
         if err != nil {
             http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
         }
@@ -5815,6 +5828,16 @@ func getTVShowCount(db *sql.DB) int {
     err := db.QueryRow("SELECT COUNT(*) FROM tvshows").Scan(&count)
     if err != nil {
         log.Println("DB error (tvcount):", err)
+        return 0
+    }
+    return count
+}
+
+func getVideoCount(db *sql.DB) int {
+    var count int
+    err := db.QueryRow("SELECT COUNT(*) FROM videos").Scan(&count)
+    if err != nil {
+        log.Println("DB error (videocount):", err)
         return 0
     }
     return count
