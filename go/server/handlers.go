@@ -1,6 +1,3 @@
-
-
-
 package server
 
 import (
@@ -14,8 +11,8 @@ import (
     "fmt"
     "github.com/gorilla/websocket"
     "html/template"
-    // "path/filepath"
     "net/http"
+    "syscall"
 )
 
 // HomePageHandler serves the index.html page for the root path
@@ -27,7 +24,7 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
         movsizeondisk := getMoviesSizeOnDisk(db)
         tvsizeondisk := getTVShowsSizeOnDisk(db)
         videosizeondisk := getVideosSizeOnDisk(db)
-        freespaceondisk := freeSpaceOnDisk()
+        freespaceondisk := freeSpaceOnDisk("/")
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
