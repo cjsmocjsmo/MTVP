@@ -24,15 +24,24 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
         movCount := getMovieCount(db)
         tvCount := getTVShowCount(db)
         videoCount := getVideoCount(db)
+        movsizeondisk := getMovieSizeOnDisk(db)
+        tvsizeondisk := getTVShowsSizeOnDisk(db)
+        videosizeondisk := getVideosSizeOnDisk(db)
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
             TotalVideos    int
+            MovieSizeOnDisk int64
+            TVShowSizeOnDisk int64
+            VideoSizeOnDisk int64
         }
         stats := Stats{
-            TotalMovies:  movCount,
-            TotalTVShows: tvCount,
-            TotalVideos:  videoCount,
+            TotalMovies:      movCount,
+            TotalTVShows:     tvCount,
+            TotalVideos:      videoCount,
+            MovieSizeOnDisk:  movsizeondisk,
+            TVShowSizeOnDisk: tvsizeondisk,
+            VideoSizeOnDisk:  videosizeondisk,
         }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
@@ -5843,3 +5852,37 @@ func getVideoCount(db *sql.DB) int {
     return count
 }
 
+func getMoviesSizeOnDisk(db *sql.DB) int64 {
+    var size int64
+    err := db.QueryRow("SELECT SUM(Size) FROM movies").Scan(&size)
+    if err != nil {
+        log.Println("DB error (moviedisk):", err)
+        return 0
+    }
+    return bytestoGB(size)
+}
+
+func getTVShowsSizeOnDisk(db *sql.DB) int64 {
+    var size int64
+    err := db.QueryRow("SELECT SUM(Size) FROM tvshows").Scan(&size)
+    if err != nil {
+        log.Println("DB error (tvshowdisk):", err)
+        return 0
+    }
+    return bytestoGB(size)
+}
+
+func getVideosSizeOnDisk(db *sql.DB) int64 {
+    var size int64
+    err := db.QueryRow("SELECT SUM(Size) FROM videos").Scan(&size)
+    if err != nil {
+        log.Println("DB error (videodisk):", err)
+        return 0
+    }
+    return bytestoGB(size)
+}
+
+func bytestoGB(bytes int64) string {
+    gb := float64(bytes) / (1024 * 1024 * 1024)
+    return fmt.Sprintf("%.2f GB", gb)
+}
