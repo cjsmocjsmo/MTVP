@@ -27,6 +27,7 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
         movsizeondisk := getMoviesSizeOnDisk(db)
         tvsizeondisk := getTVShowsSizeOnDisk(db)
         videosizeondisk := getVideosSizeOnDisk(db)
+        freespaceondisk := freeSpaceOnDisk()
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
@@ -34,6 +35,7 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             MovieSizeOnDisk string
             TVShowSizeOnDisk string
             VideoSizeOnDisk string
+            FreeSpaceOnDisk string
         }
         stats := Stats{
             TotalMovies:      movCount,
@@ -42,6 +44,7 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             MovieSizeOnDisk:  movsizeondisk,
             TVShowSizeOnDisk: tvsizeondisk,
             VideoSizeOnDisk:  videosizeondisk,
+            FreeSpaceOnDisk:  freespaceondisk,
         }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
@@ -5885,4 +5888,15 @@ func getVideosSizeOnDisk(db *sql.DB) string {
 func bytestoGB(bytes int64) string {
     gb := float64(bytes) / (1024 * 1024 * 1024)
     return fmt.Sprintf("%.2f GB", gb)
+}
+
+func freeSpaceOnDisk(path string) string {
+    var stat syscall.Statfs_t
+    err := syscall.Statfs(path, &stat)
+    if err != nil {
+        log.Println("Disk error (freespace):", err)
+        return "0 GB"
+    }
+    free := stat.Bavail * uint64(stat.Bsize)
+    return bytestoGB(int64(free))
 }
