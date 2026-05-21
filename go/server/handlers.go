@@ -5787,7 +5787,7 @@ type WSResponse map[string]interface{}
 
 // getCategoryMovieImages queries the DB for movies in a given category and returns a list of image URLs
 func getCategoryMovieImages(db *sql.DB, category string) []map[string]interface{} {
-    query := "SELECT * FROM movies WHERE Catagory=?"
+    query := "SELECT * FROM movies WHERE Catagory=? ORDER BY Year DESC"
     rows, err := db.Query(query, category)
     if err != nil {
         log.Println("DB error (category images):", err)
