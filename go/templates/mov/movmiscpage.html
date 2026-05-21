@@ -14,7 +14,12 @@
 	<h1>Misc Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Misc Movie" class="mov-img" />
+			<img 
+				id={{.MovId}} 
+				src="{{.HttpThumbPath}}" 
+				alt="Misc Movie" 
+				class="mov-img" 
+			/>
 		{{else}}
 			<p>No Misc movie images found.</p>
 		{{end}}

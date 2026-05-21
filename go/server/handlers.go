@@ -5363,6 +5363,7 @@ func (p *PlayerManager) Previous() error {
     })
 }
 
+//use wscat -c ws://10.0.4.41:8090/ws
 func HandleWS(conn *websocket.Conn, db *sql.DB) {
     defer conn.Close()
     for {

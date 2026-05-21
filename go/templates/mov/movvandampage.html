@@ -14,7 +14,12 @@
 	<h1>Van Damme Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Van Damme Movie" class="mov-img" />
+			<img 
+				id={{.MovId}} 
+				src="{{.HttpThumbPath}}" 
+				alt="Van Damme Movie" 
+				class="mov-img" 
+			/>
 		{{else}}
 			<p>No Van Damme movie images found.</p>
 		{{end}}

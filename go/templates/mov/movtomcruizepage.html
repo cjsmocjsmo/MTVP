@@ -14,7 +14,12 @@
 	<h1>Tom Cruise Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Tom Cruise Movie" class="mov-img" />
+			<img 
+				id={{.MovId}} 
+				src="{{.HttpThumbPath}}" 
+				alt="Tom Cruise Movie" 
+				class="mov-img" 
+			/>
 		{{else}}
 			<p>No Tom Cruise movie images found.</p>
 		{{end}}
