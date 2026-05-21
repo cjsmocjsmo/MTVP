@@ -24,16 +24,16 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
         movCount := getMovieCount(db)
         tvCount := getTVShowCount(db)
         videoCount := getVideoCount(db)
-        movsizeondisk := getMovieSizeOnDisk(db)
+        movsizeondisk := getMoviesSizeOnDisk(db)
         tvsizeondisk := getTVShowsSizeOnDisk(db)
         videosizeondisk := getVideosSizeOnDisk(db)
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
             TotalVideos    int
-            MovieSizeOnDisk int64
-            TVShowSizeOnDisk int64
-            VideoSizeOnDisk int64
+            MovieSizeOnDisk string
+            TVShowSizeOnDisk string
+            VideoSizeOnDisk string
         }
         stats := Stats{
             TotalMovies:      movCount,
@@ -5852,32 +5852,32 @@ func getVideoCount(db *sql.DB) int {
     return count
 }
 
-func getMoviesSizeOnDisk(db *sql.DB) int64 {
+func getMoviesSizeOnDisk(db *sql.DB) string {
     var size int64
     err := db.QueryRow("SELECT SUM(Size) FROM movies").Scan(&size)
     if err != nil {
         log.Println("DB error (moviedisk):", err)
-        return 0
+        return "0 GB"
     }
     return bytestoGB(size)
 }
 
-func getTVShowsSizeOnDisk(db *sql.DB) int64 {
+func getTVShowsSizeOnDisk(db *sql.DB) string {
     var size int64
     err := db.QueryRow("SELECT SUM(Size) FROM tvshows").Scan(&size)
     if err != nil {
         log.Println("DB error (tvshowdisk):", err)
-        return 0
+        return "0 GB"
     }
     return bytestoGB(size)
 }
 
-func getVideosSizeOnDisk(db *sql.DB) int64 {
+func getVideosSizeOnDisk(db *sql.DB) string {
     var size int64
     err := db.QueryRow("SELECT SUM(Size) FROM videos").Scan(&size)
     if err != nil {
         log.Println("DB error (videodisk):", err)
-        return 0
+        return "0 GB"
     }
     return bytestoGB(size)
 }
