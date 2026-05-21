@@ -24,7 +24,9 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
         movsizeondisk := getMoviesSizeOnDisk(db)
         tvsizeondisk := getTVShowsSizeOnDisk(db)
         videosizeondisk := getVideosSizeOnDisk(db)
-        freespaceondisk := freeSpaceOnDisk("/")
+        freespaceondisk1 := freeSpaceOnDisk("/")
+        freespaceondisk2 := freeSpaceOnDisk("/media/pinas/baz")
+        freespaceondisk3 := freeSpaceOnDisk("/media/pinas/foo")
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
@@ -32,7 +34,9 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             MovieSizeOnDisk string
             TVShowSizeOnDisk string
             VideoSizeOnDisk string
-            FreeSpaceOnDisk string
+            FreeSpaceOnDisk1 string
+            FreeSpaceOnDisk2 string
+            FreeSpaceOnDisk3 string
         }
         stats := Stats{
             TotalMovies:      movCount,
@@ -41,7 +45,9 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             MovieSizeOnDisk:  movsizeondisk,
             TVShowSizeOnDisk: tvsizeondisk,
             VideoSizeOnDisk:  videosizeondisk,
-            FreeSpaceOnDisk:  freespaceondisk,
+            FreeSpaceOnDisk1:  freespaceondisk1,
+            FreeSpaceOnDisk2:  freespaceondisk2,
+            FreeSpaceOnDisk3:  freespaceondisk3,
         }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
