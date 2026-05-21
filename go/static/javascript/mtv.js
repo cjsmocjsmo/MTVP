@@ -1,3 +1,13 @@
+// Attach click listeners to all .mov-img images and log their id
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.mov-img');
+    images.forEach(function(img) {
+        img.addEventListener('click', function() {
+            console.log('Clicked image id:', img.id);
+        });
+    });
+});
+
 // document.addEventListener('DOMContentLoaded', () => {
 const btnBack = document.getElementById('btn-back');
 const btnPlay = document.getElementById('btn-play');
@@ -29,12 +39,3 @@ if (btnNext) {
     });
 }
 
-// Attach click listeners to all .mov-img images and log their id
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('.mov-img');
-    images.forEach(function(img) {
-        img.addEventListener('click', function() {
-            console.log('Clicked image id:', img.id);
-        });
-    });
-});
