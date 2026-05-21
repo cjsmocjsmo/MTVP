@@ -14,10 +14,16 @@
 	<h1>Bruce Willis Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img id={{.MovID}} src="{{.HttpThumbPath}}" alt="Bruce Willis Movie" class="mov-img" />
+			<img 
+				id="{{.MovID}}" 
+				class="mov-img" 
+				src="{{.HttpThumbPath}}" 
+				alt="Bruce Willis Movie" 
+			/>
 		{{else}}
 			<p>No Bruce Willis movie images found.</p>
 		{{end}}
 	</div>
 </body>
+<script src="/static/javascript/mtv.js"></script>
 </html>

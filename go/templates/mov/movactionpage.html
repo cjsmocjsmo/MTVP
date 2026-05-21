@@ -14,7 +14,12 @@
     <h1>Action Movies</h1>
     <div class="mov-images-grid">
         {{range .Images}}
-            <img id="{{.MovId}}" class="mov-img" src="{{.HttpThumbPath}}" alt="Action Movie"  />
+            <img 
+                id="{{.MovId}}" 
+                class="mov-img" 
+                src="{{.HttpThumbPath}}" 
+                alt="Action Movie" 
+            />
         {{else}}
             <p>No action movie images found.</p>
         {{end}}

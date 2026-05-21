@@ -5420,17 +5420,17 @@ func HandleWS(conn *websocket.Conn, db *sql.DB) {
             } else {
                 sendJSON(conn, map[string]interface{}{ "status": "previous" })
             }
-        case "search":
-            phrase, _ := data["phrase"].(string)
-            results := getCategoryMovieImages(db, phrase)
-            resp := map[string]interface{}{ "results": results }
-            sendJSON(conn, resp)
-        case "movcount":
-            count := getMovieCount(db)
-            sendJSON(conn, map[string]interface{}{ "movcount": count })
-        case "tvcount":
-            count := getTVShowCount(db)
-            sendJSON(conn, map[string]interface{}{ "tvcount": count })
+        // case "search":
+        //     phrase, _ := data["phrase"].(string)
+        //     results := getCategoryMovieImages(db, phrase)
+        //     resp := map[string]interface{}{ "results": results }
+        //     sendJSON(conn, resp)
+        // case "movcount":
+        //     count := getMovieCount(db)
+        //     sendJSON(conn, map[string]interface{}{ "movcount": count })
+        // case "tvcount":
+        //     count := getTVShowCount(db)
+        //     sendJSON(conn, map[string]interface{}{ "tvcount": count })
         case "test":
             sendJSON(conn, map[string]interface{}{ "status": "It worked" })
         // Movie categories

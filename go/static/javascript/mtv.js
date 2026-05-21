@@ -3,7 +3,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('.mov-img');
     images.forEach(function(img) {
         img.addEventListener('click', function() {
-            console.log('Clicked image id:', img.id);
+            const movId = img.id;
+            console.log('Clicked image id:', movId);
+
+            // Connect to WebSocket server (assume ws://localhost:8765/)
+            const ws = new WebSocket('ws://10.0.4.41:8765/');
+
+            ws.onopen = function() {
+                // Send set_media command with mov-id
+                ws.send(JSON.stringify({ command: 'set_media', media_id: movId }));
+                // After set_media, send play command
+                ws.send(JSON.stringify({ command: 'play' }));
+            };
+
+            ws.onmessage = function(event) {
+                console.log('WebSocket message:', event.data);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+            };
         });
     });
 });
