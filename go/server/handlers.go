@@ -14,7 +14,63 @@ import (
     "html/template"
     "net/http"
     "syscall"
+    "io"
 )
+
+func MTVWeather() ([]byte, error) {
+	
+	// Fetch weather for Belfair, WA from National Weather Service
+	latitude := 47.4281
+	longitude := -122.8189
+	pointURL := fmt.Sprintf("https://api.weather.gov/points/%f,%f", latitude, longitude)
+	pointResp, err := http.Get(pointURL)
+	if err != nil {
+		return nil, fmt.Errorf("weather fetch failed: %v", err)
+	}
+	defer pointResp.Body.Close()
+    pointData, err := io.ReadAll(pointResp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("weather read failed: %v", err)
+	}
+	var pointObj map[string]interface{}
+	if err := json.Unmarshal(pointData, &pointObj); err != nil {
+		return nil, fmt.Errorf("weather parse failed: %v", err)
+	}
+	forecastURL, ok := pointObj["properties"].(map[string]interface{})["forecastHourly"].(string)
+	if !ok {
+		return nil, fmt.Errorf("weather forecast URL missing")
+	}
+	weatherResp, err := http.Get(forecastURL)
+	if err != nil {
+		return nil, fmt.Errorf("weather fetch failed: %v", err)
+	}
+	defer weatherResp.Body.Close()
+    weatherData, err := io.ReadAll(weatherResp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("weather read failed: %v", err)
+	}
+	var weatherObj map[string]interface{}
+	if err := json.Unmarshal(weatherData, &weatherObj); err != nil {
+		return nil, fmt.Errorf("weather parse failed: %v", err)
+	}
+	periods, ok := weatherObj["properties"].(map[string]interface{})["periods"].([]interface{})
+	if !ok || len(periods) == 0 {
+		return nil, fmt.Errorf("weather no periods data")
+	}
+	current := periods[0].(map[string]interface{})
+	resp, err := json.Marshal(map[string]interface{}{
+		"location": "Belfair, WA",
+		"temperature": current["temperature"],
+		"temperature_unit": current["temperatureUnit"],
+		"conditions": current["shortForecast"],
+		"winddirection": current["windDirection"],
+		"windspeed": current["windSpeed"],
+	})
+	if err != nil {
+		return nil, fmt.Errorf("weather marshal failed: %v", err)
+	}
+	return resp, nil
+}
 
 // HomePageHandler serves the index.html page for the root path
 func HomePageHandler(db *sql.DB) http.HandlerFunc {
@@ -26,6 +82,35 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
         tvsizeondisk := getTVShowsSizeOnDisk(db)
         videosizeondisk := getVideosSizeOnDisk(db)
         freespaceondisk := freeSpaceOnDisk("/")
+        weatherData, err := MTVWeather()
+        var wdLocation, wdTemp, wdUnit, wdConditions, wdWindDir, wdWindSpeed string
+        if err != nil {
+            log.Println("Error fetching weather:", err)
+        } else {
+            var weatherMap map[string]interface{}
+            if err := json.Unmarshal(weatherData, &weatherMap); err == nil {
+                if v, ok := weatherMap["location"].(string); ok {
+                    wdLocation = v
+                }
+                if v, ok := weatherMap["temperature"].(float64); ok {
+                    wdTemp = fmt.Sprintf("%.0f", v)
+                } else if v, ok := weatherMap["temperature"].(string); ok {
+                    wdTemp = v
+                }
+                if v, ok := weatherMap["temperature_unit"].(string); ok {
+                    wdUnit = v
+                }
+                if v, ok := weatherMap["conditions"].(string); ok {
+                    wdConditions = v
+                }
+                if v, ok := weatherMap["winddirection"].(string); ok {
+                    wdWindDir = v
+                }
+                if v, ok := weatherMap["windspeed"].(string); ok {
+                    wdWindSpeed = v
+                }
+            }
+        }
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
@@ -34,6 +119,12 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             TVShowSizeOnDisk string
             VideoSizeOnDisk string
             FreeSpaceOnDisk string
+            WeatherLocation string
+            WeatherTemperature string
+            WeatherUnit string
+            WeatherConditions string
+            WeatherWindDirection string
+            WeatherWindSpeed string
         }
         stats := Stats{
             TotalMovies:      movCount,
@@ -43,6 +134,12 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             TVShowSizeOnDisk: tvsizeondisk,
             VideoSizeOnDisk:  videosizeondisk,
             FreeSpaceOnDisk:  freespaceondisk,
+            WeatherLocation:  wdLocation,
+            WeatherTemperature: wdTemp,
+            WeatherUnit:      wdUnit,
+            WeatherConditions: wdConditions,
+            WeatherWindDirection: wdWindDir,
+            WeatherWindSpeed: wdWindSpeed,
         }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
@@ -467,3 +564,4 @@ func freeSpaceOnDisk(path string) string {
     free := stat.Bavail * uint64(stat.Bsize)
     return bytestoGB(int64(free))
 }
+
