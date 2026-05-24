@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MTV Movie List</title>
 	<link rel="stylesheet" href="/static/css/mtv.css">
+	
 </head>
 <body>
 	<div id="navbar">
@@ -14,7 +15,17 @@
         <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
     </div>
+
 	<h1 id="header">MTV Movie List</h1>
+
+	<div class="mov-search-div">
+		<form id="mov-search-form" action="/search" method="get">
+			<input id="mov-search-input" type="text" name="query" placeholder="Search for movies or TV shows...">
+			<button id="mov-search-button" type="submit">Search</button>
+		</form>
+	</div>
+	<div class="mov-search-results"></div>
+
 	<div class="media-grid">
 		<a class="media-grid-item" href='/action'><p>Action</p></a>
 		<a class="media-grid-item" href='/arnold'><p>Arnold</p></a>
@@ -74,5 +85,15 @@
 		<a class="media-grid-item" href='/vandam'><p>VanDam</p></a>
 		<a class="media-grid-item" href='/xmen'><p>XMen</p></a>
 	</div>
+	<footer class="sticky-footer">
+		<div class="footer-controls">
+			<button class="btn" id="btn-back">Back</button>
+			<button class="btn" id="btn-stop">Stop</button>
+			<button class="btn" id="btn-play">Play</button>
+			<button class="btn" id="btn-pause">Pause</button>
+			<button class="btn" id="btn-next">Next</button>
+		</div>
+    </footer>
 </body>
+<script src="/static/javascript/mtv.js"></script>
 </html>

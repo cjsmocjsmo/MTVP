@@ -14,10 +14,16 @@
 	<h1>Arnold Movies</h1>
 	<div class="mov-images-grid">
         {{range .Images}}
-            <img id={{.MovID}} src="{{.HttpThumbPath}}" alt="Arnold Movie" class="mov-img"/>
+            <img 
+                id="{{.MovID}}" 
+                class="mov-img" 
+                src="{{.HttpThumbPath}}" 
+                alt="Arnold Movie" 
+            />
         {{else}}
             <p>No Arnold movie images found.</p>
         {{end}}     
 	</div>
 </body>
+<script src="/static/javascript/mtv.js"></script>
 </html>

@@ -1,6 +1,4 @@
 
-
-
 package server
 
 import (
@@ -14,19 +12,44 @@ import (
     "fmt"
     "github.com/gorilla/websocket"
     "html/template"
-    // "path/filepath"
     "net/http"
+    "syscall"
 )
 
 // HomePageHandler serves the index.html page for the root path
-func HomePageHandler() http.HandlerFunc {
+func HomePageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
+        movCount := getMovieCount(db)
+        tvCount := getTVShowCount(db)
+        videoCount := getVideoCount(db)
+        movsizeondisk := getMoviesSizeOnDisk(db)
+        tvsizeondisk := getTVShowsSizeOnDisk(db)
+        videosizeondisk := getVideosSizeOnDisk(db)
+        freespaceondisk := freeSpaceOnDisk("/")
+        type Stats struct {
+            TotalMovies    int
+            TotalTVShows   int
+            TotalVideos    int
+            MovieSizeOnDisk string
+            TVShowSizeOnDisk string
+            VideoSizeOnDisk string
+            FreeSpaceOnDisk string
+        }
+        stats := Stats{
+            TotalMovies:      movCount,
+            TotalTVShows:     tvCount,
+            TotalVideos:      videoCount,
+            MovieSizeOnDisk:  movsizeondisk,
+            TVShowSizeOnDisk: tvsizeondisk,
+            VideoSizeOnDisk:  videosizeondisk,
+            FreeSpaceOnDisk:  freespaceondisk,
+        }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
             return
         }
-        err = tmpl.Execute(w, nil)
+        err = tmpl.Execute(w, stats)
         if err != nil {
             http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
         }
@@ -1132,6 +1155,62 @@ func XmenPageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
+func MovSearchHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        query := r.URL.Query().Get("q")
+        if query == "" {
+            http.Error(w, "Missing search query", http.StatusBadRequest)
+            return
+        }
+        rows, err := db.Query("SELECT * FROM movies WHERE Name LIKE ?", "%"+query+"%")
+        if err != nil {
+            http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        defer rows.Close()
+        cols, _ := rows.Columns()
+        results := []map[string]interface{}{}
+        for rows.Next() {
+            vals := make([]interface{}, len(cols))
+            valPtrs := make([]interface{}, len(cols))
+            for i := range vals {
+                valPtrs[i] = &vals[i]
+            }
+            if err := rows.Scan(valPtrs...); err == nil {
+                row := make(map[string]interface{})
+                for i, col := range cols {
+                    b, ok := vals[i].([]byte)
+                    if ok {
+                        row[col] = string(b)
+                    } else {
+                        row[col] = vals[i]
+                    }
+                }
+                results = append(results, row)
+            }
+        }
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(map[string]interface{}{
+            "results": results,
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1557,7 +1636,7 @@ func TVJonnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Jonny Quest", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "JonnyQuest", seasonNum)
             if err != nil {
                 log.Println("DB error (Jonny Quest S", seasonNum, "): ", err)
                 continue
@@ -1741,7 +1820,7 @@ func TVLordOfTheRingsPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Lord of the Rings", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "TheLordOfTheRingsTheRingsOfPower", seasonNum)
             if err != nil {
                 log.Println("DB error (Lord of the Rings S", seasonNum, "): ", err)
                 continue
@@ -2483,7 +2562,7 @@ func TVWonderManPageHandler(db *sql.DB) http.HandlerFunc {
         seasons := map[string][]map[string]interface{}{}
         for i := 1; i <= 2; i++ {
             seasonNum := fmt.Sprintf("%02d", i)
-            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Wonderman", seasonNum)
+            rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "Supers", seasonNum)
             if err != nil {
                 log.Println("DB error (Wonderman S", seasonNum, "): ", err)
                 continue
@@ -5265,6 +5344,52 @@ func TV1923PageHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
+// TVSearchHandler returns JSON search results for TV shows
+func TVSearchHandler(db *sql.DB) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        query := r.URL.Query().Get("q")
+        if query == "" {
+            http.Error(w, "Missing search query", http.StatusBadRequest)
+            return
+        }
+        rows, err := db.Query("SELECT * FROM tvshows WHERE Name LIKE ?", "%"+query+"%")
+        if err != nil {
+            http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+            return
+        }
+        defer rows.Close()
+        cols, _ := rows.Columns()
+        results := []map[string]interface{}{}
+        for rows.Next() {
+            vals := make([]interface{}, len(cols))
+            valPtrs := make([]interface{}, len(cols))
+            for i := range vals {
+                valPtrs[i] = &vals[i]
+            }
+            if err := rows.Scan(valPtrs...); err == nil {
+                row := make(map[string]interface{})
+                for i, col := range cols {
+                    b, ok := vals[i].([]byte)
+                    if ok {
+                        row[col] = string(b)
+                    } else {
+                        row[col] = vals[i]
+                    }
+                }
+                results = append(results, row)
+            }
+        }
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(map[string]interface{}{
+            "results": results,
+        })
+    }
+}
+
+
+
+
+
 
 
 
@@ -5280,26 +5405,34 @@ type PlayerManager struct {
 var player = &PlayerManager{ipcSock: "/tmp/mpvsocket"}
 
 func (p *PlayerManager) StartMPV(path string) error {
+    log.Printf("[PlayerManager] StartMPV called with path: %s", path)
     p.mu.Lock()
     defer p.mu.Unlock()
     if p.cmd != nil && p.playing {
+        log.Printf("[PlayerManager] Killing existing MPV process")
         p.cmd.Process.Kill()
         time.Sleep(500 * time.Millisecond)
     }
+    log.Printf("[PlayerManager] Removing IPC socket: %s", p.ipcSock)
     _ = exec.Command("rm", "-f", p.ipcSock).Run()
     p.cmd = exec.Command("mpv", "--fs", "--volume=100", "--input-ipc-server="+p.ipcSock, path)
     err := p.cmd.Start()
     if err == nil {
+        log.Printf("[PlayerManager] MPV started successfully for path: %s", path)
         p.playing = true
         p.paused = false
+    } else {
+        log.Printf("[PlayerManager] Failed to start MPV for path %s: %v", path, err)
     }
     return err
 }
 
 func (p *PlayerManager) StopMPV() {
+    log.Printf("[PlayerManager] StopMPV called")
     p.mu.Lock()
     defer p.mu.Unlock()
     if p.cmd != nil && p.playing {
+        log.Printf("[PlayerManager] Killing MPV process")
         p.cmd.Process.Kill()
         p.playing = false
         p.paused = false
@@ -5307,40 +5440,66 @@ func (p *PlayerManager) StopMPV() {
 }
 
 func (p *PlayerManager) sendMPVCommand(cmd interface{}) error {
+    log.Printf("[PlayerManager] sendMPVCommand: %v", cmd)
     conn, err := net.Dial("unix", p.ipcSock)
     if err != nil {
+        log.Printf("[PlayerManager] Failed to dial IPC socket %s: %v", p.ipcSock, err)
         return err
     }
     defer conn.Close()
     b, _ := json.Marshal(cmd)
     _, err = conn.Write(append(b, '\n'))
+    if err != nil {
+        log.Printf("[PlayerManager] Failed to write command to IPC: %v", err)
+    }
     return err
 }
 
 func (p *PlayerManager) Pause() error {
-    return p.sendMPVCommand(map[string]interface{}{
+    log.Printf("[PlayerManager] Pause called")
+    err := p.sendMPVCommand(map[string]interface{}{
         "command": []interface{}{ "set_property", "pause", true },
     })
+    if err != nil {
+        log.Printf("[PlayerManager] Pause error: %v", err)
+    }
+    return err
 }
 
 func (p *PlayerManager) Play() error {
-    return p.sendMPVCommand(map[string]interface{}{
+    log.Printf("[PlayerManager] Play called")
+    err := p.sendMPVCommand(map[string]interface{}{
         "command": []interface{}{ "set_property", "pause", false },
     })
+    if err != nil {
+        log.Printf("[PlayerManager] Play error: %v", err)
+    }
+    return err
 }
 
 func (p *PlayerManager) Next() error {
-    return p.sendMPVCommand(map[string]interface{}{
+    log.Printf("[PlayerManager] Next called")
+    err := p.sendMPVCommand(map[string]interface{}{
         "command": []interface{}{ "seek", 35, "relative" },
     })
+    if err != nil {
+        log.Printf("[PlayerManager] Next error: %v", err)
+    }
+    return err
 }
 
 func (p *PlayerManager) Previous() error {
-    return p.sendMPVCommand(map[string]interface{}{
+    log.Printf("[PlayerManager] Previous called")
+    err := p.sendMPVCommand(map[string]interface{}{
         "command": []interface{}{ "seek", -35, "relative" },
     })
+    if err != nil {
+        log.Printf("[PlayerManager] Previous error: %v", err)
+    }
+    return err
 }
 
+//use wscat -c ws://10.0.4.41:8090/ws
 func HandleWS(conn *websocket.Conn, db *sql.DB) {
     defer conn.Close()
     for {
@@ -5358,18 +5517,51 @@ func HandleWS(conn *websocket.Conn, db *sql.DB) {
         switch command {
         case "set_media":
             mediaID, _ := data["media_id"].(string)
+            log.Printf("[HandleWS] Received 'set_media' command. media_id: %v", mediaID)
             if mediaID != "" {
                 var path string
+                log.Printf("[HandleWS] Querying DB for media_id: %v", mediaID)
                 err := db.QueryRow("SELECT Path FROM movies WHERE MovId = ?", mediaID).Scan(&path)
                 if err != nil {
+                    log.Printf("[HandleWS] Media not found for media_id %v: %v", mediaID, err)
                     sendJSON(conn, map[string]interface{}{ "status": "error", "message": "media not found" })
                 } else {
+                    log.Printf("[HandleWS] Found media path for media_id %v: %v", mediaID, path)
+                    log.Printf("[HandleWS] Attempting to start player with path: %v", path)
                     if err := player.StartMPV(path); err != nil {
+                        log.Printf("[HandleWS] Error starting player for path %v: %v", path, err)
                         sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
                     } else {
+                        log.Printf("[HandleWS] Media set successfully for media_id %v", mediaID)
                         sendJSON(conn, map[string]interface{}{ "status": "media_set" })
                     }
                 }
+            } else {
+                log.Printf("[HandleWS] 'set_media' command received with empty media_id")
+            }
+        case "tv_set_media":
+            tvID, _ := data["media_id"].(string)
+            log.Printf("[HandleWS] Received 'tv_set_media' command. tv_id: %v", tvID)
+            if tvID != "" {
+                var path string
+                log.Printf("[HandleWS] Querying DB for tv_id: %v", tvID)
+                err := db.QueryRow("SELECT Path FROM tvshows WHERE TvId = ?", tvID).Scan(&path)
+                if err != nil {
+                    log.Printf("[HandleWS] Media not found for tv_id %v: %v", tvID, err)
+                    sendJSON(conn, map[string]interface{}{ "status": "error", "message": "media not found" })
+                } else {
+                    log.Printf("[HandleWS] Found media path for tv_id %v: %v", tvID, path)
+                    log.Printf("[HandleWS] Attempting to start player with path: %v", path)
+                    if err := player.StartMPV(path); err != nil {
+                        log.Printf("[HandleWS] Error starting player for path %v: %v", path, err)
+                        sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+                    } else {
+                        log.Printf("[HandleWS] Media set successfully for tv_id %v", tvID)
+                        sendJSON(conn, map[string]interface{}{ "status": "media_set" })
+                    }
+                }
+            } else {
+                log.Printf("[HandleWS] 'tv_set_media' command received with empty tv_id")
             }
         case "stop":
             player.StopMPV()
@@ -5398,355 +5590,13 @@ func HandleWS(conn *websocket.Conn, db *sql.DB) {
             } else {
                 sendJSON(conn, map[string]interface{}{ "status": "previous" })
             }
-        case "search":
-            phrase, _ := data["phrase"].(string)
-            results := getCategoryMovieImages(db, phrase)
-            resp := map[string]interface{}{ "results": results }
-            sendJSON(conn, resp)
-        case "movcount":
-            count := getMovieCount(db)
-            sendJSON(conn, map[string]interface{}{ "movcount": count })
-        case "tvcount":
-            count := getTVShowCount(db)
-            sendJSON(conn, map[string]interface{}{ "tvcount": count })
         case "test":
             sendJSON(conn, map[string]interface{}{ "status": "It worked" })
-        // Movie categories
-        case "action", "arnold", "avatar", 
-            "brucelee", "brucewillis", "buzz",
-            "cartoons", "charliebrown", "cheechandchong", "chucknorris", "clinteastwood", "comedy",
-            "drama", "documentary",
-            "fantasy",
-            "ghostbusters", "godzilla",
-            "harrisonford", "harrypotter", "hellboy",
-            "indianajones",
-            "jamesbond", "johnwayne", "johnwick", "jurassicpark",
-            "kevincostner", "kingsman",
-            "lego",
-            "meninblack", "minions", "misc", "musicvids", "mummy",
-            "nature", "nicolascage",
-            "oldies",
-            "panda", "pirates", "predator",
-            "riddick", 
-            "science", "scifi", "stalone", "startrek", "starwars", "stooges", "superheros", "superman",
-            "therock", "tinkerbell", "tomcruize", "transformers", "tremors", "trolls",
-			"vandam",
-			"xmen":
-            results := getCategoryMovieImages(db, command)
-            sendJSON(conn, map[string]interface{}{ "images": results })
-        // TV show categories (full parity with mtvserverutils.py)
-        case "alteredcarbons1", "alteredcarbons2",
-			 "cowboybebop", "columbia",
-			 "fallouts1", "fallouts2",
-             "forallmankinds1", "forallmankinds2", "forallmankinds3", "forallmankinds4", "forallmankinds5",
-             "foundations1", "foundations2", "foundations3",
-			 "fuubar1", "fuubar2",
-			 "hford19231", "hford19232",
-             "halos1", "halos2",
-		  	 "houseofthedragons1", "houseofthedragons2",
-			 "lostinspaces1", "lostinspaces2", "lostinspaces3",
-			 "mastersoftheuniverse",
-			 "mobland",
-			 "monarchlegacyofmonsterss1", "monarchlegacyofmonsterss2",
-             "nightsky",
-			 "orvilles1", "orvilles2", "orvilles3",
-			 "percyjacksonandtheolympianss1", "percyjacksonandtheolympianss2",
-			 "prehistoricplanets1", "prehistoricplanets2", "prehistoricplanets3",
-             "raisedbywolvess1", "raisedbywolvess2",
-			 "shogun",
-			 "silo1", "silo2", 
-			 "thecontinental",
-			 "thelastofus1", "thelastofus2",
-			 "thelordoftheringstheringsofpower",
-			 "wheeloftime1", "wheeloftime2", "wheeloftime3",
-			 "wednesdays1", "wednesdays2",
-
-             "discoverys1", "discoverys2", "discoverys3", "discoverys4", "discoverys5",
-             "enterprises1", "enterprises2", "enterprises3", "enterprises4",
-             "lowerdeckss1", "lowerdeckss2", "lowerdeckss3", "lowerdeckss4", "lowerdeckss5",
-             "picards1", "picards2",
-             "prodigy1", "prodigy2",
-             "sttvs1", "sttvs2", "sttvs3",
-             "strangenewworldss1", "strangenewworldss2", "strangenewworldss3",
-             "tngs1", "tngs2", "tngs3", "tngs4", "tngs5", "tngs6", "tngs7",
-             "voyagers1", "voyagers2", "voyagers3", "voyagers4", "voyagers5", "voyagers6", "voyagers7",
-             "deepspacenines1", "deepspacenines2", "deepspacenines3", "deepspacenines4", "deepspacenines5", "deepspacenines6", "deepspacenines7",
-             "continues1", "starfleetacademys1",
-
-             "acolyte", "ahsoka", "andor1", "andor2", "bookofbobafett",
-             "mandalorians1", "mandalorians2", "mandalorians3", "obiwankenobi",
-             "talesoftheempire", "talesofthejedi", "thebadbatchs1", "thebadbatchs2", "thebadbatchs3",
-             "visionss1", "visionss2", "visionss3", "maulshadowlords1",
-
-             "falconwintersoldier", "hawkeye", "iamgroots1", "iamgroots2",
-             "lokis1", "lokis2", "moonknight", "secretinvasion", "shehulk", "wandavision",
-             "skeletoncrew",  "talesoftheunderworld",  "ironheart", "wondermans1",
-              
-            "tonyandzivas1",
-            "nciss1", "nciss2", "nciss3", "nciss4", "nciss5", "nciss6", "nciss7", "nciss8", "nciss9", "nciss10", "nciss11", "nciss12", "nciss13", "nciss14", "nciss15", "nciss16", "nciss17", "nciss18", "nciss19", "nciss20", "nciss21", "nciss22", "nciss23", "nciss24",
-            "ncislas1", "ncislas2", "ncislas3", "ncislas4", "ncislas5", "ncislas6", "ncislas7", "ncislas8", "ncislas9", "ncislas10", "ncislas11", "ncislas12", "ncislas13", "ncislas14",
-            "ncissydneys1", "ncissydneys2", "ncissydneys3",
-            "ncisorigins1",
-            "ncishawaiis1", "ncishawaiis2", "ncishawaiis3",
-            "ncisneworleanss1", "ncisneworleanss2", "ncisneworleanss3", "ncisneworleanss4", 
-            "ncisneworleanss5", "ncisneworleanss6", "ncisneworleanss7":
-            results := getCategoryTVShowEpisodes(db, command)
-            sendJSON(conn, map[string]interface{}{ "episodes": results })
         default:
             sendJSON(conn, map[string]interface{}{ "status": "unknown command" })
         }
     }
 }
-
-func getCategoryTVShowEpisodes(db *sql.DB, key string) []map[string]interface{} {
-    var cat, season string
-    switch key {
-    case "nciss1":
-        cat, season = "NCIS", "01"
-    case "nciss2":
-        cat, season = "NCIS", "02"
-    case "nciss3":
-        cat, season = "NCIS", "03"
-    case "nciss4":
-        cat, season = "NCIS", "04"
-    case "nciss5":
-        cat, season = "NCIS", "05"
-    case "nciss6":
-        cat, season = "NCIS", "06"
-    case "nciss7":
-        cat, season = "NCIS", "07"
-    case "nciss8":
-        cat, season = "NCIS", "08"
-    case "nciss9":
-        cat, season = "NCIS", "09"
-    case "nciss10":
-        cat, season = "NCIS", "10"
-    case "nciss11":
-        cat, season = "NCIS", "11"
-    case "nciss12":
-        cat, season = "NCIS", "12"
-    case "nciss13":
-        cat, season = "NCIS", "13"
-    case "nciss14":
-        cat, season = "NCIS", "14"
-    case "nciss15":
-        cat, season = "NCIS", "15"
-    case "nciss16":
-        cat, season = "NCIS", "16"
-    case "nciss17":
-        cat, season = "NCIS", "17"
-    case "nciss18":
-        cat, season = "NCIS", "18"
-    case "nciss19":
-        cat, season = "NCIS", "19"
-    case "nciss20":
-        cat, season = "NCIS", "20"
-    case "nciss21":
-        cat, season = "NCIS", "21"
-    case "nciss22":
-        cat, season = "NCIS", "22"
-    case "nciss23":
-        cat, season = "NCIS", "23"
-    case "nciss24":
-        cat, season = "NCIS", "24"
-    case "ncislas1":
-        cat, season = "NCISLA", "01"
-    case "ncislas2":
-        cat, season = "NCISLA", "02"
-    case "ncislas3":
-        cat, season = "NCISLA", "03"
-    case "ncislas4":
-        cat, season = "NCISLA", "04"
-    case "ncislas5":
-        cat, season = "NCISLA", "05"
-    case "ncislas6":
-        cat, season = "NCISLA", "06"
-    case "ncislas7":
-        cat, season = "NCISLA", "07"
-    case "ncislas8":
-        cat, season = "NCISLA", "08"
-    case "ncislas9":
-        cat, season = "NCISLA", "09"
-    case "ncislas10":
-        cat, season = "NCISLA", "10"
-    case "ncislas11":
-        cat, season = "NCISLA", "11"
-    case "ncislas12":
-        cat, season = "NCISLA", "12"
-    case "ncislas13":
-        cat, season = "NCISLA", "13"
-    case "ncislas14":
-        cat, season = "NCISLA", "14"
-    case "ncissydneys1":
-        cat, season = "NCISSydney", "01"
-    case "ncissydneys2":
-        cat, season = "NCISSydney", "02"
-    case "ncissydneys3":
-        cat, season = "NCISSydney", "03"
-    case "ncisorigins1":
-        cat, season = "NCISOrigins", "01"
-    case "alteredcarbons1":
-        cat, season = "AlteredCarbon", "01"
-    case "alteredcarbons2":
-        cat, season = "AlteredCarbon", "02"
-    case "cowboybebop":
-        cat = "CowboyBebop"
-    case "fallouts1":
-        cat, season = "Fallout", "01"
-    case "fallouts2":
-        cat, season = "Fallout", "02"
-    case "forallmankinds1":
-        cat, season = "ForAllManKind", "01"
-    case "forallmankinds2":
-        cat, season = "ForAllManKind", "02"
-    case "forallmankinds3":
-        cat, season = "ForAllManKind", "03"
-    case "forallmankinds4":
-        cat, season = "ForAllManKind", "04"
-    case "forallmankinds5":
-        cat, season = "ForAllManKind", "05"
-    case "foundations1":
-        cat, season = "Foundation", "01"
-    case "foundations2":
-        cat, season = "Foundation", "02"
-    case "foundations3":
-        cat, season = "Foundation", "03"
-    case "fuubar1":
-        cat, season = "FuuBar", "01"
-    case "fuubar2":
-        cat, season = "FuuBar", "02"
-    case "hford19231":
-        cat, season = "HFord1923", "01"
-    case "hford19232":
-        cat, season = "HFord1923", "02"
-    case "halos1":
-        cat, season = "Halo", "01"
-    case "halos2":
-        cat, season = "Halo", "02"
-    case "houseofthedragons1":
-        cat, season = "HouseOfTheDragon", "01"
-    case "houseofthedragons2":
-        cat, season = "HouseOfTheDragon", "02"
-    case "lostinspaces1":
-        cat, season = "LostInSpace", "01"
-    case "lostinspaces2":
-        cat, season = "LostInSpace", "02"
-    case "lostinspaces3":
-        cat, season = "LostInSpace", "03"
-    case "mastersoftheuniverse":
-        cat = "MastersOfTheUniverse"
-    case "monarchlegacyofmonsterss1":
-        cat = "MonarchLegacyOfMonsters"
-    case "monarchlegacyofmonsterss2":
-        cat, season = "MonarchLegacyOfMonsters", "02"
-    case "nightsky":
-        cat = "NightSky"
-    case "orvilles1":
-        cat, season = "Orville", "01"
-    case "orvilles2":
-        cat, season = "Orville", "02"
-    case "orvilles3":
-        cat, season = "Orville", "03"
-    case "percyjacksonandtheolympianss1":
-        cat, season = "PercyJacksonAndTheOlympians", "01"
-    case "percyjacksonandtheolympianss2":
-        cat, season = "PercyJacksonAndTheOlympians", "02"
-    case "prehistoricplanets1":
-        cat, season = "PrehistoricPlanet", "01"
-    case "prehistoricplanets2":
-        cat, season = "PrehistoricPlanet", "02"
-    case "prehistoricplanets3":
-        cat, season = "PrehistoricPlanet", "03"
-    case "raisedbywolvess1":
-        cat, season = "RaisedByWolves", "01"
-    case "raisedbywolvess2":
-        cat, season = "RaisedByWolves", "02"
-    case "shogun":
-        cat = "Shogun"
-    case "silo1":
-        cat, season = "Silo", "01"
-    case "silo2":
-        cat, season = "Silo", "02"
-    case "thecontinental":
-        cat = "TheContinental"
-    case "thelastofus1":
-        cat, season = "TheLastOfUs", "01"
-    case "thelastofus2":
-        cat, season = "TheLastOfUs", "02"
-    case "thelordoftheringstheringsofpower":
-        cat = "TheLordOfTheRingsTheRingsOfPower"
-    case "wheeloftime1":
-        cat, season = "WheelOfTime", "01"
-    case "wheeloftime2":
-        cat, season = "WheelOfTime", "02"
-    case "wheeloftime3":
-        cat, season = "WheelOfTime", "03"
-    case "discoverys1":
-        cat, season = "Discovery", "01"
-    case "discoverys2":
-        cat, season = "Discovery", "02"
-    case "discoverys3":
-        cat, season = "Discovery", "03"
-    case "discoverys4":
-        cat, season = "Discovery", "04"
-    case "discoverys5":
-        cat, season = "Discovery", "05"
-    case "enterprises1":
-        cat, season = "Enterprise", "01"
-    case "enterprises2":
-        cat, season = "Enterprise", "02"
-    case "enterprises3":
-        cat, season = "Enterprise", "03"
-    case "enterprises4":
-        cat, season = "Enterprise", "04"
-    case "lowerdeckss1":
-        cat, season = "LowerDecks", "01"
-    case "lowerdeckss2":
-        cat, season = "LowerDecks", "02"
-    case "lowerdeckss3":
-        cat, season = "LowerDecks", "03"
-    case "lowerdeckss4":
-        cat, season = "LowerDecks", "04"
-    case "lowerdeckss5":
-        cat, season = "LowerDecks", "05"
-    }
-    var rows *sql.Rows
-    var err error
-    if season != "" {
-        rows, err = db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", cat, season)
-    } else {
-        rows, err = db.Query("SELECT * FROM tvshows WHERE catagory=? ORDER BY Episode ASC", cat)
-    }
-    if err != nil {
-        log.Println("DB error (tvshow episodes):", err)
-        return nil
-    }
-    defer rows.Close()
-    cols, _ := rows.Columns()
-    results := []map[string]interface{}{}
-    for rows.Next() {
-        vals := make([]interface{}, len(cols))
-        valPtrs := make([]interface{}, len(cols))
-        for i := range vals {
-            valPtrs[i] = &vals[i]
-        }
-        if err := rows.Scan(valPtrs...); err == nil {
-            row := make(map[string]interface{})
-            for i, col := range cols {
-                b, ok := vals[i].([]byte)
-                if ok {
-                    row[col] = string(b)
-                } else {
-                    row[col] = vals[i]
-                }
-            }
-            results = append(results, row)
-        }
-    }
-    return results
-}
-
-
 
 func sendJSON(conn *websocket.Conn, v interface{}) {
     msg, err := json.Marshal(v)
@@ -5759,12 +5609,11 @@ func sendJSON(conn *websocket.Conn, v interface{}) {
     }
 }
 
-
 type WSResponse map[string]interface{}
 
 // getCategoryMovieImages queries the DB for movies in a given category and returns a list of image URLs
 func getCategoryMovieImages(db *sql.DB, category string) []map[string]interface{} {
-    query := "SELECT * FROM movies WHERE Catagory=?"
+    query := "SELECT * FROM movies WHERE Catagory=? ORDER BY Year DESC"
     rows, err := db.Query(query, category)
     if err != nil {
         log.Println("DB error (category images):", err)
@@ -5795,10 +5644,6 @@ func getCategoryMovieImages(db *sql.DB, category string) []map[string]interface{
     return results
 }
 
-
-
-
-
 func getMovieCount(db *sql.DB) int {
     var count int
     err := db.QueryRow("SELECT COUNT(*) FROM movies").Scan(&count)
@@ -5808,7 +5653,6 @@ func getMovieCount(db *sql.DB) int {
     }
     return count
 }
-
 
 func getTVShowCount(db *sql.DB) int {
     var count int
@@ -5820,3 +5664,58 @@ func getTVShowCount(db *sql.DB) int {
     return count
 }
 
+func getVideoCount(db *sql.DB) int {
+    var count int
+    err := db.QueryRow("SELECT COUNT(*) FROM videos").Scan(&count)
+    if err != nil {
+        log.Println("DB error (videocount):", err)
+        return 0
+    }
+    return count
+}
+
+func getMoviesSizeOnDisk(db *sql.DB) string {
+    var size int64
+    err := db.QueryRow("SELECT SUM(Size) FROM movies").Scan(&size)
+    if err != nil {
+        log.Println("DB error (moviedisk):", err)
+        return "0 GB"
+    }
+    return bytestoGB(size)
+}
+
+func getTVShowsSizeOnDisk(db *sql.DB) string {
+    var size int64
+    err := db.QueryRow("SELECT SUM(Size) FROM tvshows").Scan(&size)
+    if err != nil {
+        log.Println("DB error (tvshowdisk):", err)
+        return "0 GB"
+    }
+    return bytestoGB(size)
+}
+
+func getVideosSizeOnDisk(db *sql.DB) string {
+    var size int64
+    err := db.QueryRow("SELECT SUM(Size) FROM videos").Scan(&size)
+    if err != nil {
+        log.Println("DB error (videodisk):", err)
+        return "0 GB"
+    }
+    return bytestoGB(size)
+}
+
+func bytestoGB(bytes int64) string {
+    gb := float64(bytes) / (1024 * 1024 * 1024)
+    return fmt.Sprintf("%.2f GB", gb)
+}
+
+func freeSpaceOnDisk(path string) string {
+    var stat syscall.Statfs_t
+    err := syscall.Statfs(path, &stat)
+    if err != nil {
+        log.Println("Disk error (freespace):", err)
+        return "0 GB"
+    }
+    free := stat.Bavail * uint64(stat.Bsize)
+    return bytestoGB(int64(free))
+}

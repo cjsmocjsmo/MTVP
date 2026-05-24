@@ -12,6 +12,13 @@
         <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
     </div>
-	<h1 id="header">Put something here Im not sure what</h1>
+	<h1 id="header">Stats</h1>
+	<div class="stats-div">
+		<p id="i1" class="stat-div-item">Total Movies: {{.TotalMovies}} ({{.MovieSizeOnDisk}})</p>
+		<p id="i2" class="stat-div-item">Total TV Episodes: {{.TotalTVShows}} ({{.TVShowSizeOnDisk}})</p>
+		<p id="i3" class="stat-div-item">Total Videos: {{.TotalVideos}} ({{.VideoSizeOnDisk}})</p>
+		<p id="i4" class="stat-div-item">Free Space on Disk: {{.FreeSpaceOnDisk}}</p>
+	</div>
 </body>
+<script src="/static/javascript/mtv.js"></script>
 </html>

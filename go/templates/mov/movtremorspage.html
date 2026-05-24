@@ -14,10 +14,16 @@
 	<h1>Tremors Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img id={{.MovId}} src="{{.HttpThumbPath}}" alt="Tremors Movie" class="mov-img" />
+			<img 
+				id={{.MovId}} 
+				src="{{.HttpThumbPath}}" 
+				alt="Tremors Movie" 
+				class="mov-img" 
+			/>
 		{{else}}
 			<p>No Tremors movie images found.</p>
 		{{end}}
 	</div>
 </body>
+<script src="/static/javascript/mtv.js"></script>
 </html>

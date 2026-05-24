@@ -105,7 +105,12 @@ func StartServer() {
 	http.Handle("/tvthumbnails/", http.StripPrefix("/tvthumbnails/", http.FileServer(http.Dir(tvThumbPath))))
 	log.Println("[StartServer] File server registered for /tvthumbnails ->", tvThumbPath)
 
-	http.HandleFunc("/", HomePageHandler())
+	
+	http.HandleFunc("/movsearch", MovSearchHandler(db))
+	http.HandleFunc("/tvsearch", TVSearchHandler(db))
+	http.HandleFunc("/ws", wsHandler(db))
+
+	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
 	http.HandleFunc("/maintvpage", MainTVPageHandler(db))
 	http.HandleFunc("/action", ActionPageHandler(db))
@@ -164,7 +169,6 @@ func StartServer() {
 	http.HandleFunc("/transformers", TransformersPageHandler(db))
 	http.HandleFunc("/trolls", TrollsPageHandler(db))
 	http.HandleFunc("/vandam", VandamPageHandler(db))
-	http.HandleFunc("/ws", wsHandler(db))
 	http.HandleFunc("/xmen", XmenPageHandler(db))
 		// Register TV show pages
 	http.HandleFunc("/tvactionpage", TVActionPageHandler())

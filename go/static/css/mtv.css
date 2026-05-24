@@ -1,18 +1,8 @@
-/* body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #121212;
-  color: #f0f0f0;
-} */
-
 body {
-  display: block;
-  min-height: 100vh;
-  background: #121212;
-  color: #f0f0f0;
+    display: block;
+    min-height: 100vh;
+    background: #121212;
+    color: #f0f0f0;
 }
 
 #header { 
@@ -38,18 +28,31 @@ body {
     font-size: 1em;
     transition: background 0.3s ease;
 }
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
         
-.img-grid {
+/* .img-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1em;
     padding: 2em;
-}
+} */
         
-.img-grid img {
+/* .img-grid img {
     width: 100%;
     border-radius: 8px;
     background: #222;
+} */
+
+.media-grid-div {
+    display: block;
+    min-height: 100vh;
 }
 
 .media-grid {
@@ -73,6 +76,9 @@ body {
 
 .mov-images-grid {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -85,10 +91,10 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.sea-epi-div {
+/* .sea-epi-div {
 
 
-}
+} */
 
 .sea-div {
     display: flex;
@@ -113,4 +119,86 @@ body {
     border: none;
     border-radius: 12px;
     font-size: 0.9em;
+}
+
+.stats-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.mov-search-div, .tv-search-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 3.25em;
+}
+
+#mov-search-input, #tv-search-input {
+    padding: 0.75em 1em;
+    font-size: 1em;
+    border: none;
+    border-radius: 12px;
+    width: 16em;
+    height: 2.2em;
+}
+
+#mov-search-button, #tv-search-button {
+    padding: 1em 1.75em;
+    font-size: 1em;
+    border: solid 1px #780b71;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #0071e3;
+    color: white;
+    width: 6.5em;
+    height: 3.5em;
+}
+
+.sticky-footer {
+    background-color: black;
+    padding: 1rem 2rem;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.footer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+/* Button Styling */
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #0071e3;
+    color: white;
+    min-width: 90px;
+}
+.btn:hover {
+    background-color: #0077ed;
+    transform: translateY(-1px);
+}
+.btn:active {
+    transform: translateY(1px);
+}
+/* Specific style for Back to distinguish it slightly */
+#btn-back {
+    background-color: #86868b;
+}
+#btn-back:hover {
+    background-color: #98989d;
 }
