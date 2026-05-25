@@ -14,22 +14,22 @@ import (
     "html/template"
     "net/http"
     "net/url"
-    "time"
     "syscall"
     "io"
 )
 
 // APODResponse maps the exact JSON fields returned by NASA's API
 type APODResponse struct {
-	Date           string `json:"date"`
-	Explanation    string `json:"explanation"`
-	HDURL          string `json:"hdurl"`
-	MediaType      string `json:"media_type"`
-	ServiceVersion string `json:"service_version"`
-	Title          string `json:"title"`
-	URL            string `json:"url"`
-	ThumbnailURL   string `json:"thumbnail_url,omitempty"` // Only present if video and thumbs=true
-	Copyright      string `json:"copyright,omitempty"`     // Only present for copyrighted works
+    Date           string `json:"date"`
+    Explanation    string `json:"explanation"`
+    HDURL          string `json:"hdurl"`
+    MediaType      string `json:"media_type"`
+    ServiceVersion string `json:"service_version"`
+    Title          string `json:"title"`
+    URL            string `json:"url"`
+    ThumbnailURL   string `json:"thumbnail_url,omitempty"` // Only present if video and thumbs=true
+    Copyright      string `json:"copyright,omitempty"`     // Only present for copyrighted works
+    Idx            int    // Database primary key
 }
 
 // FetchNASAData hits the APOD endpoint, returns the parsed payload, and inserts it into the nasa table
@@ -37,7 +37,7 @@ func FetchNASAData(db *sql.DB) (*APODResponse, error) {
     today := time.Now().Format("2006-01-02")
     // Try to get today's entry from the nasa table
     var apod APODResponse
-    row := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright FROM nasa WHERE Date = ? ORDER BY Idx DESC LIMIT 1`, today)
+    row := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright, Idx FROM nasa WHERE Date = ? ORDER BY Idx DESC LIMIT 1`, today)
     err := row.Scan(
         &apod.Date,
         &apod.Explanation,
@@ -48,6 +48,7 @@ func FetchNASAData(db *sql.DB) (*APODResponse, error) {
         &apod.URL,
         &apod.ThumbnailURL,
         &apod.Copyright,
+        &apod.Idx,
     )
     if err == nil {
         // Found today's entry, return it
