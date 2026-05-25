@@ -13,11 +13,11 @@
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
     </div>
 	<h1 id="header">Current Weather</h1>
-	<div class="stats-div">
-		<p id="i1" class="stat-div-item">Location: {{.WeatherLocation}}</p>
-		<p id="i3" class="stat-div-item">Conditions: {{.WeatherConditions}}</p>
-		<p id="i2" class="stat-div-item">Temperature: {{.WeatherTemperature}} {{.WeatherUnit}}</p>
-		<p id="i4" class="stat-div-item">Wind: {{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
+	<div class="weather-div">
+		<p id="wi1" class="weather-div-item">{{.WeatherLocation}}</p>
+		<p id="wi3" class="weather-div-item">{{.WeatherConditions}}</p>
+		<p id="wi2" class="weather-div-item">{{.WeatherTemperature}} {{.WeatherUnit}}</p>
+		<p id="wi4" class="weather-div-item">{{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
 	</div>
 	<h1 id="header">Stats</h1>
 	<div class="stats-div">
@@ -38,7 +38,7 @@
 			<p class="nasa-txt">{{.NasaExplanation}}</p>
 		</div>
 	{{else if .IsNasaImage}}
-		<h1 id="header">NASA Astronomy Picture of the Day</h1>
+		<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
 		<div class="nasa-div">
 			<h2>{{.NasaTitle}}</h2>
 			<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->

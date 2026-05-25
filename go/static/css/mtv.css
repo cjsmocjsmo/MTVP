@@ -130,6 +130,19 @@ h1 {
     gap: 0.5em;
 }
 
+.weather-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    margin: .25em;
+}
+
+#wi2 {
+    color: goldenrod
+}
+
 .mov-search-div, .tv-search-div {
     display: flex;
     justify-content: center;
