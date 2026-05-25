@@ -405,7 +405,7 @@ func HellboyPageHandler(db *sql.DB) http.HandlerFunc {
 // HomeVidsPageHandler serves the Home Vids movies page with images from the DB
 func HomeVidsPageHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        images := getCategoryMovieImages(db, "HomeVids")
+        images := getCategoryVideoImages(db)
         tmpl, err := template.ParseFiles("templates/mov/movhomevidspage.html")
         if err != nil {
             http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
@@ -419,6 +419,39 @@ func HomeVidsPageHandler(db *sql.DB) http.HandlerFunc {
             http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
         }
     }
+}
+
+// getCategoryVideoImages fetches all videos from the videos table
+func getCategoryVideoImages(db *sql.DB) []map[string]interface{} {
+    query := "SELECT * FROM videos ORDER BY Idx ASC"
+    rows, err := db.Query(query)
+    if err != nil {
+        fmt.Println("DB error (video images):", err)
+        return nil
+    }
+    defer rows.Close()
+    cols, _ := rows.Columns()
+    results := []map[string]interface{}{}
+    for rows.Next() {
+        vals := make([]interface{}, len(cols))
+        valPtrs := make([]interface{}, len(cols))
+        for i := range vals {
+            valPtrs[i] = &vals[i]
+        }
+        if err := rows.Scan(valPtrs...); err == nil {
+            row := make(map[string]interface{})
+            for i, col := range cols {
+                b, ok := vals[i].([]byte)
+                if ok {
+                    row[col] = string(b)
+                } else {
+                    row[col] = vals[i]
+                }
+            }
+            results = append(results, row)
+        }
+    }
+    return results
 }
 
 // IndianaJonesPageHandler serves the Indiana Jones movies page with images from the DB

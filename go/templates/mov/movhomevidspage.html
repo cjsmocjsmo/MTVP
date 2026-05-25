@@ -15,14 +15,11 @@
 	<h1>Home Vids Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img 
-				id="{{.MovId}}" 
-				src="{{.HttpThumbPath}}" 
-				alt="{{.Name}}" 
-				class="mov-img" 
-			/>
+			<div class="mov-video-entry">
+				<p id="{{.VidId}}" class="mov-video-name">{{.Name}}</p>
+			</div>
 		{{else}}
-			<p>No Home Vids movie images found.</p>
+			<p>No Home Vids videos found.</p>
 		{{end}}
 	</div>
 </body>
