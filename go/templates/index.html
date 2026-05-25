@@ -35,7 +35,7 @@
 				<source src="{{.NasaURL}}" type="video/mp4">
 				Your browser does not support the video tag.
 			</video>
-			<p>{{.NasaExplanation}}</p>
+			<p class="nasa-txt">{{.NasaExplanation}}</p>
 		</div>
 	{{else if .IsNasaImage}}
 		<h1 id="header">NASA Astronomy Picture of the Day</h1>
@@ -43,7 +43,7 @@
 			<h2>{{.NasaTitle}}</h2>
 			<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->
 			<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}" >
-			<p>{{.NasaExplanation}}</p>
+			<p class="nasa-txt">{{.NasaExplanation}}</p>
 		</div>
 	{{end}}
 </body>

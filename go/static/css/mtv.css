@@ -159,6 +159,23 @@ h1 {
     height: 3.5em;
 }
 
+.nasa-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 2em;
+}
+
+.nasa-image {
+    width: 75%;
+}
+
+.nasa-txt {
+    width: 75%;
+}
+
 .sticky-footer {
     background-color: black;
     padding: 1rem 2rem;
