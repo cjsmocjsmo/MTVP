@@ -27,23 +27,23 @@
 		<p id="i4" class="stat-div-item">Free Space on Disk: {{.FreeSpaceOnDisk}}</p>
 	</div>
 	{{if .IsNasaVideo}}
-		<h1 id="header">NASA Astronomy Picture of the Day</h1>
+		<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
 		<div class="nasa-div">
 			<h2>{{.NasaTitle}}</h2>
-			<p>{{.NasaExplanation}}</p>
-			<a href="{{.NasaURL}}" target="_blank">View on NASA</a>
+			<!-- <a href="{{.NasaURL}}" target="_blank">View on NASA</a> -->
 			<video controls class="nasa-video">
 				<source src="{{.NasaURL}}" type="video/mp4">
 				Your browser does not support the video tag.
 			</video>
+			<p>{{.NasaExplanation}}</p>
 		</div>
 	{{else if .IsNasaImage}}
 		<h1 id="header">NASA Astronomy Picture of the Day</h1>
 		<div class="nasa-div">
 			<h2>{{.NasaTitle}}</h2>
-			<p>{{.NasaExplanation}}</p>
-			<a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a>
+			<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->
 			<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}" >
+			<p>{{.NasaExplanation}}</p>
 		</div>
 	{{end}}
 </body>
