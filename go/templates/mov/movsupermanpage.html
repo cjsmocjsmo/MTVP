@@ -15,9 +15,9 @@
 	<div class="mov-images-grid">
 		{{range .Images}}
 			<img 
-				id={{.MovId}} 
+				id="{{.MovId}}" 
 				src="{{.HttpThumbPath}}" 
-				alt="Superman Movie" 
+				alt="{{.Name}}" 
 				class="mov-img" 
 			/>
 		{{else}}

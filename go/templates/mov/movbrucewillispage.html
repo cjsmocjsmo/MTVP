@@ -15,10 +15,10 @@
 	<div class="mov-images-grid">
 		{{range .Images}}
 			<img 
-				id="{{.MovID}}" 
+				id="{{.MovId}}" 
 				class="mov-img" 
 				src="{{.HttpThumbPath}}" 
-				alt="Bruce Willis Movie" 
+				alt="{{.Name}}" 
 			/>
 		{{else}}
 			<p>No Bruce Willis movie images found.</p>
