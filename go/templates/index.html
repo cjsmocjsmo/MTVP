@@ -26,6 +26,26 @@
 		<p id="i3" class="stat-div-item">Total Videos: {{.TotalVideos}} ({{.VideoSizeOnDisk}})</p>
 		<p id="i4" class="stat-div-item">Free Space on Disk: {{.FreeSpaceOnDisk}}</p>
 	</div>
+	{{if .NasaMediaType == "video"}}
+		<h1 id="header">NASA Astronomy Picture of the Day</h1>
+		<div class="nasa-div">
+			<h2>{{.NasaTitle}}</h2>
+			<p>{{.NasaExplanation}}</p>
+			<a href="{{.NasaURL}}" target="_blank">View on NASA</a>
+			<video controls class="nasa-video">
+				<source src="{{.NasaURL}}" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		</div>
+	{{else if .NasaMediaType == "image"}}
+		<h1 id="header">NASA Astronomy Picture of the Day</h1>
+		<div class="nasa-div">
+			<h2>{{.NasaTitle}}</h2>
+			<p>{{.NasaExplanation}}</p>
+			<a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a>
+			<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}" >
+		</div>
+	{{end}}
 </body>
 <script src="/static/javascript/mtv.js"></script>
 </html>

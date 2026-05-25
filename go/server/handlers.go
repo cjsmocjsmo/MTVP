@@ -13,12 +13,99 @@ import (
     "github.com/gorilla/websocket"
     "html/template"
     "net/http"
+    "net/url"
+    "time"
     "syscall"
     "io"
 )
 
+// APODResponse maps the exact JSON fields returned by NASA's API
+type APODResponse struct {
+	Date           string `json:"date"`
+	Explanation    string `json:"explanation"`
+	HDURL          string `json:"hdurl"`
+	MediaType      string `json:"media_type"`
+	ServiceVersion string `json:"service_version"`
+	Title          string `json:"title"`
+	URL            string `json:"url"`
+	ThumbnailURL   string `json:"thumbnail_url,omitempty"` // Only present if video and thumbs=true
+	Copyright      string `json:"copyright,omitempty"`     // Only present for copyrighted works
+}
+
+// FetchNASAData hits the APOD endpoint, returns the parsed payload, and inserts it into the nasa table
+func FetchNASAData(db *sql.DB) (*APODResponse, error) {
+    today := time.Now().Format("2006-01-02")
+    // Try to get today's entry from the nasa table
+    var apod APODResponse
+    row := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright FROM nasa WHERE Date = ? ORDER BY Idx DESC LIMIT 1`, today)
+    err := row.Scan(
+        &apod.Date,
+        &apod.Explanation,
+        &apod.HDURL,
+        &apod.MediaType,
+        &apod.ServiceVersion,
+        &apod.Title,
+        &apod.URL,
+        &apod.ThumbnailURL,
+        &apod.Copyright,
+    )
+    if err == nil {
+        // Found today's entry, return it
+        return &apod, nil
+    }
+    if err != sql.ErrNoRows {
+        // Some other DB error
+        return nil, fmt.Errorf("failed to query nasa table: %w", err)
+    }
+
+    // Not found, fetch from NASA API
+    baseURL := "https://api.nasa.gov/planetary/apod"
+    apiKey := "c2MSxvl303kuIlMnkhygr6l60lc14bENZm0Mjwik"
+
+    u, err := url.Parse(baseURL)
+    if err != nil {
+        return nil, err
+    }
+    q := u.Query()
+    q.Set("api_key", apiKey)
+    q.Set("thumbs", "true")
+    u.RawQuery = q.Encode()
+
+    client := &http.Client{
+        Timeout: 10 * time.Second,
+    }
+    resp, err := client.Get(u.String())
+    if err != nil {
+        return nil, fmt.Errorf("failed making request to NASA API: %w", err)
+    }
+    defer resp.Body.Close()
+    if resp.StatusCode != http.StatusOK {
+        return nil, fmt.Errorf("nasa API returned status code: %d", resp.StatusCode)
+    }
+    if err := json.NewDecoder(resp.Body).Decode(&apod); err != nil {
+        return nil, fmt.Errorf("failed to decode JSON response: %w", err)
+    }
+    // Insert into nasa table
+    insertStmt := `INSERT INTO nasa (Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    _, err = db.Exec(insertStmt,
+        apod.Date,
+        apod.Explanation,
+        apod.HDURL,
+        apod.MediaType,
+        apod.ServiceVersion,
+        apod.Title,
+        apod.URL,
+        apod.ThumbnailURL,
+        apod.Copyright,
+    )
+    if err != nil {
+        return nil, fmt.Errorf("failed to insert APODResponse into nasa table: %w", err)
+    }
+    return &apod, nil
+}
+
 func MTVWeather() ([]byte, error) {
-	
 	// Fetch weather for Belfair, WA from National Weather Service
 	latitude := 47.4281
 	longitude := -122.8189
@@ -111,6 +198,13 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
                 }
             }
         }
+        nasaData, err := FetchNASAData(db)
+        if err != nil {
+            log.Println("Error fetching NASA data:", err)
+        } else {
+            // You can use nasaData in the template if needed
+            log.Printf("Today's NASA APOD: %s - %s", nasaData.Title, nasaData.URL)
+        }
         type Stats struct {
             TotalMovies    int
             TotalTVShows   int
@@ -125,6 +219,16 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             WeatherConditions string
             WeatherWindDirection string
             WeatherWindSpeed string
+            NasaDate string
+            NasaExplanation string
+            NasaHDURL string
+            NasaMediaType string
+            NasaServiceVersion string
+            NasaTitle string
+            NasaURL string
+            NasaThumbnailURL string
+            NasaCopyright string
+            NasaIdx int
         }
         stats := Stats{
             TotalMovies:      movCount,
@@ -140,6 +244,16 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             WeatherConditions: wdConditions,
             WeatherWindDirection: wdWindDir,
             WeatherWindSpeed: wdWindSpeed,
+            NasaDate: nasaData.Date,
+            NasaExplanation: nasaData.Explanation,
+            NasaHDURL: nasaData.HDURL,
+            NasaMediaType: nasaData.MediaType,
+            NasaServiceVersion: nasaData.ServiceVersion,
+            NasaTitle: nasaData.Title,
+            NasaURL: nasaData.URL,
+            NasaThumbnailURL: nasaData.ThumbnailURL,
+            NasaCopyright: nasaData.Copyright,
+            NasaIdx: nasaData.Idx,
         }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {

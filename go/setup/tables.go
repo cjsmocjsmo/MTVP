@@ -65,5 +65,22 @@ func createTables(db *sql.DB) error {
     if err != nil {
         return err
     }
+    log.Println("[SETUP] Creating nasa table...")
+    nasaTable := `CREATE TABLE IF NOT EXISTS nasa (
+        Date TEXT,
+        Explanation TEXT,
+        HDURL TEXT,
+        MediaType TEXT,
+        ServiceVersion TEXT,
+        Title TEXT,
+        URL TEXT,
+        ThumbnailURL TEXT,
+        Copyright TEXT,
+        Idx INTEGER PRIMARY KEY AUTOINCREMENT
+    );`
+    _, err = db.Exec(nasaTable)
+    if err != nil {
+        return err
+    }
     return nil
 }
