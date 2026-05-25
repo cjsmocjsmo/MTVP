@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"log"
+	"sync"
 	"time"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -39,23 +40,43 @@ func Run() error {
 	}
 	log.Println("[SETUP] Tables created.")
 
-	log.Println("[SETUP] Populating movies...")
-	if err := populateMovies(db); err != nil {
-	    return fmt.Errorf("failed to populate movies: %w", err)
-	}
-	log.Println("[SETUP] Movies populated.")
 
-	log.Println("[SETUP] Populating TV shows...")
-	if err := populateTVShows(db); err != nil {
-	    return fmt.Errorf("failed to populate tvshows: %w", err)
-	}
-	log.Println("[SETUP] TV shows populated.")
 
-	log.Println("[SETUP] Populating videos...")
-	if err := populateVideos(db); err != nil {
-	    return fmt.Errorf("failed to populate videos: %w", err)
-	}
-	log.Println("[SETUP] Videos populated.")
+	   log.Println("[SETUP] Populating movies, TV shows, and videos (parallel)...")
+	   var moviesErr, tvErr, videosErr error
+	   var wg sync.WaitGroup
+	   wg.Add(3)
+	   go func() {
+		   defer wg.Done()
+		   if err := populateMovies(db); err != nil {
+			   moviesErr = fmt.Errorf("failed to populate movies: %w", err)
+		   }
+	   }()
+	   go func() {
+		   defer wg.Done()
+		   if err := populateTVShows(db); err != nil {
+			   tvErr = fmt.Errorf("failed to populate tvshows: %w", err)
+		   }
+	   }()
+	   go func() {
+		   defer wg.Done()
+		   if err := populateVideos(db); err != nil {
+			   videosErr = fmt.Errorf("failed to populate videos: %w", err)
+		   }
+	   }()
+	   wg.Wait()
+	   if moviesErr != nil {
+		   return moviesErr
+	   }
+	   log.Println("[SETUP] Movies populated.")
+	   if tvErr != nil {
+		   return tvErr
+	   }
+	   log.Println("[SETUP] TV shows populated.")
+	   if videosErr != nil {
+		   return videosErr
+	   }
+	   log.Println("[SETUP] Videos populated.")
 
 	log.Println("[SETUP] Database setup complete.")
 	return nil
