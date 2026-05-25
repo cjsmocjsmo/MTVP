@@ -24,35 +24,35 @@ func GenerateImgId(s string) string {
 }
 
 func CreateThumbnail(srcPath, dstDir string) (string, error) {
-	       // Ensure thumbnail directory exists
-	       if err := os.MkdirAll(dstDir, 0755); err != nil {
-		       return "", fmt.Errorf("failed to create thumbnail directory %s: %w", dstDir, err)
-	       }
+	// Ensure thumbnail directory exists
+	if err := os.MkdirAll(dstDir, 0755); err != nil {
+	    return "", fmt.Errorf("failed to create thumbnail directory %s: %w", dstDir, err)
+	}
 
-	       file, err := os.Open(srcPath)
-	       if err != nil {
-		       return "", err
-	       }
-	       defer file.Close()
+	file, err := os.Open(srcPath)
+	if err != nil {
+	    return "", err
+	}
+	defer file.Close()
 
-	       img, _, err := image.Decode(file)
-	       if err != nil {
-		       return "", err
-	       }
+	img, _, err := image.Decode(file)
+	if err != nil {
+	    return "", err
+	}
 
-	       thumb := resizeImage(img, 300, 300)
-	       fname := filepath.Base(srcPath)
-	       thumbPath := filepath.Join(dstDir, fname)
-	       thumbFile, err := os.Create(thumbPath)
-	       if err != nil {
-		       return "", err
-	       }
-	       defer thumbFile.Close()
+	thumb := resizeImage(img, 300, 300)
+	fname := filepath.Base(srcPath)
+	thumbPath := filepath.Join(dstDir, fname)
+	thumbFile, err := os.Create(thumbPath)
+	if err != nil {
+	    return "", err
+	}
+	defer thumbFile.Close()
 
-	       if err := jpeg.Encode(thumbFile, thumb, &jpeg.Options{Quality: 85}); err != nil {
-		       return "", err
-	       }
-	       return thumbPath, nil
+	if err := jpeg.Encode(thumbFile, thumb, &jpeg.Options{Quality: 85}); err != nil {
+	    return "", err
+	}
+	return thumbPath, nil
 }
 
 func resizeImage(img image.Image, maxW, maxH int) image.Image {
