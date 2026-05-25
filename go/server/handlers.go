@@ -230,6 +230,8 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             NasaThumbnailURL string
             NasaCopyright string
             NasaIdx int
+            IsNasaVideo bool
+            IsNasaImage bool
         }
         stats := Stats{
             TotalMovies:      movCount,
@@ -255,6 +257,8 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
             NasaThumbnailURL: nasaData.ThumbnailURL,
             NasaCopyright: nasaData.Copyright,
             NasaIdx: nasaData.Idx,
+            IsNasaVideo: nasaData.MediaType == "video",
+            IsNasaImage: nasaData.MediaType == "image",
         }
         tmpl, err := template.ParseFiles("templates/index.html")
         if err != nil {
