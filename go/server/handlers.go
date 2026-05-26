@@ -527,6 +527,30 @@ func HandleWS(conn *websocket.Conn, db *sql.DB) {
             } else {
                 log.Printf("[HandleWS] 'tv_set_media' command received with empty tv_id")
             }
+        case "home_set_media":
+            homevidId, _ := data["media_id"].(string)
+            log.Printf("[HandleWS] Received 'home_set_media' command. homevidId: %v", homevidId)
+            if homevidId != "" {
+                var path string
+                log.Printf("[HandleWS] Querying DB for homevidId: %v", homevidId)
+                err := db.QueryRow("SELECT VidPath FROM videos WHERE VidId = ?", homevidId).Scan(&path)
+                if err != nil {
+                    log.Printf("[HandleWS] Media not found for homevidId %v: %v", homevidId, err)
+                    sendJSON(conn, map[string]interface{}{ "status": "error", "message": "media not found" })
+                } else {
+                    log.Printf("[HandleWS] Found media path for homevidId %v: %v", homevidId, path)
+                    log.Printf("[HandleWS] Attempting to start player with path: %v", path)
+                    if err := player.StartMPV(path); err != nil {
+                        log.Printf("[HandleWS] Error starting player for path %v: %v", path, err)
+                        sendJSON(conn, map[string]interface{}{ "status": "error", "message": err.Error() })
+                    } else {
+                        log.Printf("[HandleWS] Media set successfully for homevidId %v", homevidId)
+                        sendJSON(conn, map[string]interface{}{ "status": "media_set" })
+                    }
+                }
+            } else {
+                log.Printf("[HandleWS] 'home_set_media' command received with empty homevidId")
+            }
         case "stop":
             player.StopMPV()
             sendJSON(conn, map[string]interface{}{ "status": "stopped" })

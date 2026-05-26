@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MTV Movie List</title>
 	<link rel="stylesheet" href="/static/css/mtv.css">
 </head>
+
 <body>
 	<div id="navbar">
-        <a href="/"><button class="navbarbtn">Home</button></a>
-        <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
-        <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
-    </div>
+		<a href="/"><button class="navbarbtn">Home</button></a>
+		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
+		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
+	</div>
 	<!-- <h1 id="header">Current Weather</h1> -->
 	<div class="weather-div">
 		<p id="wi1" class="weather-div-item">{{.WeatherLocation}}</p>
@@ -27,25 +30,26 @@
 		<p id="i4" class="stat-div-item">Free Space on Disk: {{.FreeSpaceOnDisk}}</p>
 	</div>
 	{{if .IsNasaVideo}}
-		<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
-		<div class="nasa-div">
-			<h2>{{.NasaTitle}}</h2>
-			<!-- <a href="{{.NasaURL}}" target="_blank">View on NASA</a> -->
-			<video controls class="nasa-video">
-				<source src="{{.NasaURL}}" type="video/mp4">
-				Your browser does not support the video tag.
-			</video>
-			<p class="nasa-txt">{{.NasaExplanation}}</p>
-		</div>
+	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
+	<div class="nasa-div">
+		<h2>{{.NasaTitle}}</h2>
+		<!-- <a href="{{.NasaURL}}" target="_blank">View on NASA</a> -->
+		<video controls class="nasa-video">
+			<source src="{{.NasaURL}}" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		<p class="nasa-txt">{{.NasaExplanation}}</p>
+	</div>
 	{{else if .IsNasaImage}}
-		<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
-		<div class="nasa-div">
-			<h2>{{.NasaTitle}}</h2>
-			<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->
-			<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}" >
-			<p class="nasa-txt">{{.NasaExplanation}}</p>
-		</div>
+	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
+	<div class="nasa-div">
+		<h2>{{.NasaTitle}}</h2>
+		<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->
+		<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}">
+		<p class="nasa-txt">{{.NasaExplanation}}</p>
+	</div>
 	{{end}}
 </body>
 <script src="/static/javascript/mtv.js"></script>
+
 </html>

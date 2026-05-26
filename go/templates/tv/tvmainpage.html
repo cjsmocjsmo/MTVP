@@ -1,53 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pagetitle">TV Shows</title>
     <link rel="stylesheet" href="/static/css/mtv.css">
-    
+
 </head>
+
 <body>
     <div id="navbar">
         <a href="/"><button class="navbarbtn">Home</button></a>
         <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
         <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+        <a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
     </div>
-	<h1 id="header">Tv Shows</h1>
+    <h1 id="header">Tv Shows</h1>
 
     <div class="tv-search-div">
-		<form id="tv-search-form" action="/search" method="get">
-			<input id="tv-search-input" type="text" name="query" placeholder="Search for movies or TV shows...">
-			<button id="tv-search-button" type="submit">Search</button>
-		</form>
-	</div>
-        
-	<div class="tv-search-results"></div>
+        <form id="tv-search-form" action="/search" method="get">
+            <input id="tv-search-input" type="text" name="query" placeholder="Search for movies or TV shows...">
+            <button id="tv-search-button" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="tv-search-results"></div>
 
     <div class="media-grid-div">
         <div class="media-grid">
-            <a class="media-grid-item" href="/tvactionpage"><p>Action</p></a>
-            <a class="media-grid-item" href="/tvcartoonspage"><p>Cartoons</p></a>
-            <a class="media-grid-item" href="/tvcomedypage"><p>Comedy</p></a>
-            <a class="media-grid-item" href="/tvfantasypage"><p>Fantasy</p></a>
-            <a class="media-grid-item" href="/tvmcupage"><p>MCU</p></a>
-            <a class="media-grid-item" href="/tvncispage"><p>NCIS</p></a>
-            <a class="media-grid-item" href="/tvsciencepage"><p>Science</p></a>
-            <a class="media-grid-item" href="/tvscifipage"><p>SciFi</p></a>
-            <a class="media-grid-item" href="/tvstartrekpage"><p>Star Trek</p></a>
-            <a class="media-grid-item" href="/tvstarwarspage"><p>Star Wars</p></a>
-            <a class="media-grid-item" href="/tvwesternspage"><p>Westerns</p></a>
+            <a class="media-grid-item" href="/tvactionpage">
+                <p>Action</p>
+            </a>
+            <a class="media-grid-item" href="/tvcartoonspage">
+                <p>Cartoons</p>
+            </a>
+            <a class="media-grid-item" href="/tvcomedypage">
+                <p>Comedy</p>
+            </a>
+            <a class="media-grid-item" href="/tvfantasypage">
+                <p>Fantasy</p>
+            </a>
+            <a class="media-grid-item" href="/tvmcupage">
+                <p>MCU</p>
+            </a>
+            <a class="media-grid-item" href="/tvncispage">
+                <p>NCIS</p>
+            </a>
+            <a class="media-grid-item" href="/tvsciencepage">
+                <p>Science</p>
+            </a>
+            <a class="media-grid-item" href="/tvscifipage">
+                <p>SciFi</p>
+            </a>
+            <a class="media-grid-item" href="/tvstartrekpage">
+                <p>Star Trek</p>
+            </a>
+            <a class="media-grid-item" href="/tvstarwarspage">
+                <p>Star Wars</p>
+            </a>
+            <a class="media-grid-item" href="/tvwesternspage">
+                <p>Westerns</p>
+            </a>
         </div>
     </div>
     <footer class="sticky-footer">
-		<div class="footer-controls">
-			<button class="btn" id="btn-back">Back</button>
+        <div class="footer-controls">
+            <button class="btn" id="btn-back">Back</button>
             <button class="btn" id="btn-stop">Stop</button>
-			<button class="btn" id="btn-play">Play</button>
-			<button class="btn" id="btn-pause">Pause</button>
-			<button class="btn" id="btn-next">Next</button>
-		</div>
+            <button class="btn" id="btn-play">Play</button>
+            <button class="btn" id="btn-pause">Pause</button>
+            <button class="btn" id="btn-next">Next</button>
+        </div>
     </footer>
 </body>
 <script src="/static/javascript/mtv.js"></script>
+
 </html>

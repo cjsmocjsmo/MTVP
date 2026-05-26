@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Documentary Movies</title>
 	<link rel="stylesheet" href="/static/css/mtv.css">
 </head>
+
 <body>
-    <div id="navbar">
-        <a href="/"><button class="navbarbtn">Home</button></a>
-        <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
-        <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
-    </div>
+	<div id="navbar">
+		<a href="/"><button class="navbarbtn">Home</button></a>
+		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
+		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
+	</div>>
 	<h1>Documentary Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-			<img 
-				id="{{.MovId}}" 
-				class="mov-img" 
-				src="{{.HttpThumbPath}}" 
-				alt="{{.Name}}" 
-			/>
+		<img id="{{.MovId}}" class="mov-img" src="{{.HttpThumbPath}}" alt="{{.Name}}" />
 		{{else}}
-			<p>No Documentary movie images found.</p>
+		<p>No Documentary movie images found.</p>
 		{{end}}
 	</div>
 	<div id="navbar">
 		<a href="/"><button class="navbarbtn">Home</button></a>
 		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
 		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
-	</div>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
+	</div>>
 </body>
 <script src="/static/javascript/mtv.js"></script>
+
 </html>

@@ -1,20 +1,21 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MTV Movie List</title>
 	<link rel="stylesheet" href="/static/css/mtv.css">
-	
+
 </head>
+
 <body>
 	<div id="navbar">
-        <a href="/"><button class="navbarbtn">Home</button></a>
-        <a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
-        <a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
-    </div>
+		<a href="/"><button class="navbarbtn">Home</button></a>
+		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
+		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
+	</div>
 
 	<h1 id="header">MTV Movie List</h1>
 
@@ -27,63 +28,183 @@
 	<div class="mov-search-results"></div>
 
 	<div class="media-grid">
-		<a class="media-grid-item" href='/action'><p>Action</p></a>
-		<a class="media-grid-item" href='/arnold'><p>Arnold</p></a>
-		<a class="media-grid-item" href='/avatar'><p>Avatar</p></a>
-		<a class="media-grid-item" href='/brucelee'><p>Bruce Lee</p></a>
-		<a class="media-grid-item" href='/brucewillis'><p>Bruce Willis</p></a>
-		<a class="media-grid-item" href='/buzz'><p>Buzz</p></a>
-		<a class="media-grid-item" href='/cartoons'><p>Cartoons</p></a>
-		<a class="media-grid-item" href='/charliebrown'><p>Charlie Brown</p></a>
-		<a class="media-grid-item" href='/cheechandchong'><p>Cheech And Chong</p></a>
-		<a class="media-grid-item" href='/chucknorris'><p>Chuck Norris</p></a>
-		<a class="media-grid-item" href='/clinteastwood'><p>Clint Eastwood</p></a>
-		<a class="media-grid-item" href='/comedy'><p>Comedy</p></a>
-		<a class="media-grid-item" href='/drama'><p>Drama</p></a>
-		<a class="media-grid-item" href='/documentary'><p>Documentary</p></a>
-		<a class="media-grid-item" href='/fantasy'><p>Fantasy</p></a>
-		<a class="media-grid-item" href='/ghostbusters'><p>GhostBusters</p></a>
-		<a class="media-grid-item" href='/godzilla'><p>Godzilla</p></a>
-		<a class="media-grid-item" href='/harrisonford'><p>HarrisonFord</p></a>
-		<a class="media-grid-item" href='/harrypotter'><p>HarryPotter</p></a>
-		<a class="media-grid-item" href='/hellboy'><p>HellBoy</p></a>
-		<a class="media-grid-item" href='/homevids'><p>Home Vids</p></a>
-		<a class="media-grid-item" href='/indianajones'><p>Indiana Jones</p></a>
-		<a class="media-grid-item" href='/jamesbond'><p>James Bond</p></a>
-		<a class="media-grid-item" href='/johnwayne'><p>John Wayne</p></a>
-		<a class="media-grid-item" href='/johnwick'><p>John Wick</p></a>
-		<a class="media-grid-item" href='/jurassicpark'><p>Jurrasic Park</p></a>
-		<a class="media-grid-item" href='/kevincostner'><p>Kevin Costner</p></a>
-		<a class="media-grid-item" href='/kingsman'><p>KingsMan</p></a>
-		<a class="media-grid-item" href='/lego'><p>Lego</p></a>
-		<a class="media-grid-item" href='/meninblack'><p>Men In Black</p></a>
-		<a class="media-grid-item" href='/minions'><p>Minions</p></a>
-		<a class="media-grid-item" href='/misc'><p>Misc</p></a>
-		<a class="media-grid-item" href='/musicvids'><p>Music Vids</p></a>
-		<a class="media-grid-item" href='/mummy'><p>Mummy</p></a>
-		<a class="media-grid-item" href='/nature'><p>Nature</p></a>
-		<a class="media-grid-item" href='/nicolascage'><p>Nicolas Cage</p></a>
-		<a class="media-grid-item" href='/oldies'><p>Oldies</p></a>
-		<a class="media-grid-item" href='/pandas'><p>Pandas</p></a>
-		<a class="media-grid-item" href='/pirates'><p>Pirates</p></a>
-		<a class="media-grid-item" href='/predator'><p>Predator</p></a>
-		<a class="media-grid-item" href='/riddick'><p>Riddick</p></a>
-		<a class="media-grid-item" href='/science'><p>Science</p></a>
-		<a class="media-grid-item" href='/scifi'><p>SciFi</p></a>
-		<a class="media-grid-item" href='/stalone'><p>Stalone</p></a>
-		<a class="media-grid-item" href='/startrek'><p>Star Trek</p></a>
-		<a class="media-grid-item" href='/starwars'><p>Star Wars</p></a>
-		<a class="media-grid-item" href='/stooges'><p>Stooges</p></a>
-		<a class="media-grid-item" href='/superheros'><p>Super Heros</p></a>
-		<a class="media-grid-item" href='/superman'><p>SuperMan</p></a>
-		<a class="media-grid-item" href='/tinkerbell'><p>Tinker Bell</p></a>
-		<a class="media-grid-item" href='/tomcruize'><p>Tom Cruize</p></a>
-		<a class="media-grid-item" href='/transformers'><p>Transformers</p></a>
-		<a class="media-grid-item" href='/tremors'><p>Tremors</p></a>
-		<a class="media-grid-item" href='/trolls'><p>Trolls</p></a>
-		<a class="media-grid-item" href='/therock'><p>The Rock</p></a>
-		<a class="media-grid-item" href='/vandam'><p>VanDam</p></a>
-		<a class="media-grid-item" href='/xmen'><p>XMen</p></a>
+		<a class="media-grid-item" href='/action'>
+			<p>Action</p>
+		</a>
+		<a class="media-grid-item" href='/arnold'>
+			<p>Arnold</p>
+		</a>
+		<a class="media-grid-item" href='/avatar'>
+			<p>Avatar</p>
+		</a>
+		<a class="media-grid-item" href='/brucelee'>
+			<p>Bruce Lee</p>
+		</a>
+		<a class="media-grid-item" href='/brucewillis'>
+			<p>Bruce Willis</p>
+		</a>
+		<a class="media-grid-item" href='/buzz'>
+			<p>Buzz</p>
+		</a>
+		<a class="media-grid-item" href='/cartoons'>
+			<p>Cartoons</p>
+		</a>
+		<a class="media-grid-item" href='/charliebrown'>
+			<p>Charlie Brown</p>
+		</a>
+		<a class="media-grid-item" href='/cheechandchong'>
+			<p>Cheech And Chong</p>
+		</a>
+		<a class="media-grid-item" href='/chucknorris'>
+			<p>Chuck Norris</p>
+		</a>
+		<a class="media-grid-item" href='/clinteastwood'>
+			<p>Clint Eastwood</p>
+		</a>
+		<a class="media-grid-item" href='/comedy'>
+			<p>Comedy</p>
+		</a>
+		<a class="media-grid-item" href='/drama'>
+			<p>Drama</p>
+		</a>
+		<a class="media-grid-item" href='/documentary'>
+			<p>Documentary</p>
+		</a>
+		<a class="media-grid-item" href='/fantasy'>
+			<p>Fantasy</p>
+		</a>
+		<a class="media-grid-item" href='/ghostbusters'>
+			<p>GhostBusters</p>
+		</a>
+		<a class="media-grid-item" href='/godzilla'>
+			<p>Godzilla</p>
+		</a>
+		<a class="media-grid-item" href='/harrisonford'>
+			<p>HarrisonFord</p>
+		</a>
+		<a class="media-grid-item" href='/harrypotter'>
+			<p>HarryPotter</p>
+		</a>
+		<a class="media-grid-item" href='/hellboy'>
+			<p>HellBoy</p>
+		</a>
+		<a class="media-grid-item" href='/homevids'>
+			<p>Home Vids</p>
+		</a>
+		<a class="media-grid-item" href='/indianajones'>
+			<p>Indiana Jones</p>
+		</a>
+		<a class="media-grid-item" href='/jamesbond'>
+			<p>James Bond</p>
+		</a>
+		<a class="media-grid-item" href='/johnwayne'>
+			<p>John Wayne</p>
+		</a>
+		<a class="media-grid-item" href='/johnwick'>
+			<p>John Wick</p>
+		</a>
+		<a class="media-grid-item" href='/jurassicpark'>
+			<p>Jurrasic Park</p>
+		</a>
+		<a class="media-grid-item" href='/kevincostner'>
+			<p>Kevin Costner</p>
+		</a>
+		<a class="media-grid-item" href='/kingsman'>
+			<p>KingsMan</p>
+		</a>
+		<a class="media-grid-item" href='/lego'>
+			<p>Lego</p>
+		</a>
+		<a class="media-grid-item" href='/meninblack'>
+			<p>Men In Black</p>
+		</a>
+		<a class="media-grid-item" href='/minions'>
+			<p>Minions</p>
+		</a>
+		<a class="media-grid-item" href='/misc'>
+			<p>Misc</p>
+		</a>
+		<a class="media-grid-item" href='/musicvids'>
+			<p>Music Vids</p>
+		</a>
+		<a class="media-grid-item" href='/mummy'>
+			<p>Mummy</p>
+		</a>
+		<a class="media-grid-item" href='/nature'>
+			<p>Nature</p>
+		</a>
+		<a class="media-grid-item" href='/nicolascage'>
+			<p>Nicolas Cage</p>
+		</a>
+		<a class="media-grid-item" href='/oldies'>
+			<p>Oldies</p>
+		</a>
+		<a class="media-grid-item" href='/pandas'>
+			<p>Pandas</p>
+		</a>
+		<a class="media-grid-item" href='/pirates'>
+			<p>Pirates</p>
+		</a>
+		<a class="media-grid-item" href='/predator'>
+			<p>Predator</p>
+		</a>
+		<a class="media-grid-item" href='/riddick'>
+			<p>Riddick</p>
+		</a>
+		<a class="media-grid-item" href='/science'>
+			<p>Science</p>
+		</a>
+		<a class="media-grid-item" href='/scifi'>
+			<p>SciFi</p>
+		</a>
+		<a class="media-grid-item" href='/stalone'>
+			<p>Stalone</p>
+		</a>
+		<a class="media-grid-item" href='/startrek'>
+			<p>Star Trek</p>
+		</a>
+		<a class="media-grid-item" href='/starwars'>
+			<p>Star Wars</p>
+		</a>
+		<a class="media-grid-item" href='/stooges'>
+			<p>Stooges</p>
+		</a>
+		<a class="media-grid-item" href='/superheros'>
+			<p>Super Heros</p>
+		</a>
+		<a class="media-grid-item" href='/superman'>
+			<p>SuperMan</p>
+		</a>
+		<a class="media-grid-item" href='/tinkerbell'>
+			<p>Tinker Bell</p>
+		</a>
+		<a class="media-grid-item" href='/tomcruize'>
+			<p>Tom Cruize</p>
+		</a>
+		<a class="media-grid-item" href='/transformers'>
+			<p>Transformers</p>
+		</a>
+		<a class="media-grid-item" href='/tremors'>
+			<p>Tremors</p>
+		</a>
+		<a class="media-grid-item" href='/trolls'>
+			<p>Trolls</p>
+		</a>
+		<a class="media-grid-item" href='/therock'>
+			<p>The Rock</p>
+		</a>
+		<a class="media-grid-item" href='/vandam'>
+			<p>VanDam</p>
+		</a>
+		<a class="media-grid-item" href='/xmen'>
+			<p>XMen</p>
+		</a>
+	</div>
+	<div id="navbar">
+		<a href="/"><button class="navbarbtn">Home</button></a>
+		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
+		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
 	</div>
 	<footer class="sticky-footer">
 		<div class="footer-controls">
@@ -93,7 +214,8 @@
 			<button class="btn" id="btn-pause">Pause</button>
 			<button class="btn" id="btn-next">Next</button>
 		</div>
-    </footer>
+	</footer>
 </body>
 <script src="/static/javascript/mtv.js"></script>
+
 </html>
