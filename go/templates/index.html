@@ -23,12 +23,7 @@
 		<p id="wi4" class="weather-div-item">{{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
 	</div>
 	<h1 id="header">Stats</h1>
-	<div class="stats-div">
-		<p id="i1" class="stat-div-item">Total Movies: {{.TotalMovies}} ({{.MovieSizeOnDisk}})</p>
-		<p id="i2" class="stat-div-item">Total TV Episodes: {{.TotalTVShows}} ({{.TVShowSizeOnDisk}})</p>
-		<p id="i3" class="stat-div-item">Total Videos: {{.TotalVideos}} ({{.VideoSizeOnDisk}})</p>
-		<p id="i4" class="stat-div-item">Free Space on Disk: {{.FreeSpaceOnDisk}}</p>
-	</div>
+
 	{{if .IsNasaVideo}}
 	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
 	<div class="nasa-div">
@@ -49,6 +44,12 @@
 		<p class="nasa-txt">{{.NasaExplanation}}</p>
 	</div>
 	{{end}}
+	<div class="stats-div">
+		<p id="i1" class="stat-div-item">Total Movies: {{.TotalMovies}} ({{.MovieSizeOnDisk}})</p>
+		<p id="i2" class="stat-div-item">Total TV Episodes: {{.TotalTVShows}} ({{.TVShowSizeOnDisk}})</p>
+		<p id="i3" class="stat-div-item">Total Videos: {{.TotalVideos}} ({{.VideoSizeOnDisk}})</p>
+		<p id="i4" class="stat-div-item">Free Space on Disk: {{.FreeSpaceOnDisk}}</p>
+	</div>
 </body>
 <script src="/static/javascript/mtv.js"></script>
 
