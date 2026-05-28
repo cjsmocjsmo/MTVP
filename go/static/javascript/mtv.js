@@ -24,6 +24,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Attach click listeners to all .mov-video-name elements for home_set_media WebSocket command
+    const movVideoNames = document.querySelectorAll('.mov-video-name');
+    movVideoNames.forEach(function(p) {
+        p.addEventListener('click', function() {
+            const vidId = p.id;
+            console.log('[mtv.js] mov-video-name clicked. Selected VidId:', vidId);
+            const ws = new WebSocket(wsAddr);
+            ws.onopen = function() {
+                console.log('[mtv.js] WebSocket opened for VidId:', vidId);
+                ws.send(JSON.stringify({ command: 'home_set_media', VidId: vidId }));
+            };
+            ws.onmessage = function(event) {
+                console.log('[mtv.js] WebSocket message:', event.data);
+            };
+            ws.onerror = function(error) {
+                console.error('[mtv.js] WebSocket error:', error);
+            };
+            ws.onclose = function() {
+                console.log('[mtv.js] WebSocket connection closed for VidId:', vidId);
+            };
+        });
+    });
+
     // Attach click listeners to all TV episode buttons for tv_set_media WebSocket command
     const tvEpisodeBtns = document.querySelectorAll('.epi-div-item');
     tvEpisodeBtns.forEach(function(btn) {
