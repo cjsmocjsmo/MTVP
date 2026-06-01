@@ -86,6 +86,7 @@ func StartServer() {
 	http.HandleFunc("/movsearch", MovSearchHandler(db))
 	http.HandleFunc("/tvsearch", TVSearchHandler(db))
 	http.HandleFunc("/ws", WSHandler(db))
+	http.HandleFunc("/update", UpdateHandler(db))
 
 	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
