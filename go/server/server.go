@@ -8,27 +8,7 @@ import (
 	"os"
 	"strings"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/gorilla/websocket"
 )
-
-
-
-
-func wsHandler(db *sql.DB) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		upgrader := websocket.Upgrader{
-			ReadBufferSize:  1024,
-			WriteBufferSize: 1024,
-			CheckOrigin: func(r *http.Request) bool { return true },
-		}
-		conn, err := upgrader.Upgrade(w, r, nil)
-		if err != nil {
-			log.Println("WebSocket upgrade error:", err)
-			return
-		}
-		HandleWS(conn, db)
-	}
-}
 
 func staticFileHandler(prefix, dir string) http.Handler {
 		log.Printf("[staticFileHandler] Initializing for prefix: '%s', dir: '%s'", prefix, dir)
@@ -62,9 +42,6 @@ func StartServer() {
 	}
 	defer db.Close()
 
-		// Serve static files from templates at root
-		//http.Handle("/", staticFileHandler("/", "templates"))
-		// Serve /static/ from static for CSS, JS, etc.
 	log.Println("[StartServer] Creating static file handler for /static/ route (using http.StripPrefix)")
 	staticDir := "./static/"
 	absStaticDir, err := os.Getwd()
@@ -108,7 +85,7 @@ func StartServer() {
 	
 	http.HandleFunc("/movsearch", MovSearchHandler(db))
 	http.HandleFunc("/tvsearch", TVSearchHandler(db))
-	http.HandleFunc("/ws", wsHandler(db))
+	http.HandleFunc("/ws", WSHandler(db))
 
 	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())
@@ -268,8 +245,6 @@ func StartServer() {
 
 	http.HandleFunc("/tvwesternspage", TVWesternsPageHandler())
 	http.HandleFunc("/tvwestern1923", TV1923PageHandler(db))
-
-
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 	go func() {

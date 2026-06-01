@@ -5,11 +5,12 @@ import (
 	"log"
 	"mtvp/setup"
 	"mtvp/server"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	// Load environment variables
-	err := setup.LoadEnv()
+	err := godotenv.Load("../env/.env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
