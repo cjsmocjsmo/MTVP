@@ -27,19 +27,19 @@ func createTables(db *sql.DB) error {
 		Path TEXT,
 		Idx INTEGER
 	);`
-	
-    log.Println("[SETUP] Creating movies table...")
-    _, err := db.Exec(movieTable)
-    if err != nil {
-        return err
-    }
-    log.Println("[SETUP] Creating tvshows table...")
-    _, err = db.Exec(tvTable)
-    if err != nil {
-        return err
-    }
-    log.Println("[SETUP] Creating images table...")
-    imagesTable := `CREATE TABLE IF NOT EXISTS images (
+
+	log.Println("[SETUP] Creating movies table...")
+	_, err := db.Exec(movieTable)
+	if err != nil {
+		return err
+	}
+	log.Println("[SETUP] Creating tvshows table...")
+	_, err = db.Exec(tvTable)
+	if err != nil {
+		return err
+	}
+	log.Println("[SETUP] Creating images table...")
+	imagesTable := `CREATE TABLE IF NOT EXISTS images (
         ImgId TEXT,
         Path TEXT,
         ImgPath TEXT,
@@ -49,24 +49,40 @@ func createTables(db *sql.DB) error {
         Idx INTEGER,
         HttpThumbPath TEXT
     );`
-    _, err = db.Exec(imagesTable)
-    if err != nil {
-        return err
-    }
-    log.Println("[SETUP] Creating videos table...")
-    videosTable := `CREATE TABLE IF NOT EXISTS videos (
+	_, err = db.Exec(imagesTable)
+	if err != nil {
+		return err
+	}
+	log.Println("[SETUP] Creating videos table...")
+	videosTable := `CREATE TABLE IF NOT EXISTS videos (
         VidId TEXT PRIMARY KEY,
         VidPath TEXT,
         Size INTEGER,
         Name TEXT,
         Idx INTEGER
     );`
-    _, err = db.Exec(videosTable)
-    if err != nil {
-        return err
-    }
-    log.Println("[SETUP] Creating nasa table...")
-    nasaTable := `CREATE TABLE IF NOT EXISTS nasa (
+	_, err = db.Exec(videosTable)
+	if err != nil {
+		return err
+	}
+	log.Println("[SETUP] Creating weather table...")
+	weatherTable := `CREATE TABLE IF NOT EXISTS weather (
+        FetchedAt TEXT,
+        Location TEXT,
+        Temperature TEXT,
+        TemperatureUnit TEXT,
+        Conditions TEXT,
+        WindDirection TEXT,
+        WindSpeed TEXT,
+        Humidity TEXT,
+        Idx INTEGER PRIMARY KEY AUTOINCREMENT
+    );`
+	_, err = db.Exec(weatherTable)
+	if err != nil {
+		return err
+	}
+	log.Println("[SETUP] Creating nasa table...")
+	nasaTable := `CREATE TABLE IF NOT EXISTS nasa (
         Date TEXT,
         Explanation TEXT,
         HDURL TEXT,
@@ -78,9 +94,9 @@ func createTables(db *sql.DB) error {
         Copyright TEXT,
         Idx INTEGER PRIMARY KEY AUTOINCREMENT
     );`
-    _, err = db.Exec(nasaTable)
-    if err != nil {
-        return err
-    }
-    return nil
+	_, err = db.Exec(nasaTable)
+	if err != nil {
+		return err
+	}
+	return nil
 }

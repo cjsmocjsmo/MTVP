@@ -1,8 +1,8 @@
 package server
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestPlayerManager_StartMPV(t *testing.T) {

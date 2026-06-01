@@ -9,10 +9,10 @@ import (
 	"image/jpeg"
 	"os"
 	"path/filepath"
-	"strings"
 	"runtime"
-	"sync"
 	"strconv"
+	"strings"
+	"sync"
 
 	_ "image/png"
 )
@@ -26,18 +26,18 @@ func GenerateImgId(s string) string {
 func CreateThumbnail(srcPath, dstDir string) (string, error) {
 	// Ensure thumbnail directory exists
 	if err := os.MkdirAll(dstDir, 0755); err != nil {
-	    return "", fmt.Errorf("failed to create thumbnail directory %s: %w", dstDir, err)
+		return "", fmt.Errorf("failed to create thumbnail directory %s: %w", dstDir, err)
 	}
 
 	file, err := os.Open(srcPath)
 	if err != nil {
-	    return "", err
+		return "", err
 	}
 	defer file.Close()
 
 	img, _, err := image.Decode(file)
 	if err != nil {
-	    return "", err
+		return "", err
 	}
 
 	thumb := resizeImage(img, 300, 300)
@@ -45,12 +45,12 @@ func CreateThumbnail(srcPath, dstDir string) (string, error) {
 	thumbPath := filepath.Join(dstDir, fname)
 	thumbFile, err := os.Create(thumbPath)
 	if err != nil {
-	    return "", err
+		return "", err
 	}
 	defer thumbFile.Close()
 
 	if err := jpeg.Encode(thumbFile, thumb, &jpeg.Options{Quality: 85}); err != nil {
-	    return "", err
+		return "", err
 	}
 	return thumbPath, nil
 }
@@ -88,14 +88,14 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 		path string
 	}
 	type result struct {
-		idx         int
-		path        string
-		imgId       string
-		name        string
-		thumbPath   string
-		size        int64
+		idx           int
+		path          string
+		imgId         string
+		name          string
+		thumbPath     string
+		size          int64
 		httpThumbPath string
-		err         error
+		err           error
 	}
 
 	numWorkers := runtime.NumCPU()

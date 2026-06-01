@@ -1,14 +1,14 @@
 package setup
 
 import (
-	"testing"
+	"database/sql"
 	"github.com/stretchr/testify/assert"
 	"image"
-	"os"
 	"image/color"
 	"image/jpeg"
+	"os"
 	"path/filepath"
-	"database/sql"
+	"testing"
 )
 
 func TestGenerateImgId(t *testing.T) {

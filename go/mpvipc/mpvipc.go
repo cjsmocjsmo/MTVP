@@ -2,8 +2,8 @@ package mpvipc
 
 import (
 	"encoding/json"
-	"net"
 	"log"
+	"net"
 )
 
 type MPVIPC struct {

@@ -1,6 +1,5 @@
 package setup
 
-
 import (
 	"crypto/sha256"
 	"database/sql"
@@ -9,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"sync"
 	"strconv"
+	"sync"
 )
 
 func GenerateVidId(path string) (string, error) {

@@ -1,11 +1,10 @@
 package main
 
-
 import (
-	"log"
-	"mtvp/setup"
-	"mtvp/server"
 	"github.com/joho/godotenv"
+	"log"
+	"mtvp/server"
+	"mtvp/setup"
 )
 
 func main() {

@@ -2,13 +2,13 @@ package setup
 
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
+	"github.com/stretchr/testify/assert"
+	"image"
+	"image/jpeg"
 	"os"
 	"path/filepath"
 	"testing"
-	"image"
-	"image/jpeg"
-	"github.com/stretchr/testify/assert"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func TestInsertVideos_TableMissing(t *testing.T) {

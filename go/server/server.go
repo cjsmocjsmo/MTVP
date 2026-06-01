@@ -1,36 +1,35 @@
-	
 package server
 
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
 	"os"
 	"strings"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func staticFileHandler(prefix, dir string) http.Handler {
-		log.Printf("[staticFileHandler] Initializing for prefix: '%s', dir: '%s'", prefix, dir)
-		fs := http.FileServer(http.Dir(dir))
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			log.Printf("[staticFileHandler] Incoming request: Method=%s, URL=%s, RemoteAddr=%s, UserAgent=%s", r.Method, r.URL.Path, r.RemoteAddr, r.UserAgent())
-			relPath := strings.TrimPrefix(r.URL.Path, prefix)
-			filePath := dir
-			if !strings.HasSuffix(dir, "/") && relPath != "" {
-				filePath += "/"
-			}
-			filePath += relPath
-			log.Printf("[staticFileHandler] Mapped URL '%s' to file path '%s'", r.URL.Path, filePath)
-			fileInfo, err := os.Stat(filePath)
-			if err != nil {
-				log.Printf("[staticFileHandler] File not found or error: %v", err)
-			} else {
-				log.Printf("[staticFileHandler] File exists: %s (size: %d bytes, mode: %s)", filePath, fileInfo.Size(), fileInfo.Mode())
-			}
-			fs.ServeHTTP(w, r)
-			log.Printf("[staticFileHandler] Finished serving: %s", r.URL.Path)
-		})
+	log.Printf("[staticFileHandler] Initializing for prefix: '%s', dir: '%s'", prefix, dir)
+	fs := http.FileServer(http.Dir(dir))
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("[staticFileHandler] Incoming request: Method=%s, URL=%s, RemoteAddr=%s, UserAgent=%s", r.Method, r.URL.Path, r.RemoteAddr, r.UserAgent())
+		relPath := strings.TrimPrefix(r.URL.Path, prefix)
+		filePath := dir
+		if !strings.HasSuffix(dir, "/") && relPath != "" {
+			filePath += "/"
+		}
+		filePath += relPath
+		log.Printf("[staticFileHandler] Mapped URL '%s' to file path '%s'", r.URL.Path, filePath)
+		fileInfo, err := os.Stat(filePath)
+		if err != nil {
+			log.Printf("[staticFileHandler] File not found or error: %v", err)
+		} else {
+			log.Printf("[staticFileHandler] File exists: %s (size: %d bytes, mode: %s)", filePath, fileInfo.Size(), fileInfo.Mode())
+		}
+		fs.ServeHTTP(w, r)
+		log.Printf("[staticFileHandler] Finished serving: %s", r.URL.Path)
+	})
 }
 
 func StartServer() {
@@ -82,7 +81,6 @@ func StartServer() {
 	http.Handle("/tvthumbnails/", http.StripPrefix("/tvthumbnails/", http.FileServer(http.Dir(tvThumbPath))))
 	log.Println("[StartServer] File server registered for /tvthumbnails ->", tvThumbPath)
 
-	
 	http.HandleFunc("/movsearch", MovSearchHandler(db))
 	http.HandleFunc("/tvsearch", TVSearchHandler(db))
 	http.HandleFunc("/ws", WSHandler(db))
@@ -148,13 +146,13 @@ func StartServer() {
 	http.HandleFunc("/trolls", TrollsPageHandler(db))
 	http.HandleFunc("/vandam", VandamPageHandler(db))
 	http.HandleFunc("/xmen", XmenPageHandler(db))
-		// Register TV show pages
+	// Register TV show pages
 	http.HandleFunc("/tvactionpage", TVActionPageHandler())
 	http.HandleFunc("/tvactiondarkwinds", TVDarkWindsPageHandler(db))
 	http.HandleFunc("/tvactionmobland", TVMoblandPageHandler(db))
 	http.HandleFunc("/tvactionshogun", TVShogunPageHandler(db))
 	http.HandleFunc("/tvactionthecontinental", TVTheContinentalPageHandler(db))
-	
+
 	http.HandleFunc("/tvcartoonspage", TVCartoonsPageHandler())
 	http.HandleFunc("/tvcartoonsmastersoftheuniverse", TVMastersOfTheUniversePageHandler(db))
 	http.HandleFunc("/tvcartoonsflintstones", TVFlintstonesPageHandler(db))
@@ -249,11 +247,11 @@ func StartServer() {
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 	go func() {
-	    var port = os.Getenv("MTVGO_SERVER_PORT")
-	    println(wsAddr+":"+port)
-	    if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
-	       log.Fatal("WebSocket server error:", err)
-	    }
+		var port = os.Getenv("MTVGO_SERVER_PORT")
+		println(wsAddr + ":" + port)
+		if err := http.ListenAndServe(wsAddr+":"+port, nil); err != nil {
+			log.Fatal("WebSocket server error:", err)
+		}
 	}()
 
 	// Block forever
