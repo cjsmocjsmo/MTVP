@@ -568,6 +568,16 @@ func TVSearchHandler(db *sql.DB) http.HandlerFunc {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
 // PlayerManager manages the media player process and state
 type PlayerManager struct {
     mu      sync.Mutex
@@ -576,22 +586,6 @@ type PlayerManager struct {
     paused  bool
     ipcSock string
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var player = &PlayerManager{ipcSock: "/tmp/mpvsocket"}
 
 func (p *PlayerManager) StartMPV(path string) error {
