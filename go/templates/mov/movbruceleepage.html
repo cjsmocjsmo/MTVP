@@ -17,7 +17,7 @@
 	<h1>Bruce Lee Movies</h1>
 	<div class="mov-images-grid">
 		{{range .Images}}
-		<img id="{{.MovID}}" class="mov-img" src="{{.HttpThumbPath}}" alt="{{.Name}}" />
+		<img id="{{.MovId}}" class="mov-img" src="{{.HttpThumbPath}}" alt="{{.Name}}" />
 		{{else}}
 		<p>No Bruce Lee movie images found.</p>
 		{{end}}

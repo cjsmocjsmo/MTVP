@@ -17,7 +17,7 @@
     <h1>Arnold Movies</h1>
     <div class="mov-images-grid">
         {{range .Images}}
-        <img id="{{.MovID}}" class="mov-img" src="{{.HttpThumbPath}}" alt="{{.Name}}" />
+        <img id="{{.MovId}}" class="mov-img" src="{{.HttpThumbPath}}" alt="{{.Name}}" />
         {{else}}
         <p>No Arnold movie images found.</p>
         {{end}}
