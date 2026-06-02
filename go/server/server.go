@@ -204,6 +204,7 @@ func StartServer() {
 	http.HandleFunc("/tvscificowboybebop", TVCowboyBebopPageHandler(db))
 	http.HandleFunc("/tvscififallout", TVFalloutPageHandler(db))
 	http.HandleFunc("/tvscififorallmankind", TVForAllMankindPageHandler(db))
+	http.HandleFunc("/tvscifispidernoir", TVSpiderNoirPageHandler(db))
 	http.HandleFunc("/tvscififoundation", TVFoundationPageHandler(db))
 	http.HandleFunc("/tvscifihalo", TVHaloPageHandler(db))
 	http.HandleFunc("/tvscifilostinspace", TVLostInSpacePageHandler(db))
