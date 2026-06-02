@@ -2309,7 +2309,7 @@ func TVSpiderNoirPageHandler(db *sql.DB) http.HandlerFunc {
 				seasons[seasonNum] = episodes
 			}
 		}
-		tmpl, err := template.ParseFiles("templates/tv/scifi/tvscifispidermannoirpage.html")
+		tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsspidermannoirpage.html")
 		if err != nil {
 			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
 			return

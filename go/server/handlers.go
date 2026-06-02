@@ -243,7 +243,25 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 		nasaData, err := FetchNASAData(db)
 		if err != nil {
 			log.Println("Error fetching NASA data:", err)
+			// Fallback: use the most recent entry already in the DB
 			nasaData = &APODResponse{}
+			fallbackRow := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright, Idx FROM nasa ORDER BY Date DESC LIMIT 1`)
+			if scanErr := fallbackRow.Scan(
+				&nasaData.Date,
+				&nasaData.Explanation,
+				&nasaData.HDURL,
+				&nasaData.MediaType,
+				&nasaData.ServiceVersion,
+				&nasaData.Title,
+				&nasaData.URL,
+				&nasaData.ThumbnailURL,
+				&nasaData.Copyright,
+				&nasaData.Idx,
+			); scanErr != nil {
+				log.Println("No NASA fallback row available:", scanErr)
+			} else {
+				log.Printf("Using NASA fallback row: %s - %s", nasaData.Title, nasaData.URL)
+			}
 		} else {
 			// You can use nasaData in the template if needed
 			log.Printf("Today's NASA APOD: %s - %s", nasaData.Title, nasaData.URL)

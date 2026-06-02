@@ -42,6 +42,14 @@ func StartServer() {
 	}
 	defer db.Close()
 
+	// Pre-warm the NASA APOD cache so the first page load always has data
+	log.Println("[StartServer] Pre-fetching NASA APOD data...")
+	if _, nasaErr := FetchNASAData(db); nasaErr != nil {
+		log.Println("[StartServer] NASA pre-fetch failed (will retry on first request):", nasaErr)
+	} else {
+		log.Println("[StartServer] NASA APOD pre-fetch succeeded.")
+	}
+
 	log.Println("[StartServer] Creating static file handler for /static/ route (using http.StripPrefix)")
 	staticDir := "./static/"
 	absStaticDir, err := os.Getwd()
