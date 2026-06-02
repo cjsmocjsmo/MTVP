@@ -1,12 +1,13 @@
 package server
 
 import (
-	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
 	"os"
 	"strings"
+
+	"mtvp/setup"
 )
 
 func staticFileHandler(prefix, dir string) http.Handler {
@@ -35,7 +36,7 @@ func staticFileHandler(prefix, dir string) http.Handler {
 func StartServer() {
 
 	dbPath := os.Getenv("MTVGO_DB_PATH")
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := setup.OpenDB(dbPath)
 	if err != nil {
 		log.Fatal("Failed to open DB:", err)
 	}
