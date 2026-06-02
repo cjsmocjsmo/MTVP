@@ -167,6 +167,11 @@ func StartServer() {
 	http.HandleFunc("/tvcartoonsflintstones", TVFlintstonesPageHandler(db))
 	http.HandleFunc("/tvcartoonsjetsons", TVJetsonsPageHandler(db))
 	http.HandleFunc("/tvcartoonsjonnyquest", TVJonnyQuestPageHandler(db))
+	http.HandleFunc("/tvcartoonsspidernoir", TVSpiderNoirPageHandler(db))
+
+
+
+
 
 	http.HandleFunc("/tvcomedypage", TVComedyPageHandler())
 	http.HandleFunc("/tvcomedydmvpage", TVDMVPageHandler(db))
@@ -212,7 +217,6 @@ func StartServer() {
 	http.HandleFunc("/tvscificowboybebop", TVCowboyBebopPageHandler(db))
 	http.HandleFunc("/tvscififallout", TVFalloutPageHandler(db))
 	http.HandleFunc("/tvscififorallmankind", TVForAllMankindPageHandler(db))
-	http.HandleFunc("/tvscifispidernoir", TVSpiderNoirPageHandler(db))
 	http.HandleFunc("/tvscifistarcity", TVStarCityPageHandler(db))
 	http.HandleFunc("/tvscififoundation", TVFoundationPageHandler(db))
 	http.HandleFunc("/tvscifihalo", TVHaloPageHandler(db))
