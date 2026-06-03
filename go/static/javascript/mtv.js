@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const ws = new WebSocket(wsAddr);
             ws.onopen = function() {
                 console.log('[mtv.js] WebSocket opened for VidId:', vidId);
-                ws.send(JSON.stringify({ command: 'home_set_media', VidId: vidId }));
+                ws.send(JSON.stringify({ command: 'home_set_media', media_id: vidId }));
             };
             ws.onmessage = function(event) {
                 console.log('[mtv.js] WebSocket message:', event.data);
