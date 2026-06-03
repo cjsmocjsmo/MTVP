@@ -169,10 +169,6 @@ func StartServer() {
 	http.HandleFunc("/tvcartoonsjonnyquest", TVJonnyQuestPageHandler(db))
 	http.HandleFunc("/tvcartoonsspidernoir", TVSpiderNoirPageHandler(db))
 
-
-
-
-
 	http.HandleFunc("/tvcomedypage", TVComedyPageHandler())
 	http.HandleFunc("/tvcomedydmvpage", TVDMVPageHandler(db))
 	http.HandleFunc("/tvcomedyfubarpage", TVFubarPageHandler(db))
