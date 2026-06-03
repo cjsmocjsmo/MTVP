@@ -2274,12 +2274,10 @@ func TVForAllMankindPageHandler(db *sql.DB) http.HandlerFunc {
 
 func TVSpiderNoirPageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("TVSpiderNoirPageHandler: start method=%s path=%s remote=%s", r.Method, r.URL.Path, r.RemoteAddr)
 		// Support up to 4 seasons, extendable
 		seasons := map[string][]map[string]interface{}{}
 		for i := 1; i <= 2; i++ {
 			seasonNum := fmt.Sprintf("%02d", i)
-			log.Printf("TVSpiderNoirPageHandler: querying season=%s category=%s", seasonNum, "SpiderNoir")
 			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "SpiderNoir", seasonNum)
 			if err != nil {
 				log.Printf("TVSpiderNoirPageHandler: DB query failed season=%s err=%v", seasonNum, err)
@@ -2287,9 +2285,7 @@ func TVSpiderNoirPageHandler(db *sql.DB) http.HandlerFunc {
 			}
 			defer rows.Close()
 			cols, _ := rows.Columns()
-			log.Printf("TVSpiderNoirPageHandler: season=%s columns=%v", seasonNum, cols)
 			episodes := []map[string]interface{}{}
-			rowCount := 0
 			for rows.Next() {
 				vals := make([]interface{}, len(cols))
 				valPtrs := make([]interface{}, len(cols))
@@ -2307,8 +2303,6 @@ func TVSpiderNoirPageHandler(db *sql.DB) http.HandlerFunc {
 						}
 					}
 					episodes = append(episodes, row)
-					rowCount++
-					log.Printf("TVSpiderNoirPageHandler: season=%s scanned row #%d data=%v", seasonNum, rowCount, row)
 				} else {
 					log.Printf("TVSpiderNoirPageHandler: season=%s row scan failed err=%v", seasonNum, err)
 				}
@@ -2316,34 +2310,25 @@ func TVSpiderNoirPageHandler(db *sql.DB) http.HandlerFunc {
 			if err := rows.Err(); err != nil {
 				log.Printf("TVSpiderNoirPageHandler: season=%s rows iteration error=%v", seasonNum, err)
 			}
-			log.Printf("TVSpiderNoirPageHandler: season=%s total episodes=%d", seasonNum, len(episodes))
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
-				log.Printf("TVSpiderNoirPageHandler: season=%s stored in render payload", seasonNum)
-			} else {
-				log.Printf("TVSpiderNoirPageHandler: season=%s has no episodes and will be omitted from render payload", seasonNum)
 			}
 		}
-		log.Printf("TVSpiderNoirPageHandler: completed season collection payload_seasons=%d", len(seasons))
-		log.Printf("TVSpiderNoirPageHandler: parsing template=%s", "templates/tv/cartoons/tvcartoonsspidernoirpage.html")
 		tmpl, err := template.ParseFiles("templates/tv/cartoons/tvcartoonsspidernoirpage.html")
 		if err != nil {
 			log.Printf("TVSpiderNoirPageHandler: template parse failed template=%s err=%v", "templates/tv/cartoons/tvcartoonsspidernoirpage.html", err)
 			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		log.Printf("TVSpiderNoirPageHandler: template parsed successfully template=%s", "templates/tv/cartoons/tvcartoonsspidernoirpage.html")
 		data := struct {
 			Seasons map[string][]map[string]interface{}
 		}{Seasons: seasons}
-		log.Printf("TVSpiderNoirPageHandler: executing template template=%s seasons=%d", "templates/tv/cartoons/tvcartoonsspidernoirpage.html", len(data.Seasons))
 		err = tmpl.Execute(w, data)
 		if err != nil {
 			log.Printf("TVSpiderNoirPageHandler: template execute failed template=%s err=%v", "templates/tv/cartoons/tvcartoonsspidernoirpage.html", err)
 			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		log.Printf("TVSpiderNoirPageHandler: template execute completed template=%s", "templates/tv/cartoons/tvcartoonsspidernoirpage.html")
 	}
 }
 
