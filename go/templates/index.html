@@ -24,26 +24,25 @@
 		<p id="wi4" class="weather-div-item">{{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
 	</div>
 
-	{{if .IsNasaVideo}}
 	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
 	<div class="nasa-div">
 		<h2>{{.NasaTitle}}</h2>
+		{{if .IsNasaVideo}}
 		<!-- <a href="{{.NasaURL}}" target="_blank">View on NASA</a> -->
 		<video controls class="nasa-video">
 			<source src="{{.NasaURL}}" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
-		<p class="nasa-txt">{{.NasaExplanation}}</p>
-	</div>
-	{{else if .IsNasaImage}}
-	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
-	<div class="nasa-div">
-		<h2>{{.NasaTitle}}</h2>
+		{{else if .NasaURL}}
 		<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->
 		<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}">
+		{{else if .NasaThumbnailURL}}
+		<img class="nasa-image" src="{{.NasaThumbnailURL}}" alt="{{.NasaTitle}}">
+		{{else}}
+		<p class="nasa-txt">NASA media is unavailable.</p>
+		{{end}}
 		<p class="nasa-txt">{{.NasaExplanation}}</p>
 	</div>
-	{{end}}
 	<div class="stats-div">
 		<p id="i1" class="stat-div-item">Total Movies: {{.TotalMovies}} ({{.MovieSizeOnDisk}})</p>
 		<p id="i2" class="stat-div-item">Total TV Episodes: {{.TotalTVShows}} ({{.TVShowSizeOnDisk}})</p>
