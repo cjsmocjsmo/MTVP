@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NOAA/NWS Radar</title>
+	<link rel="stylesheet" href="/static/css/mtv.css">
+</head>
+
+<body>
+	<div id="navbar">
+		<a href="/"><button class="navbarbtn">Home</button></a>
+		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
+		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
+	</div>
+
+	<div class="radar-page" data-radar-refresh-ms="300000">
+		<h1 id="header">NOAA/NWS Radar - Belfair, WA Area</h1>
+		<p class="radar-subtitle">Location: 47.451355, -122.82689</p>
+		<div class="radar-frame">
+			<img
+				id="radar-image"
+				class="radar-image"
+				src="https://radar.weather.gov/ridge/standard/KATX_loop.gif"
+				data-radar-base="https://radar.weather.gov/ridge/standard/KATX_loop.gif"
+				alt="NOAA NWS weather radar loop for the Seattle Tacoma region"
+				loading="eager"
+				decoding="async"
+			>
+		</div>
+		<p id="radar-last-updated" class="radar-updated">Last updated: loading...</p>
+	</div>
+</body>
+<script src="/static/javascript/mtv.js"></script>
+
+</html>

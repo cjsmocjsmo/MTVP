@@ -239,3 +239,41 @@ if (btnNext) {
         };
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const radarImage = document.getElementById('radar-image');
+    if (!radarImage) {
+        return;
+    }
+
+    const radarPage = document.querySelector('.radar-page');
+    const updatedLabel = document.getElementById('radar-last-updated');
+    const refreshMs = Number(radarPage?.dataset?.radarRefreshMs) || 300000;
+    const baseURL = radarImage.dataset.radarBase || radarImage.src;
+
+    function setLastUpdatedText() {
+        if (!updatedLabel) {
+            return;
+        }
+        const now = new Date();
+        updatedLabel.textContent = 'Last updated: ' + now.toLocaleString();
+    }
+
+    function refreshRadarImage() {
+        if (document.visibilityState !== 'visible') {
+            return;
+        }
+        const separator = baseURL.includes('?') ? '&' : '?';
+        radarImage.src = baseURL + separator + 'ts=' + Date.now();
+        setLastUpdatedText();
+    }
+
+    refreshRadarImage();
+    setInterval(refreshRadarImage, refreshMs);
+
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            refreshRadarImage();
+        }
+    });
+});
