@@ -5,13 +5,46 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io"
 	"log"
 	"net/http"
 	"net/url"
+	"sync"
 	"syscall"
 	"time"
 	// "mtvp/setup"
+)
+
+const (
+	weatherCacheTTL        = 10 * time.Minute
+	weatherHTTPTimeout     = 2 * time.Second
+	nasaRefreshMinInterval = 5 * time.Minute
+)
+
+type WeatherSnapshot struct {
+	Location      string
+	Temperature   string
+	Unit          string
+	Conditions    string
+	WindDirection string
+	WindSpeed     string
+	Humidity      string
+}
+
+var (
+	indexTemplateOnce sync.Once
+	indexTemplate     *template.Template
+	indexTemplateErr  error
+
+	weatherCacheMu sync.RWMutex
+	weatherCache   struct {
+		data      WeatherSnapshot
+		fetchedAt time.Time
+		valid     bool
+	}
+
+	nasaRefreshMu          sync.Mutex
+	nasaRefreshInFlight    bool
+	nasaLastRefreshAttempt time.Time
 )
 
 // APODResponse maps the exact JSON fields returned by NASA's API
@@ -103,45 +136,59 @@ func FetchNASAData(db *sql.DB) (*APODResponse, error) {
 }
 
 func MTVWeather(db *sql.DB) ([]byte, error) {
+	return MTVWeatherWithTimeout(db, weatherHTTPTimeout)
+}
+
+func MTVWeatherWithTimeout(db *sql.DB, timeout time.Duration) ([]byte, error) {
 	// Fetch weather for Belfair, WA from National Weather Service
 	latitude := 47.4281
 	longitude := -122.8189
+	client := &http.Client{Timeout: timeout}
 	pointURL := fmt.Sprintf("https://api.weather.gov/points/%f,%f", latitude, longitude)
-	pointResp, err := http.Get(pointURL)
+	pointResp, err := client.Get(pointURL)
 	if err != nil {
 		return nil, fmt.Errorf("weather fetch failed: %v", err)
 	}
 	defer pointResp.Body.Close()
-	pointData, err := io.ReadAll(pointResp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("weather read failed: %v", err)
+	if pointResp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("weather point status: %d", pointResp.StatusCode)
 	}
 	var pointObj map[string]interface{}
-	if err := json.Unmarshal(pointData, &pointObj); err != nil {
+	if err := json.NewDecoder(pointResp.Body).Decode(&pointObj); err != nil {
 		return nil, fmt.Errorf("weather parse failed: %v", err)
 	}
-	forecastURL, ok := pointObj["properties"].(map[string]interface{})["forecastHourly"].(string)
+	properties, ok := pointObj["properties"].(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("weather properties missing")
+	}
+	forecastURL, ok := properties["forecastHourly"].(string)
 	if !ok {
 		return nil, fmt.Errorf("weather forecast URL missing")
 	}
-	weatherResp, err := http.Get(forecastURL)
+	weatherResp, err := client.Get(forecastURL)
 	if err != nil {
 		return nil, fmt.Errorf("weather fetch failed: %v", err)
 	}
 	defer weatherResp.Body.Close()
-	weatherData, err := io.ReadAll(weatherResp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("weather read failed: %v", err)
+	if weatherResp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("weather forecast status: %d", weatherResp.StatusCode)
 	}
 	var weatherObj map[string]interface{}
-	if err := json.Unmarshal(weatherData, &weatherObj); err != nil {
+	if err := json.NewDecoder(weatherResp.Body).Decode(&weatherObj); err != nil {
 		return nil, fmt.Errorf("weather parse failed: %v", err)
 	}
-	periods, ok := weatherObj["properties"].(map[string]interface{})["periods"].([]interface{})
+	weatherProps, ok := weatherObj["properties"].(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("weather properties missing")
+	}
+	periods, ok := weatherProps["periods"].([]interface{})
 	if !ok || len(periods) == 0 {
 		return nil, fmt.Errorf("weather no periods data")
 	}
-	current := periods[0].(map[string]interface{})
+	current, ok := periods[0].(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("weather current period invalid")
+	}
 
 	temperature := ""
 	switch v := current["temperature"].(type) {
@@ -196,9 +243,134 @@ func MTVWeather(db *sql.DB) ([]byte, error) {
 	return resp, nil
 }
 
+func decodeWeatherSnapshot(weatherData []byte) (WeatherSnapshot, error) {
+	var weatherMap map[string]interface{}
+	if err := json.Unmarshal(weatherData, &weatherMap); err != nil {
+		return WeatherSnapshot{}, err
+	}
+	s := WeatherSnapshot{}
+	if v, ok := weatherMap["location"].(string); ok {
+		s.Location = v
+	}
+	if v, ok := weatherMap["temperature"].(float64); ok {
+		s.Temperature = fmt.Sprintf("%.0f", v)
+	} else if v, ok := weatherMap["temperature"].(string); ok {
+		s.Temperature = v
+	}
+	if v, ok := weatherMap["temperature_unit"].(string); ok {
+		s.Unit = v
+	}
+	if v, ok := weatherMap["conditions"].(string); ok {
+		s.Conditions = v
+	}
+	if v, ok := weatherMap["winddirection"].(string); ok {
+		s.WindDirection = v
+	}
+	if v, ok := weatherMap["windspeed"].(string); ok {
+		s.WindSpeed = v
+	}
+	if v, ok := weatherMap["humidity"].(float64); ok {
+		s.Humidity = fmt.Sprintf("%.0f", v)
+	} else if v, ok := weatherMap["humidity"].(string); ok {
+		s.Humidity = v
+	}
+	return s, nil
+}
+
+func getWeatherSnapshotCached(db *sql.DB) (WeatherSnapshot, error) {
+	now := time.Now()
+	weatherCacheMu.RLock()
+	if weatherCache.valid && now.Sub(weatherCache.fetchedAt) < weatherCacheTTL {
+		cached := weatherCache.data
+		weatherCacheMu.RUnlock()
+		return cached, nil
+	}
+	hasStale := weatherCache.valid
+	stale := weatherCache.data
+	weatherCacheMu.RUnlock()
+
+	weatherData, err := MTVWeatherWithTimeout(db, weatherHTTPTimeout)
+	if err != nil {
+		if hasStale {
+			return stale, err
+		}
+		return WeatherSnapshot{}, err
+	}
+
+	snapshot, err := decodeWeatherSnapshot(weatherData)
+	if err != nil {
+		if hasStale {
+			return stale, err
+		}
+		return WeatherSnapshot{}, err
+	}
+
+	weatherCacheMu.Lock()
+	weatherCache.data = snapshot
+	weatherCache.fetchedAt = now
+	weatherCache.valid = true
+	weatherCacheMu.Unlock()
+
+	return snapshot, nil
+}
+
+func getLatestNASAData(db *sql.DB) (*APODResponse, error) {
+	nasaData := &APODResponse{}
+	fallbackRow := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright, Idx FROM nasa ORDER BY Date DESC, Idx DESC LIMIT 1`)
+	if err := fallbackRow.Scan(
+		&nasaData.Date,
+		&nasaData.Explanation,
+		&nasaData.HDURL,
+		&nasaData.MediaType,
+		&nasaData.ServiceVersion,
+		&nasaData.Title,
+		&nasaData.URL,
+		&nasaData.ThumbnailURL,
+		&nasaData.Copyright,
+		&nasaData.Idx,
+	); err != nil {
+		return nil, err
+	}
+	return nasaData, nil
+}
+
+func maybeRefreshNASAAsync(db *sql.DB) {
+	now := time.Now()
+	nasaRefreshMu.Lock()
+	if nasaRefreshInFlight || now.Sub(nasaLastRefreshAttempt) < nasaRefreshMinInterval {
+		nasaRefreshMu.Unlock()
+		return
+	}
+	nasaRefreshInFlight = true
+	nasaLastRefreshAttempt = now
+	nasaRefreshMu.Unlock()
+
+	go func() {
+		start := time.Now()
+		if _, err := FetchNASAData(db); err != nil {
+			log.Printf("[HomePageHandler] NASA background refresh failed after %s: %v", time.Since(start), err)
+		} else {
+			log.Printf("[HomePageHandler] NASA background refresh completed in %s", time.Since(start))
+		}
+		nasaRefreshMu.Lock()
+		nasaRefreshInFlight = false
+		nasaRefreshMu.Unlock()
+	}()
+}
+
+func getIndexTemplate() (*template.Template, error) {
+	indexTemplateOnce.Do(func() {
+		indexTemplate, indexTemplateErr = template.ParseFiles("templates/index.html")
+	})
+	return indexTemplate, indexTemplateErr
+}
+
 // HomePageHandler serves the index.html page for the root path
 func HomePageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		requestStart := time.Now()
+
+		statsStart := time.Now()
 		movCount := getMovieCount(db)
 		tvCount := getTVShowCount(db)
 		videoCount := getVideoCount(db)
@@ -206,66 +378,23 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 		tvsizeondisk := getTVShowsSizeOnDisk(db)
 		videosizeondisk := getVideosSizeOnDisk(db)
 		freespaceondisk := freeSpaceOnDisk("/")
-		weatherData, err := MTVWeather(db)
-		var wdLocation, wdTemp, wdUnit, wdConditions, wdWindDir, wdWindSpeed, wdHumidity string
-		if err != nil {
-			log.Println("Error fetching weather:", err)
-		} else {
-			var weatherMap map[string]interface{}
-			if err := json.Unmarshal(weatherData, &weatherMap); err == nil {
-				if v, ok := weatherMap["location"].(string); ok {
-					wdLocation = v
-				}
-				if v, ok := weatherMap["temperature"].(float64); ok {
-					wdTemp = fmt.Sprintf("%.0f", v)
-				} else if v, ok := weatherMap["temperature"].(string); ok {
-					wdTemp = v
-				}
-				if v, ok := weatherMap["temperature_unit"].(string); ok {
-					wdUnit = v
-				}
-				if v, ok := weatherMap["conditions"].(string); ok {
-					wdConditions = v
-				}
-				if v, ok := weatherMap["winddirection"].(string); ok {
-					wdWindDir = v
-				}
-				if v, ok := weatherMap["windspeed"].(string); ok {
-					wdWindSpeed = v
-				}
-				if v, ok := weatherMap["humidity"].(float64); ok {
-					wdHumidity = fmt.Sprintf("%.0f", v)
-				} else if v, ok := weatherMap["humidity"].(string); ok {
-					wdHumidity = v
-				}
-			}
+		log.Printf("[HomePageHandler] local stats computed in %s", time.Since(statsStart))
+
+		weatherStart := time.Now()
+		weatherSnapshot, weatherErr := getWeatherSnapshotCached(db)
+		if weatherErr != nil {
+			log.Printf("[HomePageHandler] weather fetch/cache warning after %s: %v", time.Since(weatherStart), weatherErr)
 		}
-		nasaData, err := FetchNASAData(db)
-		if err != nil {
-			log.Println("Error fetching NASA data:", err)
-			// Fallback: use the most recent entry already in the DB
+		log.Printf("[HomePageHandler] weather stage completed in %s", time.Since(weatherStart))
+
+		nasaStart := time.Now()
+		nasaData, nasaErr := getLatestNASAData(db)
+		if nasaErr != nil {
+			log.Printf("[HomePageHandler] no NASA row available: %v", nasaErr)
 			nasaData = &APODResponse{}
-			fallbackRow := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright, Idx FROM nasa ORDER BY Date DESC LIMIT 1`)
-			if scanErr := fallbackRow.Scan(
-				&nasaData.Date,
-				&nasaData.Explanation,
-				&nasaData.HDURL,
-				&nasaData.MediaType,
-				&nasaData.ServiceVersion,
-				&nasaData.Title,
-				&nasaData.URL,
-				&nasaData.ThumbnailURL,
-				&nasaData.Copyright,
-				&nasaData.Idx,
-			); scanErr != nil {
-				log.Println("No NASA fallback row available:", scanErr)
-			} else {
-				log.Printf("Using NASA fallback row: %s - %s", nasaData.Title, nasaData.URL)
-			}
-		} else {
-			// You can use nasaData in the template if needed
-			log.Printf("Today's NASA APOD: %s - %s", nasaData.Title, nasaData.URL)
 		}
+		maybeRefreshNASAAsync(db)
+		log.Printf("[HomePageHandler] nasa stage completed in %s", time.Since(nasaStart))
 		type Stats struct {
 			TotalMovies          int
 			TotalTVShows         int
@@ -302,13 +431,13 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 			TVShowSizeOnDisk:     tvsizeondisk,
 			VideoSizeOnDisk:      videosizeondisk,
 			FreeSpaceOnDisk:      freespaceondisk,
-			WeatherLocation:      wdLocation,
-			WeatherTemperature:   wdTemp,
-			WeatherUnit:          wdUnit,
-			WeatherConditions:    wdConditions,
-			WeatherWindDirection: wdWindDir,
-			WeatherWindSpeed:     wdWindSpeed,
-			WeatherHumidity:      wdHumidity,
+			WeatherLocation:      weatherSnapshot.Location,
+			WeatherTemperature:   weatherSnapshot.Temperature,
+			WeatherUnit:          weatherSnapshot.Unit,
+			WeatherConditions:    weatherSnapshot.Conditions,
+			WeatherWindDirection: weatherSnapshot.WindDirection,
+			WeatherWindSpeed:     weatherSnapshot.WindSpeed,
+			WeatherHumidity:      weatherSnapshot.Humidity,
 			NasaDate:             nasaData.Date,
 			NasaExplanation:      nasaData.Explanation,
 			NasaHDURL:            nasaData.HDURL,
@@ -322,15 +451,22 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 			IsNasaVideo:          nasaData.MediaType == "video",
 			IsNasaImage:          nasaData.MediaType == "image",
 		}
-		tmpl, err := template.ParseFiles("templates/index.html")
+
+		tmplStart := time.Now()
+		tmpl, err := getIndexTemplate()
 		if err != nil {
 			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
+		log.Printf("[HomePageHandler] template load in %s", time.Since(tmplStart))
+
+		execStart := time.Now()
 		err = tmpl.Execute(w, stats)
 		if err != nil {
 			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+			return
 		}
+		log.Printf("[HomePageHandler] template execute in %s, total request %s", time.Since(execStart), time.Since(requestStart))
 	}
 }
 
