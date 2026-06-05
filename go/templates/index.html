@@ -10,14 +10,6 @@
 </head>
 
 <body>
-	<div id="navbar">
-		<a href="/"><button class="navbarbtn">Home</button></a>
-		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
-		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
-		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
-		<a href="/update"><button class="navbarbtn">Update</button></a>
-	</div>
-	<!-- <h1 id="header">Current Weather</h1> -->
 	<div class="weather-div">
 		<p id="wi1" class="weather-div-item">{{.WeatherLocation}}</p>
 		<p id="wi3" class="weather-div-item">{{.WeatherConditions}}</p>
@@ -25,11 +17,15 @@
 		<p id="wi4" class="weather-div-item">{{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
 		<a id="radar" class="weather-div-item" href="/radar"><button class="radarbtn">Radar</button></a>
 	</div>
-
-	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
+	<div id="navbar">
+		<a href="/"><button class="navbarbtn">Home</button></a>
+		<a href="/mainmoviepage"><button class="navbarbtn">Movies</button></a>
+		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
+		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
+		<a href="/update"><button class="navbarbtn">Update</button></a>
+	</div>
 	<div class="nasa-div">
 		{{if .IsNasaVideo}}
-		<!-- <a href="{{.NasaURL}}" target="_blank">View on NASA</a> -->
 		<video controls class="nasa-video">
 			<source src="{{.NasaURL}}" type="video/mp4">
 			Your browser does not support the video tag.
