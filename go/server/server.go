@@ -95,6 +95,7 @@ func StartServer() {
 	http.HandleFunc("/ws", WSHandler(db))
 	http.HandleFunc("/update", UpdateHandler(db))
 	http.HandleFunc("/radar", RadarPageHandler())
+	http.HandleFunc("/health/perf", PerfHealthHandler(db))
 
 	http.HandleFunc("/", HomePageHandler(db))
 	http.HandleFunc("/mainmoviepage", MainMoviePageHandler())

@@ -365,6 +365,66 @@ func getIndexTemplate() (*template.Template, error) {
 	return indexTemplate, indexTemplateErr
 }
 
+// PerfHealthHandler exposes lightweight runtime state for homepage performance diagnostics.
+func PerfHealthHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		now := time.Now()
+
+		weatherCacheMu.RLock()
+		weatherValid := weatherCache.valid
+		weatherFetchedAt := weatherCache.fetchedAt
+		weatherLocation := weatherCache.data.Location
+		weatherCacheMu.RUnlock()
+
+		nasaRefreshMu.Lock()
+		nasaInFlight := nasaRefreshInFlight
+		nasaLastAttempt := nasaLastRefreshAttempt
+		nasaRefreshMu.Unlock()
+
+		latestNasaDate := ""
+		latestNasaTitle := ""
+		latestNasaErr := ""
+		if nasaData, err := getLatestNASAData(db); err == nil {
+			latestNasaDate = nasaData.Date
+			latestNasaTitle = nasaData.Title
+		} else {
+			latestNasaErr = err.Error()
+		}
+
+		weatherAgeSeconds := -1
+		if weatherValid {
+			weatherAgeSeconds = int(now.Sub(weatherFetchedAt).Seconds())
+		}
+
+		nasaLastAttemptAgeSeconds := -1
+		if !nasaLastAttempt.IsZero() {
+			nasaLastAttemptAgeSeconds = int(now.Sub(nasaLastAttempt).Seconds())
+		}
+
+		payload := map[string]interface{}{
+			"now":                             now.Format(time.RFC3339),
+			"weather_cache_ttl_seconds":       int(weatherCacheTTL.Seconds()),
+			"weather_cache_valid":             weatherValid,
+			"weather_cache_fetched_at":        weatherFetchedAt.Format(time.RFC3339),
+			"weather_cache_age_seconds":       weatherAgeSeconds,
+			"weather_cached_location":         weatherLocation,
+			"weather_http_timeout_seconds":    int(weatherHTTPTimeout.Seconds()),
+			"nasa_refresh_in_flight":          nasaInFlight,
+			"nasa_last_refresh_attempt":       nasaLastAttempt.Format(time.RFC3339),
+			"nasa_last_attempt_age_seconds":   nasaLastAttemptAgeSeconds,
+			"nasa_refresh_min_interval_seconds": int(nasaRefreshMinInterval.Seconds()),
+			"latest_nasa_date":                latestNasaDate,
+			"latest_nasa_title":               latestNasaTitle,
+			"latest_nasa_error":               latestNasaErr,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(payload); err != nil {
+			http.Error(w, "Failed to encode perf health response", http.StatusInternalServerError)
+		}
+	}
+}
+
 // HomePageHandler serves the index.html page for the root path
 func HomePageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

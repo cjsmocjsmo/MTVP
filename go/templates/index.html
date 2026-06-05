@@ -28,7 +28,6 @@
 
 	<!-- <h1 id="header">NASA Astronomy Picture of the Day</h1> -->
 	<div class="nasa-div">
-		<h2>{{.NasaTitle}}</h2>
 		{{if .IsNasaVideo}}
 		<!-- <a href="{{.NasaURL}}" target="_blank">View on NASA</a> -->
 		<video controls class="nasa-video">
@@ -43,6 +42,7 @@
 		{{else}}
 		<p class="nasa-txt">NASA media is unavailable.</p>
 		{{end}}
+		<h2>{{.NasaTitle}}</h2>
 		<p class="nasa-txt">{{.NasaExplanation}}</p>
 	</div>
 	<div class="stats-div">
