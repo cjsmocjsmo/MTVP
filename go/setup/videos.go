@@ -105,15 +105,44 @@ func InsertVideos(db *sql.DB, vidPaths []string, idxStart int) error {
 		}
 		inserts[res.idx] = res
 	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		if firstErr != nil {
+			return firstErr
+		}
+		return fmt.Errorf("failed to begin video insert transaction: %w", err)
+	}
+	defer func() {
+		if tx != nil {
+			_ = tx.Rollback()
+		}
+	}()
+
+	stmt, err := tx.Prepare(`INSERT OR IGNORE INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)`)
+	if err != nil {
+		if firstErr != nil {
+			return firstErr
+		}
+		return fmt.Errorf("failed to prepare video insert statement: %w", err)
+	}
+	defer stmt.Close()
+
 	for _, res := range inserts {
 		if res.err != nil {
 			continue
 		}
-		_, err := db.Exec(`INSERT OR IGNORE INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)`,
+		_, err := stmt.Exec(
 			res.vidId, res.path, res.size, res.name, res.idx+idxStart+1)
 		if err != nil && firstErr == nil {
 			firstErr = fmt.Errorf("failed to insert video %s: %w", res.path, err)
 		}
 	}
+
+	if err := tx.Commit(); err != nil && firstErr == nil {
+		firstErr = fmt.Errorf("failed to commit video insert transaction: %w", err)
+	}
+	tx = nil
+
 	return firstErr
 }

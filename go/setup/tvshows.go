@@ -68,6 +68,22 @@ func GetTVShowCategory(name string) string {
 }
 
 func InsertTVShows(db *sql.DB, tvPaths []string, idxStart int) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("failed to begin tvshow insert transaction: %w", err)
+	}
+	defer func() {
+		if tx != nil {
+			_ = tx.Rollback()
+		}
+	}()
+
+	stmt, err := tx.Prepare(`INSERT OR IGNORE INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		return fmt.Errorf("failed to prepare tvshow insert statement: %w", err)
+	}
+	defer stmt.Close()
+
 	for idx, path := range tvPaths {
 		fileInfo, err := os.Stat(path)
 		if err != nil {
@@ -80,11 +96,16 @@ func InsertTVShows(db *sql.DB, tvPaths []string, idxStart int) error {
 		episode := GetTVShowEpisode(filename)
 		size := fileInfo.Size()
 		category := GetTVShowCategory(path)
-		_, err = db.Exec(`INSERT OR IGNORE INTO tvshows (TvId, Size, Catagory, Name, Season, Episode, Path, Idx) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+		_, err = stmt.Exec(
 			tvId, size, category, name, season, episode, path, idx+idxStart+1)
 		if err != nil {
 			return fmt.Errorf("failed to insert tvshow %s: %w", path, err)
 		}
 	}
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("failed to commit tvshow insert transaction: %w", err)
+	}
+	tx = nil
+
 	return nil
 }

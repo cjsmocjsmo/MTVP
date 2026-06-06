@@ -205,6 +205,22 @@ func GetHttpThumbPath(filename string) string {
 
 // InsertMovies inserts movie metadata into the database
 func InsertMovies(db *sql.DB, moviePaths []string, idxStart int) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("failed to begin movie insert transaction: %w", err)
+	}
+	defer func() {
+		if tx != nil {
+			_ = tx.Rollback()
+		}
+	}()
+
+	stmt, err := tx.Prepare(`INSERT OR IGNORE INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		return fmt.Errorf("failed to prepare movie insert statement: %w", err)
+	}
+	defer stmt.Close()
+
 	for idx, path := range moviePaths {
 		fileInfo, err := os.Stat(path)
 		if err != nil {
@@ -220,11 +236,16 @@ func InsertMovies(db *sql.DB, moviePaths []string, idxStart int) error {
 		// fmt.Println("Poster path:", poster)
 		catagory := GetMovieCategory(path)
 		thumbPath := GetHttpThumbPath(filename)
-		_, err = db.Exec(`INSERT OR IGNORE INTO movies (Name, Year, PosterAddr, Size, Path, Idx, MovId, Catagory, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		_, err = stmt.Exec(
 			name, year, poster, size, path, idx+idxStart+1, movId, catagory, thumbPath)
 		if err != nil {
 			return fmt.Errorf("failed to insert movie %s: %w", path, err)
 		}
 	}
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("failed to commit movie insert transaction: %w", err)
+	}
+	tx = nil
+
 	return nil
 }

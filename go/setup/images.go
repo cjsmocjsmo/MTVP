@@ -155,15 +155,44 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 		}
 		inserts[res.idx] = res
 	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		if firstErr != nil {
+			return firstErr
+		}
+		return fmt.Errorf("failed to begin image insert transaction: %w", err)
+	}
+	defer func() {
+		if tx != nil {
+			_ = tx.Rollback()
+		}
+	}()
+
+	stmt, err := tx.Prepare(`INSERT OR IGNORE INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		if firstErr != nil {
+			return firstErr
+		}
+		return fmt.Errorf("failed to prepare image insert statement: %w", err)
+	}
+	defer stmt.Close()
+
 	for _, res := range inserts {
 		if res.err != nil {
 			continue
 		}
-		_, err := db.Exec(`INSERT OR IGNORE INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+		_, err := stmt.Exec(
 			res.imgId, res.path, res.path, res.size, res.name, res.thumbPath, res.idx+idxStart+1, res.httpThumbPath)
 		if err != nil && firstErr == nil {
 			firstErr = fmt.Errorf("failed to insert image %s: %w", res.path, err)
 		}
 	}
+
+	if err := tx.Commit(); err != nil && firstErr == nil {
+		firstErr = fmt.Errorf("failed to commit image insert transaction: %w", err)
+	}
+	tx = nil
+
 	return firstErr
 }
