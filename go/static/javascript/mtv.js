@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // document.addEventListener('DOMContentLoaded', function() {
     const movUpdateButton = document.getElementById('mov-update-button');
-    const movResults = document.querySelector('.mov-search-results');
     if (movUpdateButton && movResults) {
         movUpdateButton.addEventListener('click', function (event) {
             event.preventDefault();
@@ -122,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const tvUpdateButton = document.getElementById('tv-update-button');
-    const tvResults = document.querySelector('.tv-search-results');
 
     if (tvUpdateButton && tvResults) {
         tvUpdateButton.addEventListener('click', function (event) {
