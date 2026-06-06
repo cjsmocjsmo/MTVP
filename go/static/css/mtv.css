@@ -226,7 +226,6 @@ h1 {
 }
 
 .radar-frame {
-    width: min(92vw, 920px);
     background: #1b1b1b;
     border: 1px solid #2a2a2a;
     border-radius: 10px;
