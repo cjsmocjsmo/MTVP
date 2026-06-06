@@ -16,7 +16,12 @@
 		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
 		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
 	</div>
-
+	<div class="weather-div">
+		<p id="wi1" class="weather-div-item">{{.WeatherLocation}}</p>
+		<p id="wi3" class="weather-div-item">{{.WeatherConditions}}</p>
+		<p id="wi2" class="weather-div-item">{{.WeatherTemperature}} {{.WeatherUnit}}</p>
+		<p id="wi4" class="weather-div-item">{{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
+	</div>
 	<div class="radar-page" data-radar-refresh-ms="300000">
 		<h1 id="header">NOAA/NWS Radar - Belfair, WA Area</h1>
 		<p class="radar-subtitle">Location: 47.451355, -122.82689</p>

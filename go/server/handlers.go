@@ -30,6 +30,15 @@ type WeatherSnapshot struct {
 	Humidity      string
 }
 
+type WeatherTemplateData struct {
+	WeatherLocation      string
+	WeatherTemperature   string
+	WeatherUnit          string
+	WeatherConditions    string
+	WeatherWindDirection string
+	WeatherWindSpeed     string
+}
+
 var (
 	indexTemplateOnce sync.Once
 	indexTemplate     *template.Template
@@ -314,6 +323,22 @@ func getWeatherSnapshotCached(db *sql.DB) (WeatherSnapshot, error) {
 	return snapshot, nil
 }
 
+func buildWeatherTemplateData(db *sql.DB) (WeatherTemplateData, error) {
+	weatherSnapshot, err := getWeatherSnapshotCached(db)
+	if err != nil {
+		return WeatherTemplateData{}, err
+	}
+
+	return WeatherTemplateData{
+		WeatherLocation:      weatherSnapshot.Location,
+		WeatherTemperature:   weatherSnapshot.Temperature,
+		WeatherUnit:          weatherSnapshot.Unit,
+		WeatherConditions:    weatherSnapshot.Conditions,
+		WeatherWindDirection: weatherSnapshot.WindDirection,
+		WeatherWindSpeed:     weatherSnapshot.WindSpeed,
+	}, nil
+}
+
 func getLatestNASAData(db *sql.DB) (*APODResponse, error) {
 	nasaData := &APODResponse{}
 	fallbackRow := db.QueryRow(`SELECT Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright, Idx FROM nasa ORDER BY Date DESC, Idx DESC LIMIT 1`)
@@ -440,13 +465,6 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 		freespaceondisk := freeSpaceOnDisk("/")
 		log.Printf("[HomePageHandler] local stats computed in %s", time.Since(statsStart))
 
-		weatherStart := time.Now()
-		weatherSnapshot, weatherErr := getWeatherSnapshotCached(db)
-		if weatherErr != nil {
-			log.Printf("[HomePageHandler] weather fetch/cache warning after %s: %v", time.Since(weatherStart), weatherErr)
-		}
-		log.Printf("[HomePageHandler] weather stage completed in %s", time.Since(weatherStart))
-
 		nasaStart := time.Now()
 		nasaData, nasaErr := getLatestNASAData(db)
 		if nasaErr != nil {
@@ -463,13 +481,6 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 			TVShowSizeOnDisk     string
 			VideoSizeOnDisk      string
 			FreeSpaceOnDisk      string
-			WeatherLocation      string
-			WeatherTemperature   string
-			WeatherUnit          string
-			WeatherConditions    string
-			WeatherWindDirection string
-			WeatherWindSpeed     string
-			WeatherHumidity      string
 			NasaDate             string
 			NasaExplanation      string
 			NasaHDURL            string
@@ -491,13 +502,6 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 			TVShowSizeOnDisk:     tvsizeondisk,
 			VideoSizeOnDisk:      videosizeondisk,
 			FreeSpaceOnDisk:      freespaceondisk,
-			WeatherLocation:      weatherSnapshot.Location,
-			WeatherTemperature:   weatherSnapshot.Temperature,
-			WeatherUnit:          weatherSnapshot.Unit,
-			WeatherConditions:    weatherSnapshot.Conditions,
-			WeatherWindDirection: weatherSnapshot.WindDirection,
-			WeatherWindSpeed:     weatherSnapshot.WindSpeed,
-			WeatherHumidity:      weatherSnapshot.Humidity,
 			NasaDate:             nasaData.Date,
 			NasaExplanation:      nasaData.Explanation,
 			NasaHDURL:            nasaData.HDURL,
@@ -531,14 +535,20 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 }
 
 // RadarPageHandler serves the NOAA/NWS radar page.
-func RadarPageHandler() http.HandlerFunc {
+func RadarPageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.ParseFiles("templates/radar.html")
 		if err != nil {
 			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		err = tmpl.Execute(w, nil)
+
+		weatherData, weatherErr := buildWeatherTemplateData(db)
+		if weatherErr != nil {
+			log.Printf("[RadarPageHandler] weather fetch/cache warning: %v", weatherErr)
+		}
+
+		err = tmpl.Execute(w, weatherData)
 		if err != nil {
 			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
 		}
