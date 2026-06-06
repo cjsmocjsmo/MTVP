@@ -111,82 +111,118 @@ func hasAllowedExt(path string, allowed map[string]struct{}) bool {
 	return ok
 }
 
+func authorizeAndLockUpdate(w http.ResponseWriter, r *http.Request, handlerName string) (bool, time.Time) {
+	start := time.Now()
+	log.Printf("[%s] update request started method=%s remote=%s", handlerName, r.Method, r.RemoteAddr)
+
+	if r.Method != http.MethodGet && r.Method != http.MethodPost {
+		writeJSONError(w, http.StatusMethodNotAllowed, "method not allowed")
+		return false, start
+	}
+
+	if ok, reason := authorizeUpdateRequest(r); !ok {
+		writeJSONError(w, http.StatusUnauthorized, reason)
+		return false, start
+	}
+
+	select {
+	case updateSem <- struct{}{}:
+		return true, start
+	default:
+		writeJSONError(w, http.StatusConflict, "update already in progress")
+		return false, start
+	}
+}
+
+func decodeAndSortPaths(raw string) ([]string, error) {
+	var paths []string
+	if err := json.Unmarshal([]byte(raw), &paths); err != nil {
+		return nil, err
+	}
+	sort.Strings(paths)
+	return paths, nil
+}
+
+func runMovieUpdates(db *sql.DB) (updateBatchResult, error) {
+	newmovfiles, err := movScanCompare(db)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to scan movies: %w", err)
+	}
+
+	moviePaths, err := decodeAndSortPaths(newmovfiles)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to decode movie paths: %w", err)
+	}
+
+	movieResult, err := processUpdatesInTx(db, moviePaths, movUpdateInsert)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to process movie updates: %w", err)
+	}
+
+	return movieResult, nil
+}
+
+func runTVShowUpdates(db *sql.DB) (updateBatchResult, error) {
+	newtvfiles, err := tvshowScanCompare(db)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to scan tvshows: %w", err)
+	}
+
+	tvshowPaths, err := decodeAndSortPaths(newtvfiles)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to decode tvshow paths: %w", err)
+	}
+
+	tvResult, err := processUpdatesInTx(db, tvshowPaths, tvshowUpdateInsert)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to process tvshow updates: %w", err)
+	}
+
+	return tvResult, nil
+}
+
+func runVideoUpdates(db *sql.DB) (updateBatchResult, error) {
+	newvideofiles, err := videoScanCompare(db)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to scan videos: %w", err)
+	}
+
+	videoPaths, err := decodeAndSortPaths(newvideofiles)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to decode video paths: %w", err)
+	}
+
+	videoResult, err := processUpdatesInTx(db, videoPaths, videoUpdateInsert)
+	if err != nil {
+		return updateBatchResult{}, fmt.Errorf("failed to process video updates: %w", err)
+	}
+
+	return videoResult, nil
+}
+
 func UpdateHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		start := time.Now()
-		log.Printf("[UpdateHandler] update request started method=%s remote=%s", r.Method, r.RemoteAddr)
-
-		if r.Method != http.MethodGet && r.Method != http.MethodPost {
-			writeJSONError(w, http.StatusMethodNotAllowed, "method not allowed")
+		ok, start := authorizeAndLockUpdate(w, r, "UpdateHandler")
+		if !ok {
 			return
 		}
+		defer func() { <-updateSem }()
 
-		if ok, reason := authorizeUpdateRequest(r); !ok {
-			writeJSONError(w, http.StatusUnauthorized, reason)
-			return
-		}
-
-		select {
-		case updateSem <- struct{}{}:
-			defer func() { <-updateSem }()
-		default:
-			writeJSONError(w, http.StatusConflict, "update already in progress")
-			return
-		}
-
-		newmovfiles, err := movScanCompare(db)
+		movieResult, err := runMovieUpdates(db)
 		if err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to scan movies: %v", err))
+			writeJSONError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
-		newtvfiles, err := tvshowScanCompare(db)
+
+		tvResult, err := runTVShowUpdates(db)
 		if err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to scan tvshows: %v", err))
+			writeJSONError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
-		newvideofiles, err := videoScanCompare(db)
+
+		videoResult, err := runVideoUpdates(db)
 		if err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to scan videos: %v", err))
-			return
-		}
-
-		var moviePaths []string
-		if err := json.Unmarshal([]byte(newmovfiles), &moviePaths); err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to decode movie paths: %v", err))
-			return
-		}
-
-		var tvshowPaths []string
-		if err := json.Unmarshal([]byte(newtvfiles), &tvshowPaths); err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to decode tvshow paths: %v", err))
-			return
-		}
-
-		var videoPaths []string
-		if err := json.Unmarshal([]byte(newvideofiles), &videoPaths); err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to decode video paths: %v", err))
-			return
-		}
-
-		sort.Strings(moviePaths)
-		sort.Strings(tvshowPaths)
-		sort.Strings(videoPaths)
-
-		movieResult, err := processUpdatesInTx(db, moviePaths, movUpdateInsert)
-		if err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to process movie updates: %v", err))
-			return
-		}
-
-		tvResult, err := processUpdatesInTx(db, tvshowPaths, tvshowUpdateInsert)
-		if err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to process tvshow updates: %v", err))
-			return
-		}
-
-		videoResult, err := processUpdatesInTx(db, videoPaths, videoUpdateInsert)
-		if err != nil {
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("failed to process video updates: %v", err))
+			writeJSONError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -214,6 +250,76 @@ func UpdateHandler(db *sql.DB) http.HandlerFunc {
 			"videosInserted":  videoResult.Inserted,
 		})
 
+	}
+}
+
+func MovUpdateHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ok, start := authorizeAndLockUpdate(w, r, "MovUpdateHandler")
+		if !ok {
+			return
+		}
+		defer func() { <-updateSem }()
+
+		movieResult, err := runMovieUpdates(db)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		status := "ok"
+		if movieResult.Failed > 0 {
+			status = "partial"
+		}
+
+		duration := time.Since(start).String()
+		log.Printf("[MovUpdateHandler] update completed status=%s duration=%s movies=%+v",
+			status, duration, movieResult)
+
+		writeJSON(w, http.StatusOK, map[string]interface{}{
+			"status":   status,
+			"method":   r.Method,
+			"duration": duration,
+			"summary": map[string]interface{}{
+				"movies": movieResult,
+			},
+			"moviesInserted": movieResult.Inserted,
+		})
+	}
+}
+
+func TVUpdateHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ok, start := authorizeAndLockUpdate(w, r, "TVUpdateHandler")
+		if !ok {
+			return
+		}
+		defer func() { <-updateSem }()
+
+		tvResult, err := runTVShowUpdates(db)
+		if err != nil {
+			writeJSONError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		status := "ok"
+		if tvResult.Failed > 0 {
+			status = "partial"
+		}
+
+		duration := time.Since(start).String()
+		log.Printf("[TVUpdateHandler] update completed status=%s duration=%s tvshows=%+v",
+			status, duration, tvResult)
+
+		writeJSON(w, http.StatusOK, map[string]interface{}{
+			"status":   status,
+			"method":   r.Method,
+			"duration": duration,
+			"summary": map[string]interface{}{
+				"tvshows": tvResult,
+			},
+			"tvshowsInserted": tvResult.Inserted,
+		})
 	}
 }
 

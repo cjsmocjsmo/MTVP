@@ -82,6 +82,15 @@ func mustWriteFile(t *testing.T, path string) {
 	}
 }
 
+func countRows(t *testing.T, db *sql.DB, query string) int {
+	t.Helper()
+	var count int
+	if err := db.QueryRow(query).Scan(&count); err != nil {
+		t.Fatalf("count rows failed: %v", err)
+	}
+	return count
+}
+
 func TestUpdateHandler_MethodNotAllowed(t *testing.T) {
 	drainUpdateSemaphore()
 	t.Cleanup(drainUpdateSemaphore)
@@ -247,5 +256,107 @@ func TestUpdateHandler_SuccessSummaryWithExtensionFiltering(t *testing.T) {
 	}
 	if int(movies["scanned"].(float64)) != 1 {
 		t.Fatalf("expected movies scanned=1 after extension filtering, got %v", movies["scanned"])
+	}
+}
+
+func TestMovUpdateHandler_UpdatesMoviesOnly(t *testing.T) {
+	drainUpdateSemaphore()
+	t.Cleanup(drainUpdateSemaphore)
+	t.Setenv("MTVGO_UPDATE_TOKEN", "")
+	t.Setenv("MTVGO_SERVER_ADDR", "http://127.0.0.1")
+	t.Setenv("MTVGO_SERVER_PORT", "8090")
+
+	base := t.TempDir()
+	moviesDir := filepath.Join(base, "movies")
+	tvDir := filepath.Join(base, "tv")
+	t.Setenv("MTVGO_MOVIES_PATH", moviesDir)
+	t.Setenv("MTVGO_TV_PATH", tvDir)
+
+	mustWriteFile(t, filepath.Join(moviesDir, "Action", "Alpha (2025).mp4"))
+	mustWriteFile(t, filepath.Join(tvDir, "SciFi", "Show Name S01E01.mkv"))
+
+	db := setupUpdateTestDB(t)
+	h := MovUpdateHandler(db)
+
+	req := httptest.NewRequest(http.MethodGet, "/movupdate", nil)
+	rr := httptest.NewRecorder()
+	h.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d body=%s", rr.Code, rr.Body.String())
+	}
+
+	var payload map[string]interface{}
+	if err := json.Unmarshal(rr.Body.Bytes(), &payload); err != nil {
+		t.Fatalf("decode response: %v", err)
+	}
+
+	if payload["status"] != "ok" {
+		t.Fatalf("expected ok status, got %v", payload["status"])
+	}
+	if int(payload["moviesInserted"].(float64)) != 1 {
+		t.Fatalf("expected 1 movie inserted, got %v", payload["moviesInserted"])
+	}
+	if _, exists := payload["tvshowsInserted"]; exists {
+		t.Fatalf("did not expect tvshowsInserted in movupdate response")
+	}
+
+	moviesCount := countRows(t, db, "SELECT COUNT(*) FROM movies")
+	tvshowsCount := countRows(t, db, "SELECT COUNT(*) FROM tvshows")
+	if moviesCount != 1 {
+		t.Fatalf("expected movies count=1, got %d", moviesCount)
+	}
+	if tvshowsCount != 0 {
+		t.Fatalf("expected tvshows count=0, got %d", tvshowsCount)
+	}
+}
+
+func TestTVUpdateHandler_UpdatesTVShowsOnly(t *testing.T) {
+	drainUpdateSemaphore()
+	t.Cleanup(drainUpdateSemaphore)
+	t.Setenv("MTVGO_UPDATE_TOKEN", "")
+
+	base := t.TempDir()
+	moviesDir := filepath.Join(base, "movies")
+	tvDir := filepath.Join(base, "tv")
+	t.Setenv("MTVGO_MOVIES_PATH", moviesDir)
+	t.Setenv("MTVGO_TV_PATH", tvDir)
+
+	mustWriteFile(t, filepath.Join(moviesDir, "Action", "Alpha (2025).mp4"))
+	mustWriteFile(t, filepath.Join(tvDir, "SciFi", "Show Name S01E01.mkv"))
+
+	db := setupUpdateTestDB(t)
+	h := TVUpdateHandler(db)
+
+	req := httptest.NewRequest(http.MethodGet, "/tvupdate", nil)
+	rr := httptest.NewRecorder()
+	h.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d body=%s", rr.Code, rr.Body.String())
+	}
+
+	var payload map[string]interface{}
+	if err := json.Unmarshal(rr.Body.Bytes(), &payload); err != nil {
+		t.Fatalf("decode response: %v", err)
+	}
+
+	if payload["status"] != "ok" {
+		t.Fatalf("expected ok status, got %v", payload["status"])
+	}
+	if int(payload["tvshowsInserted"].(float64)) != 1 {
+		t.Fatalf("expected 1 tvshow inserted, got %v", payload["tvshowsInserted"])
+	}
+	if _, exists := payload["moviesInserted"]; exists {
+		t.Fatalf("did not expect moviesInserted in tvupdate response")
+	}
+
+	moviesCount := countRows(t, db, "SELECT COUNT(*) FROM movies")
+	tvshowsCount := countRows(t, db, "SELECT COUNT(*) FROM tvshows")
+	if moviesCount != 0 {
+		t.Fatalf("expected movies count=0, got %d", moviesCount)
+	}
+	if tvshowsCount != 1 {
+		t.Fatalf("expected tvshows count=1, got %d", tvshowsCount)
 	}
 }
