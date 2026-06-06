@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>NOAA/NWS Radar</title>
 	<link rel="stylesheet" href="/static/css/mtv.css">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
 <body>
@@ -23,18 +23,12 @@
 		<p id="wi4" class="weather-div-item">{{.WeatherWindDirection}} at {{.WeatherWindSpeed}}</p>
 	</div>
 	<div class="radar-page" data-radar-refresh-ms="300000">
-		<h1 id="header">NOAA/NWS Radar - Belfair, WA Area</h1>
+		<!-- <h1 id="header">NOAA/NWS Radar - Belfair, WA Area</h1> -->
 		<p class="radar-subtitle">Location: 47.451355, -122.82689</p>
 		<div class="radar-frame">
-			<img
-				id="radar-image"
-				class="radar-image"
-				src="https://radar.weather.gov/ridge/standard/KATX_loop.gif"
+			<img id="radar-image" class="radar-image" src="https://radar.weather.gov/ridge/standard/KATX_loop.gif"
 				data-radar-base="https://radar.weather.gov/ridge/standard/KATX_loop.gif"
-				alt="NOAA NWS weather radar loop for the Seattle Tacoma region"
-				loading="eager"
-				decoding="async"
-			>
+				alt="NOAA NWS weather radar loop for the Seattle Tacoma region" loading="eager" decoding="async">
 		</div>
 		<p id="radar-last-updated" class="radar-updated">Last updated: loading...</p>
 	</div>
