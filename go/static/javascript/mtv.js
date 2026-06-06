@@ -157,6 +157,68 @@ function escapeHtml(text) {
     return result;
 }
 
+function renderUpdateResults(payload, container, mediaLabel, summaryKey, insertedKey) {
+    if (!container) {
+        return;
+    }
+
+    const summary = payload && payload.summary ? payload.summary : {};
+    const batch = summary[summaryKey] || {};
+    const errors = batch.errors || [];
+    const inserted = insertedKey ? payload[insertedKey] : batch.inserted;
+
+    let html = '<div class="no-results">';
+    html += `<strong>${escapeHtml(mediaLabel)} update complete.</strong><br>`;
+    html += `Status: ${escapeHtml(payload.status || 'unknown')}<br>`;
+    html += `Scanned: ${Number(batch.scanned || 0)}<br>`;
+    html += `Inserted: ${Number(inserted || 0)}<br>`;
+    html += `Skipped: ${Number(batch.skipped || 0)}<br>`;
+    html += `Failed: ${Number(batch.failed || 0)}`;
+
+    if (errors.length) {
+        html += '<br><br><strong>Errors</strong><br>';
+        html += errors.map((err) => `<div>${escapeHtml(err)}</div>`).join('');
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const movUpdateButton = document.getElementById('mov-update-button');
+    const movResults = document.querySelector('.mov-search-results');
+    if (movUpdateButton && movResults) {
+        movUpdateButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            movResults.innerHTML = '<div class="no-results">Running movie update...</div>';
+
+            fetch('/movupdate')
+                .then((res) => res.json())
+                .then((data) => renderUpdateResults(data, movResults, 'Movie', 'movies', 'moviesInserted'))
+                .catch(() => {
+                    movResults.innerHTML = '<div class="no-results">Movie update failed.</div>';
+                });
+        });
+    }
+
+    const tvUpdateButton = document.getElementById('tv-update-button');
+    const tvResults = document.querySelector('.tv-search-results');
+
+    if (tvUpdateButton && tvResults) {
+        tvUpdateButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            tvResults.innerHTML = '<div class="no-results">Running TV update...</div>';
+
+            fetch('/tvupdate')
+                .then((res) => res.json())
+                .then((data) => renderUpdateResults(data, tvResults, 'TV', 'tvshows', 'tvshowsInserted'))
+                .catch(() => {
+                    tvResults.innerHTML = '<div class="no-results">TV update failed.</div>';
+                });
+        });
+    }
+});
+
 // document.addEventListener('DOMContentLoaded', () => {
 const btnBack = document.getElementById('btn-back');
 const btnStop = document.getElementById('btn-stop');
