@@ -12,7 +12,7 @@ body {
 
 #navbar {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     padding: 1em;
@@ -20,6 +20,7 @@ body {
 }
 
 .navbarbtn {
+    width: 8.5em;
     background: #282828;
     color: #f0f0f0;
     border: none;
@@ -241,7 +242,8 @@ h1 {
 }
 
 .nasa-image {
-    width: 50%;
+    width: 40%;
+    margin-top: -20em;
 }
 
 .nasa-txt {
