@@ -137,7 +137,7 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 2.5em;
-    margin-top: 18em;
+    margin-top: -18em;
 }
 
 .weather-div-item {
