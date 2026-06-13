@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var reconnectTimer = null;
     var hasReceivedData = false;
 
-    shedTempEl.textContent = 'Shed: loading...';
+    shedTempEl.textContent = 'loading...';
 
     function connectShedWs() {
         if (shedWs) {
@@ -374,11 +374,11 @@ document.addEventListener('DOMContentLoaded', function () {
         shedWs.onmessage = function (event) {
             try {
                 var data = JSON.parse(event.data);
-                var tempF = data.temp_f;
-                var tempC = data.temp_c;
-                var humidity = data.humidity;
-                shedTempEl.textContent =
-                    'Shed: ' + tempF + '\u00b0F / ' + tempC + '\u00b0C \u2014 Humidity: ' + humidity + '%';
+                if (typeof data.temp_f !== 'number' || !isFinite(data.temp_f)) {
+                    console.warn('[shedtemp] Message missing numeric temp_f:', data);
+                    return;
+                }
+                shedTempEl.textContent = data.temp_f.toFixed(1) + '\u00b0F';
                 hasReceivedData = true;
             } catch (e) {
                 console.error('[shedtemp] Failed to parse message:', event.data, e);
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
         shedWs.onclose = function () {
             console.warn('[shedtemp] WebSocket closed. Reconnecting in', reconnectDelay, 'ms');
             if (!hasReceivedData) {
-                shedTempEl.textContent = 'Shed: unavailable';
+                shedTempEl.textContent = 'unavailable';
             }
             clearTimeout(reconnectTimer);
             reconnectTimer = setTimeout(function () {
