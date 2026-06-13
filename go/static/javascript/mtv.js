@@ -337,3 +337,78 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// --- Shed temperature WebSocket ---
+(function () {
+    var shedTempEl = document.getElementById('shedtemp');
+    if (!shedTempEl) {
+        return; // only active on pages with #shedtemp
+    }
+
+    var shedWsUrl = 'ws://10.0.4.60:9080/';
+    var shedWs = null;
+    var reconnectDelay = 2000;
+    var maxReconnectDelay = 10000;
+    var reconnectTimer = null;
+    var hasReceivedData = false;
+
+    shedTempEl.textContent = 'Shed: loading...';
+
+    function connectShedWs() {
+        if (shedWs) {
+            shedWs.onopen = null;
+            shedWs.onmessage = null;
+            shedWs.onerror = null;
+            shedWs.onclose = null;
+            shedWs.close();
+            shedWs = null;
+        }
+
+        shedWs = new WebSocket(shedWsUrl);
+
+        shedWs.onopen = function () {
+            console.log('[shedtemp] WebSocket connected');
+            reconnectDelay = 2000; // reset backoff on successful connect
+        };
+
+        shedWs.onmessage = function (event) {
+            try {
+                var data = JSON.parse(event.data);
+                var tempF = data.temp_f;
+                var tempC = data.temp_c;
+                var humidity = data.humidity;
+                shedTempEl.textContent =
+                    'Shed: ' + tempF + '\u00b0F / ' + tempC + '\u00b0C \u2014 Humidity: ' + humidity + '%';
+                hasReceivedData = true;
+            } catch (e) {
+                console.error('[shedtemp] Failed to parse message:', event.data, e);
+            }
+        };
+
+        shedWs.onerror = function (err) {
+            console.error('[shedtemp] WebSocket error:', err);
+        };
+
+        shedWs.onclose = function () {
+            console.warn('[shedtemp] WebSocket closed. Reconnecting in', reconnectDelay, 'ms');
+            if (!hasReceivedData) {
+                shedTempEl.textContent = 'Shed: unavailable';
+            }
+            clearTimeout(reconnectTimer);
+            reconnectTimer = setTimeout(function () {
+                connectShedWs();
+            }, reconnectDelay);
+            reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+        };
+    }
+
+    connectShedWs();
+
+    window.addEventListener('beforeunload', function () {
+        clearTimeout(reconnectTimer);
+        if (shedWs) {
+            shedWs.onclose = null; // prevent reconnect on intentional close
+            shedWs.close();
+        }
+    });
+}());
