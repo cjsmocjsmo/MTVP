@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pagetitle">TVWesterns</title>
+    <title>Little House On The Prairie</title>
     <link rel="stylesheet" href="/static/css/mtv.css">
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
@@ -16,14 +16,18 @@
 		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
 		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
 	</div>
-    <h1 id="header">TV Westerns</h1>
-    <div class="cat-div">
-        <a href="/tvwestern1923">
-            <img src="/tvthumbnails/1923.jpg" class="tvshowimage" alt="1923">
-        </a>
-        <a href="tvlittlehouseontheprairie">
-            <img src="/tvthumbnails/littlehouseontheprairie.jpg" class="tvshowimage" alt="Little House on the Prairie">
-        </a>
+    <h1>Little House On The Prairie</h1>
+    <div class="sea-epi-div">
+        {{range $season, $episodes := .Seasons}}
+        <div class="sea-div">
+            <h2>Season {{$season}}</h2>
+            <div class="epi-div">
+                {{range $episodes}}
+                <button id={{.TvId}} class="epi-div-item">{{.Episode}}</button>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
     </div>
 </body>
 <script src="/static/javascript/mtv.js"></script>
