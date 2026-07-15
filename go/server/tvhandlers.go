@@ -4246,6 +4246,58 @@ func TV1923PageHandler(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+func TVLittleHouseOnThePrairiePageHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Support up to 9 seasons, extendable
+		seasons := map[string][]map[string]interface{}{}
+		for i := 1; i <= 9; i++ {
+			seasonNum := fmt.Sprintf("%02d", i)
+			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "LittleHouseOnThePrairie", seasonNum)
+			if err != nil {
+				log.Println("DB error (Little House On The Prairie S", seasonNum, "): ", err)
+				continue
+			}
+			defer rows.Close()
+			cols, _ := rows.Columns()
+			episodes := []map[string]interface{}{}
+			for rows.Next() {
+				vals := make([]interface{}, len(cols))
+				valPtrs := make([]interface{}, len(cols))
+				for i := range vals {
+					valPtrs[i] = &vals[i]
+				}
+				if err := rows.Scan(valPtrs...); err == nil {
+					row := make(map[string]interface{})
+					for i, col := range cols {
+						b, ok := vals[i].([]byte)
+						if ok {
+							row[col] = string(b)
+						} else {
+							row[col] = vals[i]
+						}
+					}
+					episodes = append(episodes, row)
+				}
+			}
+			if len(episodes) > 0 {
+				seasons[seasonNum] = episodes
+			}
+		}
+		tmpl, err := template.ParseFiles("templates/tv/westerns/tvlittlehouseontheprairiepage.html")
+		if err != nil {
+			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		data := struct {
+			Seasons map[string][]map[string]interface{}
+		}{Seasons: seasons}
+		err = tmpl.Execute(w, data)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		}
+	}
+}
+
 func TVDeadlochPageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Support up to 2 seasons, extendable

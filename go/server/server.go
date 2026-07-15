@@ -260,6 +260,7 @@ func StartServer() {
 
 	http.HandleFunc("/tvwesternspage", TVWesternsPageHandler())
 	http.HandleFunc("/tvwestern1923", TV1923PageHandler(db))
+	http.HandleFunc("/tvlittlehouseontheprairie", TVLittleHouseOnThePrairiePageHandler(db))
 
 	wsAddr := os.Getenv("MTVGO_RAW_ADDR")
 	go func() {
