@@ -1,5 +1,2 @@
 # Ignore Go build output
 /go/mtvp
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
