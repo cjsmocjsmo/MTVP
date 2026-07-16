@@ -1844,9 +1844,9 @@ func TVColumbiaPageHandler(db *sql.DB) http.HandlerFunc {
 
 func TVForgedInFirePageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Support up to 10 seasons, extendable
+		// Support up to 11 seasons, extendable
 		seasons := map[string][]map[string]interface{}{}
-		for i := 1; i <= 10; i++ {
+		for i := 1; i <= 11; i++ {
 			seasonNum := fmt.Sprintf("%02d", i)
 			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "ForgedInFire", seasonNum)
 			if err != nil {
