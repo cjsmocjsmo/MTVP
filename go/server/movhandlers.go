@@ -872,6 +872,24 @@ func SciFiPageHandler(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+func SpiderManPageHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		images := getCategoryMovieImages(db, "SpiderMan")
+		tmpl, err := template.ParseFiles("templates/mov/movspidermanpage.html")
+		if err != nil {
+			http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		data := struct {
+			Images []map[string]interface{}
+		}{Images: images}
+		err = tmpl.Execute(w, data)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		}
+	}
+}
+
 // StalonePageHandler serves the Stallone movies page with images from the DB
 func StalonePageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
