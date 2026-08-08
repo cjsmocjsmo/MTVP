@@ -658,9 +658,9 @@ func TVLordOfTheRingsPageHandler(db *sql.DB) http.HandlerFunc {
 
 func TVHouseOfTheDragonPageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Support up to 4 seasons, extendable
+		// Support up to 3 seasons, extendable
 		seasons := map[string][]map[string]interface{}{}
-		for i := 1; i <= 2; i++ {
+		for i := 1; i <= 3; i++ {
 			seasonNum := fmt.Sprintf("%02d", i)
 			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "HouseOfTheDragon", seasonNum)
 			if err != nil {
@@ -816,7 +816,7 @@ func TVWheelOfTimePageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Support up to 4 seasons, extendable
 		seasons := map[string][]map[string]interface{}{}
-		for i := 1; i <= 2; i++ {
+		for i := 1; i <= 3; i++ {
 			seasonNum := fmt.Sprintf("%02d", i)
 			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "WheelOfTime", seasonNum)
 			if err != nil {
