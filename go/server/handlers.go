@@ -427,20 +427,20 @@ func PerfHealthHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		payload := map[string]interface{}{
-			"now":                             now.Format(time.RFC3339),
-			"weather_cache_ttl_seconds":       int(weatherCacheTTL.Seconds()),
-			"weather_cache_valid":             weatherValid,
-			"weather_cache_fetched_at":        weatherFetchedAt.Format(time.RFC3339),
-			"weather_cache_age_seconds":       weatherAgeSeconds,
-			"weather_cached_location":         weatherLocation,
-			"weather_http_timeout_seconds":    int(weatherHTTPTimeout.Seconds()),
-			"nasa_refresh_in_flight":          nasaInFlight,
-			"nasa_last_refresh_attempt":       nasaLastAttempt.Format(time.RFC3339),
-			"nasa_last_attempt_age_seconds":   nasaLastAttemptAgeSeconds,
+			"now":                               now.Format(time.RFC3339),
+			"weather_cache_ttl_seconds":         int(weatherCacheTTL.Seconds()),
+			"weather_cache_valid":               weatherValid,
+			"weather_cache_fetched_at":          weatherFetchedAt.Format(time.RFC3339),
+			"weather_cache_age_seconds":         weatherAgeSeconds,
+			"weather_cached_location":           weatherLocation,
+			"weather_http_timeout_seconds":      int(weatherHTTPTimeout.Seconds()),
+			"nasa_refresh_in_flight":            nasaInFlight,
+			"nasa_last_refresh_attempt":         nasaLastAttempt.Format(time.RFC3339),
+			"nasa_last_attempt_age_seconds":     nasaLastAttemptAgeSeconds,
 			"nasa_refresh_min_interval_seconds": int(nasaRefreshMinInterval.Seconds()),
-			"latest_nasa_date":                latestNasaDate,
-			"latest_nasa_title":               latestNasaTitle,
-			"latest_nasa_error":               latestNasaErr,
+			"latest_nasa_date":                  latestNasaDate,
+			"latest_nasa_title":                 latestNasaTitle,
+			"latest_nasa_error":                 latestNasaErr,
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -474,46 +474,46 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 		maybeRefreshNASAAsync(db)
 		log.Printf("[HomePageHandler] nasa stage completed in %s", time.Since(nasaStart))
 		type Stats struct {
-			TotalMovies          int
-			TotalTVShows         int
-			TotalVideos          int
-			MovieSizeOnDisk      string
-			TVShowSizeOnDisk     string
-			VideoSizeOnDisk      string
-			FreeSpaceOnDisk      string
-			NasaDate             string
-			NasaExplanation      string
-			NasaHDURL            string
-			NasaMediaType        string
-			NasaServiceVersion   string
-			NasaTitle            string
-			NasaURL              string
-			NasaThumbnailURL     string
-			NasaCopyright        string
-			NasaIdx              int
-			IsNasaVideo          bool
-			IsNasaImage          bool
+			TotalMovies        int
+			TotalTVShows       int
+			TotalVideos        int
+			MovieSizeOnDisk    string
+			TVShowSizeOnDisk   string
+			VideoSizeOnDisk    string
+			FreeSpaceOnDisk    string
+			NasaDate           string
+			NasaExplanation    string
+			NasaHDURL          string
+			NasaMediaType      string
+			NasaServiceVersion string
+			NasaTitle          string
+			NasaURL            string
+			NasaThumbnailURL   string
+			NasaCopyright      string
+			NasaIdx            int
+			IsNasaVideo        bool
+			IsNasaImage        bool
 		}
 		stats := Stats{
-			TotalMovies:          movCount,
-			TotalTVShows:         tvCount,
-			TotalVideos:          videoCount,
-			MovieSizeOnDisk:      movsizeondisk,
-			TVShowSizeOnDisk:     tvsizeondisk,
-			VideoSizeOnDisk:      videosizeondisk,
-			FreeSpaceOnDisk:      freespaceondisk,
-			NasaDate:             nasaData.Date,
-			NasaExplanation:      nasaData.Explanation,
-			NasaHDURL:            nasaData.HDURL,
-			NasaMediaType:        nasaData.MediaType,
-			NasaServiceVersion:   nasaData.ServiceVersion,
-			NasaTitle:            nasaData.Title,
-			NasaURL:              nasaData.URL,
-			NasaThumbnailURL:     nasaData.ThumbnailURL,
-			NasaCopyright:        nasaData.Copyright,
-			NasaIdx:              nasaData.Idx,
-			IsNasaVideo:          nasaData.MediaType == "video",
-			IsNasaImage:          nasaData.MediaType == "image",
+			TotalMovies:        movCount,
+			TotalTVShows:       tvCount,
+			TotalVideos:        videoCount,
+			MovieSizeOnDisk:    movsizeondisk,
+			TVShowSizeOnDisk:   tvsizeondisk,
+			VideoSizeOnDisk:    videosizeondisk,
+			FreeSpaceOnDisk:    freespaceondisk,
+			NasaDate:           nasaData.Date,
+			NasaExplanation:    nasaData.Explanation,
+			NasaHDURL:          nasaData.HDURL,
+			NasaMediaType:      nasaData.MediaType,
+			NasaServiceVersion: nasaData.ServiceVersion,
+			NasaTitle:          nasaData.Title,
+			NasaURL:            nasaData.URL,
+			NasaThumbnailURL:   nasaData.ThumbnailURL,
+			NasaCopyright:      nasaData.Copyright,
+			NasaIdx:            nasaData.Idx,
+			IsNasaVideo:        nasaData.MediaType == "video",
+			IsNasaImage:        nasaData.MediaType == "image",
 		}
 
 		tmplStart := time.Now()
@@ -589,6 +589,10 @@ func MovSearchHandler(db *sql.DB) http.HandlerFunc {
 				results = append(results, row)
 			}
 		}
+		if err := rows.Err(); err != nil {
+			http.Error(w, "Row iteration error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"results": results,
@@ -631,6 +635,10 @@ func TVSearchHandler(db *sql.DB) http.HandlerFunc {
 				results = append(results, row)
 			}
 		}
+		if err := rows.Err(); err != nil {
+			http.Error(w, "Row iteration error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"results": results,
@@ -669,6 +677,9 @@ func getCategoryMovieImages(db *sql.DB, category string) []map[string]interface{
 			}
 			results = append(results, row)
 		}
+	}
+	if err := rows.Err(); err != nil {
+		log.Println("row iteration error (category images):", err)
 	}
 	return results
 }

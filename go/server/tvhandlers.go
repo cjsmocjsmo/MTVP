@@ -71,6 +71,9 @@ func TVMoblandPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -123,6 +126,9 @@ func TVDarkWindsPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -178,6 +184,9 @@ func TVShogunPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -230,6 +239,9 @@ func TVTheContinentalPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -297,6 +309,9 @@ func TVMastersOfTheUniversePageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -348,6 +363,9 @@ func TVFlintstonesPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -401,6 +419,9 @@ func TVJetsonsPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -452,6 +473,9 @@ func TVJonnyQuestPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -519,6 +543,9 @@ func TVDMVPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -570,6 +597,9 @@ func TVFubarPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -637,6 +667,9 @@ func TVLordOfTheRingsPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -688,6 +721,9 @@ func TVHouseOfTheDragonPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -741,6 +777,9 @@ func TVPercyJacksonAndTheOlympiansPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -793,6 +832,9 @@ func TVWednesdayPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -844,6 +886,9 @@ func TVWheelOfTimePageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -911,6 +956,9 @@ func TVFalconAndTheWinterSoldierPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -962,6 +1010,9 @@ func TVHawkeyePageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1015,6 +1066,9 @@ func TVIAmGrootPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1066,6 +1120,9 @@ func TVIronHeartPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1119,6 +1176,9 @@ func TVLokiPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1170,6 +1230,9 @@ func TVMoonKnightPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1223,6 +1286,9 @@ func TVSecretInvasionPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1274,6 +1340,9 @@ func TVSheHulkPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1327,6 +1396,9 @@ func TVWandaVisionPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1378,6 +1450,9 @@ func TVWonderManPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1445,6 +1520,9 @@ func TVNCISHawaiiPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1496,6 +1574,9 @@ func TVNCISLAPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1549,6 +1630,9 @@ func TVNCISNewOrleansPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1600,6 +1684,9 @@ func TVNCISOriginsPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1653,6 +1740,9 @@ func TVNCISNCISPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1705,6 +1795,9 @@ func TVNCISSydneyPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1756,6 +1849,9 @@ func TVNCISTonyAndZivaPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1823,6 +1919,9 @@ func TVColumbiaPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1874,6 +1973,9 @@ func TVForgedInFirePageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -1927,6 +2029,9 @@ func TVPersonOfInterestPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -1979,6 +2084,9 @@ func TVPreHistoricPlanetPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2030,6 +2138,9 @@ func TVThePittPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2097,6 +2208,9 @@ func TVAlteredCarbonPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2148,6 +2262,9 @@ func TVCowboyBebopPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2201,6 +2318,9 @@ func TVFalloutPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2252,6 +2372,9 @@ func TVForAllMankindPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2310,6 +2433,9 @@ func TVSpiderNoirPageHandler(db *sql.DB) http.HandlerFunc {
 			if err := rows.Err(); err != nil {
 				log.Printf("TVSpiderNoirPageHandler: season=%s rows iteration error=%v", seasonNum, err)
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2365,6 +2491,9 @@ func TVStarCityPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2416,6 +2545,9 @@ func TVFoundationPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2469,6 +2601,9 @@ func TVHaloPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2520,6 +2655,9 @@ func TVLostInSpacePageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2573,6 +2711,9 @@ func TVMonarchLegacyOfMonstersPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2624,6 +2765,9 @@ func TVNightSkyPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2677,6 +2821,9 @@ func TVOrvillePageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2728,6 +2875,9 @@ func TVRaisedByWolvesPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2781,6 +2931,9 @@ func TVSiloPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2832,6 +2985,9 @@ func TVLastOfUsPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -2899,6 +3055,9 @@ func TVStarTrekContinuesPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -2950,6 +3109,9 @@ func TVDeepSpaceNinePageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3003,6 +3165,9 @@ func TVDiscoveryPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3054,6 +3219,9 @@ func TVEnterprisePageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3107,6 +3275,9 @@ func TVLowerDecksPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3158,6 +3329,9 @@ func TVPicardPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3211,6 +3385,9 @@ func TVProdigyPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3262,6 +3439,9 @@ func TVStarFleetAcademyPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3315,6 +3495,9 @@ func TVStrangeNewWorldsPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3366,6 +3549,9 @@ func TVSTTVPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3419,6 +3605,9 @@ func TVTNGPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3470,6 +3659,9 @@ func TVVoyagerPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3537,6 +3729,9 @@ func TVAcolytePageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3588,6 +3783,9 @@ func TVAhsokaPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3641,6 +3839,9 @@ func TVAndorPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3692,6 +3893,9 @@ func TVBookOfBobafettPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3745,6 +3949,9 @@ func TVMandalorianPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3796,6 +4003,9 @@ func TVMaulShadowLordPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3849,6 +4059,9 @@ func TVObiWanKenobiPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -3900,6 +4113,9 @@ func TVSkeletonCrewPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -3953,6 +4169,9 @@ func TVTalesOfTheEmpirePageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -4004,6 +4223,9 @@ func TVTalesOfTheJediPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -4057,6 +4279,9 @@ func TVTalesOfTheUnderworldPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -4109,6 +4334,9 @@ func TVTheBadBatchPageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -4160,6 +4388,9 @@ func TVVisionsPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
@@ -4227,6 +4458,9 @@ func TV1923PageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -4279,6 +4513,9 @@ func TVLittleHouseOnThePrairiePageHandler(db *sql.DB) http.HandlerFunc {
 					episodes = append(episodes, row)
 				}
 			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
+			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes
 			}
@@ -4330,6 +4567,9 @@ func TVDeadlochPageHandler(db *sql.DB) http.HandlerFunc {
 					}
 					episodes = append(episodes, row)
 				}
+			}
+			if err := rows.Err(); err != nil {
+				log.Println("row iteration error:", err)
 			}
 			if len(episodes) > 0 {
 				seasons[seasonNum] = episodes

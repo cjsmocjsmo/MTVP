@@ -451,6 +451,9 @@ func getCategoryVideoImages(db *sql.DB) []map[string]interface{} {
 			results = append(results, row)
 		}
 	}
+	if err := rows.Err(); err != nil {
+		fmt.Println("row iteration error (video images):", err)
+	}
 	return results
 }
 
