@@ -1,7 +1,19 @@
 var wsAddr = 'ws://10.0.4.41:8090/ws';
 
+// Updates the #current-time element with the current time as HH:MM:SS
+function updateCurrentTime() {
+    const timeEl = document.getElementById('current-time');
+    if (!timeEl) return;
+    const now = new Date();
+    const pad = function (n) { return String(n).padStart(2, '0'); };
+    timeEl.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+}
+
 // Attach click listeners to all .mov-img images for set_media WebSocket command
 document.addEventListener('DOMContentLoaded', function () {
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+
     const movImgs = document.querySelectorAll('.mov-img');
     movImgs.forEach(function (img) {
         img.addEventListener('click', function () {

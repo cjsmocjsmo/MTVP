@@ -10,6 +10,15 @@ body {
     margin: 0.5em;
 }
 
+#current-time {
+    position: fixed;
+    top: 0.5em;
+    right: 0.75em;
+    font-size: 1.1em;
+    color: #f0f0f0;
+    z-index: 1000;
+}
+
 #navbar {
     display: flex;
     flex-direction: column;
