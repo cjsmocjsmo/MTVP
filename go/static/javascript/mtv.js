@@ -2,7 +2,7 @@ var wsAddr = 'ws://10.0.4.41:8090/ws';
 
 // Updates the #current-time element with the current time as HH:MM:SS
 function updateCurrentTime() {
-    const timeEl = document.getElementById('current-time');
+    const timeEl = document.getElementById('currenttime');
     if (!timeEl) return;
     const now = new Date();
     const pad = function (n) { return String(n).padStart(2, '0'); };
