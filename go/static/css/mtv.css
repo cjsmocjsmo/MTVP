@@ -10,7 +10,7 @@ body {
     margin: 0.5em;
 }
 
-#current-time {
+#currenttime {
     position: fixed;
     top: 0.5em;
     right: 0.75em;
