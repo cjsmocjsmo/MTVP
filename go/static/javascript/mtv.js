@@ -319,9 +319,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const radarPage = document.querySelector('.radar-page');
+    const radarSubtitle = document.querySelector('.radar-subtitle');
     const updatedLabel = document.getElementById('radar-last-updated');
+    const locationRadios = document.querySelectorAll('input[name="radar-location"]');
     const refreshMs = Number(radarPage?.dataset?.radarRefreshMs) || 300000;
-    const baseURL = radarImage.dataset.radarBase || radarImage.src;
+    let baseURL = radarImage.dataset.radarBase || radarImage.src;
 
     function setLastUpdatedText() {
         if (!updatedLabel) {
@@ -339,6 +341,21 @@ document.addEventListener('DOMContentLoaded', function () {
         radarImage.src = baseURL + separator + 'ts=' + Date.now();
         setLastUpdatedText();
     }
+
+    locationRadios.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            if (!radio.checked) {
+                return;
+            }
+            baseURL = radio.dataset.radarBase;
+            radarImage.dataset.radarBase = baseURL;
+            radarImage.alt = radio.dataset.radarAlt || radarImage.alt;
+            if (radarSubtitle && radio.dataset.radarSubtitle) {
+                radarSubtitle.textContent = radio.dataset.radarSubtitle;
+            }
+            refreshRadarImage();
+        });
+    });
 
     refreshRadarImage();
     setInterval(refreshRadarImage, refreshMs);

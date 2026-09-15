@@ -16,6 +16,37 @@
 		<a href="/maintvpage"><button class="navbarbtn">TV Shows</button></a>
 		<a href="http://10.0.4.76:9090/"><button class="navbarbtn">Music</button></a>
 	</div>
+	<fieldset class="radar-location-picker">
+		<legend>Radar Location</legend>
+		<label class="radar-location-option">
+			<input type="radio" name="radar-location" checked
+				data-radar-base="https://radar.weather.gov/ridge/standard/KATX_loop.gif"
+				data-radar-subtitle="Location: 47.451355, -122.82689"
+				data-radar-alt="NOAA NWS weather radar loop for the Seattle Tacoma region">
+			Belfair, WA
+		</label>
+		<label class="radar-location-option">
+			<input type="radio" name="radar-location"
+				data-radar-base="https://radar.weather.gov/ridge/standard/KCBX_loop.gif"
+				data-radar-subtitle="Location: 43.615, -116.202"
+				data-radar-alt="NOAA NWS weather radar loop for the Boise region">
+			Boise, ID
+		</label>
+		<label class="radar-location-option">
+			<input type="radio" name="radar-location"
+				data-radar-base="https://radar.weather.gov/ridge/standard/KMTX_loop.gif"
+				data-radar-subtitle="Location: 40.7606, -111.888"
+				data-radar-alt="NOAA NWS weather radar loop for the Salt Lake City region">
+			Salt Lake City, UT
+		</label>
+		<label class="radar-location-option">
+			<input type="radio" name="radar-location"
+				data-radar-base="https://radar.weather.gov/ridge/standard/KTLX_loop.gif"
+				data-radar-subtitle="Location: 33.993, -96.402"
+				data-radar-alt="NOAA NWS weather radar loop for the Durant region">
+			Durant, OK
+		</label>
+	</fieldset>
 	<div class="weather-div">
 		<p id="wi1" class="weather-div-item">{{.WeatherLocation}}</p>
 		<p id="wi3" class="weather-div-item">{{.WeatherConditions}}</p>
