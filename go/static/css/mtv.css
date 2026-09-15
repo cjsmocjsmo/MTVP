@@ -208,16 +208,14 @@ h1 {
     width: fit-content;
     margin: 1em auto 0 auto;
     padding: 0.75em 1.25em;
-    border: solid 1px #0f5f1c;
-    border-radius: 12px;
     color: #ffffff;
 }
 
-.radar-location-picker legend {
+/* .radar-location-picker legend {
     padding: 0 0.5em;
     color: #cfcfcf;
     font-size: 0.9em;
-}
+} */
 
 .radar-location-option {
     display: flex;

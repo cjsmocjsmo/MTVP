@@ -333,14 +333,19 @@ document.addEventListener('DOMContentLoaded', function () {
         updatedLabel.textContent = 'Last updated: ' + now.toLocaleString();
     }
 
-    function refreshRadarImage() {
-        if (document.visibilityState !== 'visible') {
+    // force=true bypasses the visibility guard, used for user-initiated changes.
+    function refreshRadarImage(force) {
+        if (!force && document.visibilityState !== 'visible') {
             return;
         }
         const separator = baseURL.includes('?') ? '&' : '?';
         radarImage.src = baseURL + separator + 'ts=' + Date.now();
         setLastUpdatedText();
     }
+
+    radarImage.addEventListener('error', function () {
+        console.error('[radar] Failed to load image:', radarImage.src);
+    });
 
     locationRadios.forEach(function (radio) {
         radio.addEventListener('change', function () {
@@ -353,16 +358,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (radarSubtitle && radio.dataset.radarSubtitle) {
                 radarSubtitle.textContent = radio.dataset.radarSubtitle;
             }
-            refreshRadarImage();
+            refreshRadarImage(true);
         });
     });
 
-    refreshRadarImage();
+    refreshRadarImage(true);
     setInterval(refreshRadarImage, refreshMs);
 
     document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible') {
-            refreshRadarImage();
+            refreshRadarImage(true);
         }
     });
 });
