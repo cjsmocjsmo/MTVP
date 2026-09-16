@@ -203,14 +203,10 @@ h1 {
 
 .radar-location-picker {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    
-    
-    
-    
-    color: #ffffff;
+    color: palevioletred;
 }
 
 /* .radar-location-picker legend {
