@@ -39,17 +39,36 @@ type WeatherTemplateData struct {
 	WeatherWindSpeed     string
 }
 
+// weatherLocation describes a radar/weather location selectable from the radar page.
+type weatherLocation struct {
+	Name      string
+	Latitude  float64
+	Longitude float64
+}
+
+const defaultWeatherLocationKey = "belfair"
+
+// weatherLocations maps the radio button keys used by templates/radar.html to coordinates.
+var weatherLocations = map[string]weatherLocation{
+	"belfair":      {Name: "Belfair, WA", Latitude: 47.4281, Longitude: -122.8189},
+	"boise":        {Name: "Boise, ID", Latitude: 43.615, Longitude: -116.202},
+	"saltlakecity": {Name: "Salt Lake City, UT", Latitude: 40.7606, Longitude: -111.888},
+	"durant":       {Name: "Durant, OK", Latitude: 33.993, Longitude: -96.402},
+}
+
+type weatherCacheEntry struct {
+	data      WeatherSnapshot
+	fetchedAt time.Time
+	valid     bool
+}
+
 var (
 	indexTemplateOnce sync.Once
 	indexTemplate     *template.Template
 	indexTemplateErr  error
 
-	weatherCacheMu sync.RWMutex
-	weatherCache   struct {
-		data      WeatherSnapshot
-		fetchedAt time.Time
-		valid     bool
-	}
+	weatherCacheMu    sync.RWMutex
+	weatherCacheByKey = map[string]*weatherCacheEntry{}
 
 	nasaRefreshMu          sync.Mutex
 	nasaRefreshInFlight    bool
@@ -145,15 +164,16 @@ func FetchNASAData(db *sql.DB) (*APODResponse, error) {
 }
 
 func MTVWeather(db *sql.DB) ([]byte, error) {
-	return MTVWeatherWithTimeout(db, weatherHTTPTimeout)
+	return MTVWeatherWithTimeout(db, defaultWeatherLocationKey, weatherHTTPTimeout)
 }
 
-func MTVWeatherWithTimeout(db *sql.DB, timeout time.Duration) ([]byte, error) {
-	// Fetch weather for Belfair, WA from National Weather Service
-	latitude := 47.4281
-	longitude := -122.8189
+func MTVWeatherWithTimeout(db *sql.DB, locationKey string, timeout time.Duration) ([]byte, error) {
+	loc, ok := weatherLocations[locationKey]
+	if !ok {
+		return nil, fmt.Errorf("weather unknown location: %s", locationKey)
+	}
 	client := &http.Client{Timeout: timeout}
-	pointURL := fmt.Sprintf("https://api.weather.gov/points/%f,%f", latitude, longitude)
+	pointURL := fmt.Sprintf("https://api.weather.gov/points/%f,%f", loc.Latitude, loc.Longitude)
 	pointResp, err := client.Get(pointURL)
 	if err != nil {
 		return nil, fmt.Errorf("weather fetch failed: %v", err)
@@ -225,7 +245,7 @@ func MTVWeatherWithTimeout(db *sql.DB, timeout time.Duration) ([]byte, error) {
 		`INSERT INTO weather (FetchedAt, Location, Temperature, TemperatureUnit, Conditions, WindDirection, WindSpeed, Humidity)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 		time.Now().Format(time.RFC3339),
-		"Belfair, WA",
+		loc.Name,
 		temperature,
 		temperatureUnit,
 		conditions,
@@ -238,7 +258,7 @@ func MTVWeatherWithTimeout(db *sql.DB, timeout time.Duration) ([]byte, error) {
 	}
 
 	resp, err := json.Marshal(map[string]interface{}{
-		"location":         "Belfair, WA",
+		"location":         loc.Name,
 		"temperature":      temperature,
 		"temperature_unit": temperatureUnit,
 		"conditions":       conditions,
@@ -286,19 +306,26 @@ func decodeWeatherSnapshot(weatherData []byte) (WeatherSnapshot, error) {
 	return s, nil
 }
 
-func getWeatherSnapshotCached(db *sql.DB) (WeatherSnapshot, error) {
+func getWeatherSnapshotCached(db *sql.DB, locationKey string) (WeatherSnapshot, error) {
+	if _, ok := weatherLocations[locationKey]; !ok {
+		return WeatherSnapshot{}, fmt.Errorf("weather unknown location: %s", locationKey)
+	}
+
 	now := time.Now()
 	weatherCacheMu.RLock()
-	if weatherCache.valid && now.Sub(weatherCache.fetchedAt) < weatherCacheTTL {
-		cached := weatherCache.data
-		weatherCacheMu.RUnlock()
-		return cached, nil
-	}
-	hasStale := weatherCache.valid
-	stale := weatherCache.data
+	entry := weatherCacheByKey[locationKey]
 	weatherCacheMu.RUnlock()
 
-	weatherData, err := MTVWeatherWithTimeout(db, weatherHTTPTimeout)
+	if entry != nil && entry.valid && now.Sub(entry.fetchedAt) < weatherCacheTTL {
+		return entry.data, nil
+	}
+	hasStale := entry != nil && entry.valid
+	var stale WeatherSnapshot
+	if entry != nil {
+		stale = entry.data
+	}
+
+	weatherData, err := MTVWeatherWithTimeout(db, locationKey, weatherHTTPTimeout)
 	if err != nil {
 		if hasStale {
 			return stale, err
@@ -315,16 +342,14 @@ func getWeatherSnapshotCached(db *sql.DB) (WeatherSnapshot, error) {
 	}
 
 	weatherCacheMu.Lock()
-	weatherCache.data = snapshot
-	weatherCache.fetchedAt = now
-	weatherCache.valid = true
+	weatherCacheByKey[locationKey] = &weatherCacheEntry{data: snapshot, fetchedAt: now, valid: true}
 	weatherCacheMu.Unlock()
 
 	return snapshot, nil
 }
 
 func buildWeatherTemplateData(db *sql.DB) (WeatherTemplateData, error) {
-	weatherSnapshot, err := getWeatherSnapshotCached(db)
+	weatherSnapshot, err := getWeatherSnapshotCached(db, defaultWeatherLocationKey)
 	if err != nil {
 		return WeatherTemplateData{}, err
 	}
@@ -396,10 +421,17 @@ func PerfHealthHandler(db *sql.DB) http.HandlerFunc {
 		now := time.Now()
 
 		weatherCacheMu.RLock()
-		weatherValid := weatherCache.valid
-		weatherFetchedAt := weatherCache.fetchedAt
-		weatherLocation := weatherCache.data.Location
+		defaultEntry := weatherCacheByKey[defaultWeatherLocationKey]
 		weatherCacheMu.RUnlock()
+
+		var weatherValid bool
+		var weatherFetchedAt time.Time
+		var weatherLocation string
+		if defaultEntry != nil {
+			weatherValid = defaultEntry.valid
+			weatherFetchedAt = defaultEntry.fetchedAt
+			weatherLocation = defaultEntry.data.Location
+		}
 
 		nasaRefreshMu.Lock()
 		nasaInFlight := nasaRefreshInFlight
@@ -552,6 +584,37 @@ func RadarPageHandler(db *sql.DB) http.HandlerFunc {
 		if err != nil {
 			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
 		}
+	}
+}
+
+// WeatherAPIHandler serves current conditions for a given ?location= key as JSON,
+// used by the radar page to refresh the weather-div when a radio button is selected.
+func WeatherAPIHandler(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		locationKey := r.URL.Query().Get("location")
+		if locationKey == "" {
+			locationKey = defaultWeatherLocationKey
+		}
+		if _, ok := weatherLocations[locationKey]; !ok {
+			http.Error(w, "unknown location", http.StatusBadRequest)
+			return
+		}
+
+		snapshot, err := getWeatherSnapshotCached(db, locationKey)
+		if err != nil && snapshot.Location == "" {
+			http.Error(w, "weather fetch failed: "+err.Error(), http.StatusBadGateway)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]string{
+			"location":      snapshot.Location,
+			"temperature":   snapshot.Temperature,
+			"unit":          snapshot.Unit,
+			"conditions":    snapshot.Conditions,
+			"winddirection": snapshot.WindDirection,
+			"windspeed":     snapshot.WindSpeed,
+		})
 	}
 }
 

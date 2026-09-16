@@ -10,17 +10,23 @@ import (
 )
 
 func seedWeatherCacheForTest(t *testing.T, snapshot WeatherSnapshot, fetchedAt time.Time, valid bool) {
+	seedWeatherCacheForLocationForTest(t, defaultWeatherLocationKey, snapshot, fetchedAt, valid)
+}
+
+func seedWeatherCacheForLocationForTest(t *testing.T, locationKey string, snapshot WeatherSnapshot, fetchedAt time.Time, valid bool) {
 	t.Helper()
 	weatherCacheMu.Lock()
-	previous := weatherCache
-	weatherCache.data = snapshot
-	weatherCache.fetchedAt = fetchedAt
-	weatherCache.valid = valid
+	previous := weatherCacheByKey[locationKey]
+	weatherCacheByKey[locationKey] = &weatherCacheEntry{data: snapshot, fetchedAt: fetchedAt, valid: valid}
 	weatherCacheMu.Unlock()
 
 	t.Cleanup(func() {
 		weatherCacheMu.Lock()
-		weatherCache = previous
+		if previous == nil {
+			delete(weatherCacheByKey, locationKey)
+		} else {
+			weatherCacheByKey[locationKey] = previous
+		}
 		weatherCacheMu.Unlock()
 	})
 }
@@ -93,5 +99,40 @@ func TestRadarPageHandler_RendersWeatherDivValues(t *testing.T) {
 	}
 	if !strings.Contains(body, "Cloudy") {
 		t.Fatalf("expected conditions text in radar page")
+	}
+}
+
+func TestWeatherAPIHandler_ReturnsCachedSnapshotForLocation(t *testing.T) {
+	seedWeatherCacheForLocationForTest(t, "durant", WeatherSnapshot{
+		Location:      "Durant, OK",
+		Temperature:   "88",
+		Unit:          "F",
+		Conditions:    "Sunny",
+		WindDirection: "SW",
+		WindSpeed:     "10 mph",
+	}, time.Now(), true)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/weather?location=durant", nil)
+	rr := httptest.NewRecorder()
+
+	WeatherAPIHandler(nil).ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d body=%s", rr.Code, rr.Body.String())
+	}
+	body := rr.Body.String()
+	if !strings.Contains(body, "Durant, OK") || !strings.Contains(body, "Sunny") {
+		t.Fatalf("expected Durant weather data in response, got %s", body)
+	}
+}
+
+func TestWeatherAPIHandler_UnknownLocationReturnsBadRequest(t *testing.T) {
+	req := httptest.NewRequest(http.MethodGet, "/api/weather?location=nowhere", nil)
+	rr := httptest.NewRecorder()
+
+	WeatherAPIHandler(nil).ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusBadRequest {
+		t.Fatalf("expected status 400, got %d", rr.Code)
 	}
 }

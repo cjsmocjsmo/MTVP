@@ -325,6 +325,41 @@ document.addEventListener('DOMContentLoaded', function () {
     const refreshMs = Number(radarPage?.dataset?.radarRefreshMs) || 300000;
     let baseURL = radarImage.dataset.radarBase || radarImage.src;
 
+    const weatherLocationEl = document.getElementById('wi1');
+    const weatherConditionsEl = document.getElementById('wi3');
+    const weatherTemperatureEl = document.getElementById('wi2');
+    const weatherWindEl = document.getElementById('wi4');
+
+    function updateWeatherForLocation(locationKey) {
+        if (!locationKey) {
+            return;
+        }
+        fetch('/api/weather?location=' + encodeURIComponent(locationKey))
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('weather request failed: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                if (weatherLocationEl) {
+                    weatherLocationEl.textContent = data.location;
+                }
+                if (weatherConditionsEl) {
+                    weatherConditionsEl.textContent = data.conditions;
+                }
+                if (weatherTemperatureEl) {
+                    weatherTemperatureEl.textContent = data.temperature + ' ' + data.unit;
+                }
+                if (weatherWindEl) {
+                    weatherWindEl.textContent = data.winddirection + ' at ' + data.windspeed;
+                }
+            })
+            .catch(function (error) {
+                console.error('[radar] Failed to update weather:', error);
+            });
+    }
+
     function setLastUpdatedText() {
         if (!updatedLabel) {
             return;
@@ -359,6 +394,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 radarSubtitle.textContent = radio.dataset.radarSubtitle;
             }
             refreshRadarImage(true);
+            updateWeatherForLocation(radio.dataset.weatherLocation);
         });
     });
 
