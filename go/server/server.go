@@ -1,11 +1,12 @@
 package server
 
 import (
-	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
 	"os"
 	"strings"
+
+	_ "github.com/mattn/go-sqlite3"
 
 	"mtvp/setup"
 )
