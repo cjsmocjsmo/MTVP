@@ -126,6 +126,30 @@ func TestWeatherAPIHandler_ReturnsCachedSnapshotForLocation(t *testing.T) {
 	}
 }
 
+func TestWeatherAPIHandler_ReturnsCachedSnapshotForYellowstone(t *testing.T) {
+	seedWeatherCacheForLocationForTest(t, "yellowstone", WeatherSnapshot{
+		Location:      "Yellowstone Lake, WY",
+		Temperature:   "41",
+		Unit:          "F",
+		Conditions:    "Partly Cloudy",
+		WindDirection: "W",
+		WindSpeed:     "6 mph",
+	}, time.Now(), true)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/weather?location=yellowstone", nil)
+	rr := httptest.NewRecorder()
+
+	WeatherAPIHandler(nil).ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d body=%s", rr.Code, rr.Body.String())
+	}
+	body := rr.Body.String()
+	if !strings.Contains(body, "Yellowstone Lake, WY") || !strings.Contains(body, "Partly Cloudy") {
+		t.Fatalf("expected Yellowstone weather data in response, got %s", body)
+	}
+}
+
 func TestWeatherAPIHandler_UnknownLocationReturnsBadRequest(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/api/weather?location=nowhere", nil)
 	rr := httptest.NewRecorder()

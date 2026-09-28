@@ -54,6 +54,7 @@ var weatherLocations = map[string]weatherLocation{
 	"boise":        {Name: "Boise, ID", Latitude: 43.615, Longitude: -116.202},
 	"saltlakecity": {Name: "Salt Lake City, UT", Latitude: 40.7606, Longitude: -111.888},
 	"durant":       {Name: "Durant, OK", Latitude: 33.993, Longitude: -96.402},
+	"yellowstone":  {Name: "Yellowstone Lake, WY", Latitude: 44.6151, Longitude: -110.5885},
 }
 
 type weatherCacheEntry struct {
