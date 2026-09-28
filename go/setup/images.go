@@ -83,6 +83,20 @@ func resizeImage(img image.Image, maxW, maxH int) image.Image {
 }
 
 func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, serverAddr string) error {
+	pathsToProcess := make([]string, 0, len(imgPaths))
+	for _, path := range imgPaths {
+		needsUpdate, err := imageNeedsUpdate(db, path)
+		if err != nil {
+			return err
+		}
+		if needsUpdate {
+			pathsToProcess = append(pathsToProcess, path)
+		}
+	}
+	if len(pathsToProcess) == 0 {
+		return nil
+	}
+
 	type job struct {
 		idx  int
 		path string
@@ -105,8 +119,8 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 		}
 	}
 
-	jobs := make(chan job, len(imgPaths))
-	results := make(chan result, len(imgPaths))
+	jobs := make(chan job, len(pathsToProcess))
+	results := make(chan result, len(pathsToProcess))
 	var wg sync.WaitGroup
 
 	worker := func() {
@@ -137,7 +151,7 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 		go worker()
 	}
 
-	for idx, path := range imgPaths {
+	for idx, path := range pathsToProcess {
 		jobs <- job{idx, path}
 	}
 	close(jobs)
@@ -148,7 +162,7 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 	}()
 
 	var firstErr error
-	inserts := make([]result, len(imgPaths))
+	inserts := make([]result, len(pathsToProcess))
 	for res := range results {
 		if res.err != nil && firstErr == nil {
 			firstErr = res.err
@@ -169,23 +183,50 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 		}
 	}()
 
-	stmt, err := tx.Prepare(`INSERT OR IGNORE INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+	updateStmt, err := tx.Prepare(`UPDATE images SET ImgId = ?, ImgPath = ?, Size = ?, Name = ?, ThumbPath = ?, Idx = ?, HttpThumbPath = ? WHERE Path = ?`)
 	if err != nil {
 		if firstErr != nil {
 			return firstErr
 		}
 		return fmt.Errorf("failed to prepare image insert statement: %w", err)
 	}
-	defer stmt.Close()
+	defer updateStmt.Close()
+	insertStmt, err := tx.Prepare(`INSERT INTO images (ImgId, Path, ImgPath, Size, Name, ThumbPath, Idx, HttpThumbPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		if firstErr != nil {
+			return firstErr
+		}
+		return fmt.Errorf("failed to prepare image insert statement: %w", err)
+	}
+	defer insertStmt.Close()
 
 	for _, res := range inserts {
 		if res.err != nil {
 			continue
 		}
-		_, err := stmt.Exec(
-			res.imgId, res.path, res.path, res.size, res.name, res.thumbPath, res.idx+idxStart+1, res.httpThumbPath)
+		idx := res.idx + idxStart + 1
+		updated, err := updateStmt.Exec(
+			res.imgId, res.path, res.size, res.name, res.thumbPath, idx, res.httpThumbPath, res.path)
 		if err != nil && firstErr == nil {
-			firstErr = fmt.Errorf("failed to insert image %s: %w", res.path, err)
+			firstErr = fmt.Errorf("failed to update image %s: %w", res.path, err)
+			continue
+		}
+		if err != nil {
+			continue
+		}
+		rowsAffected, err := updated.RowsAffected()
+		if err != nil {
+			if firstErr == nil {
+				firstErr = fmt.Errorf("failed to inspect image update %s: %w", res.path, err)
+			}
+			continue
+		}
+		if rowsAffected == 0 {
+			_, err = insertStmt.Exec(
+				res.imgId, res.path, res.path, res.size, res.name, res.thumbPath, idx, res.httpThumbPath)
+			if err != nil && firstErr == nil {
+				firstErr = fmt.Errorf("failed to insert image %s: %w", res.path, err)
+			}
 		}
 	}
 
@@ -195,4 +236,28 @@ func InsertImages(db *sql.DB, imgPaths []string, idxStart int, thumbDir string, 
 	tx = nil
 
 	return firstErr
+}
+
+func imageNeedsUpdate(db *sql.DB, path string) (bool, error) {
+	var thumbPath string
+	err := db.QueryRow(`SELECT ThumbPath FROM images WHERE Path = ? LIMIT 1`, path).Scan(&thumbPath)
+	if err == sql.ErrNoRows {
+		return true, nil
+	}
+	if err != nil {
+		return false, err
+	}
+
+	sourceInfo, err := os.Stat(path)
+	if err != nil {
+		return false, err
+	}
+	thumbInfo, err := os.Stat(thumbPath)
+	if os.IsNotExist(err) {
+		return true, nil
+	}
+	if err != nil {
+		return false, err
+	}
+	return thumbInfo.ModTime().Before(sourceInfo.ModTime()), nil
 }

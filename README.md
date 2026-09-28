@@ -72,9 +72,11 @@ go run .
 The program will:
 
 1. Load `../env/.env`
-2. Open the SQLite database from `MTVGO_DB_PATH`
-3. Create and populate tables
+2. Create the database schema if the database file does not exist; otherwise validate the existing schema and exit if required tables or columns are missing
+3. Scan configured media directories and add new movies, TV episodes, videos, and posters without repeating unchanged work
 4. Start the HTTP server on `MTVGO_RAW_ADDR:MTVGO_SERVER_PORT`
+
+An existing database with an incomplete schema is not repaired automatically. The program exits with an error so the database can be removed and initialized again.
 
 ## Notes
 

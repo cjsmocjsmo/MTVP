@@ -2,13 +2,15 @@ package setup
 
 import (
 	"database/sql"
-	"github.com/stretchr/testify/assert"
 	"image"
 	"image/color"
 	"image/jpeg"
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGenerateImgId(t *testing.T) {
@@ -72,11 +74,28 @@ func TestInsertImages(t *testing.T) {
 	err = jpeg.Encode(f, img, nil)
 	assert.NoError(t, err)
 
-	err = InsertImages(db, []string{imgPath}, 0, tmpDir, "http://localhost")
+	thumbDir := filepath.Join(tmpDir, "thumbs")
+	err = InsertImages(db, []string{imgPath}, 0, thumbDir, "http://localhost")
 	assert.NoError(t, err)
+	assert.NoError(t, InsertImages(db, []string{imgPath}, 0, thumbDir, "http://localhost"))
 
 	row := db.QueryRow("SELECT Name FROM images WHERE Path=?", imgPath)
 	var name string
 	assert.NoError(t, row.Scan(&name))
 	assert.Equal(t, "img1", name)
+
+	var thumbPath string
+	assert.NoError(t, db.QueryRow("SELECT ThumbPath FROM images WHERE Path=?", imgPath).Scan(&thumbPath))
+	sourceTime := time.Now().Add(-time.Minute)
+	assert.NoError(t, os.Chtimes(imgPath, sourceTime, sourceTime))
+	thumbTime := sourceTime.Add(-time.Second)
+	assert.NoError(t, os.Chtimes(thumbPath, thumbTime, thumbTime))
+	assert.NoError(t, InsertImages(db, []string{imgPath}, 1, thumbDir, "http://localhost"))
+
+	var imageCount int
+	assert.NoError(t, db.QueryRow("SELECT COUNT(*) FROM images WHERE Path=?", imgPath).Scan(&imageCount))
+	assert.Equal(t, 1, imageCount)
+	thumbInfo, err := os.Stat(thumbPath)
+	assert.NoError(t, err)
+	assert.True(t, thumbInfo.ModTime().After(sourceTime))
 }

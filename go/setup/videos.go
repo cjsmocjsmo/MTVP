@@ -119,20 +119,34 @@ func InsertVideos(db *sql.DB, vidPaths []string, idxStart int) error {
 		}
 	}()
 
-	stmt, err := tx.Prepare(`INSERT OR IGNORE INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)`)
+	deleteStmt, err := tx.Prepare(`DELETE FROM videos WHERE VidPath = ?`)
+	if err != nil {
+		if firstErr != nil {
+			return firstErr
+		}
+		return fmt.Errorf("failed to prepare video replacement statement: %w", err)
+	}
+	defer deleteStmt.Close()
+	insertStmt, err := tx.Prepare(`INSERT OR IGNORE INTO videos (VidId, VidPath, Size, Name, Idx) VALUES (?, ?, ?, ?, ?)`)
 	if err != nil {
 		if firstErr != nil {
 			return firstErr
 		}
 		return fmt.Errorf("failed to prepare video insert statement: %w", err)
 	}
-	defer stmt.Close()
+	defer insertStmt.Close()
 
 	for _, res := range inserts {
 		if res.err != nil {
 			continue
 		}
-		_, err := stmt.Exec(
+		if _, err := deleteStmt.Exec(res.path); err != nil {
+			if firstErr == nil {
+				firstErr = fmt.Errorf("failed to replace video %s: %w", res.path, err)
+			}
+			continue
+		}
+		_, err := insertStmt.Exec(
 			res.vidId, res.path, res.size, res.name, res.idx+idxStart+1)
 		if err != nil && firstErr == nil {
 			firstErr = fmt.Errorf("failed to insert video %s: %w", res.path, err)
