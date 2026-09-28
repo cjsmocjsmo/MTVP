@@ -2,9 +2,10 @@ package setup
 
 import (
 	"database/sql"
+	"testing"
+
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestCreateTables(t *testing.T) {
@@ -41,6 +42,7 @@ func TestCreateTables(t *testing.T) {
 			assert.NoError(t, err)
 			foundFields[name] = true
 		}
+		assert.NoError(t, rows.Err())
 		for _, field := range check.fields {
 			assert.True(t, foundFields[field], "%s table missing field: %s", check.name, field)
 		}
