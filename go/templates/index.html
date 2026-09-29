@@ -26,7 +26,7 @@
 			Your browser does not support the video tag.
 		</video>
 		{{else if .NasaURL}}
-		<!-- <a href="{{.NasaHDURL}}" target="_blank">View HD Image on NASA</a> -->
+		<a href="https://science.nasa.gov/apod" target="_blank" rel="noopener noreferrer">View NASA Astronomy Picture of the Day</a>
 		<img class="nasa-image" src="{{.NasaURL}}" alt="{{.NasaTitle}}">
 		{{else if .NasaThumbnailURL}}
 		<img class="nasa-image" src="{{.NasaThumbnailURL}}" alt="{{.NasaTitle}}">

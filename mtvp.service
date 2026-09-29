@@ -1,0 +1,14 @@
+[Unit]
+Description=MTVP application
+After=network.target
+
+[Service]
+Type=simple
+User=pimedia
+WorkingDirectory=/home/pimedia/MTVP/go
+ExecStart=/home/pimedia/MTVP/go/mtvp
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
