@@ -5,12 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
-	"net/url"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
+
+	"golang.org/x/net/html"
 	// "mtvp/setup"
 )
 
@@ -90,6 +93,128 @@ type APODResponse struct {
 	Idx            int    // Database primary key
 }
 
+type nasaAPODFeedItem struct {
+	Date        string `json:"date"`
+	Explanation string `json:"explanation"`
+	HDURL       string `json:"hdurl"`
+	MediaType   string `json:"media_type"`
+	Title       string `json:"title"`
+	Copyright   string `json:"copyright"`
+	BasicHTML   string `json:"basic_html"`
+}
+
+const nasaAPODFeedURL = "https://science.nasa.gov/wp-json/wp/v2/apod-basic"
+
+func decodeNASAAPODFeed(reader io.Reader, targetDate string) (*APODResponse, error) {
+	var items []nasaAPODFeedItem
+	if err := json.NewDecoder(reader).Decode(&items); err != nil {
+		return nil, fmt.Errorf("failed to decode APOD feed: %w", err)
+	}
+	if len(items) == 0 {
+		return nil, fmt.Errorf("APOD feed returned no entries")
+	}
+
+	selected := &items[0]
+	for index := range items {
+		if items[index].Date == targetDate {
+			selected = &items[index]
+			break
+		}
+		if items[index].Date > selected.Date {
+			selected = &items[index]
+		}
+	}
+
+	mediaURL := selected.HDURL
+	thumbnailURL := ""
+	if selected.MediaType == "video" {
+		videoURL, err := extractAPODVideoURL(selected.BasicHTML)
+		if err != nil {
+			return nil, err
+		}
+		mediaURL = videoURL
+		thumbnailURL = selected.HDURL
+	}
+	if mediaURL == "" {
+		return nil, fmt.Errorf("APOD entry %s has no media URL", selected.Date)
+	}
+
+	return &APODResponse{
+		Date:         selected.Date,
+		Explanation:  apodHTMLText(selected.Explanation),
+		HDURL:        selected.HDURL,
+		MediaType:    selected.MediaType,
+		Title:        apodHTMLText(selected.Title),
+		URL:          mediaURL,
+		ThumbnailURL: thumbnailURL,
+		Copyright:    apodHTMLText(selected.Copyright),
+	}, nil
+}
+
+func extractAPODVideoURL(markup string) (string, error) {
+	document, err := html.Parse(strings.NewReader(markup))
+	if err != nil {
+		return "", fmt.Errorf("failed to parse APOD video markup: %w", err)
+	}
+
+	var findSource func(*html.Node, bool) string
+	findSource = func(node *html.Node, insideVideo bool) string {
+		if node.Type == html.ElementNode {
+			if node.Data == "video" {
+				insideVideo = true
+				for _, attribute := range node.Attr {
+					if attribute.Key == "src" && attribute.Val != "" {
+						return attribute.Val
+					}
+				}
+			}
+			if insideVideo && node.Data == "source" {
+				for _, attribute := range node.Attr {
+					if attribute.Key == "src" && attribute.Val != "" {
+						return attribute.Val
+					}
+				}
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			if source := findSource(child, insideVideo); source != "" {
+				return source
+			}
+		}
+		return ""
+	}
+
+	if source := findSource(document, false); source != "" {
+		return source, nil
+	}
+	return "", fmt.Errorf("APOD video entry has no video source")
+}
+
+func apodHTMLText(markup string) string {
+	context := &html.Node{Type: html.ElementNode, Data: "div"}
+	fragments, err := html.ParseFragment(strings.NewReader(markup), context)
+	if err != nil {
+		return strings.TrimSpace(markup)
+	}
+
+	var text strings.Builder
+	var collect func(*html.Node)
+	collect = func(node *html.Node) {
+		if node.Type == html.TextNode {
+			text.WriteString(node.Data)
+			text.WriteByte(' ')
+			return
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			collect(child)
+		}
+	}
+	for _, fragment := range fragments {
+		collect(fragment)
+	}
+	return strings.Join(strings.Fields(text.String()), " ")
+}
+
 // FetchNASAData hits the APOD endpoint, returns the parsed payload, and inserts it into the nasa table
 func FetchNASAData(db *sql.DB) (*APODResponse, error) {
 	today := time.Now().Format("2006-01-02")
@@ -117,23 +242,11 @@ func FetchNASAData(db *sql.DB) (*APODResponse, error) {
 		return nil, fmt.Errorf("failed to query nasa table: %w", err)
 	}
 
-	// Not found, fetch from NASA API
-	baseURL := "https://api.nasa.gov/planetary/apod"
-	apiKey := "c2MSxvl303kuIlMnkhygr6l60lc14bENZm0Mjwik"
-
-	u, err := url.Parse(baseURL)
-	if err != nil {
-		return nil, err
-	}
-	q := u.Query()
-	q.Set("api_key", apiKey)
-	q.Set("thumbs", "true")
-	u.RawQuery = q.Encode()
-
+	// Not found, fetch from NASA's WordPress APOD feed
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
-	resp, err := client.Get(u.String())
+	resp, err := client.Get(nasaAPODFeedURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed making request to NASA API: %w", err)
 	}
@@ -141,9 +254,11 @@ func FetchNASAData(db *sql.DB) (*APODResponse, error) {
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("nasa API returned status code: %d", resp.StatusCode)
 	}
-	if err := json.NewDecoder(resp.Body).Decode(&apod); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON response: %w", err)
+	apodData, err := decodeNASAAPODFeed(resp.Body, today)
+	if err != nil {
+		return nil, err
 	}
+	apod = *apodData
 	// Insert into nasa table
 	insertStmt := `INSERT INTO nasa (Date, Explanation, HDURL, MediaType, ServiceVersion, Title, URL, ThumbnailURL, Copyright)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`

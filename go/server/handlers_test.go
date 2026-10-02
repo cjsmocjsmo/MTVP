@@ -160,3 +160,47 @@ func TestWeatherAPIHandler_UnknownLocationReturnsBadRequest(t *testing.T) {
 		t.Fatalf("expected status 400, got %d", rr.Code)
 	}
 }
+
+func TestDecodeNASAAPODFeed_SelectsDateAndMapsImage(t *testing.T) {
+	feed := `[
+		{"date":"2026-10-03","title":"Future image","hdurl":"https://assets.example/future.jpg","media_type":"image","url":"https://science.example/future-article/"},
+		{"date":"2026-10-02","title":"<em>Today's image</em>","hdurl":"https://assets.example/today.jpg","media_type":"image","url":"https://science.example/today-article/","explanation":"A <strong>bright</strong> galaxy.","copyright":"<a href=\"https://example.com\">Jane Example</a>"}
+	]`
+
+	got, err := decodeNASAAPODFeed(strings.NewReader(feed), "2026-10-02")
+	if err != nil {
+		t.Fatalf("decodeNASAAPODFeed returned error: %v", err)
+	}
+	if got.Date != "2026-10-02" || got.Title != "Today's image" {
+		t.Fatalf("expected today's APOD entry, got date=%q title=%q", got.Date, got.Title)
+	}
+	if got.URL != "https://assets.example/today.jpg" || got.HDURL != got.URL {
+		t.Fatalf("expected the image URL to use hdurl, got URL=%q HDURL=%q", got.URL, got.HDURL)
+	}
+	if got.Explanation != "A bright galaxy." || got.Copyright != "Jane Example" {
+		t.Fatalf("expected text-only APOD fields, got explanation=%q copyright=%q", got.Explanation, got.Copyright)
+	}
+}
+
+func TestDecodeNASAAPODFeed_ExtractsVideoSource(t *testing.T) {
+	feed := `[{"date":"2026-10-02","title":"Video APOD","hdurl":"https://assets.example/poster.jpg","media_type":"video","basic_html":"<html><body><video controls><source src=\"https://assets.example/apod.mp4\" type=\"video/mp4\"></video></body></html>"}]`
+
+	got, err := decodeNASAAPODFeed(strings.NewReader(feed), "2026-10-02")
+	if err != nil {
+		t.Fatalf("decodeNASAAPODFeed returned error: %v", err)
+	}
+	if got.URL != "https://assets.example/apod.mp4" {
+		t.Fatalf("expected video URL from markup, got %q", got.URL)
+	}
+	if got.ThumbnailURL != "https://assets.example/poster.jpg" {
+		t.Fatalf("expected hdurl as video thumbnail, got %q", got.ThumbnailURL)
+	}
+}
+
+func TestDecodeNASAAPODFeed_RejectsVideoWithoutSource(t *testing.T) {
+	feed := `[{"date":"2026-10-02","title":"Video APOD","hdurl":"https://assets.example/poster.jpg","media_type":"video","basic_html":"<video controls></video>"}]`
+
+	if _, err := decodeNASAAPODFeed(strings.NewReader(feed), "2026-10-02"); err == nil {
+		t.Fatal("expected an error when the video markup has no source")
+	}
+}
