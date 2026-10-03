@@ -3,8 +3,10 @@ package setup
 import (
 	"crypto/sha256"
 	"database/sql"
+	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -12,21 +14,39 @@ import (
 	"sync"
 )
 
+const vidSampleSize int64 = 1 << 20
+
+// GenerateVidId fingerprints a video from its size plus up to three 1 MiB
+// samples (start, middle, end) instead of reading the whole file.
 func GenerateVidId(path string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return "", err
 	}
 	defer file.Close()
+
+	info, err := file.Stat()
+	if err != nil {
+		return "", err
+	}
+	size := info.Size()
+
 	hash := sha256.New()
-	buf := make([]byte, 4096)
-	for {
-		n, err := file.Read(buf)
-		if n > 0 {
-			hash.Write(buf[:n])
+	var sizeBuf [8]byte
+	binary.LittleEndian.PutUint64(sizeBuf[:], uint64(size))
+	hash.Write(sizeBuf[:])
+
+	if size <= 3*vidSampleSize {
+		if _, err := io.Copy(hash, file); err != nil {
+			return "", err
 		}
-		if err != nil {
-			break
+		return hex.EncodeToString(hash.Sum(nil)), nil
+	}
+
+	offsets := []int64{0, size/2 - vidSampleSize/2, size - vidSampleSize}
+	for _, off := range offsets {
+		if _, err := io.Copy(hash, io.NewSectionReader(file, off, vidSampleSize)); err != nil {
+			return "", err
 		}
 	}
 	return hex.EncodeToString(hash.Sum(nil)), nil
@@ -47,7 +67,8 @@ func InsertVideos(db *sql.DB, vidPaths []string, idxStart int) error {
 	}
 
 	// Get number of workers from env, fallback to NumCPU if not set or invalid
-	numWorkers := runtime.NumCPU()
+	// Hashing is I/O-bound, so oversubscribe CPUs
+	numWorkers := runtime.NumCPU() * 2
 	if env := os.Getenv("MTVGO_VIDEO_WORKERS"); env != "" {
 		if n, err := strconv.Atoi(env); err == nil && n > 0 {
 			numWorkers = n
