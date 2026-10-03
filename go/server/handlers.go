@@ -141,7 +141,7 @@ func decodeNASAAPODFeed(reader io.Reader, targetDate string) (*APODResponse, err
 
 	return &APODResponse{
 		Date:         selected.Date,
-		Explanation:  apodHTMLText(selected.Explanation),
+		Explanation:  selected.Explanation,
 		HDURL:        selected.HDURL,
 		MediaType:    selected.MediaType,
 		Title:        apodHTMLText(selected.Title),
@@ -630,7 +630,7 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 			VideoSizeOnDisk    string
 			FreeSpaceOnDisk    string
 			NasaDate           string
-			NasaExplanation    string
+			NasaExplanation    template.HTML
 			NasaHDURL          string
 			NasaMediaType      string
 			NasaServiceVersion string
@@ -651,7 +651,7 @@ func HomePageHandler(db *sql.DB) http.HandlerFunc {
 			VideoSizeOnDisk:    videosizeondisk,
 			FreeSpaceOnDisk:    freespaceondisk,
 			NasaDate:           nasaData.Date,
-			NasaExplanation:    nasaData.Explanation,
+			NasaExplanation:    sanitizeAPODHTML(nasaData.Explanation),
 			NasaHDURL:          nasaData.HDURL,
 			NasaMediaType:      nasaData.MediaType,
 			NasaServiceVersion: nasaData.ServiceVersion,
