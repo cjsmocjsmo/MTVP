@@ -1711,7 +1711,7 @@ func TVNCISNCISPageHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Support up to 4 seasons, extendable
 		seasons := map[string][]map[string]interface{}{}
-		for i := 1; i <= 23; i++ {
+		for i := 1; i <= 25; i++ {
 			seasonNum := fmt.Sprintf("%02d", i)
 			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISNCIS", seasonNum)
 			if err != nil {
@@ -1878,7 +1878,7 @@ func TVNCISNewYorkPageHandler(db *sql.DB) http.HandlerFunc {
 		seasons := map[string][]map[string]interface{}{}
 		for i := 1; i <= 2; i++ {
 			seasonNum := fmt.Sprintf("%02d", i)
-			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NewYork", seasonNum)
+			rows, err := db.Query("SELECT * FROM tvshows WHERE catagory=? AND season=? ORDER BY Episode ASC", "NCISNewYork", seasonNum)
 			if err != nil {
 				log.Println("DB error (NCIS New York S", seasonNum, "): ", err)
 				continue
