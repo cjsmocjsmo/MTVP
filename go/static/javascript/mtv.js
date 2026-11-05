@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.warn('[shedtemp] Message missing numeric temp_f:', data);
                     return;
                 }
-                shedTempEl.textContent = 'Shed: ' + data.temp_f.toFixed(1);
+                shedTempEl.textContent = data.temp_f.toFixed(1);
                 hasReceivedData = true;
             } catch (e) {
                 console.error('[shedtemp] Failed to parse message:', event.data, e);
@@ -523,7 +523,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.warn('[housetemp] Message missing numeric temp_f:', data);
                     return;
                 }
-                houseTempEl.textContent = 'House: ' + data.temp_f.toFixed(1);
+                houseTempEl.textContent = data.temp_f.toFixed(1);
                 hasReceivedData = true;
             } catch (e) {
                 console.error('[housetemp] Failed to parse message:', event.data, e);
