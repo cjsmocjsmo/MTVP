@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.warn('[shedtemp] Message missing numeric temp_f:', data);
                     return;
                 }
-                shedTempEl.textContent = data.temp_f.toFixed(1) + '\u00b0F';
+                shedTempEl.textContent = 'Shed: ' + data.temp_f.toFixed(1);
                 hasReceivedData = true;
             } catch (e) {
                 console.error('[shedtemp] Failed to parse message:', event.data, e);
@@ -479,6 +479,81 @@ document.addEventListener('DOMContentLoaded', function () {
         if (shedWs) {
             shedWs.onclose = null; // prevent reconnect on intentional close
             shedWs.close();
+        }
+    });
+}());
+
+// --- House temperature WebSocket ---
+(function () {
+    var houseTempEl = document.getElementById('housetemp');
+    if (!houseTempEl) {
+        return; // only active on pages with #housetemp
+    }
+
+    var houseWsUrl = 'ws://10.0.4.23:9080/';
+    var houseWs = null;
+    var reconnectDelay = 2000;
+    var maxReconnectDelay = 10000;
+    var reconnectTimer = null;
+    var hasReceivedData = false;
+
+    houseTempEl.textContent = 'loading...';
+
+    function connectHouseWs() {
+        if (houseWs) {
+            houseWs.onopen = null;
+            houseWs.onmessage = null;
+            houseWs.onerror = null;
+            houseWs.onclose = null;
+            houseWs.close();
+            houseWs = null;
+        }
+
+        houseWs = new WebSocket(houseWsUrl);
+
+        houseWs.onopen = function () {
+            console.log('[housetemp] WebSocket connected');
+            reconnectDelay = 2000; // reset backoff on successful connect
+        };
+
+        houseWs.onmessage = function (event) {
+            try {
+                var data = JSON.parse(event.data);
+                if (typeof data.temp_f !== 'number' || !isFinite(data.temp_f)) {
+                    console.warn('[housetemp] Message missing numeric temp_f:', data);
+                    return;
+                }
+                houseTempEl.textContent = 'House: ' + data.temp_f.toFixed(1);
+                hasReceivedData = true;
+            } catch (e) {
+                console.error('[housetemp] Failed to parse message:', event.data, e);
+            }
+        };
+
+        houseWs.onerror = function (err) {
+            console.error('[housetemp] WebSocket error:', err);
+        };
+
+        houseWs.onclose = function () {
+            console.warn('[housetemp] WebSocket closed. Reconnecting in', reconnectDelay, 'ms');
+            if (!hasReceivedData) {
+                houseTempEl.textContent = 'unavailable';
+            }
+            clearTimeout(reconnectTimer);
+            reconnectTimer = setTimeout(function () {
+                connectHouseWs();
+            }, reconnectDelay);
+            reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+        };
+    }
+
+    connectHouseWs();
+
+    window.addEventListener('beforeunload', function () {
+        clearTimeout(reconnectTimer);
+        if (houseWs) {
+            houseWs.onclose = null; // prevent reconnect on intentional close
+            houseWs.close();
         }
     });
 }());
