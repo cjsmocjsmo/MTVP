@@ -58,7 +58,9 @@ func sanitizeAPODHTML(markup string) template.HTML {
 			for c := n.FirstChild; c != nil; c = c.NextSibling {
 				walk(c)
 			}
-			out.WriteString("</" + n.Data + ">")
+			out.WriteString("</")
+			out.WriteString(n.Data)
+			out.WriteByte('>')
 		}
 	}
 	for _, f := range fragments {
